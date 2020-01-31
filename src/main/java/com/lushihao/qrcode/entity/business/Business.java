@@ -1,4 +1,4 @@
-package com.lushihao.qrcode.entity;
+package com.lushihao.qrcode.entity.business;
 
 public class Business {
 

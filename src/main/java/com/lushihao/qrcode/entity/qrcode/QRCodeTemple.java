@@ -1,4 +1,4 @@
-package com.lushihao.qrcode.entity;
+package com.lushihao.qrcode.entity.qrcode;
 
 /**
  * 生成的二维码型号及相关信息

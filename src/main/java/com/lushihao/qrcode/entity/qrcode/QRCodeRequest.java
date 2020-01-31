@@ -1,9 +1,6 @@
-package com.lushihao.qrcode.entity;
+package com.lushihao.qrcode.entity.qrcode;
 
-/**
- * 二维码的使用类
- */
-public class QRCodeVo {
+public class QRCodeRequest {
 
     /**
      * 二维码信息
@@ -12,7 +9,7 @@ public class QRCodeVo {
     /**
      * 二维码所属编号
      */
-    private QRCodeTemple typeCode;
+    private String templeCode;
     /**
      * 商家
      */
@@ -30,12 +27,12 @@ public class QRCodeVo {
         this.message = message;
     }
 
-    public QRCodeTemple getTypeCode() {
-        return typeCode;
+    public String getTempleCode() {
+        return templeCode;
     }
 
-    public void setTypeCode(QRCodeTemple typeCode) {
-        this.typeCode = typeCode;
+    public void setTempleCode(String templeCode) {
+        this.templeCode = templeCode;
     }
 
     public String getBusinessCode() {
@@ -52,16 +49,6 @@ public class QRCodeVo {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public QRCodeVo(String message, QRCodeTemple typeCode, String businessCode, String fileName) {
-        this.message = message;
-        this.typeCode = typeCode;
-        this.businessCode = businessCode;
-        this.fileName = fileName;
-    }
-
-    public QRCodeVo() {
     }
 
 }

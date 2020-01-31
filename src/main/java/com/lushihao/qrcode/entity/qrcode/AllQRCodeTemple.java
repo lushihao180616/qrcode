@@ -1,4 +1,4 @@
-package com.lushihao.qrcode.entity;
+package com.lushihao.qrcode.entity.qrcode;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

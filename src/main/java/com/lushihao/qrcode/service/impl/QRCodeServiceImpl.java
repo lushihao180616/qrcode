@@ -1,9 +1,9 @@
 package com.lushihao.qrcode.service.impl;
 
-import com.lushihao.qrcode.entity.AllQRCodeTemple;
-import com.lushihao.qrcode.entity.QRCodeRequest;
-import com.lushihao.qrcode.entity.QRCodeTemple;
-import com.lushihao.qrcode.entity.QRCodeVo;
+import com.lushihao.qrcode.entity.qrcode.AllQRCodeTemple;
+import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
+import com.lushihao.qrcode.entity.qrcode.QRCodeTemple;
+import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.lushihao.qrcode.service.QRCodeService;
 import com.lushihao.qrcode.util.LSHQRCodeUtil;
 import org.springframework.stereotype.Service;

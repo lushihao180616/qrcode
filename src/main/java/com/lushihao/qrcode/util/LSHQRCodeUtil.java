@@ -1,7 +1,7 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.entity.ProjectBasicInfo;
-import com.lushihao.qrcode.entity.QRCodeVo;
+import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.swetake.util.Qrcode;
 import org.springframework.stereotype.Component;
 

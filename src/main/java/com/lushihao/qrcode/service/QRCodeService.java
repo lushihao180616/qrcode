@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.service;
 
-import com.lushihao.qrcode.entity.QRCodeRequest;
+import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 
 public interface QRCodeService {
 

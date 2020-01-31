@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.controller;
 
-import com.lushihao.qrcode.entity.AllBusiness;
+import com.lushihao.qrcode.entity.business.AllBusiness;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
