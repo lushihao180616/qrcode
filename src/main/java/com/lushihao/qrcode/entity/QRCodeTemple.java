@@ -3,7 +3,7 @@ package com.lushihao.qrcode.entity;
 /**
  * 生成的二维码型号及相关信息
  */
-public class QRCodeTypeCode {
+public class QRCodeTemple {
 
     /**
      * 标识
@@ -14,9 +14,13 @@ public class QRCodeTypeCode {
      */
     private double money;
     /**
-     * 是否只有二维码
+     * 是否只有二维码(true:只有二维码)
      */
     private boolean ifOnly;
+    /**
+     * 是否显示商标(true:显示)
+     */
+    private boolean ifShowLogo;
     /**
      * 创建二维码方式（0:热门，1:最初）
      */
@@ -24,7 +28,7 @@ public class QRCodeTypeCode {
     /**
      * 背景是否透明（Y:透明，N:不透明）
      */
-    private String transparent;
+    private boolean transparent;
     /**
      * 起绘点X
      */
@@ -58,6 +62,14 @@ public class QRCodeTypeCode {
         this.ifOnly = ifOnly;
     }
 
+    public boolean isIfShowLogo() {
+        return ifShowLogo;
+    }
+
+    public void setIfShowLogo(boolean ifShowLogo) {
+        this.ifShowLogo = ifShowLogo;
+    }
+
     public String getArti() {
         return arti;
     }
@@ -66,11 +78,11 @@ public class QRCodeTypeCode {
         this.arti = arti;
     }
 
-    public String getTransparent() {
+    public boolean isTransparent() {
         return transparent;
     }
 
-    public void setTransparent(String transparent) {
+    public void setTransparent(boolean transparent) {
         this.transparent = transparent;
     }
 
@@ -90,14 +102,18 @@ public class QRCodeTypeCode {
         this.y = y;
     }
 
-    public QRCodeTypeCode(String code, double money, boolean ifOnly, String arti, String transparent, int x, int y) {
+    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, String arti, boolean transparent, int x, int y) {
         this.code = code;
         this.money = money;
         this.ifOnly = ifOnly;
+        this.ifShowLogo = ifShowLogo;
         this.arti = arti;
         this.transparent = transparent;
         this.x = x;
         this.y = y;
+    }
+
+    public QRCodeTemple() {
     }
 
 }

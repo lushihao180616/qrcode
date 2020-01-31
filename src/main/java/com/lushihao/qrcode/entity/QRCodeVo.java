@@ -12,7 +12,7 @@ public class QRCodeVo {
     /**
      * 二维码所属编号
      */
-    private QRCodeTypeCode typeCode;
+    private QRCodeTemple typeCode;
     /**
      * 商家
      */
@@ -30,11 +30,11 @@ public class QRCodeVo {
         this.message = message;
     }
 
-    public QRCodeTypeCode getTypeCode() {
+    public QRCodeTemple getTypeCode() {
         return typeCode;
     }
 
-    public void setTypeCode(QRCodeTypeCode typeCode) {
+    public void setTypeCode(QRCodeTemple typeCode) {
         this.typeCode = typeCode;
     }
 
@@ -54,11 +54,14 @@ public class QRCodeVo {
         this.fileName = fileName;
     }
 
-    public QRCodeVo(String message, QRCodeTypeCode typeCode, String businessName, String fileName) {
+    public QRCodeVo(String message, QRCodeTemple typeCode, String businessName, String fileName) {
         this.message = message;
         this.typeCode = typeCode;
         this.businessName = businessName;
         this.fileName = fileName;
+    }
+
+    public QRCodeVo() {
     }
 
 }

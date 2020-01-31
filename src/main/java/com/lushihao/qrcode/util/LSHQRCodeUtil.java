@@ -1,8 +1,11 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.qrcode.entity.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.QRCodeVo;
 import com.swetake.util.Qrcode;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,35 +23,40 @@ import java.util.Random;
  * @author krry
  * @version 1.0
  */
+@Component
 public class LSHQRCodeUtil {
 
-    private static int width = 975;
-    private static int height = 975;
+    @Resource
+    private ProjectBasicInfo projectBasicInfo;
+
+    private int width = 975;
+    private int height = 975;
 
     // 设置偏移量，不设置可能导致解析出错
-    private static int pixoff = 25;
+    private int pixoff = 25;
     // 像素大小
-    private static int pix = 25;
+    private int pix = 25;
     // 二维码数组的长度
-    private static int codeLength;
+    private int codeLength;
     // 随机数，生成[0,2]之间的随机整数,取长度为3的数组下标
-    private static int max = 3;
+    private int max = 3;
 
     //素材图片容器
-    private static BufferedImage image_eye;
-    private static BufferedImage image11;
-    private static BufferedImage image12;
-    private static BufferedImage image13;
-    private static BufferedImage image21;
-    private static BufferedImage image22;
-    private static BufferedImage image23;
-    private static BufferedImage image31;
-    private static BufferedImage image32;
-    private static BufferedImage image33;
-    private static BufferedImage image41;
-    private static BufferedImage image42;
-    private static BufferedImage image43;
-    private static BufferedImage imageBG;
+    private BufferedImage image_eye;
+    private BufferedImage image11;
+    private BufferedImage image12;
+    private BufferedImage image13;
+    private BufferedImage image21;
+    private BufferedImage image22;
+    private BufferedImage image23;
+    private BufferedImage image31;
+    private BufferedImage image32;
+    private BufferedImage image33;
+    private BufferedImage image41;
+    private BufferedImage image42;
+    private BufferedImage image43;
+    private BufferedImage imageBG;
+    private BufferedImage imageLogo;
 
     /**
      * 生成二维码
@@ -56,7 +64,7 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo 二维码相关信息
      * @return
      */
-    public static boolean qrcode(QRCodeVo qrCodeVo) {
+    public boolean qrcode(QRCodeVo qrCodeVo) {
         FileOutputStream outputStream = null;
 
         try {
@@ -74,9 +82,8 @@ public class LSHQRCodeUtil {
             BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             //获取画笔
             Graphics2D gs = image.createGraphics();
-
             //判断是否使用二维码背景颜色是透明
-            if (qrCodeVo.getTypeCode().getTransparent().equals("Y")) {
+            if (qrCodeVo.getTypeCode().isTransparent()) {
                 //设置透明
                 image = gs.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
                 gs = image.createGraphics();
@@ -106,10 +113,10 @@ public class LSHQRCodeUtil {
             }
 
             //获取资源地址
-            String aspath = "C:\\Users\\Administrator\\Desktop\\qrcodeicon";
+            String aspath = projectBasicInfo.getTempleUrl();
 
             //加载图片
-            loadImage(aspath, qrCodeVo.getTypeCode().isIfOnly(), qrCodeVo.getTypeCode().getCode());
+            loadImage(aspath, qrCodeVo.getTypeCode().isIfOnly(), qrCodeVo.getTypeCode().isIfShowLogo(), qrCodeVo.getTypeCode().getCode());
 
             //绘制二维码，选择算法
             if (qrCodeVo.getTypeCode().getArti().equals("0")) {
@@ -120,7 +127,10 @@ public class LSHQRCodeUtil {
 //            else if (qrCodeVo.getArti().equals("2")) {
 //                drawQrcodeRiTojiao(gs, code); //三角算法
 //            }
-
+            //添加logo
+            if (qrCodeVo.getTypeCode().isIfShowLogo()) {
+                gs.drawImage(imageLogo, (width - 100) / 2, (height - 100) / 2, 100, 100, null);
+            }
             //如果类型不是单码，则装载背景图片，将二维码写进背景图片中，只有单码没有背景
             if (!qrCodeVo.getTypeCode().isIfOnly()) {
                 //获取背景图片的画笔
@@ -138,7 +148,7 @@ public class LSHQRCodeUtil {
             //释放画笔
             gs.dispose();
             //生成二维码图片
-            String realPath = "C:\\Users\\Administrator\\Desktop\\outputQrcode\\" + qrCodeVo.getBusinessName() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + "\\";
+            String realPath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessName() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + "\\";
             //String realPath = 服务器项目的地址;
             String pathName = qrCodeVo.getFileName() + new SimpleDateFormat("_HHmmss").format(new Date()) + ".png";
             outputStream = new FileOutputStream(new File(realPath, pathName));
@@ -163,7 +173,7 @@ public class LSHQRCodeUtil {
      * @param ifOnly
      * @param typeCode
      */
-    public static void loadImage(String aspath, boolean ifOnly, String typeCode) {
+    public void loadImage(String aspath, boolean ifOnly, boolean ifShowLogo, String typeCode) {
         try {
             //加载码眼
             image_eye = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\eye.png"));
@@ -183,6 +193,9 @@ public class LSHQRCodeUtil {
             image41 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\41.png"));
             image42 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\42.png"));
             image43 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\43.png"));
+            if (ifShowLogo) {
+                imageLogo = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\logo.jpg"));
+            }
             if (!ifOnly) {
                 imageBG = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\bg.jpg"));
             }
@@ -198,7 +211,7 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    public static void drawQrcodeHot(Graphics2D gs, boolean[][] code) {
+    public void drawQrcodeHot(Graphics2D gs, boolean[][] code) {
         //把图片素材放进数组
         BufferedImage[] img1 = {image11, image12, image13};
         BufferedImage[] img2 = {image21, image22, image23};
@@ -247,7 +260,7 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    public static void drawQrcodeRiTojiao(Graphics2D gs, boolean[][] code) {
+    public void drawQrcodeRiTojiao(Graphics2D gs, boolean[][] code) {
         System.out.println("三角啊");
         //把图片素材放进数组
         BufferedImage[] img1 = {image11, image12, image13};
@@ -297,7 +310,7 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    public static void drawQrcodeOrdi(Graphics2D gs, boolean[][] code) {
+    public void drawQrcodeOrdi(Graphics2D gs, boolean[][] code) {
         //把图片素材放进数组
         BufferedImage[] img1 = {image11, image12, image13};
         BufferedImage[] img2 = {image21, image22, image23};
