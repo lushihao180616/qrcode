@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.entity.AllQRCodeTemple;
+import com.lushihao.qrcode.entity.QRCodeRequest;
 import com.lushihao.qrcode.entity.QRCodeTemple;
 import com.lushihao.qrcode.entity.QRCodeVo;
 import com.lushihao.qrcode.service.QRCodeService;
@@ -18,11 +19,10 @@ public class QRCodeServiceImpl implements QRCodeService {
     private AllQRCodeTemple allQRCodeTemple;
 
     @Override
-    public boolean create() {
-        QRCodeVo qrCodeVo = new QRCodeVo("卢世豪", allQRCodeTemple.getItem("A0000"), "flower", "001");
-        lshqrCodeUtil.qrcode(qrCodeVo);
-        QRCodeVo qrCodeVo2 = new QRCodeVo("卢世豪", allQRCodeTemple.getItem("A0001"), "flower", "001");
-        return lshqrCodeUtil.qrcode(qrCodeVo2);
+    public boolean create(QRCodeRequest qrCodeRequest) {
+        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), allQRCodeTemple.getItem(qrCodeRequest.getTempleCode()), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName());
+        allQRCodeTemple.getTempleList().add(new QRCodeTemple());
+        return lshqrCodeUtil.qrcode(qrCodeVo);
     }
 
 }
