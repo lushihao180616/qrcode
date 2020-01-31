@@ -16,7 +16,7 @@ public class QRCodeVo {
     /**
      * 商家
      */
-    private String businessName;
+    private String businessCode;
     /**
      * 文件名
      */
@@ -38,12 +38,12 @@ public class QRCodeVo {
         this.typeCode = typeCode;
     }
 
-    public String getBusinessName() {
-        return businessName;
+    public String getBusinessCode() {
+        return businessCode;
     }
 
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+    public void setBusinessCode(String businessCode) {
+        this.businessCode = businessCode;
     }
 
     public String getFileName() {
@@ -54,10 +54,10 @@ public class QRCodeVo {
         this.fileName = fileName;
     }
 
-    public QRCodeVo(String message, QRCodeTemple typeCode, String businessName, String fileName) {
+    public QRCodeVo(String message, QRCodeTemple typeCode, String businessCode, String fileName) {
         this.message = message;
         this.typeCode = typeCode;
-        this.businessName = businessName;
+        this.businessCode = businessCode;
         this.fileName = fileName;
     }
 

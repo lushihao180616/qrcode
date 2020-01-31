@@ -15,6 +15,10 @@ public class ProjectBasicInfo {
      * 生成的二维码地址
      */
     private String qrcodeUrl;
+    /**
+     * 商家图标地址
+     */
+    private String businessUrl;
 
     public String getTempleUrl() {
         return templeUrl;
@@ -32,9 +36,18 @@ public class ProjectBasicInfo {
         this.qrcodeUrl = qrcodeUrl;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl) {
+    public String getBusinessUrl() {
+        return businessUrl;
+    }
+
+    public void setBusinessUrl(String businessUrl) {
+        this.businessUrl = businessUrl;
+    }
+
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
+        this.businessUrl = businessUrl;
     }
 
     public ProjectBasicInfo() {

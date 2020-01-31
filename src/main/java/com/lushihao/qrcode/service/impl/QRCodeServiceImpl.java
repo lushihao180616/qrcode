@@ -19,9 +19,10 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     @Override
     public boolean create() {
-        QRCodeTemple qrCodeTemple = allQRCodeTemple.getItem("A0000");
-        QRCodeVo qrCodeVo = new QRCodeVo("卢世豪", allQRCodeTemple.getItem("A0000"), "鲜花", "001");
-        return lshqrCodeUtil.qrcode(qrCodeVo);
+        QRCodeVo qrCodeVo = new QRCodeVo("卢世豪", allQRCodeTemple.getItem("A0000"), "flower", "001");
+        lshqrCodeUtil.qrcode(qrCodeVo);
+        QRCodeVo qrCodeVo2 = new QRCodeVo("卢世豪", allQRCodeTemple.getItem("A0001"), "flower", "001");
+        return lshqrCodeUtil.qrcode(qrCodeVo2);
     }
 
 }

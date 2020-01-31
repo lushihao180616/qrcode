@@ -1,7 +1,15 @@
 qrcodetemple:
   templeList:
     - code: A0000
-      money: 8.8
+      money: 1.0
+      ifOnly: true
+      ifShowLogo: false
+      arti: 0
+      transparent: false
+      x: 0
+      y: 0
+    - code: A0001
+      money: 2.0
       ifOnly: true
       ifShowLogo: true
       arti: 0

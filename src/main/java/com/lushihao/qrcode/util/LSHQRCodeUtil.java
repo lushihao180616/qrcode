@@ -57,6 +57,7 @@ public class LSHQRCodeUtil {
     private BufferedImage image43;
     private BufferedImage imageBG;
     private BufferedImage imageLogo;
+    private BufferedImage imageLogoBorder;
 
     /**
      * 生成二维码
@@ -112,11 +113,8 @@ public class LSHQRCodeUtil {
                 }
             }
 
-            //获取资源地址
-            String aspath = projectBasicInfo.getTempleUrl();
-
             //加载图片
-            loadImage(aspath, qrCodeVo.getTypeCode().isIfOnly(), qrCodeVo.getTypeCode().isIfShowLogo(), qrCodeVo.getTypeCode().getCode());
+            loadImage(qrCodeVo.getTypeCode().isIfOnly(), qrCodeVo.getTypeCode().isIfShowLogo(), qrCodeVo.getTypeCode().getCode(), qrCodeVo.getBusinessCode());
 
             //绘制二维码，选择算法
             if (qrCodeVo.getTypeCode().getArti().equals("0")) {
@@ -129,6 +127,7 @@ public class LSHQRCodeUtil {
 //            }
             //添加logo
             if (qrCodeVo.getTypeCode().isIfShowLogo()) {
+                gs.drawImage(imageLogoBorder, (width - 120) / 2, (height - 120) / 2, 120, 120, null);
                 gs.drawImage(imageLogo, (width - 100) / 2, (height - 100) / 2, 100, 100, null);
             }
             //如果类型不是单码，则装载背景图片，将二维码写进背景图片中，只有单码没有背景
@@ -148,7 +147,7 @@ public class LSHQRCodeUtil {
             //释放画笔
             gs.dispose();
             //生成二维码图片
-            String realPath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessName() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + "\\";
+            String realPath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + "\\";
             //String realPath = 服务器项目的地址;
             String pathName = qrCodeVo.getFileName() + new SimpleDateFormat("_HHmmss").format(new Date()) + ".png";
             outputStream = new FileOutputStream(new File(realPath, pathName));
@@ -169,35 +168,35 @@ public class LSHQRCodeUtil {
     /**
      * 加载图片素材
      *
-     * @param aspath
      * @param ifOnly
      * @param typeCode
      */
-    public void loadImage(String aspath, boolean ifOnly, boolean ifShowLogo, String typeCode) {
+    public void loadImage(boolean ifOnly, boolean ifShowLogo, String typeCode, String bussinessCode) {
         try {
             //加载码眼
-            image_eye = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\eye.png"));
+            image_eye = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\eye.png"));
             //装载50*50的图片素材
-            image11 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\11.png"));
-            image12 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\12.png"));
-            image13 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\13.png"));
+            image11 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\11.png"));
+            image12 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\12.png"));
+            image13 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\13.png"));
             //装载50*100的图片素材
-            image21 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\21.png"));
-            image22 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\22.png"));
-            image23 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\23.png"));
+            image21 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\21.png"));
+            image22 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\22.png"));
+            image23 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\23.png"));
             //装载50*150的图片素材
-            image31 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\31.png"));
-            image32 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\32.png"));
-            image33 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\33.png"));
+            image31 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\31.png"));
+            image32 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\32.png"));
+            image33 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\33.png"));
             //装载100*100的图片素材
-            image41 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\41.png"));
-            image42 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\42.png"));
-            image43 = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\43.png"));
+            image41 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\41.png"));
+            image42 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\42.png"));
+            image43 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\43.png"));
             if (ifShowLogo) {
-                imageLogo = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\logo.jpg"));
+                imageLogo = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + bussinessCode + "\\logo.jpg"));
+                imageLogoBorder = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\logo_border.png"));
             }
             if (!ifOnly) {
-                imageBG = ImageIO.read(new FileInputStream(aspath + "\\" + typeCode + "\\bg.jpg"));
+                imageBG = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\bg.jpg"));
             }
         } catch (Exception e) {
             e.printStackTrace();
