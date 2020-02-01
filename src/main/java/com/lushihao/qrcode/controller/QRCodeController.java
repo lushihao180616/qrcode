@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("qrcode")
@@ -31,6 +30,7 @@ public class QRCodeController {
     public String getIndex(HttpServletRequest request) {
         request.setAttribute("business", allBusiness.getInfoList());
         request.setAttribute("temple", allQRCodeTemple.getTempleList());
+
         return "index";
     }
 

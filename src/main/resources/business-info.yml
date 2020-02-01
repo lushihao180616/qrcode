@@ -1,7 +1,12 @@
 businessinfo:
   infoList:
-    - code: 00001
-      name: 神之花
-      address: 北纬路甲1号
-      phone: 18839875839
-      businessName: 张林
+    - code: "00001"
+      name: "神之花"
+      address: "北纬路甲1号"
+      phone: "18839875839"
+      businessName: "张林"
+    - code: "00002"
+      name: "西巴克蛋糕"
+      address: "北纬路甲2号"
+      phone: "18839875439"
+      businessName: "李菲"
