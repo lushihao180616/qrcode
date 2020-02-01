@@ -149,9 +149,9 @@ public class LSHQRCodeUtil {
             //生成二维码图片
             String realPath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + "\\";
             //String realPath = 服务器项目的地址;
-            String pathName = qrCodeVo.getFileName() + new SimpleDateFormat("_HHmmss").format(new Date()) + ".png";
+            String pathName = new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".png";
             outputStream = new FileOutputStream(new File(realPath, pathName));
-            ImageIO.write(image, "jpg", outputStream);
+            ImageIO.write(image, "png", outputStream);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

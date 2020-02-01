@@ -21,7 +21,6 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public boolean create(QRCodeRequest qrCodeRequest) {
         QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), allQRCodeTemple.getItem(qrCodeRequest.getTempleCode()), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName());
-        allQRCodeTemple.getTempleList().add(new QRCodeTemple());
         return lshqrCodeUtil.qrcode(qrCodeVo);
     }
 
