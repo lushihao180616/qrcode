@@ -7,27 +7,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>商家管理</title>
     <script type="text/javascript">
-        var createBusiness = {
-            name: '',
-            address: '',
-            phone: '',
-            businessName: '',
-            logoSrc: ''
-        };
-
-        var filterBusiness = {
-            code: '',
-            name: '',
-            address: '',
-            phone: '',
-            businessName: ''
-        };
-
         function init() {
             getBusiness();
         }
 
         function getBusiness() {
+            var filterBusiness = {
+                code: document.getElementById("filterCode").value,
+                name: document.getElementById("filterName").value,
+                address: document.getElementById("filterAddress").value,
+                phone: document.getElementById("filterPhone").value,
+                businessName: document.getElementById("filterBusinessName").value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/business/filter", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -63,24 +54,14 @@
             xhr.send(JSON.stringify(filterBusiness));
         }
 
-        function changeName(id) {
-            createBusiness.name = document.getElementById(id).value;
-        }
-
-        function changeAddress(id) {
-            createBusiness.address = document.getElementById(id).value;
-        }
-
-        function changePhone(id) {
-            createBusiness.phone = document.getElementById(id).value;
-        }
-
-        function changeBusinessName(id) {
-            createBusiness.businessName = document.getElementById(id).value;
-        }
-
-        function post() {
-            createBusiness.logoSrc = document.getElementById('logo').value;
+        function create() {
+            var createBusiness = {
+                name: document.getElementById("createName").value,
+                address: document.getElementById("createAddress").value,
+                phone: document.getElementById("createPhone").value,
+                businessName: document.getElementById("createBusinessName").value,
+                logoSrc: document.getElementById("createLogo").value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/business/create", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -91,30 +72,145 @@
                     if (xhr.status == 200 || xhr.status == 304) {
                         var data = xhr.responseText;
                         alert(data);
+                        init();
                     }
                 }
             }
             xhr.send(JSON.stringify(createBusiness));
         }
 
-        function filterCode(id) {
-            filterBusiness.code = document.getElementById(id).value;
+        function modifySearch() {
+            var modifyFilterBusiness = {
+                code: document.getElementById('modifyCode').value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/business/filter", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var businessList = JSON.parse(xhr.responseText);
+                        var modifyBusinesses = document.getElementById("modifyBusinesses");
+                        modifyBusinesses.innerHTML = '';
+                        for (var i = 0; i < businessList.length; i++) {
+                            var option = document.createElement("option");
+                            option.value = JSON.stringify(businessList[i]);
+                            option.text = businessList[i].code;
+                            modifyBusinesses.add(option);
+                        }
+                        if(businessList.length > 0){
+                            modifyBusinessCode("modifyBusinesses")
+                        }
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(modifyFilterBusiness));
         }
 
-        function filterName(id) {
-            filterBusiness.name = document.getElementById(id).value;
+        function modifyBusinessCode(id) {
+            var budiness = JSON.parse(document.getElementById(id).value);
+            document.getElementById("modifyName").value = budiness.name;
+            document.getElementById("modifyAddress").value = budiness.address;
+            document.getElementById("modifyPhone").value = budiness.phone;
+            document.getElementById("modifyBusinessName").value = budiness.businessName;
         }
 
-        function filterAddress(id) {
-            filterBusiness.address = document.getElementById(id).value;
+        function update() {
+            var modifyBusiness = {
+                code: JSON.parse(document.getElementById("modifyBusinesses").value).code,
+                name: document.getElementById("modifyName").value,
+                address: document.getElementById("modifyAddress").value,
+                phone: document.getElementById("modifyPhone").value,
+                businessName: document.getElementById("modifyBusinessName").value,
+                logoSrc: document.getElementById("modifyLogo").value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/business/update", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var data = xhr.responseText;
+                        alert(data);
+                        init();
+                        document.getElementById("modifyBusinesses").innerHTML = '';
+                        document.getElementById("modifyName").value = '';
+                        document.getElementById("modifyAddress").value = '';
+                        document.getElementById("modifyPhone").value = '';
+                        document.getElementById("modifyBusinessName").value = '';
+                        document.getElementById("modifyLogo").value = '';
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(modifyBusiness));
         }
 
-        function filterPhone(id) {
-            filterBusiness.phone = document.getElementById(id).value;
+        function deleteSearch() {
+            var deleteFilterBusiness = {
+                code: document.getElementById('deleteCode').value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/business/filter", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var businessList = JSON.parse(xhr.responseText);
+                        var deleteBusinesses = document.getElementById("deleteBusinesses");
+                        deleteBusinesses.innerHTML = '';
+                        for (var i = 0; i < businessList.length; i++) {
+                            var option = document.createElement("option");
+                            option.value = JSON.stringify(businessList[i]);
+                            option.text = businessList[i].code;
+                            deleteBusinesses.add(option);
+                        }
+                        if(businessList.length > 0){
+                            deleteBusinessCode("deleteBusinesses")
+                        }
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(deleteFilterBusiness));
         }
 
-        function filterBusinessName(id) {
-            filterBusiness.businessName = document.getElementById(id).value;
+        function deleteBusinessCode(id) {
+            var budiness = JSON.parse(document.getElementById(id).value);
+            document.getElementById("deleteName").innerText = budiness.name;
+            document.getElementById("deleteAddress").innerText = budiness.address;
+            document.getElementById("deletePhone").innerText = budiness.phone;
+            document.getElementById("deleteBusinessName").innerText = budiness.businessName;
+        }
+
+        function deleteOne() {
+            var deleteBusiness = {
+                code: JSON.parse(document.getElementById("deleteBusinesses").value).code,
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/business/delete", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var data = xhr.responseText;
+                        alert(data);
+                        init();
+                        document.getElementById("deleteBusinesses").innerHTML = '';
+                        document.getElementById("deleteName").innerHTML = '';
+                        document.getElementById("deleteAddress").innerHTML = '';
+                        document.getElementById("deletePhone").innerHTML = '';
+                        document.getElementById("deleteBusinessName").innerHTML = '';
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(deleteBusiness));
         }
     </script>
 </head>
@@ -123,21 +219,75 @@
 
 <p>创建商家: </p>
 <p>名&emsp;&emsp;称:
-    <input type="text" id="name" style="width:200px" onchange="changeName(this.id)"/></p>
+    <input type="text" id="createName" style="width:200px"/></p>
 <p>地&emsp;&emsp;址:
-    <input type="text" id="address" style="width:200px" onchange="changeAddress(this.id)"/></p>
+    <input type="text" id="createAddress" style="width:200px"/></p>
 </p>
 <p>手&ensp;机&ensp;号:
-    <input type="text" id="phone" style="width:200px" onchange="changePhone(this.id)"/></p>
+    <input type="text" id="createPhone" style="width:200px"/></p>
 </p>
 <p>联&ensp;系&ensp;人:
-    <input type="text" id="businessName" style="width:200px" onchange="changeBusinessName(this.id)"/>
+    <input type="text" id="createBusinessName" style="width:200px"/>
 </p>
 <p>商&emsp;&emsp;标:
-    <input id="logo" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
+    <input id="createLogo" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
 </p>
 
-<input type="submit" value="创建" onclick="post()"/>
+<input type="submit" value="创建" onclick="create()"/>
+
+<hr>
+
+<p>修改商家: </p>
+<p>编号:
+    <input type="button" value="搜索" onclick="modifySearch()"/>
+    <input id="modifyCode" style="width:66px"/>
+</p>
+<p>编&emsp;&emsp;号:
+    <select id="modifyBusinesses" style="width:205px;height: 25px" onchange="modifyBusinessCode(this.id)">
+    </select>
+</p>
+<p>名&emsp;&emsp;称:
+    <input type="text" id="modifyName" style="width:200px"/></p>
+<p>地&emsp;&emsp;址:
+    <input type="text" id="modifyAddress" style="width:200px"/></p>
+</p>
+<p>手&ensp;机&ensp;号:
+    <input type="text" id="modifyPhone" style="width:200px"/></p>
+</p>
+<p>联&ensp;系&ensp;人:
+    <input type="text" id="modifyBusinessName" style="width:200px"/>
+</p>
+<p>商&emsp;&emsp;标:
+    <input id="modifyLogo" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
+</p>
+
+<input type="submit" value="更新" onclick="update()"/>
+
+<hr>
+
+<p>删除商家: </p>
+
+<p>编号:
+    <input type="button" value="搜索" onclick="deleteSearch()"/>
+    <input id="deleteCode" style="width:66px"/>
+</p>
+<p>编&emsp;&emsp;号:
+    <select id="deleteBusinesses" style="width:205px;height: 25px" onchange="deleteBusinessCode(this.id)">
+    </select>
+</p>
+<p>名&emsp;&emsp;称:
+    <span id="deleteName" style="width:200px"></span></p>
+<p>地&emsp;&emsp;址:
+    <span id="deleteAddress" style="width:200px"></span></p>
+</p>
+<p>手&ensp;机&ensp;号:
+    <span id="deletePhone" style="width:200px"></span></p>
+</p>
+<p>联&ensp;系&ensp;人:
+    <span id="deleteBusinessName" style="width:200px"></span>
+</p>
+
+<input type="submit" value="删除" onclick="deleteOne()"/>
 
 <hr>
 
@@ -145,15 +295,15 @@
 <p>
     <input type="button" value="搜索" onclick="init()"/>
     编号:
-    <input id="filterCode" style="width:66px" onchange="filterCode(this.id)"/>
+    <input id="filterCode" style="width:66px"/>
     名称:
-    <input id="filterName" style="width:66px" onchange="filterName(this.id)"/>
+    <input id="filterName" style="width:66px"/>
     地址:
-    <input id="filterAddress" style="width:66px" onchange="filterAddress(this.id)"/>
+    <input id="filterAddress" style="width:66px"/>
     电话:
-    <input id="filterPhone" style="width:66px" onchange="filterPhone(this.id)"/>
+    <input id="filterPhone" style="width:66px"/>
     联系人:
-    <input id="filterBusinessName" style="width:66px" onchange="filterBusinessName(this.id)"/>
+    <input id="filterBusinessName" style="width:66px"/>
 </p>
 <table id="buisnesses">
 </table>

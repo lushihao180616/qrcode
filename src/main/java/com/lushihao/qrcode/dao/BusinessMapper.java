@@ -11,6 +11,9 @@ public interface BusinessMapper {
 
     int create(Business business);
 
-    List<Business> filter(Business business);
+    int update(Business business);
 
+    int delete(@Param("code") String code);
+
+    List<Business> filter(Business business);
 }

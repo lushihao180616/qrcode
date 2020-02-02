@@ -15,6 +15,23 @@
             #{businessName}
             )
     </insert>
+    <update id="update" parameterType="Business">
+        UPDATE
+            business
+        SET
+            name=#{name},
+            address=#{address},
+            phone=#{phone},
+            businessName=#{businessName}
+        WHERE
+            code=#{code}
+    </update>
+    <delete id="delete">
+        DELETE FROM
+            business
+        WHERE
+            code=#{code}
+    </delete>
     <select id="filter" parameterType="Business" resultType="Business">
         SELECT
             *

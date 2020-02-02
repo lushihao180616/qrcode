@@ -28,6 +28,23 @@ public class BusinessController {
         return back;
     }
 
+    @RequestMapping("update")
+    @ResponseBody
+    public String update(@RequestBody Map<String, Object> reqMap) {
+        String logoSrc = (String) reqMap.get("logoSrc");
+        Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
+        String back = businessService.update(business, logoSrc);
+        return back;
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public String delete(@RequestBody Map<String, Object> reqMap) {
+        String code = (String) reqMap.get("code");
+        String back = businessService.delete(code);
+        return back;
+    }
+
     @RequestMapping("filter")
     @ResponseBody
     public List<Business> filter(@RequestBody Map<String, Object> reqMap) {

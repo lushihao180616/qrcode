@@ -8,6 +8,9 @@ public interface BusinessService {
 
     String create(Business business, String logoSrc);
 
-    List<Business> filter(Business business);
+    String update(Business business, String logoSrc);
 
+    String delete(String code);
+
+    List<Business> filter(Business business);
 }

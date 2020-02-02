@@ -50,6 +50,37 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    public String update(Business business, String logoSrc) {
+        int back = businessMapper.update(business);
+        if (back > 0) {
+            if (logoSrc != null && !"".equals(logoSrc)) {
+                //商标地址
+                String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
+                copyFile(logoSrc, logoPath + "\\logo.jpg");
+            }
+
+            return "更新成功";
+        }
+        return "更新失败";
+    }
+
+    @Override
+    public String delete(String code) {
+        int back = businessMapper.delete(code);
+        if (back > 0) {
+            //商标地址
+            String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
+            delFile(logoPath);
+            //二维码地址
+            String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + code;
+            delFile(qrcodePath);
+
+            return "删除成功";
+        }
+        return "删除失败";
+    }
+
+    @Override
     public List<Business> filter(Business business) {
         return businessMapper.filter(business);
     }
@@ -83,6 +114,28 @@ public class BusinessServiceImpl implements BusinessService {
                 fis.close(); // 先开后关
             } catch (IOException e) {
             }
+        }
+    }
+
+    /**
+     * 删除文件或文件夹下所有内容
+     * @param filename
+     */
+    private void delFile(String filename) {
+        File file = new File(filename);
+        if (!file.exists()) {
+            return;
+        }
+        if (file.isFile()) {
+            file.delete();
+            return;
+        } else {
+            File[] fs = file.listFiles();
+            for (File f : fs) {
+                f.delete();
+            }
+            file.delete();
+            return;
         }
     }
 
