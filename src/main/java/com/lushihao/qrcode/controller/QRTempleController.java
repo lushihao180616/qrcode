@@ -28,9 +28,48 @@ public class QRTempleController {
         qrCodeTemple.setIfShowLogo((Boolean) reqMap.get("ifShowLogo"));
         qrCodeTemple.setTransparent((Boolean) reqMap.get("transparent"));
         qrCodeTemple.setMoney(Double.parseDouble(reqMap.get("money").toString()));
-        qrCodeTemple.setX((Integer) reqMap.get("x"));
-        qrCodeTemple.setY((Integer) reqMap.get("y"));
+        if(reqMap.get("x") == null){
+            qrCodeTemple.setX(0);
+        }else{
+            qrCodeTemple.setX((Integer) reqMap.get("x"));
+        }
+        if(reqMap.get("y") == null){
+            qrCodeTemple.setY(0);
+        }else{
+            qrCodeTemple.setY((Integer) reqMap.get("y"));
+        }
         String back = qrTempleService.create(qrCodeTemple, templeItemsPath);
+        return back;
+    }
+
+    @RequestMapping("update")
+    @ResponseBody
+    public String update(@RequestBody Map<String, Object> reqMap) {
+        String templeItemsPath = (String) reqMap.get("templeItemsPath");
+        QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
+        qrCodeTemple.setIfOnly((Boolean) reqMap.get("ifOnly"));
+        qrCodeTemple.setIfShowLogo((Boolean) reqMap.get("ifShowLogo"));
+        qrCodeTemple.setTransparent((Boolean) reqMap.get("transparent"));
+        qrCodeTemple.setMoney(Double.parseDouble(reqMap.get("money").toString()));
+        if(reqMap.get("x") == null){
+            qrCodeTemple.setX(0);
+        }else{
+            qrCodeTemple.setX((Integer) reqMap.get("x"));
+        }
+        if(reqMap.get("y") == null){
+            qrCodeTemple.setY(0);
+        }else{
+            qrCodeTemple.setY((Integer) reqMap.get("y"));
+        }
+        String back = qrTempleService.update(qrCodeTemple, templeItemsPath);
+        return back;
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public String delete(@RequestBody Map<String, Object> reqMap) {
+        String code = (String) reqMap.get("code");
+        String back = qrTempleService.delete(code);
         return back;
     }
 

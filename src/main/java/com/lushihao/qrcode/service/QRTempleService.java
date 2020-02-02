@@ -8,6 +8,9 @@ public interface QRTempleService {
 
     String create(QRCodeTemple qrCodeTemple, String templeItemsPath);
 
-    List<QRCodeTemple> filter(String code);
+    String update(QRCodeTemple qrCodeTemple, String templeItemsPath);
 
+    String delete(String code);
+
+    List<QRCodeTemple> filter(String code);
 }

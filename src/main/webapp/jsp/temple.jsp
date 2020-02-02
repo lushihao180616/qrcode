@@ -7,27 +7,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>模板管理</title>
     <script type="text/javascript">
-        var createTemple = {
-            code: "",
-            money: "0",
-            ifOnly: true,
-            ifShowLogo: true,
-            arti: "0",
-            transparent: true,
-            x: 0,
-            y: 0,
-            templeItemsPath: ""
-        };
-
-        var filterTemple = {
-            code: ""
-        };
-
         function init() {
             getTemple();
         }
 
         function getTemple() {
+            var filterTemple = {
+                code: document.getElementById("filterCode").value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/temple/filter", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -95,40 +82,18 @@
             xhr.send(JSON.stringify(filterTemple));
         }
 
-        function changeCode(id) {
-            createTemple.code = document.getElementById(id).value;
-        }
-
-        function changeMoney(id) {
-            createTemple.money = document.getElementById(id).value;
-        }
-
-        function changeIfOnly(id) {
-            createTemple.ifOnly = Boolean(parseInt(document.getElementById(id).value));
-        }
-
-        function changeIfShowLogo(id) {
-            createTemple.ifShowLogo = Boolean(parseInt(document.getElementById(id).value));
-        }
-
-        function changeArti(id) {
-            createTemple.arti = document.getElementById(id).value;
-        }
-
-        function changeTransparent(id) {
-            createTemple.transparent = Boolean(parseInt(document.getElementById(id).value));
-        }
-
-        function changeX(id) {
-            createTemple.x = parseInt(document.getElementById(id).value);
-        }
-
-        function changeY(id) {
-            createTemple.y = parseInt(document.getElementById(id).value);
-        }
-
-        function post() {
-            createTemple.templeItemsPath = document.getElementById('templeItemsPath').value;
+        function create() {
+            var createTemple = {
+                code: document.getElementById("createCode").value,
+                money: document.getElementById("createMoney").value,
+                ifOnly: Boolean(parseInt(document.getElementById("createIfOnly").value)),
+                ifShowLogo: Boolean(parseInt(document.getElementById("createIfShowLogo").value)),
+                arti: document.getElementById("createArti").value,
+                transparent: Boolean(parseInt(document.getElementById("createTransparent").value)),
+                x: parseInt(document.getElementById("createX").value),
+                y: parseInt(document.getElementById("createY").value),
+                templeItemsPath: document.getElementById('createTempleItemsPath').value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/temple/create", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -139,16 +104,202 @@
                     if (xhr.status == 200 || xhr.status == 304) {
                         var data = xhr.responseText;
                         alert(data);
+                        init();
+                        document.getElementById("createCode").value = '';
+                        document.getElementById("createMoney").value = '';
+                        document.getElementById("createIfOnly").options[0].selected = true;
+                        document.getElementById("createIfShowLogo").options[0].selected = true;
+                        document.getElementById("createArti").options[0].selected = true;
+                        document.getElementById("createTransparent").options[0].selected = true;
+                        document.getElementById("createX").value = '';
+                        document.getElementById("createY").value = '';
+                        document.getElementById('createTempleItemsPath').value = '';
                     }
                 }
             }
             xhr.send(JSON.stringify(createTemple));
         }
 
-        function filterCode(id) {
-            filterTemple.code = document.getElementById(id).value;
+        function updateSearch() {
+            var updateFilterBusiness = {
+                code: document.getElementById('updateCode').value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/temple/filter", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var templeList = JSON.parse(xhr.responseText);
+                        var updateTemples = document.getElementById("updateTemples");
+                        updateTemples.innerHTML = '';
+                        for (var i = 0; i < templeList.length; i++) {
+                            var option = document.createElement("option");
+                            option.value = JSON.stringify(templeList[i]);
+                            option.text = templeList[i].code;
+                            updateTemples.add(option);
+                        }
+                        if (templeList.length > 0) {
+                            updateTempleCode("updateTemples")
+                        }
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(updateFilterBusiness));
+        }
+        
+        function updateTempleCode(id) {
+            var temple = JSON.parse(document.getElementById(id).value);
+            document.getElementById("updateMoney").value = temple.money;
+            if(temple.ifOnly){
+                document.getElementById("updateIfOnly").options[0].selected = true;
+            }else{
+                document.getElementById("updateIfOnly").options[1].selected = true;
+            }
+            if(temple.ifShowLogo){
+                document.getElementById("updateIfShowLogo").options[0].selected = true;
+            }else{
+                document.getElementById("updateIfShowLogo").options[1].selected = true;
+            }
+            if(temple.arti == '0'){
+                document.getElementById("updateArti").options[0].selected = true;
+            }else{
+                document.getElementById("updateArti").options[1].selected = true;
+            }
+            if(temple.transparent){
+                document.getElementById("updateTransparent").options[0].selected = true;
+            }else{
+                document.getElementById("updateTransparent").options[1].selected = true;
+            }
+            document.getElementById("updateX").value = temple.x;
+            document.getElementById("updateY").value = temple.y;
         }
 
+        function update() {
+            var updateTemple = {
+                code: JSON.parse(document.getElementById("updateTemples").value).code,
+                money: document.getElementById("updateMoney").value,
+                ifOnly: Boolean(parseInt(document.getElementById("updateIfOnly").value)),
+                ifShowLogo: Boolean(parseInt(document.getElementById("updateIfShowLogo").value)),
+                arti: document.getElementById("updateArti").value,
+                transparent: Boolean(parseInt(document.getElementById("updateTransparent").value)),
+                x: parseInt(document.getElementById("updateX").value),
+                y: parseInt(document.getElementById("updateY").value),
+                templeItemsPath: document.getElementById('updateTempleItemsPath').value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/temple/update", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var data = xhr.responseText;
+                        alert(data);
+                        init();
+                        document.getElementById("updateTemples").innerHTML = '';
+                        document.getElementById("updateMoney").value = '';
+                        document.getElementById("updateIfOnly").options[0].selected = true;
+                        document.getElementById("updateIfShowLogo").options[0].selected = true;
+                        document.getElementById("updateArti").options[0].selected = true;
+                        document.getElementById("updateTransparent").options[0].selected = true;
+                        document.getElementById("updateX").value = '';
+                        document.getElementById("updateY").value = '';
+                        document.getElementById('updateTempleItemsPath').value = '';
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(updateTemple ));
+        }
+
+        function deleteSearch() {
+            var deleteFilterBusiness = {
+                code: document.getElementById('deleteCode').value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/temple/filter", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var templeList = JSON.parse(xhr.responseText);
+                        var deleteTemples = document.getElementById("deleteTemples");
+                        deleteTemples.innerHTML = '';
+                        for (var i = 0; i < templeList.length; i++) {
+                            var option = document.createElement("option");
+                            option.value = JSON.stringify(templeList[i]);
+                            option.text = templeList[i].code;
+                            deleteTemples.add(option);
+                        }
+                        if (templeList.length > 0) {
+                            deleteTempleCode("deleteTemples")
+                        }
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(deleteFilterBusiness));
+        }
+
+        function deleteTempleCode(id) {
+            var temple = JSON.parse(document.getElementById(id).value);
+            document.getElementById("deleteMoney").innerText = temple.money;
+            if(temple.ifOnly){
+                document.getElementById("deleteIfOnly").innerText = '是';
+            }else{
+                document.getElementById("deleteIfOnly").innerText = '否';
+            }
+            if(temple.ifShowLogo){
+                document.getElementById("deleteIfShowLogo").innerText = '是';
+            }else{
+                document.getElementById("deleteIfShowLogo").innerText = '否';
+            }
+            if(temple.arti == '0'){
+                document.getElementById("deleteArti").innerText = '热门算法';
+            }else{
+                document.getElementById("deleteArti").innerText = '最初算法';
+            }
+            if(temple.transparent){
+                document.getElementById("deleteTransparent").innerText = '是';
+            }else{
+                document.getElementById("deleteTransparent").innerText = '否';
+            }
+            document.getElementById("deleteX").innerText = temple.x;
+            document.getElementById("deleteY").innerText = temple.y;
+        }
+
+        function deleteOne() {
+            var deleteTemple = {
+                code: JSON.parse(document.getElementById("deleteTemples").value).code,
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/temple/delete", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var data = xhr.responseText;
+                        alert(data);
+                        init();
+                        document.getElementById("deleteTemples").innerHTML = '';
+                        document.getElementById("deleteMoney").innerText = '';
+                        document.getElementById("deleteIfOnly").innerText = '';
+                        document.getElementById("deleteIfShowLogo").innerText = '';
+                        document.getElementById("deleteArti").innerText = '';
+                        document.getElementById("deleteTransparent").innerText = '';
+                        document.getElementById("deleteX").innerText = '';
+                        document.getElementById("deleteY").innerText = '';
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(deleteTemple ));
+        }
     </script>
 </head>
 <body onload="init()">
@@ -156,46 +307,134 @@
 
 <p>创建模板: </p>
 <p>编&emsp;&emsp;号:
-    <input type="text" id="code" style="width:200px" onchange="changeCode(this.id)"/></p>
+    <input type="text" id="createCode" style="width:200px"/></p>
 <p>价&emsp;&emsp;格:
-    <input type="text" id="money" style="width:200px" onchange="changeMoney(this.id)"/></p>
+    <input type="text" id="createMoney" style="width:200px"/></p>
 </p>
 <p>仅二维码:
-    <select id="ifOnly" style="width:205px;height: 25px" onchange="changeIfOnly(this.id)">
+    <select id="createIfOnly" style="width:205px;height: 25px">
         <option value="1">是</option>
         <option value="0">否</option>
     </select>
 </p>
 <p>显示商标:
-    <select id="ifShowLogo" style="width:205px;height: 25px" onchange="changeIfShowLogo(this.id)">
+    <select id="createIfShowLogo" style="width:205px;height: 25px">
         <option value="1">是</option>
         <option value="0">否</option>
     </select>
 </p>
 <p>算法选择:
-    <select id="arti" style="width:205px;height: 25px" onchange="changeArti(this.id)">
+    <select id="createArti" style="width:205px;height: 25px">
         <option value="0">热门算法</option>
         <option value="1">最初算法</option>
-        <option value="2">三角算法</option>
+        <%--<option value="2">三角算法</option>--%>
     </select>
 </p>
 <p>背景透明:
-    <select id="transparent" style="width:205px;height: 25px" onchange="changeTransparent(this.id)">
+    <select id="createTransparent" style="width:205px;height: 25px">
         <option value="1">是</option>
         <option value="0">否</option>
     </select>
 </p>
 <p>X&ensp;偏移量:
-    <input type="text" id="x" style="width:200px" onchange="changeX(this.id)"/>
+    <input type="text" id="createX" style="width:200px"/>
 </p>
 <p>Y&ensp;偏移量:
-    <input type="text" id="y" style="width:200px" onchange="changeY(this.id)"/>
+    <input type="text" id="createY" style="width:200px"/>
 </p>
 <p>文&ensp;件&ensp;夹:
-    <input id="templeItemsPath" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
+    <input id="createTempleItemsPath" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
 </p>
 
-<input type="submit" value="创建" onclick="post()"/>
+<input type="submit" value="创建" onclick="create()"/>
+
+<hr>
+
+<p>更新模板: </p>
+<p>
+    <input type="button" value="搜索" onclick="updateSearch()"/>
+    编号:
+    <input id="updateCode" style="width:66px"/>
+</p>
+<p>编&emsp;&emsp;号:
+    <select id="updateTemples" style="width:205px;height: 25px" onchange="updateTempleCode(this.id)">
+    </select>
+</p>
+<p>价&emsp;&emsp;格:
+    <input type="text" id="updateMoney" style="width:200px"/></p>
+</p>
+<p>仅二维码:
+    <select id="updateIfOnly" style="width:205px;height: 25px">
+        <option value="1">是</option>
+        <option value="0">否</option>
+    </select>
+</p>
+<p>显示商标:
+    <select id="updateIfShowLogo" style="width:205px;height: 25px">
+        <option value="1">是</option>
+        <option value="0">否</option>
+    </select>
+</p>
+<p>算法选择:
+    <select id="updateArti" style="width:205px;height: 25px">
+        <option value="0">热门算法</option>
+        <option value="1">最初算法</option>
+        <%--<option value="2">三角算法</option>--%>
+    </select>
+</p>
+<p>背景透明:
+    <select id="updateTransparent" style="width:205px;height: 25px">
+        <option value="1">是</option>
+        <option value="0">否</option>
+    </select>
+</p>
+<p>X&ensp;偏移量:
+    <input type="text" id="updateX" style="width:200px"/>
+</p>
+<p>Y&ensp;偏移量:
+    <input type="text" id="updateY" style="width:200px"/>
+</p>
+<p>文&ensp;件&ensp;夹:
+    <input id="updateTempleItemsPath" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
+</p>
+
+<input type="button" value="更新" onclick="update()"/>
+
+<hr>
+
+<p>删除模板: </p>
+<p>
+    <input type="button" value="搜索" onclick="deleteSearch()"/>
+    编号:
+    <input id="deleteCode" style="width:66px"/>
+</p>
+<p>编&emsp;&emsp;号:
+    <select id="deleteTemples" style="width:205px;height: 25px" onchange="deleteTempleCode(this.id)">
+    </select>
+</p>
+<p>价&emsp;&emsp;格:
+    <span id="deleteMoney" style="width:200px"></span></p>
+</p>
+<p>仅二维码:
+    <span id="deleteIfOnly" style="width:200px"></span></p>
+</p>
+<p>显示商标:
+    <span id="deleteIfShowLogo" style="width:200px"></span></p>
+</p>
+<p>算法选择:
+    <span id="deleteArti" style="width:200px"></span></p>
+</p>
+<p>背景透明:
+    <span id="deleteTransparent" style="width:200px"></span></p>
+</p>
+<p>X&ensp;偏移量:
+    <span id="deleteX" style="width:200px"></span></p>
+</p>
+<p>Y&ensp;偏移量:
+    <span id="deleteY" style="width:200px"></span></p>
+</p>
+
+<input type="button" value="删除" onclick="deleteOne()"/>
 
 <hr>
 
@@ -203,7 +442,7 @@
 <p>
     <input type="button" value="搜索" onclick="init()"/>
     编号:
-    <input id="filterCode" style="width:66px" onchange="filterCode(this.id)"/>
+    <input id="filterCode" style="width:66px"/>
 </p>
 <table id="temples">
 </table>

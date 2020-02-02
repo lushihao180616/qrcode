@@ -11,6 +11,10 @@ public interface QRTempleMapper {
 
     int create(QRCodeTemple qrCodeTemple);
 
+    int update(QRCodeTemple qrCodeTemple);
+
+    int delete(@Param("code") String code);
+
     List<QRCodeTemple> filter(@Param("code") String code);
 
 }

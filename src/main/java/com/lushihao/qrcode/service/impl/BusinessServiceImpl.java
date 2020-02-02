@@ -68,12 +68,12 @@ public class BusinessServiceImpl implements BusinessService {
     public String delete(String code) {
         int back = businessMapper.delete(code);
         if (back > 0) {
-            //商标地址
-            String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
-            delFile(logoPath);
-            //二维码地址
-            String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + code;
-            delFile(qrcodePath);
+//            //商标地址
+//            String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
+//            delFile(logoPath);
+//            //二维码地址
+//            String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + code;
+//            delFile(qrcodePath);
 
             return "删除成功";
         }

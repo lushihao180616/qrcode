@@ -9,6 +9,26 @@
         VALUES
             (#{code},#{money},#{ifOnly},#{ifShowLogo},#{arti},#{transparent},#{x},#{y})
     </insert>
+    <update id="update" parameterType="QRCodeTemple">
+        UPDATE
+            qrcodetemple
+        SET
+            money=#{money},
+            ifOnly=#{ifOnly},
+            ifShowLogo=#{ifShowLogo},
+            arti=#{arti},
+            transparent=#{transparent},
+            x=#{x},
+            y=#{y}
+        WHERE
+            code=#{code}
+    </update>
+    <delete id="delete">
+        DELETE FROM
+            qrcodetemple
+        WHERE
+            code=#{code}
+    </delete>
     <select id="filter" resultType="QRCodeTemple">
         SELECT
             *

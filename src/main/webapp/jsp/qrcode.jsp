@@ -10,27 +10,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>创建二维码</title>
     <script type="text/javascript">
-        var qrcode = {
-            message: '',
-            templeCode: '',
-            businessCode: '',
-            fileName: ''
-        };
-
-        var filterTempleCode = {
-            code: null
-        };
-
-        var filterBusinessCode = {
-            code: null
-        };
-
         function init() {
             getTemple();
             getBusiness();
         }
 
         function getTemple() {
+            var filterTempleCode = {
+                code: document.getElementById("filterTemple").value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/temple/filter", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -55,6 +43,9 @@
         }
 
         function getBusiness() {
+            var filterBusinessCode = {
+                code: document.getElementById("filterBusiness").value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/business/filter", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -84,36 +75,21 @@
             xhr.send(JSON.stringify(filterBusinessCode));
         }
 
-        function filterTemple(id) {
-            filterTempleCode.code = document.getElementById(id).value;
-        }
-
-        function filterBusiness(id) {
-            filterBusinessCode.code = document.getElementById(id).value;
-        }
-
-        function changeQRCodeMessage(id) {
-            qrcode.message = document.getElementById(id).value;
-        }
-
-        function changeQRCodeTempleCode(id) {
-            qrcode.templeCode = JSON.parse(document.getElementById(id).value).code;
-        }
-
         function changeBusinessCode(id) {
             var budiness = JSON.parse(document.getElementById(id).value);
             document.getElementById("nowBusiness_name").innerHTML = budiness.name;
             document.getElementById("nowBusiness_address").innerHTML = budiness.address;
             document.getElementById("nowBusiness_phone").innerHTML = budiness.phone;
             document.getElementById("nowBusiness_businessName").innerHTML = budiness.businessName;
-            qrcode.businessCode = budiness.code;
         }
 
-        function changeQRCodeFileName(id) {
-            qrcode.fileName = document.getElementById(id).value;
-        }
-
-        function post() {
+        function create() {
+            var createQRCode = {
+                message: document.getElementById("message").value,
+                templeCode: JSON.parse(document.getElementById("temples").value).code,
+                businessCode: JSON.parse(document.getElementById("businesses").value).code,
+                fileName: document.getElementById("fileName").value
+            };
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
             // 添加http头，发送信息至服务器时内容编码类型
@@ -124,10 +100,14 @@
                     if (xhr.status == 200 || xhr.status == 304) {
                         var data = xhr.responseText;
                         alert(data);
+                        document.getElementById("message").value = '';
+                        document.getElementById("temples").options[0].selected = true;
+                        document.getElementById("businesses").options[0].selected = true;
+                        document.getElementById("fileName").value = '';
                     }
                 }
             }
-            xhr.send(JSON.stringify(qrcode));
+            xhr.send(JSON.stringify(createQRCode));
         }
     </script>
 </head>
@@ -146,26 +126,25 @@
 <p>
     <input type="button" value="搜索" onclick="init()"/>
     模板:
-    <input id="filterTemple" style="width:66px" onchange="filterTemple(this.id)"/>
+    <input id="filterTemple" style="width:66px"/>
     商家:
-    <input id="filterBusiness" style="width:66px" onchange="filterBusiness(this.id)"/>
+    <input id="filterBusiness" style="width:66px"/>
 </p>
 <p>信&emsp;&emsp;息:
-    <textarea type="text" id="message" style="width:200px;height: 80px"
-              onchange="changeQRCodeMessage(this.id)"></textarea>
+    <textarea type="text" id="message" style="width:200px;height: 80px"></textarea>
 </p>
 <p>模&emsp;&emsp;板:
-    <select id="temples" style="width:205px;height: 25px" onchange="changeQRCodeTempleCode(this.id)">
+    <select id="temples" style="width:205px;height: 25px">
     </select>
 </p>
 <p>商&emsp;&emsp;家:
-    <select id="businesses" style="width:205px;height: 25px" onchange="changeBusinessCode(this.id)">
+    <select id="businesses" style="width:205px;height: 25px">
     </select>
 </p>
 <p>文&ensp;件&ensp;名:
-    <input type="text" id="fileName" style="width:200px" onchange="changeQRCodeFileName(this.id)"/>
+    <input type="text" id="fileName" style="width:200px"/>
 </p>
-<input type="button" value="创建" onclick="post()"/>
+<input type="button" value="创建" onclick="create()"/>
 
 <hr>
 
