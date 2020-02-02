@@ -57,9 +57,11 @@ public class QRTempleServiceImpl implements QRTempleService {
     public String delete(String code) {
         int back = qrTempleMapper.delete(code);
         if (back > 0) {
-//            //模板地址
-//            String logoPath = projectBasicInfo.getTempleUrl() + "\\" + code;
-//            delFile(logoPath);
+            if (projectBasicInfo.isDeleteAllTempleFiles()) {
+                //模板地址
+                String logoPath = projectBasicInfo.getTempleUrl() + "\\" + code;
+                delFile(logoPath);
+            }
 
             return "删除成功";
         }
@@ -125,6 +127,7 @@ public class QRTempleServiceImpl implements QRTempleService {
 
     /**
      * 删除文件或文件夹下所有内容
+     *
      * @param filename
      */
     private void delFile(String filename) {

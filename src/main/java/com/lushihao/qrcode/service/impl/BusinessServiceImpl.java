@@ -68,12 +68,14 @@ public class BusinessServiceImpl implements BusinessService {
     public String delete(String code) {
         int back = businessMapper.delete(code);
         if (back > 0) {
-//            //商标地址
-//            String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
-//            delFile(logoPath);
-//            //二维码地址
-//            String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + code;
-//            delFile(qrcodePath);
+            if (projectBasicInfo.isDeleteAllBusinessFiles()) {
+                //商标地址
+                String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
+                delFile(logoPath);
+                //二维码地址
+                String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + code;
+                delFile(qrcodePath);
+            }
 
             return "删除成功";
         }
@@ -119,6 +121,7 @@ public class BusinessServiceImpl implements BusinessService {
 
     /**
      * 删除文件或文件夹下所有内容
+     *
      * @param filename
      */
     private void delFile(String filename) {

@@ -2,3 +2,5 @@ basic:
   templeUrl: C:\Users\Administrator\Desktop\qrcodeTemple
   qrcodeUrl: C:\Users\Administrator\Desktop\outputQrcode
   businessUrl: C:\Users\Administrator\Desktop\businessLogo
+  deleteAllTempleFiles: false
+  deleteAllBusinessFiles: false

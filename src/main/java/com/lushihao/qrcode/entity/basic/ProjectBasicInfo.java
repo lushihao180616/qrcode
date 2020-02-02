@@ -19,6 +19,14 @@ public class ProjectBasicInfo {
      * 商家图标地址
      */
     private String businessUrl;
+    /**
+     * 删除模板的同时也删除模板图片文件
+     */
+    private boolean deleteAllTempleFiles;
+    /**
+     * 删除商家的同时也删除商家图片文件
+     */
+    private boolean deleteAllBusinessFiles;
 
     public String getTempleUrl() {
         return templeUrl;
@@ -44,10 +52,28 @@ public class ProjectBasicInfo {
         this.businessUrl = businessUrl;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl) {
+    public boolean isDeleteAllTempleFiles() {
+        return deleteAllTempleFiles;
+    }
+
+    public void setDeleteAllTempleFiles(boolean deleteAllTempleFiles) {
+        this.deleteAllTempleFiles = deleteAllTempleFiles;
+    }
+
+    public boolean isDeleteAllBusinessFiles() {
+        return deleteAllBusinessFiles;
+    }
+
+    public void setDeleteAllBusinessFiles(boolean deleteAllBusinessFiles) {
+        this.deleteAllBusinessFiles = deleteAllBusinessFiles;
+    }
+
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
+        this.deleteAllTempleFiles = deleteAllTempleFiles;
+        this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
     public ProjectBasicInfo() {
