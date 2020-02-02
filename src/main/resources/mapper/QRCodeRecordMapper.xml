@@ -41,4 +41,20 @@
         LIMIT
             0,20
     </select>
+    <select id="selectTempleAnalysis" resultType="Temple">
+        SELECT
+            templecode,count(templecode) useCount,sum(money) totalMoney,count(distinct(businesscode)) businessCount
+            businesscode,count(businesscode),sum(money),count(distinct(templecode))
+        FROM
+            qrcoderecord
+        WHERE
+            saveTime&gt;#{date1}
+        AND
+            saveTime&lt;#{date2}
+        GROUP BY
+            templecode
+        ORDER BY
+            totalMoney
+        DESC
+    </select>
 </mapper>
