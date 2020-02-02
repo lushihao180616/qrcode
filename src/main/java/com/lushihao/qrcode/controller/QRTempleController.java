@@ -1,7 +1,7 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
-import com.lushihao.qrcode.entity.qrcode.QRCodeTemple;
+import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRTempleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

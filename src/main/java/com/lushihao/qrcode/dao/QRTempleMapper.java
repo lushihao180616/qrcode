@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.dao;
 
-import com.lushihao.qrcode.entity.qrcode.QRCodeTemple;
+import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

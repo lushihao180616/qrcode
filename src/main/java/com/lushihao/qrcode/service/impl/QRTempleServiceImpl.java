@@ -2,7 +2,7 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.QRTempleMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
-import com.lushihao.qrcode.entity.qrcode.QRCodeTemple;
+import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRTempleService;
 import org.springframework.stereotype.Service;
 

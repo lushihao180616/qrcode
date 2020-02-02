@@ -1,6 +1,6 @@
 <%@ page import="com.lushihao.qrcode.entity.business.Business" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.lushihao.qrcode.entity.qrcode.QRCodeTemple" %>
+<%@ page import="com.lushihao.qrcode.entity.temple.QRCodeTemple" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
@@ -13,6 +13,7 @@
         function init() {
             getTemple();
             getBusiness();
+            getRecord();
         }
 
         function getTemple() {
@@ -75,6 +76,49 @@
             xhr.send(JSON.stringify(filterBusinessCode));
         }
 
+        function getRecord() {
+            var filterRecord = {
+                templeCode: document.getElementById("filterRecordTemple").value,
+                businessCode: document.getElementById("filterRecordBusiness").value,
+                fileName: document.getElementById("filterFileName").value
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "http://localhost:8090/qrcode/qrcode/selectRecord", false);
+            // 添加http头，发送信息至服务器时内容编码类型
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.setRequestHeader('dataType', 'json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        var recordList = JSON.parse(xhr.responseText);
+                        var records = document.getElementById("records");
+                        records.innerHTML = '\n' +
+                            '    <tr>\n' +
+                            '        <th style="width: 100px">商家</th>\n' +
+                            '        <th style="width: 100px">模板</th>\n' +
+                            '        <th style="width: 100px">文件名</th>\n' +
+                            '        <th style="width: 400px">位置</th>\n' +
+                            '        <th style="width: 80px">价格</th>\n' +
+                            '        <th style="width: 100px">创建时间</th>\n' +
+                            '    </tr>';
+
+                        for (var i = 0; i < recordList.length; i++) {
+                            records.innerHTML += '\n' +
+                                '    <tr>\n' +
+                                '        <td style="width: 100px;border: 1px solid red">' + recordList[i].businessCode + '</td>\n' +
+                                '        <td style="width: 100px;border: 1px solid black">' + recordList[i].templeCode + '</td>\n' +
+                                '        <td style="width: 100px;border: 1px solid purple">' + recordList[i].fileName + '</td>\n' +
+                                '        <td style="width: 400px;border: 1px solid blue">' + recordList[i].url + '</td>\n' +
+                                '        <td style="width: 80px;border: 1px solid brown">' + recordList[i].money + '</td>\n' +
+                                '        <td style="width: 100px;border: 1px solid green">' + recordList[i].saveTime + '</td>\n' +
+                                '    </tr>';
+                        }
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(filterRecord));
+        }
+
         function changeBusinessCode(id) {
             var budiness = JSON.parse(document.getElementById(id).value);
             document.getElementById("nowBusiness_name").innerHTML = budiness.name;
@@ -100,6 +144,7 @@
                     if (xhr.status == 200 || xhr.status == 304) {
                         var data = xhr.responseText;
                         alert(data);
+                        init();
                         document.getElementById("message").value = '';
                         document.getElementById("temples").options[0].selected = true;
                         document.getElementById("businesses").options[0].selected = true;
@@ -147,6 +192,18 @@
 <input type="button" value="创建" onclick="create()"/>
 
 <hr>
+<p>创建记录:</p>
+<p>
+    <input type="button" value="搜索" onclick="getRecord()"/>
+    商家:
+    <input id="filterRecordBusiness" style="width:66px"/>
+    模板:
+    <input id="filterRecordTemple" style="width:66px"/>
+    文件名:
+    <input id="filterFileName" style="width:66px"/>
+</p>
+<table id="records">
+</table>
 
 </body>
 </html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lushihao.qrcode.dao.QRCodeRecordMapper">
+    <insert id="create" parameterType="QRCodeRecord">
+        INSERT INTO
+            qrcoderecord
+            (templeCode,businessCode,fileName,url,saveTime,money)
+        VALUES
+            (
+            #{templeCode},
+            #{businessCode},
+            #{fileName},
+            #{url},
+            #{saveTime},
+            #{money}
+            )
+    </insert>
+    <select id="select" parameterType="QRCodeRecord" resultType="QRCodeRecord">
+        SELECT
+            *
+        FROM
+            qrcoderecord
+        WHERE
+            1=1
+        <if test="templeCode != null">
+            AND templeCode
+            LIKE '${templeCode}%'
+        </if>
+        <if test="businessCode != null">
+            AND businessCode
+            LIKE '${businessCode}%'
+        </if>
+        <if test="fileName != null">
+            AND fileName
+            LIKE '%${fileName}%'
+        </if>
+        ORDER BY
+            saveTime
+        DESC
+        LIMIT
+            0,20
+    </select>
+</mapper>

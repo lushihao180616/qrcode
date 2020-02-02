@@ -1,6 +1,9 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.myutils.time.LSHDateUtils;
+import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.swetake.util.Qrcode;
 import org.springframework.stereotype.Component;
@@ -28,6 +31,8 @@ public class LSHQRCodeUtil {
 
     @Resource
     private ProjectBasicInfo projectBasicInfo;
+    @Resource
+    private QRCodeRecordMapper qrCodeRecordMapper;
 
     private int width = 975;
     private int height = 975;
@@ -152,9 +157,17 @@ public class LSHQRCodeUtil {
                 qrcodeDirectory.mkdir();//创建文件夹
             }
             //String realPath = 服务器项目的地址;
-            String pathName = new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".png";
-            outputStream = new FileOutputStream(new File(qrcodePath + "\\", pathName));
+            String fileName = new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".png";
+            outputStream = new FileOutputStream(new File(qrcodePath + "\\", fileName));
             ImageIO.write(image, "png", outputStream);
+            QRCodeRecord qrCodeRecord = new QRCodeRecord();
+            qrCodeRecord.setTempleCode(qrCodeVo.getTypeCode().getCode());
+            qrCodeRecord.setBusinessCode(qrCodeVo.getBusinessCode());
+            qrCodeRecord.setFileName(fileName);
+            qrCodeRecord.setSaveTime(LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1));
+            qrCodeRecord.setUrl(qrcodePath + "\\" + fileName);
+            qrCodeRecord.setMoney(qrCodeVo.getTypeCode().getMoney());
+            qrCodeRecordMapper.create(qrCodeRecord);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

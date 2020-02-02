@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.service;
 
-import com.lushihao.qrcode.entity.qrcode.QRCodeTemple;
+import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 
 import java.util.List;
 

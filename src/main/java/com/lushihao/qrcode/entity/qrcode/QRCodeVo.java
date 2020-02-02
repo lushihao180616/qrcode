@@ -1,5 +1,7 @@
 package com.lushihao.qrcode.entity.qrcode;
 
+import com.lushihao.qrcode.entity.temple.QRCodeTemple;
+
 /**
  * 二维码的使用类
  */
