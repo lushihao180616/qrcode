@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface QRTempleService {
 
-    String create(QRCodeTemple qrCodeTemple, String templeItemsSrc);
+    String create(QRCodeTemple qrCodeTemple, String templeItemsPath);
 
     List<QRCodeTemple> filter(String code);
 

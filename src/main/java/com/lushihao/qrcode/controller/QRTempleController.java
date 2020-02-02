@@ -22,9 +22,15 @@ public class QRTempleController {
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody Map<String, Object> reqMap) {
-        String templeItemsSrc = (String) reqMap.get("templeItemsSrc");
+        String templeItemsPath = (String) reqMap.get("templeItemsPath");
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
-        String back = qrTempleService.create(qrCodeTemple, templeItemsSrc);
+        qrCodeTemple.setIfOnly((Boolean) reqMap.get("ifOnly"));
+        qrCodeTemple.setIfShowLogo((Boolean) reqMap.get("ifShowLogo"));
+        qrCodeTemple.setTransparent((Boolean) reqMap.get("transparent"));
+        qrCodeTemple.setMoney(Double.parseDouble(reqMap.get("money").toString()));
+        qrCodeTemple.setX((Integer) reqMap.get("x"));
+        qrCodeTemple.setY((Integer) reqMap.get("y"));
+        String back = qrTempleService.create(qrCodeTemple, templeItemsPath);
         return back;
     }
 

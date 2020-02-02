@@ -121,10 +121,9 @@ public class LSHQRCodeUtil {
                 drawQrcodeHot(gs, code); //热门算法
             } else if (qrCodeVo.getTypeCode().getArti().equals("1")) {
                 drawQrcodeOrdi(gs, code); //最初算法
+            } else if (qrCodeVo.getTypeCode().getArti().equals("2")) {
+                drawQrcodeRiTojiao(gs, code); //三角算法
             }
-//            else if (qrCodeVo.getArti().equals("2")) {
-//                drawQrcodeRiTojiao(gs, code); //三角算法
-//            }
             //添加logo
             if (qrCodeVo.getTypeCode().isIfShowLogo()) {
                 gs.drawImage(imageLogoBorder, (width - 120) / 2, (height - 120) / 2, 120, 120, null);

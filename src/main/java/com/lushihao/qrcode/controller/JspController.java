@@ -23,4 +23,9 @@ public class JspController {
         return "business";
     }
 
+    @RequestMapping("getTemple")
+    public String getTemple(HttpServletRequest request) {
+        return "temple";
+    }
+
 }

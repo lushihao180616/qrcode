@@ -15,7 +15,7 @@
             logoSrc: ''
         };
 
-        var filterBusinessCode = {
+        var filterBusiness = {
             code: '',
             name: '',
             address: '',
@@ -60,7 +60,7 @@
                     }
                 }
             }
-            xhr.send(JSON.stringify(filterBusinessCode));
+            xhr.send(JSON.stringify(filterBusiness));
         }
 
         function changeName(id) {
@@ -98,23 +98,23 @@
         }
 
         function filterCode(id) {
-            filterBusinessCode.code = document.getElementById(id).value;
+            filterBusiness.code = document.getElementById(id).value;
         }
 
         function filterName(id) {
-            filterBusinessCode.name = document.getElementById(id).value;
+            filterBusiness.name = document.getElementById(id).value;
         }
 
         function filterAddress(id) {
-            filterBusinessCode.address = document.getElementById(id).value;
+            filterBusiness.address = document.getElementById(id).value;
         }
 
         function filterPhone(id) {
-            filterBusinessCode.phone = document.getElementById(id).value;
+            filterBusiness.phone = document.getElementById(id).value;
         }
 
         function filterBusinessName(id) {
-            filterBusinessCode.businessName = document.getElementById(id).value;
+            filterBusiness.businessName = document.getElementById(id).value;
         }
     </script>
 </head>
