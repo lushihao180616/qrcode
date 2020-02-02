@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lushihao.qrcode.dao.QRTempleMapper">
+    <insert id="create" parameterType="QRCodeTemple">
+        INSERT INTO
+            qrcodetemple
+            (code,money,ifOnly,ifShowLogo,arti,transparent,x,y)
+        VALUES
+            (#{code},#{money},#{ifOnly},#{ifShowLogo},#{arti},#{transparent},#{x},#{y})
+    </insert>
+    <select id="filter" resultType="QRCodeTemple">
+        SELECT
+            *
+        FROM
+            qrcodetemple
+        <if test="code != null">
+            WHERE code
+            LIKE '${code}%'
+        </if>
+    </select>
+</mapper>

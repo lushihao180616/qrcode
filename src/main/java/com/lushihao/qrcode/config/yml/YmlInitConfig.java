@@ -19,9 +19,7 @@ public class YmlInitConfig {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(
-                new ClassPathResource("business-info.yml"),
-                new ClassPathResource("project-basic.yml"),
-                new ClassPathResource("qrcode-temple.yml")
+                new ClassPathResource("project-basic.yml")
         );
         configurer.setProperties(yaml.getObject());
         return configurer;

@@ -4,6 +4,6 @@ import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 
 public interface QRCodeService {
 
-    boolean create(QRCodeRequest qrCodeRequest);
+    String create(QRCodeRequest qrCodeRequest);
 
 }

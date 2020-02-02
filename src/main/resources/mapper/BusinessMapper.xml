@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lushihao.qrcode.dao.BusinessMapper">
+    <insert id="create" parameterType="Business">
+        INSERT INTO
+            business
+            (code,name,address,phone,businessName)
+        VALUES
+            (
+            #{code},
+            #{name},
+            #{address},
+            #{phone},
+            #{businessName}
+            )
+    </insert>
+    <select id="filter" parameterType="Business" resultType="Business">
+        SELECT
+            *
+        FROM
+            business
+        WHERE
+            1=1
+        <if test="code != null">
+        AND code
+            LIKE '${code}%'
+        </if>
+        <if test="name != null">
+        AND name
+            LIKE '%${name}%'
+        </if>
+        <if test="address != null">
+        AND address
+            LIKE '%${address}%'
+        </if>
+        <if test="phone != null">
+        AND phone
+            LIKE '${phone}%'
+        </if>
+        <if test="businessName != null">
+        AND businessName
+            LIKE '%${businessName}%'
+        </if>
+    </select>
+</mapper>

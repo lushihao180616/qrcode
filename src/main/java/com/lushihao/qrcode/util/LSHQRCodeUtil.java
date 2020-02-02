@@ -147,10 +147,14 @@ public class LSHQRCodeUtil {
             //释放画笔
             gs.dispose();
             //生成二维码图片
-            String realPath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + "\\";
+            String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+            File qrcodeDirectory = new File(qrcodePath);
+            if (!qrcodeDirectory.exists()) {//如果文件夹不存在
+                qrcodeDirectory.mkdir();//创建文件夹
+            }
             //String realPath = 服务器项目的地址;
             String pathName = new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".png";
-            outputStream = new FileOutputStream(new File(realPath, pathName));
+            outputStream = new FileOutputStream(new File(qrcodePath + "\\", pathName));
             ImageIO.write(image, "png", outputStream);
         } catch (Exception e) {
             e.printStackTrace();
