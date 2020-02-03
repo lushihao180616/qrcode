@@ -53,15 +53,20 @@ function getBusiness() {
                     businesses.add(option);
                 }
                 if(businessList.length > 0){
-                    document.getElementById("nowBusiness_name").innerText = '名        称：' + businessList[0].name;
-                    document.getElementById("nowBusiness_address").innerText = '地        址：' + businessList[0].address;
-                    document.getElementById("nowBusiness_phone").innerText = '电        话：' + businessList[0].phone;
-                    document.getElementById("nowBusiness_businessName").innerText = '联  系  人：' + businessList[0].businessName;
+                    updateBusinessCode("businesses");
                 }
             }
         }
     }
     xhr.send(JSON.stringify(filterBusinessCode));
+}
+
+function updateBusinessCode(id) {
+    var budiness = JSON.parse(document.getElementById(id).value);
+    document.getElementById("nowBusiness_name").innerText = '名        称：' + budiness.name;
+    document.getElementById("nowBusiness_address").innerText = '地        址：' + budiness.address;
+    document.getElementById("nowBusiness_phone").innerText = '电        话：' + budiness.phone;
+    document.getElementById("nowBusiness_businessName").innerText = '联  系  人：' + budiness.businessName;
 }
 
 function getRecord() {

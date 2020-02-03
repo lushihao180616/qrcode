@@ -25,7 +25,8 @@
                                                                             onclick="init()"/><br><br>
         信&emsp;&emsp;息：<input class="topItemInput" type="text" id="message"/><br><br>
         模&emsp;&emsp;板：<select class="topItemSelect" id="temples"></select><br><br>
-        商&emsp;&emsp;家：<select class="topItemSelect" id="businesses"></select><br><br>
+        商&emsp;&emsp;家：<select class="topItemSelect" id="businesses"
+                               onchange="updateBusinessCode(this.id)"></select><br><br>
         文&ensp;件&ensp;名：<input class="topItemInput" type="text" id="fileName"/><br><br>
         联&ensp;系&ensp;人：<input class="topItemInput" type="text" id="createBusinessName"/><br><br>
         商&emsp;&emsp;标：<input class="topItemSelect" id="createLogo" type="file" name="uploadFile"/><br><br>

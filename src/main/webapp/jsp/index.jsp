@@ -10,6 +10,10 @@
     </script>
 </head>
 <body>
+
+<p style="background-color: black;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+    页面信息
+</p>
 <p>
     <a style="margin: 10px;padding: 10px;background-color: lightcoral"
        href="qrcode.jsp">二&ensp;维&ensp;码&ensp;管&ensp;理</a>
