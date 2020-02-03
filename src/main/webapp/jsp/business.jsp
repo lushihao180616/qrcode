@@ -11,6 +11,11 @@
 </head>
 <body onload="init()">
 
+<a style="margin: 10px;padding: 10px;background-color: cadetblue" href="index.jsp">首页</a>
+
+<p style="background-color: cadetblue;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+    商家变动
+</p>
 <div class="top">
     <div class="topItem1">
         <br>
@@ -63,15 +68,17 @@
     </div>
 </div>
 
+<p style="background-color: cadetblue;margin: 100px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+    商家查询
+</p>
+
 <div class="bottom">
     <div class="topItem4">
-        <br>
-        <span class="topItemTitle">商家列表：</span><br><br><br>
         编号：<input class="bottomItemFilter" id="filterCode"/>
         名称：<input class="bottomItemFilter" id="filterName"/>
         地址：<input class="bottomItemFilter" id="filterAddress"/>
         电话：<input class="bottomItemFilter" id="filterPhone"/>
-        联系人：<input class="topItemFilter" id="filterBusinessName"/>
+        联系人：<input class="bottomItemFilter" id="filterBusinessName"/>
         <input class="topItemSearch" type="button" value="搜索" onclick="init()"/><br><br>
 
         <table class="bottomItemTable" id="buisnesses"></table>

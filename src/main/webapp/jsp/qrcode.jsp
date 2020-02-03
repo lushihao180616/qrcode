@@ -6,201 +6,65 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>创建二维码</title>
-    <script type="text/javascript">
-        function init() {
-            getTemple();
-            getBusiness();
-            getRecord();
-        }
-
-        function getTemple() {
-            var filterTempleCode = {
-                code: document.getElementById("filterTemple").value
-            };
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "http://localhost:8090/qrcode/temple/filter", false);
-            // 添加http头，发送信息至服务器时内容编码类型
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.setRequestHeader('dataType', 'json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200 || xhr.status == 304) {
-                        var templeList = JSON.parse(xhr.responseText);
-                        var temples = document.getElementById("temples");
-                        temples.innerHTML = '';
-                        for (var i = 0; i < templeList.length; i++) {
-                            var option = document.createElement("option");
-                            option.value = JSON.stringify(templeList[i]);
-                            option.text = templeList[i].code;
-                            temples.add(option);
-                        }
-                    }
-                }
-            }
-            xhr.send(JSON.stringify(filterTempleCode));
-        }
-
-        function getBusiness() {
-            var filterBusinessCode = {
-                code: document.getElementById("filterBusiness").value
-            };
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "http://localhost:8090/qrcode/business/filter", false);
-            // 添加http头，发送信息至服务器时内容编码类型
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.setRequestHeader('dataType', 'json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200 || xhr.status == 304) {
-                        var businessList = JSON.parse(xhr.responseText);
-                        var businesses = document.getElementById("businesses");
-                        businesses.innerHTML = '';
-                        for (var i = 0; i < businessList.length; i++) {
-                            var option = document.createElement("option");
-                            option.value = JSON.stringify(businessList[i]);
-                            option.text = businessList[i].code;
-                            businesses.add(option);
-                        }
-                        if(businessList.length > 0){
-                            document.getElementById("nowBusiness_name").innerHTML = businessList[0].name;
-                            document.getElementById("nowBusiness_address").innerHTML = businessList[0].address;
-                            document.getElementById("nowBusiness_phone").innerHTML = businessList[0].phone;
-                            document.getElementById("nowBusiness_businessName").innerHTML = businessList[0].businessName;
-                        }
-                    }
-                }
-            }
-            xhr.send(JSON.stringify(filterBusinessCode));
-        }
-
-        function getRecord() {
-            var filterRecord = {
-                templeCode: document.getElementById("filterRecordTemple").value,
-                businessCode: document.getElementById("filterRecordBusiness").value,
-                fileName: document.getElementById("filterFileName").value
-            };
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "http://localhost:8090/qrcode/qrcode/selectRecord", false);
-            // 添加http头，发送信息至服务器时内容编码类型
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.setRequestHeader('dataType', 'json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200 || xhr.status == 304) {
-                        var recordList = JSON.parse(xhr.responseText);
-                        var records = document.getElementById("records");
-                        records.innerHTML = '\n' +
-                            '    <tr>\n' +
-                            '        <th style="width: 100px">商家</th>\n' +
-                            '        <th style="width: 100px">模板</th>\n' +
-                            '        <th style="width: 100px">文件名</th>\n' +
-                            '        <th style="width: 400px">位置</th>\n' +
-                            '        <th style="width: 80px">价格</th>\n' +
-                            '        <th style="width: 100px">创建时间</th>\n' +
-                            '    </tr>';
-
-                        for (var i = 0; i < recordList.length; i++) {
-                            records.innerHTML += '\n' +
-                                '    <tr>\n' +
-                                '        <td style="width: 100px;border: 1px solid red">' + recordList[i].businessCode + '</td>\n' +
-                                '        <td style="width: 100px;border: 1px solid black">' + recordList[i].templeCode + '</td>\n' +
-                                '        <td style="width: 100px;border: 1px solid purple">' + recordList[i].fileName + '</td>\n' +
-                                '        <td style="width: 400px;border: 1px solid blue">' + recordList[i].url + '</td>\n' +
-                                '        <td style="width: 80px;border: 1px solid brown">' + recordList[i].money + '</td>\n' +
-                                '        <td style="width: 100px;border: 1px solid green">' + recordList[i].saveTime + '</td>\n' +
-                                '    </tr>';
-                        }
-                    }
-                }
-            }
-            xhr.send(JSON.stringify(filterRecord));
-        }
-
-        function changeBusinessCode(id) {
-            var budiness = JSON.parse(document.getElementById(id).value);
-            document.getElementById("nowBusiness_name").innerHTML = budiness.name;
-            document.getElementById("nowBusiness_address").innerHTML = budiness.address;
-            document.getElementById("nowBusiness_phone").innerHTML = budiness.phone;
-            document.getElementById("nowBusiness_businessName").innerHTML = budiness.businessName;
-        }
-
-        function create() {
-            var createQRCode = {
-                message: document.getElementById("message").value,
-                templeCode: JSON.parse(document.getElementById("temples").value).code,
-                businessCode: JSON.parse(document.getElementById("businesses").value).code,
-                fileName: document.getElementById("fileName").value
-            };
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
-            // 添加http头，发送信息至服务器时内容编码类型
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.setRequestHeader('dataType', 'json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200 || xhr.status == 304) {
-                        var data = xhr.responseText;
-                        alert(data);
-                        init();
-                        document.getElementById("message").value = '';
-                        document.getElementById("temples").options[0].selected = true;
-                        document.getElementById("businesses").options[0].selected = true;
-                        document.getElementById("fileName").value = '';
-                    }
-                }
-            }
-            xhr.send(JSON.stringify(createQRCode));
-        }
-    </script>
+    <link rel="stylesheet" type="text/css" href="../css/qrcode.css">
+    <script src="../js/qrcode.js"></script>
 </head>
 <body onload="init()">
-<hr>
 
-<p>商家信息: </p>
-<p>名&emsp;&emsp;称: <i id="nowBusiness_name"></i></p>
-<p>地&emsp;&emsp;址: <i id="nowBusiness_address"></i></p>
-<p>电&emsp;&emsp;话: <i id="nowBusiness_phone"></i></p>
-<p>联&ensp;系&ensp;人: <i id="nowBusiness_businessName"></i></p>
+<a style="margin: 10px;padding: 10px;background-color: lightcoral" href="index.jsp">首页</a>
 
-<hr>
+<p style="background-color: lightcoral;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+    二维码创建
+</p>
+<div class="top">
+    <div class="topItem1">
+        <br>
+        <span class="topItemTitle">二维码信息：</span><br><br><br>
+        模&emsp;&emsp;板：<input class="topItemFilter" id="filterTemple" style="margin-right: 25px"/>商&emsp;&emsp;家：<input class="topItemFilter" id="filterBusiness"/><input class="topItemSearch" type="button"
+                                                                            value="搜索"
+                                                                            onclick="init()"/><br><br>
+        信&emsp;&emsp;息：<input class="topItemInput" type="text" id="message"/><br><br>
+        模&emsp;&emsp;板：<select class="topItemSelect" id="temples"></select><br><br>
+        商&emsp;&emsp;家：<select class="topItemSelect" id="businesses"></select><br><br>
+        文&ensp;件&ensp;名：<input class="topItemInput" type="text" id="fileName"/><br><br>
+        联&ensp;系&ensp;人：<input class="topItemInput" type="text" id="createBusinessName"/><br><br>
+        商&emsp;&emsp;标：<input class="topItemSelect" id="createLogo" type="file" name="uploadFile"/><br><br>
 
-<p>二维码信息:</p>
-<p>
-    <input type="button" value="搜索" onclick="init()"/>
-    模板:
-    <input id="filterTemple" style="width:66px"/>
-    商家:
-    <input id="filterBusiness" style="width:66px"/>
-</p>
-<p>信&emsp;&emsp;息:
-    <textarea type="text" id="message" style="width:200px;height: 80px"></textarea>
-</p>
-<p>模&emsp;&emsp;板:
-    <select id="temples" style="width:205px;height: 25px">
-    </select>
-</p>
-<p>商&emsp;&emsp;家:
-    <select id="businesses" style="width:205px;height: 25px">
-    </select>
-</p>
-<p>文&ensp;件&ensp;名:
-    <input type="text" id="fileName" style="width:200px"/>
-</p>
-<input type="button" value="创建" onclick="create()"/>
+        <input class="topItemButton" type="button" value="创建" onclick="create()"/>
+    </div>
+    <div class="topItem2">
+        <br>
+        <span class="topItemTitle">商家信息：</span><br><br><br>
 
-<hr>
-<p>创建记录:</p>
-<p>
-    <input type="button" value="搜索" onclick="getRecord()"/>
-    商家:
-    <input id="filterRecordBusiness" style="width:66px"/>
-    模板:
-    <input id="filterRecordTemple" style="width:66px"/>
-    文件名:
-    <input id="filterFileName" style="width:66px"/>
+        <div style="height: 10px"></div>
+        <div class="topItemSelect" id="nowBusiness_name"></div>
+        <br>
+        <div class="topItemSelect" id="nowBusiness_address"></div>
+        <br>
+        <div class="topItemSelect" id="nowBusiness_phone"></div>
+        <br>
+        <div class="topItemSelect" id="nowBusiness_businessName"></div>
+    </div>
+    <div class="topItem3">
+        <br>
+        <span class="topItemTitle">模板信息：</span><br><br><br>
+    </div>
+</div>
+
+<p style="background-color: lightcoral;margin: 100px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+    二维码查询
 </p>
-<table id="records">
-</table>
+
+<div class="bottom">
+    <div class="topItem4">
+        商家：<input class="bottomItemFilter" id="filterRecordBusiness"/>
+        模板：<input class="bottomItemFilter" id="filterRecordTemple"/>
+        文件名：<input class="bottomItemFilter" id="filterFileName"/>
+        <input class="topItemSearch" type="button" value="搜索" onclick="getRecord()"/><br><br>
+
+        <table class="bottomItemTable" id="records"></table>
+    </div>
+</div>
 
 </body>
 </html>

@@ -10,18 +10,15 @@
     </script>
 </head>
 <body>
-<hr>
 <p>
-    二&ensp;维&ensp;码&ensp;管&ensp;理：
-    <a href="qrcode.jsp">跳转</a>
+    <a style="margin: 10px;padding: 10px;background-color: lightcoral"
+       href="qrcode.jsp">二&ensp;维&ensp;码&ensp;管&ensp;理</a>
 </p>
 <p>
-    商&emsp;家&emsp;管&emsp;理：
-    <a href="business.jsp">跳转</a>
+    <a style="margin: 10px;padding: 10px;background-color: cadetblue" href="business.jsp">商&emsp;家&emsp;管&emsp;理</a>
 </p>
 <p>
-    模&emsp;板&emsp;管&emsp;理：
-    <a href="temple.jsp">跳转</a>
+    <a style="margin: 10px;padding: 10px;background-color: burlywood" href="temple.jsp">模&emsp;板&emsp;管&emsp;理</a>
 </p>
 <hr>
 </body>

@@ -1,7 +1,7 @@
 .top {
     position: relative;
     width: 99%;
-    height: 530px;
+    height: 700px;
 }
 
 .topItem1, .topItem2, .topItem3, .topItem4 {
@@ -10,7 +10,7 @@
     left: 0px;
     top: 0px;
     width: 31%;
-    height: 530px;
+    height: 700px;
     background-color: #ddd;
     margin: 10px;
     padding: 10px;
@@ -18,12 +18,12 @@
 
 .topItem2 {
     left: 34%;
-    height: 530px;
+    height: 700px;
 }
 
 .topItem3 {
     left: 68%;
-    height: 530px;
+    height: 700px;
 }
 
 .topItem4 {
@@ -34,7 +34,7 @@
 
 .topItemTitle {
     padding: 15px;
-    background-color: cadetblue;
+    background-color: burlywood;
     color: #333;
     font-weight: bolder;
 }
@@ -86,24 +86,25 @@
     width: 100%;
 }
 
-.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5 {
-    width: 12%;
+.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8 {
+    width: 20%;
     background-color: red;
     color: white;
     padding: 5px;
 }
 
 .bottomTh2 {
-    width: 22%;
+    width: 10%;
     background-color: black;
 }
 
 .bottomTh3 {
-    width: 42%;
+    width: 10%;
     background-color: blue;
 }
 
 .bottomTh4 {
+    width: 10%;
     background-color: purple;
 }
 
@@ -111,26 +112,57 @@
     background-color: green;
 }
 
-.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5 {
-    width: 12%;
+.bottomTh6 {
+    width: 10%;
+    background-color: crimson;
+}
+
+.bottomTh7 {
+    width: 10%;
+    background-color: midnightblue;
+}
+
+.bottomTh8 {
+    width: 10%;
+    background-color: darkolivegreen;
+}
+
+.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6, .bottomTd7, .bottomTd8 {
+    width: 20%;
     border: 2px solid red;
     padding: 5px;
 }
 
 .bottomTd2 {
-    width: 22%;
+    width: 10%;
     border: 2px solid black;
 }
 
 .bottomTd3 {
-    width: 42%;
+    width: 10%;
     border: 2px solid blue;
 }
 
 .bottomTd4 {
+    width: 10%;
     border: 2px solid purple;
 }
 
 .bottomTd5 {
     border: 2px solid green;
+}
+
+.bottomTd6 {
+    width: 10%;
+    border: 2px solid crimson;
+}
+
+.bottomTd7 {
+    width: 10%;
+    border: 2px solid midnightblue;
+}
+
+.bottomTd8 {
+    width: 10%;
+    border: 2px solid darkolivegreen;
 }
