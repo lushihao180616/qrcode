@@ -112,8 +112,12 @@ public class BusinessServiceImpl implements BusinessService {
         } finally {
             // 关闭流  先开后关  后开先关
             try {
-                fos.close(); // 后开先关
-                fis.close(); // 先开后关
+                if(fos != null){
+                    fos.close(); // 后开先关
+                }
+                if(fis != null){
+                    fis.close(); // 先开后关
+                }
             } catch (IOException e) {
             }
         }
