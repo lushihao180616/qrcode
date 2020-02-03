@@ -13,8 +13,12 @@ public class JspController {
     @Resource
     private BusinessService businessService;
 
-    @RequestMapping("getQRCode")
+    @RequestMapping("getIndex")
     public String getIndex(HttpServletRequest request) {
+        return "index";
+    }
+    @RequestMapping("getQRCode")
+    public String getQRCode(HttpServletRequest request) {
         return "qrcode";
     }
 

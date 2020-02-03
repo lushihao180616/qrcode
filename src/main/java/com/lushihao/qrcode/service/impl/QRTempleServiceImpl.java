@@ -25,7 +25,7 @@ public class QRTempleServiceImpl implements QRTempleService {
     public String create(QRCodeTemple qrCodeTemple, String templeItemsPath) {
         int back = qrTempleMapper.create(qrCodeTemple);
         if (back > 0) {
-            //商标地址
+            //模板地址
             String templePath = projectBasicInfo.getTempleUrl() + "\\" + qrCodeTemple.getCode();
             File templeDirectory = new File(templePath);
             if (!templeDirectory.exists()) {//如果文件夹不存在

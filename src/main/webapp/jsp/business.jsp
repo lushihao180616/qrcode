@@ -6,6 +6,39 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>商家管理</title>
+    <style type="text/css">
+        .top {
+            width: 99%;
+            height: 400px;
+        }
+
+        .topItem {
+            display: inline-block;
+            width: 33%;
+            height: 400px;
+            background-color: #ddd;
+        }
+
+        .topItemTitle {
+            margin-left: 10px;
+            width: 100%;
+            height: 50px;
+        }
+
+        .topItemChild {
+            margin-left: 10px;
+            width: 100%;
+        }
+
+        .topItemInput {
+            width: 70%;
+        }
+
+        .bottom {
+            width: 100%;
+            heigth: 400px;
+        }
+    </style>
     <script type="text/javascript">
         function init() {
             getBusiness();
@@ -100,7 +133,7 @@
                             option.text = businessList[i].code;
                             modifyBusinesses.add(option);
                         }
-                        if(businessList.length > 0){
+                        if (businessList.length > 0) {
                             modifyBusinessCode("modifyBusinesses")
                         }
                     }
@@ -170,7 +203,7 @@
                             option.text = businessList[i].code;
                             deleteBusinesses.add(option);
                         }
-                        if(businessList.length > 0){
+                        if (businessList.length > 0) {
                             deleteBusinessCode("deleteBusinesses")
                         }
                     }
@@ -214,99 +247,93 @@
         }
     </script>
 </head>
-<body onload="init()">
+<body>
 <hr>
 
-<p>创建商家: </p>
-<p>名&emsp;&emsp;称:
-    <input type="text" id="createName" style="width:200px"/></p>
-<p>地&emsp;&emsp;址:
-    <input type="text" id="createAddress" style="width:200px"/></p>
-</p>
-<p>手&ensp;机&ensp;号:
-    <input type="text" id="createPhone" style="width:200px"/></p>
-</p>
-<p>联&ensp;系&ensp;人:
-    <input type="text" id="createBusinessName" style="width:200px"/>
-</p>
-<p>商&emsp;&emsp;标:
-    <input id="createLogo" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
-</p>
+<div class="top">
+    <div class="topItem">
+        创建商家: <br><br><br>
+        名&emsp;&emsp;称:<input class="topItemInput" type="text" id="createName"/><br><br>
+        地&emsp;&emsp;址:<input class="topItemInput" type="text" id="createAddress"/><br><br>
+        手&ensp;机&ensp;号:<input class="topItemInput" type="text" id="createPhone"/><br><br>
+        联&ensp;系&ensp;人:<input class="topItemInput" type="text" id="createBusinessName"/><br><br>
+        商&emsp;&emsp;标:<input class="topItemInput" id="createLogo" type="file" name="uploadFile"/><br><br>
+        <input type="submit" value="创建" onclick="create()"/>
+    </div>
 
-<input type="submit" value="创建" onclick="create()"/>
+    <div class="topItem">
+        <p class="topItemTitle">修改商家:
+            &emsp;&emsp;编号:
+            <input type="button" value="搜索" onclick="modifySearch()"/>
+            <input id="modifyCode" style="width:66px"/>
+        </p>
+        <p>编&emsp;&emsp;号:
+            <select id="modifyBusinesses" style="width:205px;height: 25px" onchange="modifyBusinessCode(this.id)">
+            </select>
+        </p>
+        <p>名&emsp;&emsp;称:
+            <input type="text" id="modifyName" style="width:200px"/></p>
+        <p>地&emsp;&emsp;址:
+            <input type="text" id="modifyAddress" style="width:200px"/></p>
+        </p>
+        <p>手&ensp;机&ensp;号:
+            <input type="text" id="modifyPhone" style="width:200px"/></p>
+        </p>
+        <p>联&ensp;系&ensp;人:
+            <input type="text" id="modifyBusinessName" style="width:200px"/>
+        </p>
+        <p>商&emsp;&emsp;标:
+            <input id="modifyLogo" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
+        </p>
 
-<hr>
+        <input type="submit" value="更新" onclick="update()"/>
+    </div>
 
-<p>修改商家: </p>
-<p>编号:
-    <input type="button" value="搜索" onclick="modifySearch()"/>
-    <input id="modifyCode" style="width:66px"/>
-</p>
-<p>编&emsp;&emsp;号:
-    <select id="modifyBusinesses" style="width:205px;height: 25px" onchange="modifyBusinessCode(this.id)">
-    </select>
-</p>
-<p>名&emsp;&emsp;称:
-    <input type="text" id="modifyName" style="width:200px"/></p>
-<p>地&emsp;&emsp;址:
-    <input type="text" id="modifyAddress" style="width:200px"/></p>
-</p>
-<p>手&ensp;机&ensp;号:
-    <input type="text" id="modifyPhone" style="width:200px"/></p>
-</p>
-<p>联&ensp;系&ensp;人:
-    <input type="text" id="modifyBusinessName" style="width:200px"/>
-</p>
-<p>商&emsp;&emsp;标:
-    <input id="modifyLogo" type="file" name="uploadFile" style="width: 204px;height: 25px"/>
-</p>
+    <div class="topItem">
+        <p class="topItemTitle">删除商家: &emsp;&emsp;编号:
+            <input type="button" value="搜索" onclick="deleteSearch()"/>
+            <input id="deleteCode" style="width:66px"/>
+        </p>
+        <p>编&emsp;&emsp;号:
+            <select id="deleteBusinesses" style="width:205px;height: 25px" onchange="deleteBusinessCode(this.id)">
+            </select>
+        </p>
+        <p>名&emsp;&emsp;称:
+            <span id="deleteName" style="width:200px"></span></p>
+        <p>地&emsp;&emsp;址:
+            <span id="deleteAddress" style="width:200px"></span></p>
+        </p>
+        <p>手&ensp;机&ensp;号:
+            <span id="deletePhone" style="width:200px"></span></p>
+        </p>
+        <p>联&ensp;系&ensp;人:
+            <span id="deleteBusinessName" style="width:200px"></span>
+        </p>
 
-<input type="submit" value="更新" onclick="update()"/>
-
-<hr>
-
-<p>删除商家: </p>
-
-<p>编号:
-    <input type="button" value="搜索" onclick="deleteSearch()"/>
-    <input id="deleteCode" style="width:66px"/>
-</p>
-<p>编&emsp;&emsp;号:
-    <select id="deleteBusinesses" style="width:205px;height: 25px" onchange="deleteBusinessCode(this.id)">
-    </select>
-</p>
-<p>名&emsp;&emsp;称:
-    <span id="deleteName" style="width:200px"></span></p>
-<p>地&emsp;&emsp;址:
-    <span id="deleteAddress" style="width:200px"></span></p>
-</p>
-<p>手&ensp;机&ensp;号:
-    <span id="deletePhone" style="width:200px"></span></p>
-</p>
-<p>联&ensp;系&ensp;人:
-    <span id="deleteBusinessName" style="width:200px"></span>
-</p>
-
-<input type="submit" value="删除" onclick="deleteOne()"/>
+        <input type="submit" value="删除" onclick="deleteOne()"/>
+    </div>
+</div>
 
 <hr>
 
-<p>商家列表:</p>
-<p>
-    <input type="button" value="搜索" onclick="init()"/>
-    编号:
-    <input id="filterCode" style="width:66px"/>
-    名称:
-    <input id="filterName" style="width:66px"/>
-    地址:
-    <input id="filterAddress" style="width:66px"/>
-    电话:
-    <input id="filterPhone" style="width:66px"/>
-    联系人:
-    <input id="filterBusinessName" style="width:66px"/>
-</p>
-<table id="buisnesses">
-</table>
+<div class="bottom">
+    <p>商家列表:</p>
+    <p>
+        <input type="button" value="搜索" onclick="init()"/>
+        编号:
+        <input id="filterCode" style="width:66px"/>
+        名称:
+        <input id="filterName" style="width:66px"/>
+        地址:
+        <input id="filterAddress" style="width:66px"/>
+        电话:
+        <input id="filterPhone" style="width:66px"/>
+        联系人:
+        <input id="filterBusinessName" style="width:66px"/>
+    </p>
+    <table id="buisnesses">
+    </table>
+</div>
 
 <hr>
 </body>

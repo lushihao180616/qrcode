@@ -18,11 +18,11 @@
     </insert>
     <select id="select" parameterType="QRCodeRecord" resultType="QRCodeRecord">
         SELECT
-            *
+        *
         FROM
-            qrcoderecord
+        qrcoderecord
         WHERE
-            1=1
+        1=1
         <if test="templeCode != null">
             AND templeCode
             LIKE '${templeCode}%'
@@ -36,15 +36,14 @@
             LIKE '%${fileName}%'
         </if>
         ORDER BY
-            saveTime
+        saveTime
         DESC
         LIMIT
-            0,20
+        0,20
     </select>
-    <select id="selectTempleAnalysis" resultType="Temple">
+    <select id="selectTempleAnalysis" resultType="TempleAnalysis">
         SELECT
             templecode,count(templecode) useCount,sum(money) totalMoney,count(distinct(businesscode)) businessCount
-            businesscode,count(businesscode),sum(money),count(distinct(templecode))
         FROM
             qrcoderecord
         WHERE
@@ -53,6 +52,17 @@
             saveTime&lt;#{date2}
         GROUP BY
             templecode
+        ORDER BY
+            totalMoney
+        DESC
+    </select>
+    <select id="selectBusinessAnalysis" resultType="TempleAnalysis">
+        SELECT
+            businesscode,count(businesscode),sum(money),count(distinct(templecode))
+        FROM
+            qrcoderecord
+        GROUP BY
+            businesscode
         ORDER BY
             totalMoney
         DESC

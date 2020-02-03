@@ -1,6 +1,3 @@
-<%@ page import="com.lushihao.qrcode.entity.business.Business" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.lushihao.qrcode.entity.temple.QRCodeTemple" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
