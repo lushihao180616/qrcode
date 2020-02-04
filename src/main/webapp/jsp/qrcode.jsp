@@ -23,7 +23,7 @@
         模&emsp;&emsp;板：<input class="topItemFilter" id="filterTemple" style="margin-right: 25px"/>商&emsp;&emsp;家：<input class="topItemFilter" id="filterBusiness"/><input class="topItemSearch" type="button"
                                                                             value="搜索"
                                                                             onclick="init()"/><br><br>
-        信&emsp;&emsp;息：<input class="topItemInput" type="text" id="message"/><br><br>
+        信&emsp;&emsp;息：<textarea class="topItemInput" style="height: 80px" type="text" id="message"></textarea><br><br>
         模&emsp;&emsp;板：<select class="topItemSelect" id="temples"></select><br><br>
         商&emsp;&emsp;家：<select class="topItemSelect" id="businesses"
                                onchange="updateBusinessCode(this.id)"></select><br><br>
