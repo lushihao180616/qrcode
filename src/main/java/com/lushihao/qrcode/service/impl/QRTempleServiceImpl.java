@@ -2,7 +2,9 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.QRTempleMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
+import com.lushihao.qrcode.service.QRCodeService;
 import com.lushihao.qrcode.service.QRTempleService;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class QRTempleServiceImpl implements QRTempleService {
     private QRTempleMapper qrTempleMapper;
     @Resource
     private ProjectBasicInfo projectBasicInfo;
+    @Resource
+    private QRCodeService qrCodeService;
 
     @Override
     public String create(QRCodeTemple qrCodeTemple, String templeItemsPath) {
@@ -33,6 +37,13 @@ public class QRTempleServiceImpl implements QRTempleService {
             }
             //下面需要拷贝文件夹中所有文件
             copyDirectory(templeItemsPath.substring(0, templeItemsPath.lastIndexOf("\\")), templePath);
+
+            String modelPath = projectBasicInfo.getModelUrl();
+            File modelDirectory = new File(modelPath);
+            if (!modelDirectory.exists()) {//如果文件夹不存在
+                modelDirectory.mkdir();//创建文件夹
+            }
+            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode()));
             return "创建成功";
         }
         return "创建失败";
@@ -48,6 +59,13 @@ public class QRTempleServiceImpl implements QRTempleService {
                 //下面需要拷贝文件夹中所有文件
                 copyDirectory(templeItemsPath.substring(0, templeItemsPath.lastIndexOf("\\")), templePath);
             }
+
+            String modelPath = projectBasicInfo.getModelUrl();
+            File modelDirectory = new File(modelPath);
+            if (!modelDirectory.exists()) {//如果文件夹不存在
+                modelDirectory.mkdir();//创建文件夹
+            }
+            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode()));
             return "更新成功";
         }
         return "更新失败";

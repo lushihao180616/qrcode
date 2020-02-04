@@ -51,4 +51,13 @@ public class QRCodeRequest {
         this.fileName = fileName;
     }
 
+    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName) {
+        this.message = message;
+        this.templeCode = templeCode;
+        this.businessCode = businessCode;
+        this.fileName = fileName;
+    }
+
+    public QRCodeRequest() {
+    }
 }

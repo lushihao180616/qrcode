@@ -18,11 +18,11 @@
     </insert>
     <select id="select" parameterType="QRCodeRecord" resultType="QRCodeRecord">
         SELECT
-        *
+            *
         FROM
-        qrcoderecord
+            qrcoderecord
         WHERE
-        1=1
+            businesscode&lt;&gt;'00000000'
         <if test="templeCode != null">
             AND templeCode
             LIKE '${templeCode}%'

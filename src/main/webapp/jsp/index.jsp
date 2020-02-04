@@ -24,6 +24,8 @@
 <p>
     <a style="margin: 10px;padding: 10px;background-color: burlywood" href="temple.jsp">模&emsp;板&emsp;管&emsp;理</a>
 </p>
+
 <hr>
+
 </body>
 </html>

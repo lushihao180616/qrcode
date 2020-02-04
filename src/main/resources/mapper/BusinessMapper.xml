@@ -38,7 +38,7 @@
         FROM
             business
         WHERE
-            1=1
+            code&lt;&gt;'00000000'
         <if test="code != null">
         AND code
             LIKE '${code}%'

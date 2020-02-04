@@ -20,6 +20,10 @@ public class ProjectBasicInfo {
      */
     private String businessUrl;
     /**
+     * 模板样例
+     */
+    private String modelUrl;
+    /**
      * 删除模板的同时也删除模板图片文件
      */
     private boolean deleteAllTempleFiles;
@@ -52,6 +56,14 @@ public class ProjectBasicInfo {
         this.businessUrl = businessUrl;
     }
 
+    public String getModelUrl() {
+        return modelUrl;
+    }
+
+    public void setModelUrl(String modelUrl) {
+        this.modelUrl = modelUrl;
+    }
+
     public boolean isDeleteAllTempleFiles() {
         return deleteAllTempleFiles;
     }
@@ -68,10 +80,11 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
+        this.modelUrl = modelUrl;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }

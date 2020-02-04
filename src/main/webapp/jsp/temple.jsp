@@ -64,7 +64,7 @@
     </select><br><br>
         算法选择：<select class="topItemSelect" id="updateArti">
         <option value="0">热门算法</option>
-        <option value="1">最初算法</option>
+<%--        <option value="1">最初算法</option>--%>
     </select><br><br>
         背景透明：<select class="topItemSelect" id="updateTransparent">
         <option value="1">是</option>
