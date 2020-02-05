@@ -25,6 +25,9 @@ function getTemple() {
                     option.text = templeList[i].code;
                     temples.add(option);
                 }
+                if (templeList.length > 0) {
+                    updateTempleCode("temples");
+                }
             }
         }
     }
@@ -52,13 +55,49 @@ function getBusiness() {
                     option.text = businessList[i].code;
                     businesses.add(option);
                 }
-                if(businessList.length > 0){
+                if (businessList.length > 0) {
                     updateBusinessCode("businesses");
                 }
             }
         }
     }
     xhr.send(JSON.stringify(filterBusinessCode));
+}
+
+function updateTempleCode(id) {
+    var temple = JSON.parse(document.getElementById(id).value);
+    var ifOnly = ''
+    if (temple.ifOnly) {
+        ifOnly += "是"
+    } else {
+        ifOnly += "否"
+    }
+    var ifShowLogo = ''
+    if (temple.ifShowLogo) {
+        ifShowLogo += "是"
+    } else {
+        ifShowLogo += "否"
+    }
+    var ifSelfBg = ''
+    if (temple.ifSelfBg) {
+        ifSelfBg += "是"
+    } else {
+        ifSelfBg += "否"
+    }
+    var arti = ''
+    if (temple.arti == '0') {
+        arti += "热门算法"
+    } else if (templeList[i].arti == '1') {
+        arti += "最初算法"
+    }
+    document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
+    document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
+    document.getElementById("nowTemple_ifShowLogo").innerText = '显示商标：' + ifShowLogo;
+    document.getElementById("nowTemple_ifSelfBg").innerText = '自定背景：' + ifSelfBg;
+    document.getElementById("nowTemple_arti").innerText = '算        法：' + arti;
+    document.getElementById("nowTemple_width_height").innerText = '宽        高：' + temple.width + " / " + temple.height;
+    document.getElementById("nowTemple_x_y").innerText = '偏  移  量：' + temple.x + " / " + temple.y;
+    document.getElementById("nowTemple_path").innerText = '模板样例：' + temple.path;
 }
 
 function updateBusinessCode(id) {
@@ -117,7 +156,8 @@ function create() {
         message: document.getElementById("message").value,
         templeCode: JSON.parse(document.getElementById("temples").value).code,
         businessCode: JSON.parse(document.getElementById("businesses").value).code,
-        fileName: document.getElementById("fileName").value
+        fileName: document.getElementById("fileName").value,
+        backGround: document.getElementById("backGround").value
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
@@ -134,6 +174,7 @@ function create() {
                 document.getElementById("temples").options[0].selected = true;
                 document.getElementById("businesses").options[0].selected = true;
                 document.getElementById("fileName").value = '';
+                document.getElementById("backGround").value = '';
             }
         }
     }

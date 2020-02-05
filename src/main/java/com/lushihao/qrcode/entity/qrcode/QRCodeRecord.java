@@ -75,4 +75,15 @@ public class QRCodeRecord {
         this.money = money;
     }
 
+    public QRCodeRecord(String templeCode, String businessCode, String fileName, String url, String saveTime, double money) {
+        this.templeCode = templeCode;
+        this.businessCode = businessCode;
+        this.fileName = fileName;
+        this.url = url;
+        this.saveTime = saveTime;
+        this.money = money;
+    }
+
+    public QRCodeRecord() {
+    }
 }

@@ -18,6 +18,10 @@ public class QRCodeRequest {
      * 文件名
      */
     private String fileName;
+    /**
+     * 背景图片
+     */
+    private String backGround;
 
     public String getMessage() {
         return message;
@@ -51,11 +55,20 @@ public class QRCodeRequest {
         this.fileName = fileName;
     }
 
-    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName) {
+    public String getBackGround() {
+        return backGround;
+    }
+
+    public void setBackGround(String backGround) {
+        this.backGround = backGround;
+    }
+
+    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName, String backGround) {
         this.message = message;
         this.templeCode = templeCode;
         this.businessCode = businessCode;
         this.fileName = fileName;
+        this.backGround = backGround;
     }
 
     public QRCodeRequest() {

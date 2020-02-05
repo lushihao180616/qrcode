@@ -1,6 +1,5 @@
 package com.lushihao.qrcode.service.impl;
 
-import com.google.zxing.qrcode.encoder.QRCode;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.dao.QRTempleMapper;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
@@ -25,7 +24,7 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     @Override
     public String create(QRCodeRequest qrCodeRequest) {
-        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName());
+        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround());
         boolean back = lshqrCodeUtil.qrcode(qrCodeVo);
         if (back) {
             return "创建成功";

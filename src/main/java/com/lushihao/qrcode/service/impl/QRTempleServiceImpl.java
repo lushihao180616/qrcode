@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.service.impl;
 
+import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.QRTempleMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
@@ -13,7 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QRTempleServiceImpl implements QRTempleService {
@@ -43,7 +46,7 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode()));
+            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null));
             return "创建成功";
         }
         return "创建失败";
@@ -65,7 +68,7 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode()));
+            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null));
             return "更新成功";
         }
         return "更新失败";
@@ -90,8 +93,15 @@ public class QRTempleServiceImpl implements QRTempleService {
     }
 
     @Override
-    public List<QRCodeTemple> filter(String code) {
-        return qrTempleMapper.filter(code);
+    public List<Map<String, Object>> filter(String code) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        List<QRCodeTemple> templeList = qrTempleMapper.filter(code);
+        for (QRCodeTemple qrCodeTemple : templeList) {
+            Map<String, Object> map = LSHMapUtils.entityToMap(qrCodeTemple);
+            map.put("path", projectBasicInfo.getModelUrl() + "\\" + qrCodeTemple.getCode() + ".jpg");
+            list.add(map);
+        }
+        return list;
     }
 
     /**

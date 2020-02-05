@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -131,7 +132,7 @@ public class QRTempleController {
 
     @RequestMapping("filter")
     @ResponseBody
-    public List<QRCodeTemple> filter(@RequestBody Map<String, Object> reqMap) {
+    public List<Map<String, Object>> filter(@RequestBody Map<String, Object> reqMap) {
         String code = (String) reqMap.get("code");
         if ("".equals(code)) {
             code = null;

@@ -23,6 +23,10 @@ public class QRCodeVo {
      * 文件名
      */
     private String fileName;
+    /**
+     * 背景图片
+     */
+    private String backGround;
 
     public String getMessage() {
         return message;
@@ -56,11 +60,20 @@ public class QRCodeVo {
         this.fileName = fileName;
     }
 
-    public QRCodeVo(String message, QRCodeTemple typeCode, String businessCode, String fileName) {
+    public String getBackGround() {
+        return backGround;
+    }
+
+    public void setBackGround(String backGround) {
+        this.backGround = backGround;
+    }
+
+    public QRCodeVo(String message, QRCodeTemple typeCode, String businessCode, String fileName, String backGround) {
         this.message = message;
         this.typeCode = typeCode;
         this.businessCode = businessCode;
         this.fileName = fileName;
+        this.backGround = backGround;
     }
 
     public QRCodeVo() {

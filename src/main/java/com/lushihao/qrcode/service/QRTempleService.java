@@ -3,6 +3,7 @@ package com.lushihao.qrcode.service;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QRTempleService {
 
@@ -12,5 +13,5 @@ public interface QRTempleService {
 
     String delete(String code);
 
-    List<QRCodeTemple> filter(String code);
+    List<Map<String, Object>> filter(String code);
 }

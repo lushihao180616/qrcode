@@ -20,14 +20,17 @@
     <div class="topItem1">
         <br>
         <span class="topItemTitle">二维码信息：</span><br><br><br>
-        模&emsp;&emsp;板：<input class="topItemFilter" id="filterTemple" style="margin-right: 25px"/>商&emsp;&emsp;家：<input class="topItemFilter" id="filterBusiness"/><input class="topItemSearch" type="button"
-                                                                            value="搜索"
-                                                                            onclick="init()"/><br><br>
+        模&emsp;&emsp;板：<input class="topItemFilter" id="filterTemple" style="margin-right: 25px"/>商&emsp;&emsp;家：<input
+            class="topItemFilter" id="filterBusiness"/><input class="topItemSearch" type="button"
+                                                              value="搜索"
+                                                              onclick="init()"/><br><br>
         信&emsp;&emsp;息：<textarea class="topItemInput" style="height: 80px" type="text" id="message"></textarea><br><br>
-        模&emsp;&emsp;板：<select class="topItemSelect" id="temples"></select><br><br>
+        模&emsp;&emsp;板：<select class="topItemSelect" id="temples"
+                               onchange="updateTempleCode(this.id)"></select><br><br>
         商&emsp;&emsp;家：<select class="topItemSelect" id="businesses"
                                onchange="updateBusinessCode(this.id)"></select><br><br>
         文&ensp;件&ensp;名：<input class="topItemInput" type="text" id="fileName"/><br><br>
+        背景图片：<input class="topItemSelect" id="backGround" type="file" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
@@ -47,6 +50,23 @@
     <div class="topItem3">
         <br>
         <span class="topItemTitle">模板信息：</span><br><br><br>
+
+        <div style="height: 10px"></div>
+        <div class="topItemSelect" id="nowTemple_price"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_ifOnly"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_ifShowLogo"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_ifSelfBg"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_arti"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_width_height"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_x_y"></div>
+        <br>
+        <div class="topItemSelect" id="nowTemple_path"></div>
     </div>
 </div>
 
