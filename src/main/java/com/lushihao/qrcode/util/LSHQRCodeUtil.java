@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.Buffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -34,17 +33,28 @@ public class LSHQRCodeUtil {
     @Resource
     private QRCodeRecordMapper qrCodeRecordMapper;
 
-    private int width = 975;
-    private int height = 975;
-
+    // 二维码宽度
+    private int width = 1950;
+    // 二维码高度
+    private int height = 1950;
     // 设置偏移量，不设置可能导致解析出错
-    private int pixoff = 25;
+    private int pixoff = 50;
     // 像素大小
-    private int pix = 25;
+    private int pix = 50;
+    // logo背景宽度
+    private int logoBgWidth = 240;
+    // logo背景高度
+    private int logoBgHeight = 240;
+    // logo宽度
+    private int logoWidth = 200;
+    // logo高度
+    private int logoHeight = 200;
     // 二维码数组的长度
     private int codeLength;
     // 随机数，生成[0,2]之间的随机整数,取长度为3的数组下标
     private int max = 3;
+    // 自定义背景图片较短边长度
+    private int bgMinWidthOrHeight = 4800;
 
     //素材图片容器
     private BufferedImage image_eye;
@@ -82,7 +92,7 @@ public class LSHQRCodeUtil {
             //创建二维码
             BufferedImage image = getQRCode(qrCodeVo);
             //添加背景
-            addBG(image, qrCodeVo);
+            image = addBG(image, qrCodeVo);
             //输出图片
             String filePath = outPutImage(image, qrCodeVo);
             //记录一下
@@ -136,7 +146,7 @@ public class LSHQRCodeUtil {
             imageLogoBorder = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\logo_border.png"));
         }
         if (!qrCodeVo.getTypeCode().isIfOnly()) {
-            if (qrCodeVo.getTypeCode().isIfSelfBg()) {
+            if (qrCodeVo.getTypeCode().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {
                 imageBG = ImageIO.read(new FileInputStream(qrCodeVo.getBackGround()));
             } else {
                 imageBG = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\bg.jpg"));
@@ -180,6 +190,7 @@ public class LSHQRCodeUtil {
         boolean[][] code = qrcode.calQrcode(contentsBytes);
         //获取二维码数组的长度
         codeLength = code.length;
+        //清空码眼位置的图片
 
         //绘制二维码，选择算法
         if (qrCodeVo.getTypeCode().getArti().equals("0")) {
@@ -190,8 +201,8 @@ public class LSHQRCodeUtil {
 
         //添加logo
         if (qrCodeVo.getTypeCode().isIfShowLogo()) {
-            gs.drawImage(imageLogoBorder, (width - 120) / 2, (height - 120) / 2, 120, 120, null);
-            gs.drawImage(imageLogo, (width - 100) / 2, (height - 100) / 2, 100, 100, null);
+            gs.drawImage(imageLogo, (width - logoWidth) / 2, (height - logoHeight) / 2, logoWidth, logoHeight, null);
+            gs.drawImage(imageLogoBorder, (width - logoBgWidth) / 2, (height - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
         }
         //释放画笔
         gs.dispose();
@@ -200,36 +211,37 @@ public class LSHQRCodeUtil {
 
     /**
      * 添加背景图片
-     *
-     * @param image
+     *  @param image
      * @param qrCodeVo
+     * @return
      */
-    private void addBG(BufferedImage image, QRCodeVo qrCodeVo) {
+    private BufferedImage addBG(BufferedImage image, QRCodeVo qrCodeVo) {
         if (!qrCodeVo.getTypeCode().isIfOnly()) {
             //获取图片缓存流对象
             BufferedImage backGroundImage = new BufferedImage(qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), BufferedImage.TYPE_INT_RGB);
             Graphics2D bg = backGroundImage.createGraphics();
             int bgWidth;
             int bgHeight;
-            if (qrCodeVo.getTypeCode().isIfSelfBg()) {//非自定义图片处理方式
-                bgWidth = qrCodeVo.getTypeCode().getWidth();
-                bgHeight = qrCodeVo.getTypeCode().getHeight();
-            } else {//自定义图片处理方式
+            if (qrCodeVo.getTypeCode().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {//自定义图片处理方式
                 int width = backGroundImage.getWidth();
                 int height = backGroundImage.getHeight();
                 if (width > height) {
-                    bgWidth = 2400 * width / height;
-                    bgHeight = 2400;
+                    bgWidth = bgMinWidthOrHeight;
+                    bgHeight = bgMinWidthOrHeight * height / width;
                 } else {
-                    bgWidth = 2400;
-                    bgHeight = 2400 * height / width;
+                    bgWidth = bgMinWidthOrHeight * width / height;
+                    bgHeight = bgMinWidthOrHeight;
                 }
+            } else {//非自定义图片处理方式
+                bgWidth = qrCodeVo.getTypeCode().getWidth();
+                bgHeight = qrCodeVo.getTypeCode().getHeight();
             }
             bg.drawImage(imageBG, 0, 0, bgWidth, bgHeight, null);
             bg.drawImage(image, qrCodeVo.getTypeCode().getX(), qrCodeVo.getTypeCode().getY(), width, height, null);
             bg.dispose();
-            image = backGroundImage;
+            return backGroundImage;
         }
+        return image;
     }
 
     /**
@@ -378,19 +390,19 @@ public class LSHQRCodeUtil {
                     if (i + 2 < codeLength && code[i + 1][j] && code[i + 2][j]) {
                         //随机取图片  下标随机[0,2]，画50*150的图
                         int s3 = random.nextInt(max);
-                        gs.drawImage(img3[s3], j * 25 + pixoff, i * 25 + pixoff, pix, 3 * pix, null);
+                        gs.drawImage(img3[s3], j * pix + pixoff, i * pix + pixoff, pix, 3 * pix, null);
                         code[i + 2][j] = false;
                         code[i + 1][j] = false;
                     } else if (i + 1 < codeLength && code[i + 1][j]) {
                         //1*2
                         //随机取图片，画50*100的图
                         int s2 = random.nextInt(max);
-                        gs.drawImage(img2[s2], j * 25 + pixoff, i * 25 + pixoff, pix, 2 * pix, null);
+                        gs.drawImage(img2[s2], j * pix + pixoff, i * pix + pixoff, pix, 2 * pix, null);
                         code[i + 1][j] = false;
                     } else {
                         //随机取图片，画50*50的图
                         int s1 = random.nextInt(max);
-                        gs.drawImage(img1[s1], j * 25 + pixoff, i * 25 + pixoff, pix, pix, null);
+                        gs.drawImage(img1[s1], j * pix + pixoff, i * pix + pixoff, pix, pix, null);
                     }
                 }
             }

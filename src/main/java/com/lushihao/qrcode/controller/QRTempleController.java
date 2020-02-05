@@ -41,7 +41,7 @@ public class QRTempleController {
         } else if (code.charAt(2) == '1') {
             qrCodeTemple.setArti("1");
         }
-        if (code.charAt(1) == '1' && code.charAt(3) == '0') {
+        if (code.charAt(1) == '1' && code.charAt(3) == '1') {
             qrCodeTemple.setIfSelfBg(true);
         } else {
             qrCodeTemple.setIfSelfBg(false);
@@ -92,7 +92,7 @@ public class QRTempleController {
         } else if (code.charAt(2) == '1') {
             qrCodeTemple.setArti("1");
         }
-        if (code.charAt(1) == '1' && code.charAt(3) == '0') {
+        if (code.charAt(1) == '1' && code.charAt(3) == '1') {
             qrCodeTemple.setIfSelfBg(true);
         } else {
             qrCodeTemple.setIfSelfBg(false);
