@@ -23,9 +23,10 @@ function getTemple() {
                     '        <th class="bottomTh3">仅二维码</th>\n' +
                     '        <th class="bottomTh4">显示商标</th>\n' +
                     '        <th class="bottomTh5">算法选择</th>\n' +
-                    '        <th class="bottomTh6">背景透明</th>\n' +
-                    '        <th class="bottomTh7">X偏移量</th>\n' +
-                    '        <th class="bottomTh8">Y偏移量</th>\n' +
+                    '        <th class="bottomTh6">背景宽度</th>\n' +
+                    '        <th class="bottomTh7">背景高度</th>\n' +
+                    '        <th class="bottomTh8">X偏移量</th>\n' +
+                    '        <th class="bottomTh9">Y偏移量</th>\n' +
                     '    </tr>';
 
                 for (var i = 0; i < templeList.length; i++) {
@@ -62,9 +63,10 @@ function getTemple() {
                         '        <td class="bottomTd3">' + ifOnly + '</td>\n' +
                         '        <td class="bottomTd4">' + ifShowLogo + '</td>\n' +
                         '        <td class="bottomTd5">' + arti + '</td>\n' +
-                        '        <td class="bottomTd6">' + transparent + '</td>\n' +
-                        '        <td class="bottomTd7">' + templeList[i].x + '</td>\n' +
-                        '        <td class="bottomTd8">' + templeList[i].y + '</td>\n' +
+                        '        <td class="bottomTd6">' + templeList[i].width + '</td>\n' +
+                        '        <td class="bottomTd7">' + templeList[i].height + '</td>\n' +
+                        '        <td class="bottomTd8">' + templeList[i].x + '</td>\n' +
+                        '        <td class="bottomTd9">' + templeList[i].y + '</td>\n' +
                         '    </tr>';
                 }
             }
@@ -80,7 +82,8 @@ function create() {
         ifOnly: Boolean(parseInt(document.getElementById("createIfOnly").value)),
         ifShowLogo: Boolean(parseInt(document.getElementById("createIfShowLogo").value)),
         arti: document.getElementById("createArti").value,
-        transparent: Boolean(parseInt(document.getElementById("createTransparent").value)),
+        width: parseInt(document.getElementById("createWidth").value),
+        height: parseInt(document.getElementById("createHeight").value),
         x: parseInt(document.getElementById("createX").value),
         y: parseInt(document.getElementById("createY").value),
         templeItemsPath: document.getElementById('createTempleItemsPath').value
@@ -101,9 +104,10 @@ function create() {
                 document.getElementById("createIfOnly").options[0].selected = true;
                 document.getElementById("createIfShowLogo").options[0].selected = true;
                 document.getElementById("createArti").options[0].selected = true;
-                document.getElementById("createTransparent").options[0].selected = true;
-                document.getElementById("createX").value = '';
-                document.getElementById("createY").value = '';
+                document.getElementById("createWidth").value = '975';
+                document.getElementById("createHeight").value = '975';
+                document.getElementById("createX").value = '0';
+                document.getElementById("createY").value = '0';
                 document.getElementById('createTempleItemsPath').value = '';
             }
         }
@@ -159,11 +163,8 @@ function updateTempleCode(id) {
     } else {
         document.getElementById("updateArti").options[1].selected = true;
     }
-    if (temple.transparent) {
-        document.getElementById("updateTransparent").options[0].selected = true;
-    } else {
-        document.getElementById("updateTransparent").options[1].selected = true;
-    }
+    document.getElementById("updateWidth").value = temple.width;
+    document.getElementById("updateHeight").value = temple.height;
     document.getElementById("updateX").value = temple.x;
     document.getElementById("updateY").value = temple.y;
 }
@@ -175,7 +176,8 @@ function update() {
         ifOnly: Boolean(parseInt(document.getElementById("updateIfOnly").value)),
         ifShowLogo: Boolean(parseInt(document.getElementById("updateIfShowLogo").value)),
         arti: document.getElementById("updateArti").value,
-        transparent: Boolean(parseInt(document.getElementById("updateTransparent").value)),
+        width: parseInt(document.getElementById("updateWidth").value),
+        height: parseInt(document.getElementById("updateHeight").value),
         x: parseInt(document.getElementById("updateX").value),
         y: parseInt(document.getElementById("updateY").value),
         templeItemsPath: document.getElementById('updateTempleItemsPath').value
@@ -196,7 +198,8 @@ function update() {
                 document.getElementById("updateIfOnly").options[0].selected = true;
                 document.getElementById("updateIfShowLogo").options[0].selected = true;
                 document.getElementById("updateArti").options[0].selected = true;
-                document.getElementById("updateTransparent").options[0].selected = true;
+                document.getElementById("updateWidth").value = '';
+                document.getElementById("updateHeight").value = '';
                 document.getElementById("updateX").value = '';
                 document.getElementById("updateY").value = '';
                 document.getElementById('updateTempleItemsPath').value = '';
@@ -254,11 +257,8 @@ function deleteTempleCode(id) {
     } else {
         document.getElementById("deleteArti").innerText = '算法选择：最初算法';
     }
-    if (temple.transparent) {
-        document.getElementById("deleteTransparent").innerText = '背景透明：是';
-    } else {
-        document.getElementById("deleteTransparent").innerText = '背景透明：否';
-    }
+    document.getElementById("deleteWidth").innerText = '背景宽度：' + temple.width;
+    document.getElementById("deleteHeight").innerText = '背景高度：' + temple.height;
     document.getElementById("deleteX").innerText = 'x  偏移量：' + temple.x;
     document.getElementById("deleteY").innerText = 'y  偏移量：' + temple.y;
 }
@@ -283,7 +283,8 @@ function deleteOne() {
                 document.getElementById("deleteIfOnly").innerText = '';
                 document.getElementById("deleteIfShowLogo").innerText = '';
                 document.getElementById("deleteArti").innerText = '';
-                document.getElementById("deleteTransparent").innerText = '';
+                document.getElementById("deleteWidth").innerText = '';
+                document.getElementById("deleteHeight").innerText = '';
                 document.getElementById("deleteX").innerText = '';
                 document.getElementById("deleteY").innerText = '';
             }

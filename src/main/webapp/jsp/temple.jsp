@@ -32,14 +32,12 @@
     </select><br><br>
         算法选择：<select class="topItemSelect" id="createArti">
         <option value="0">热门算法</option>
-        <option value="1">最初算法</option>
+        <%--<option value="1">最初算法</option>--%>
     </select><br><br>
-        背景透明：<select class="topItemSelect" id="createTransparent">
-        <option value="1">是</option>
-        <option value="0">否</option>
-    </select><br><br>
-        x&ensp;偏移量：<input class="topItemInput" type="text" id="createX"/><br><br>
-        y&ensp;偏移量：<input class="topItemInput" type="text" id="createY"/><br><br>
+        背景宽度：<input class="topItemInput" type="text" value="975" id="createWidth"/><br><br>
+        背景高度：<input class="topItemInput" type="text" value="975" id="createHeight"/><br><br>
+        x&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createX"/><br><br>
+        y&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createY"/><br><br>
         文&ensp;件&ensp;夹：<input class="topItemSelect" type="file" id="createTempleItemsPath" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
@@ -64,12 +62,10 @@
     </select><br><br>
         算法选择：<select class="topItemSelect" id="updateArti">
         <option value="0">热门算法</option>
-<%--        <option value="1">最初算法</option>--%>
+        <%--<option value="1">最初算法</option>--%>
     </select><br><br>
-        背景透明：<select class="topItemSelect" id="updateTransparent">
-        <option value="1">是</option>
-        <option value="0">否</option>
-    </select><br><br>
+        背景宽度：<input class="topItemInput" type="text" id="updateWidth"/><br><br>
+        背景高度：<input class="topItemInput" type="text" id="updateHeight"/><br><br>
         x&ensp;偏移量：<input class="topItemInput" type="text" id="updateX"/><br><br>
         y&ensp;偏移量：<input class="topItemInput" type="text" id="updateY"/><br><br>
         文&ensp;件&ensp;夹：<input class="topItemSelect" id="updateTempleItemsPath" type="file" name="uploadFile"/><br><br>
@@ -94,7 +90,9 @@
         <br>
         <div class="topItemSelect" id="deleteArti"></div>
         <br>
-        <div class="topItemSelect" id="deleteTransparent"></div>
+        <div class="topItemSelect" id="deleteWidth"></div>
+        <br>
+        <div class="topItemSelect" id="deleteHeight"></div>
         <br>
         <div class="topItemSelect" id="deleteX"></div>
         <br>

@@ -3,5 +3,5 @@ basic:
   qrcodeUrl: C:\Users\86153\Desktop\outputQrcode
   businessUrl: C:\Users\86153\Desktop\businessLogo
   modelUrl: C:\Users\86153\Desktop\model
-  deleteAllTempleFiles: false
-  deleteAllBusinessFiles: false
+  deleteAllTempleFiles: true
+  deleteAllBusinessFiles: true

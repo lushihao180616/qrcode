@@ -17,6 +17,7 @@ public class JspController {
     public String getIndex(HttpServletRequest request) {
         return "index";
     }
+
     @RequestMapping("getQRCode")
     public String getQRCode(HttpServletRequest request) {
         return "qrcode";

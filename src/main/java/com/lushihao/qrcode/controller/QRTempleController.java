@@ -26,8 +26,17 @@ public class QRTempleController {
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
         qrCodeTemple.setIfOnly((Boolean) reqMap.get("ifOnly"));
         qrCodeTemple.setIfShowLogo((Boolean) reqMap.get("ifShowLogo"));
-        qrCodeTemple.setTransparent((Boolean) reqMap.get("transparent"));
         qrCodeTemple.setMoney(Double.parseDouble(reqMap.get("money").toString()));
+        if(reqMap.get("width") == null){
+            qrCodeTemple.setWidth(0);
+        }else{
+            qrCodeTemple.setWidth((Integer) reqMap.get("width"));
+        }
+        if(reqMap.get("height") == null){
+            qrCodeTemple.setHeight(0);
+        }else{
+            qrCodeTemple.setHeight((Integer) reqMap.get("height"));
+        }
         if(reqMap.get("x") == null){
             qrCodeTemple.setX(0);
         }else{
@@ -49,8 +58,17 @@ public class QRTempleController {
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
         qrCodeTemple.setIfOnly((Boolean) reqMap.get("ifOnly"));
         qrCodeTemple.setIfShowLogo((Boolean) reqMap.get("ifShowLogo"));
-        qrCodeTemple.setTransparent((Boolean) reqMap.get("transparent"));
         qrCodeTemple.setMoney(Double.parseDouble(reqMap.get("money").toString()));
+        if(reqMap.get("width") == null){
+            qrCodeTemple.setWidth(0);
+        }else{
+            qrCodeTemple.setWidth((Integer) reqMap.get("width"));
+        }
+        if(reqMap.get("height") == null){
+            qrCodeTemple.setHeight(0);
+        }else{
+            qrCodeTemple.setHeight((Integer) reqMap.get("height"));
+        }
         if(reqMap.get("x") == null){
             qrCodeTemple.setX(0);
         }else{

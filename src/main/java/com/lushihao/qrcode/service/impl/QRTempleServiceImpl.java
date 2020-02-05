@@ -79,6 +79,9 @@ public class QRTempleServiceImpl implements QRTempleService {
                 //模板地址
                 String logoPath = projectBasicInfo.getTempleUrl() + "\\" + code;
                 delFile(logoPath);
+                //模板地址
+                String modelPath = projectBasicInfo.getModelUrl() + "\\" + code + ".jpg";
+                delFile(modelPath);
             }
 
             return "删除成功";

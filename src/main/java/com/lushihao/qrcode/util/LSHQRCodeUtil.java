@@ -94,7 +94,7 @@ public class LSHQRCodeUtil {
             //获取画笔
             Graphics2D gs = image.createGraphics();
             //判断是否使用二维码背景颜色是透明
-            if (qrCodeVo.getTypeCode().isTransparent()) {
+            if (!qrCodeVo.getTypeCode().isIfOnly()) {
                 //设置透明
                 image = gs.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
                 gs = image.createGraphics();
@@ -143,14 +143,14 @@ public class LSHQRCodeUtil {
             //如果类型不是单码，则装载背景图片，将二维码写进背景图片中，只有单码没有背景
             if (!qrCodeVo.getTypeCode().isIfOnly()) {
                 //获取图片缓存流对象
-                BufferedImage backimage = new BufferedImage(975, 975, BufferedImage.TYPE_INT_RGB);
+                BufferedImage backimage = new BufferedImage(qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), BufferedImage.TYPE_INT_RGB);
                 bg = backimage.createGraphics();
-                bg.drawImage(imageBG, 0, 0, 975, 975, null);
+                bg.drawImage(imageBG, 0, 0, qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), null);
 
                 //位置坐标
                 int x = qrCodeVo.getTypeCode().getX();
                 int y = qrCodeVo.getTypeCode().getY();
-                bg.drawImage(image, x, y, 975, 975, null);
+                bg.drawImage(image, x, y, width, height, null);
                 bg.dispose();
                 image = backimage;
             }

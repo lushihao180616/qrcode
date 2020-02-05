@@ -26,9 +26,13 @@ public class QRCodeTemple {
      */
     private String arti;
     /**
-     * 背景是否透明（Y:透明，N:不透明）
+     * 起绘点X
      */
-    private boolean transparent;
+    private int width;
+    /**
+     * 起绘点Y
+     */
+    private int height;
     /**
      * 起绘点X
      */
@@ -78,12 +82,20 @@ public class QRCodeTemple {
         this.arti = arti;
     }
 
-    public boolean isTransparent() {
-        return transparent;
+    public int getWidth() {
+        return width;
     }
 
-    public void setTransparent(boolean transparent) {
-        this.transparent = transparent;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getX() {
@@ -102,13 +114,14 @@ public class QRCodeTemple {
         this.y = y;
     }
 
-    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, String arti, boolean transparent, int x, int y) {
+    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, String arti, int width, int height, int x, int y) {
         this.code = code;
         this.money = money;
         this.ifOnly = ifOnly;
         this.ifShowLogo = ifShowLogo;
         this.arti = arti;
-        this.transparent = transparent;
+        this.width = width;
+        this.height = height;
         this.x = x;
         this.y = y;
     }
