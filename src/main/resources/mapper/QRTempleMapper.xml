@@ -5,9 +5,9 @@
     <insert id="create" parameterType="QRCodeTemple">
         INSERT INTO
             qrcodetemple
-            (code,money,ifOnly,ifShowLogo,arti,width,height,x,y)
+            (code,money,ifOnly,ifShowLogo,ifSelfBg,arti,width,height,x,y)
         VALUES
-            (#{code},#{money},#{ifOnly},#{ifShowLogo},#{arti},#{width},#{height},#{x},#{y})
+            (#{code},#{money},#{ifOnly},#{ifShowLogo},#{ifSelfBg},#{arti},#{width},#{height},#{x},#{y})
     </insert>
     <update id="update" parameterType="QRCodeTemple">
         UPDATE
@@ -16,6 +16,7 @@
             money=#{money},
             ifOnly=#{ifOnly},
             ifShowLogo=#{ifShowLogo},
+            ifSelfBg=#{ifSelfBg},
             arti=#{arti},
             width=#{width},
             height=#{height},

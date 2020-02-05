@@ -139,20 +139,31 @@ public class LSHQRCodeUtil {
             }
             //释放画笔
             gs.dispose();
-            Graphics2D bg = null;
             //如果类型不是单码，则装载背景图片，将二维码写进背景图片中，只有单码没有背景
             if (!qrCodeVo.getTypeCode().isIfOnly()) {
-                //获取图片缓存流对象
-                BufferedImage backimage = new BufferedImage(qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), BufferedImage.TYPE_INT_RGB);
-                bg = backimage.createGraphics();
-                bg.drawImage(imageBG, 0, 0, qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), null);
-
                 //位置坐标
                 int x = qrCodeVo.getTypeCode().getX();
                 int y = qrCodeVo.getTypeCode().getY();
-                bg.drawImage(image, x, y, width, height, null);
-                bg.dispose();
-                image = backimage;
+
+                //获取图片缓存流对象
+                BufferedImage backGroundImage = new BufferedImage(qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), BufferedImage.TYPE_INT_RGB);
+
+                Graphics2D bg = backGroundImage.createGraphics();
+                bg.setBackground(Color.WHITE);//设置背景色
+                bg.clearRect(x, y, width, height);
+
+//                AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+//                bg.setComposite(ac);
+                bg.drawImage(imageBG, 0, 0, qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), null);
+
+                //获取图片缓存流对象
+                BufferedImage finalImage = new BufferedImage(qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), BufferedImage.TYPE_INT_RGB);
+
+                Graphics2D fin = finalImage.createGraphics();
+                fin.drawImage(backGroundImage, 0, 0, qrCodeVo.getTypeCode().getWidth(), qrCodeVo.getTypeCode().getHeight(), null);
+                fin.drawImage(image, x, y, width, height, null);
+                fin.dispose();
+                image = finalImage;
             }
             //生成二维码图片
             String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date());

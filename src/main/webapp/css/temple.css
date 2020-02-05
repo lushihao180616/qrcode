@@ -86,15 +86,11 @@
     width: 100%;
 }
 
-.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8, .bottomTh9 {
+.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8, .bottomTh9, bottomTh10 {
     width: 10%;
     background-color: red;
     color: white;
     padding: 5px;
-}
-
-.bottomTh1 {
-    width: 20%;
 }
 
 .bottomTh2 {
@@ -129,14 +125,14 @@
     background-color: indigo;
 }
 
-.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6, .bottomTd7, .bottomTd8, .bottomTd9 {
+.bottomTh10 {
+    background-color: chocolate;
+}
+
+.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6, .bottomTd7, .bottomTd8, .bottomTd9, .bottomTd10 {
     width: 10%;
     border: 2px solid red;
     padding: 5px;
-}
-
-.bottomTd1 {
-    width: 20%;
 }
 
 .bottomTd2 {
@@ -169,4 +165,8 @@
 
 .bottomTd9 {
     border: 2px solid indigo;
+}
+
+.bottomTd10 {
+    border: 2px solid chocolate;
 }

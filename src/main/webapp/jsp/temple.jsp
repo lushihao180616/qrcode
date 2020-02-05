@@ -22,18 +22,6 @@
         <span class="topItemTitle">创建模板：</span><br><br><br>
         编&emsp;&emsp;号：<input class="topItemInput" type="text" id="createCode"/><br><br>
         价&emsp;&emsp;格：<input class="topItemInput" type="text" id="createMoney"/><br><br>
-        仅二维码：<select class="topItemSelect" id="createIfOnly">
-        <option value="1">是</option>
-        <option value="0">否</option>
-    </select><br><br>
-        显示商标：<select class="topItemSelect" id="createIfShowLogo">
-        <option value="1">是</option>
-        <option value="0">否</option>
-    </select><br><br>
-        算法选择：<select class="topItemSelect" id="createArti">
-        <option value="0">热门算法</option>
-        <%--<option value="1">最初算法</option>--%>
-    </select><br><br>
         背景宽度：<input class="topItemInput" type="text" value="975" id="createWidth"/><br><br>
         背景高度：<input class="topItemInput" type="text" value="975" id="createHeight"/><br><br>
         x&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createX"/><br><br>
@@ -52,18 +40,6 @@
         编&emsp;&emsp;号：<select class="topItemSelect" id="updateTemples"
                                onchange="updateTempleCode(this.id)"></select><br><br>
         价&emsp;&emsp;格：<input class="topItemInput" type="text" id="updateMoney"/><br><br>
-        仅二维码：<select class="topItemSelect" id="updateIfOnly">
-        <option value="1">是</option>
-        <option value="0">否</option>
-    </select><br><br>
-        显示商标：<select class="topItemSelect" id="updateIfShowLogo">
-        <option value="1">是</option>
-        <option value="0">否</option>
-    </select><br><br>
-        算法选择：<select class="topItemSelect" id="updateArti">
-        <option value="0">热门算法</option>
-        <%--<option value="1">最初算法</option>--%>
-    </select><br><br>
         背景宽度：<input class="topItemInput" type="text" id="updateWidth"/><br><br>
         背景高度：<input class="topItemInput" type="text" id="updateHeight"/><br><br>
         x&ensp;偏移量：<input class="topItemInput" type="text" id="updateX"/><br><br>
@@ -83,12 +59,6 @@
                                onchange="deleteTempleCode(this.id)"></select><br><br>
         <div style="height: 10px"></div>
         <div class="topItemSelect" id="deleteMoney"></div>
-        <br>
-        <div class="topItemSelect" id="deleteIfOnly"></div>
-        <br>
-        <div class="topItemSelect" id="deleteIfShowLogo"></div>
-        <br>
-        <div class="topItemSelect" id="deleteArti"></div>
         <br>
         <div class="topItemSelect" id="deleteWidth"></div>
         <br>

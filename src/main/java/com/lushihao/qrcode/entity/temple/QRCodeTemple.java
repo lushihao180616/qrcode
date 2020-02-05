@@ -22,6 +22,10 @@ public class QRCodeTemple {
      */
     private boolean ifShowLogo;
     /**
+     * 是否自定义背景(true:显示)
+     */
+    private boolean ifSelfBg;
+    /**
      * 创建二维码方式（0:热门，1:最初）
      */
     private String arti;
@@ -74,6 +78,14 @@ public class QRCodeTemple {
         this.ifShowLogo = ifShowLogo;
     }
 
+    public boolean isIfSelfBg() {
+        return ifSelfBg;
+    }
+
+    public void setIfSelfBg(boolean ifSelfBg) {
+        this.ifSelfBg = ifSelfBg;
+    }
+
     public String getArti() {
         return arti;
     }
@@ -114,11 +126,12 @@ public class QRCodeTemple {
         this.y = y;
     }
 
-    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, String arti, int width, int height, int x, int y) {
+    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int x, int y) {
         this.code = code;
         this.money = money;
         this.ifOnly = ifOnly;
         this.ifShowLogo = ifShowLogo;
+        this.ifSelfBg = ifSelfBg;
         this.arti = arti;
         this.width = width;
         this.height = height;
