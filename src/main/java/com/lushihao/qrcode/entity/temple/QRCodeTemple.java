@@ -49,6 +49,10 @@ public class QRCodeTemple {
      * 起绘点Y
      */
     private int y;
+    /**
+     * 角度
+     */
+    private int angle;
 
     public String getCode() {
         return code;
@@ -138,7 +142,15 @@ public class QRCodeTemple {
         this.y = y;
     }
 
-    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int iconNum, int x, int y) {
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int iconNum, int x, int y, int angle) {
         this.code = code;
         this.money = money;
         this.ifOnly = ifOnly;
@@ -150,6 +162,7 @@ public class QRCodeTemple {
         this.iconNum = iconNum;
         this.x = x;
         this.y = y;
+        this.angle = angle;
     }
 
     public QRCodeTemple() {

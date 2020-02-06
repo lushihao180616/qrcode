@@ -68,6 +68,11 @@ public class QRTempleController {
             qrCodeTemple.setY((Integer) reqMap.get("y"));
         }
         qrCodeTemple.setIconNum((Integer) reqMap.get("iconNum"));
+        if(reqMap.get("angle") == null || "".equals(reqMap.get("angle"))){
+            qrCodeTemple.setAngle(0);
+        }else{
+            qrCodeTemple.setAngle((Integer) reqMap.get("angle"));
+        }
         String back = qrTempleService.create(qrCodeTemple, templeItemsPath);
         return back;
     }
@@ -120,6 +125,11 @@ public class QRTempleController {
             qrCodeTemple.setY((Integer) reqMap.get("y"));
         }
         qrCodeTemple.setIconNum((Integer) reqMap.get("iconNum"));
+        if(reqMap.get("angle") == null || "".equals(reqMap.get("angle"))){
+            qrCodeTemple.setAngle(0);
+        }else{
+            qrCodeTemple.setAngle((Integer) reqMap.get("angle"));
+        }
         String back = qrTempleService.update(qrCodeTemple, templeItemsPath);
         return back;
     }
