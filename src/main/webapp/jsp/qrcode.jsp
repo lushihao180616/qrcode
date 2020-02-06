@@ -30,7 +30,7 @@
         商&emsp;&emsp;家：<select class="topItemSelect" id="businesses"
                                onchange="updateBusinessCode(this.id)"></select><br><br>
         文&ensp;件&ensp;名：<input class="topItemInput" type="text" id="fileName"/><br><br>
-        背景图片：<input class="topItemSelect" id="backGround" type="file" name="uploadFile"/><br><br>
+        <label id="backGroundLabel">背景图片：</label><input class="topItemSelect" id="backGround" type="file" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>

@@ -37,9 +37,9 @@ public class QRTempleController {
             qrCodeTemple.setIfOnly(false);
         }
         if (code.charAt(2) == '0') {
-            qrCodeTemple.setArti("0");
+            qrCodeTemple.setArti("0-1-2-3-4");
         } else if (code.charAt(2) == '1') {
-            qrCodeTemple.setArti("1");
+            qrCodeTemple.setArti("0-1-2-5-6");
         }
         if (code.charAt(1) == '1' && code.charAt(3) == '1') {
             qrCodeTemple.setIfSelfBg(true);

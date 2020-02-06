@@ -267,16 +267,31 @@ public class LSHQRCodeUtil {
         BufferedImage[] img3 = new BufferedImage[max];
         BufferedImage[] img4 = new BufferedImage[max];
         for (int i = 1; i <= max; i++) {
-            BufferedImage image0 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png"));
-            BufferedImage image1 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\1" + i + ".png"));
-            BufferedImage image2 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\2" + i + ".png"));
-            BufferedImage image3 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\3" + i + ".png"));
-            BufferedImage image4 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\4" + i + ".png"));
-            img0[i - 1] = image0;
-            img1[i - 1] = image1;
-            img2[i - 1] = image2;
-            img3[i - 1] = image3;
-            img4[i - 1] = image4;
+            File file0 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png");
+            if(file0.exists()){
+                BufferedImage image0 = ImageIO.read(new FileInputStream(file0));
+                img0[i - 1] = image0;
+            }
+            File file1 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\1" + i + ".png");
+            if(file1.exists()){
+                BufferedImage image1 = ImageIO.read(new FileInputStream(file1));
+                img1[i - 1] = image1;
+            }
+            File file2 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\2" + i + ".png");
+            if(file2.exists()){
+                BufferedImage image2 = ImageIO.read(new FileInputStream(file2));
+                img2[i - 1] = image2;
+            }
+            File file3 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\3" + i + ".png");
+            if(file3.exists()){
+                BufferedImage image3 = ImageIO.read(new FileInputStream(file3));
+                img3[i - 1] = image3;
+            }
+            File file4 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\4" + i + ".png");
+            if(file4.exists()){
+                BufferedImage image4 = ImageIO.read(new FileInputStream(file4));
+                img4[i - 1] = image4;
+            }
         }
 
         Random random = new Random();
@@ -288,11 +303,13 @@ public class LSHQRCodeUtil {
                 if (i == -1 || j == -1 || i == codeLength || j == codeLength) {
                     //随机取图片，画50*50的图
                     int s0 = random.nextInt(max);
-                    gs.drawImage(img0[s0], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    if(img0[0] != null){
+                        gs.drawImage(img0[s0], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    }
                     continue;
                 }
                 if (code[i][j]) {
-                    if (i + 1 < codeLength && j + 1 < codeLength && code[i][j + 1] && code[i + 1][j + 1] && code[i + 1][j]) {
+                    if (img4[0] != null && i + 1 < codeLength && j + 1 < codeLength && code[i][j + 1] && code[i + 1][j + 1] && code[i + 1][j]) {
                         //随机取图片，画100*100的图
                         int s4 = random.nextInt(max);
                         gs.drawImage(img4[s4], i * pix + pixoff, j * pix + pixoff, 2 * pix, 2 * pix, null);
@@ -309,7 +326,7 @@ public class LSHQRCodeUtil {
                         if (!set.contains(code3)) {
                             set.add(code3);
                         }
-                    } else if (j + 1 < codeLength && code[i][j + 1]) {
+                    } else if (img3[0] != null && j + 1 < codeLength && code[i][j + 1]) {
                         //随机取图片，画50*100的图
                         int s3 = random.nextInt(max);
                         gs.drawImage(img3[s3], i * pix + pixoff, j * pix + pixoff, pix, 2 * pix, null);
@@ -318,7 +335,7 @@ public class LSHQRCodeUtil {
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
-                    } else if (i + 1 < codeLength && code[i + 1][j]) {
+                    } else if (img2[0] != null && i + 1 < codeLength && code[i + 1][j]) {
                         //随机取图片，画100*50的图
                         int s2 = random.nextInt(max);
                         gs.drawImage(img2[s2], i * pix + pixoff, j * pix + pixoff, 2 * pix, pix, null);
@@ -339,7 +356,9 @@ public class LSHQRCodeUtil {
                     }
                     //随机取图片，画50*50的图
                     int s0 = random.nextInt(max);
-                    gs.drawImage(img0[s0], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    if(img0[0] != null){
+                        gs.drawImage(img0[s0], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    }
                 }
             }
         }
@@ -360,16 +379,31 @@ public class LSHQRCodeUtil {
         BufferedImage[] img5 = new BufferedImage[max];
         BufferedImage[] img6 = new BufferedImage[max];
         for (int i = 1; i <= max; i++) {
-            BufferedImage image0 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png"));
-            BufferedImage image1 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\1" + i + ".png"));
-            BufferedImage image2 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\2" + i + ".png"));
-            BufferedImage image5 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\5" + i + ".png"));
-            BufferedImage image6 = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\6" + i + ".png"));
-            img0[i - 1] = image0;
-            img1[i - 1] = image1;
-            img2[i - 1] = image2;
-            img5[i - 1] = image5;
-            img6[i - 1] = image6;
+            File file0 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png");
+            if(file0.exists()){
+                BufferedImage image0 = ImageIO.read(new FileInputStream(file0));
+                img0[i - 1] = image0;
+            }
+            File file1 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\1" + i + ".png");
+            if(file1.exists()){
+                BufferedImage image1 = ImageIO.read(new FileInputStream(file1));
+                img1[i - 1] = image1;
+            }
+            File file2 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\2" + i + ".png");
+            if(file2.exists()){
+                BufferedImage image2 = ImageIO.read(new FileInputStream(file2));
+                img2[i - 1] = image2;
+            }
+            File file5 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\5" + i + ".png");
+            if(file5.exists()){
+                BufferedImage image3 = ImageIO.read(new FileInputStream(file5));
+                img5[i - 1] = image3;
+            }
+            File file6 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\6" + i + ".png");
+            if(file6.exists()){
+                BufferedImage image4 = ImageIO.read(new FileInputStream(file6));
+                img6[i - 1] = image4;
+            }
         }
 
         Random random = new Random();
@@ -380,11 +414,13 @@ public class LSHQRCodeUtil {
                 int iconIndex = random.nextInt(max);
                 if (i == -1 || j == -1 || i == codeLength || j == codeLength) {
                     //随机取图片，画50*50的图
-                    gs.drawImage(img0[iconIndex], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    if(img0[0] != null){
+                        gs.drawImage(img0[iconIndex], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    }
                     continue;
                 }
                 if (code[i][j]) {
-                    if (i + 3 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j]) {
+                    if (img6[0] != null && i + 3 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j]) {
                         //随机取图片，画200*50的图
                         gs.drawImage(img6[iconIndex], i * pix + pixoff, j * pix + pixoff, 4 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = false;
@@ -400,7 +436,7 @@ public class LSHQRCodeUtil {
                         if (!set.contains(code3)) {
                             set.add(code3);
                         }
-                    } else if (i + 2 < codeLength && code[i + 1][j] && code[i + 2][j]) {
+                    } else if (img5[0] != null && i + 2 < codeLength && code[i + 1][j] && code[i + 2][j]) {
                         //随机取图片，画150*50的图
                         gs.drawImage(img5[iconIndex], i * pix + pixoff, j * pix + pixoff, 3 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = false;
@@ -412,7 +448,7 @@ public class LSHQRCodeUtil {
                         if (!set.contains(code2)) {
                             set.add(code2);
                         }
-                    } else if (i + 1 < codeLength && code[i + 1][j]) {
+                    } else if (img2[0] != null && i + 1 < codeLength && code[i + 1][j]) {
                         //随机取图片，画100*50的图
                         gs.drawImage(img2[iconIndex], i * pix + pixoff, j * pix + pixoff, 2 * pix, pix, null);
                         code[i + 1][j] = false;
@@ -430,7 +466,9 @@ public class LSHQRCodeUtil {
                         continue;
                     }
                     //随机取图片，画50*50的图
-                    gs.drawImage(img0[iconIndex], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    if(img0[0] != null){
+                        gs.drawImage(img0[iconIndex], i * pix + pixoff, j * pix + pixoff, pix, pix, null);
+                    }
                 }
             }
         }

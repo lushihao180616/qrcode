@@ -81,8 +81,12 @@ function updateTempleCode(id) {
     var ifSelfBg = ''
     if (temple.ifSelfBg) {
         ifSelfBg += "是"
+        document.getElementById("backGround").hidden = false;
+        document.getElementById("backGroundLabel").hidden = false;
     } else {
         ifSelfBg += "否"
+        document.getElementById("backGround").hidden = true;
+        document.getElementById("backGroundLabel").hidden = true;
     }
     document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
     document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
