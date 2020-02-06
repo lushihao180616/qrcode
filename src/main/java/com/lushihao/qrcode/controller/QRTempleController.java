@@ -67,6 +67,7 @@ public class QRTempleController {
         } else {
             qrCodeTemple.setY((Integer) reqMap.get("y"));
         }
+        qrCodeTemple.setIconNum((Integer) reqMap.get("iconNum"));
         String back = qrTempleService.create(qrCodeTemple, templeItemsPath);
         return back;
     }
@@ -88,9 +89,9 @@ public class QRTempleController {
             qrCodeTemple.setIfOnly(false);
         }
         if (code.charAt(2) == '0') {
-            qrCodeTemple.setArti("0");
+            qrCodeTemple.setArti("0-1-2-3-4");
         } else if (code.charAt(2) == '1') {
-            qrCodeTemple.setArti("1");
+            qrCodeTemple.setArti("0-1-2-5-6");
         }
         if (code.charAt(1) == '1' && code.charAt(3) == '1') {
             qrCodeTemple.setIfSelfBg(true);
@@ -118,6 +119,7 @@ public class QRTempleController {
         } else {
             qrCodeTemple.setY((Integer) reqMap.get("y"));
         }
+        qrCodeTemple.setIconNum((Integer) reqMap.get("iconNum"));
         String back = qrTempleService.update(qrCodeTemple, templeItemsPath);
         return back;
     }

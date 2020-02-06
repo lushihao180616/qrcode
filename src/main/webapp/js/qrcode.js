@@ -84,17 +84,11 @@ function updateTempleCode(id) {
     } else {
         ifSelfBg += "否"
     }
-    var arti = ''
-    if (temple.arti == '0') {
-        arti += "热门算法"
-    } else if (templeList[i].arti == '1') {
-        arti += "最初算法"
-    }
     document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
     document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
     document.getElementById("nowTemple_ifShowLogo").innerText = '显示商标：' + ifShowLogo;
     document.getElementById("nowTemple_ifSelfBg").innerText = '自定背景：' + ifSelfBg;
-    document.getElementById("nowTemple_arti").innerText = '算        法：' + arti;
+    document.getElementById("nowTemple_arti").innerText = '算        法：' + temple.arti;
     document.getElementById("nowTemple_width_height").innerText = '宽        高：' + temple.width + " / " + temple.height;
     document.getElementById("nowTemple_x_y").innerText = '偏  移  量：' + temple.x + " / " + temple.y;
     document.getElementById("nowTemple_path").innerText = '模板样例：' + temple.path;

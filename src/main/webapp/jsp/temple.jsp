@@ -22,11 +22,12 @@
         <span class="topItemTitle">创建模板：</span><br><br><br>
         编&emsp;&emsp;号：<input class="topItemInput" type="text" id="createCode"/><br><br>
         价&emsp;&emsp;格：<input class="topItemInput" type="text" id="createMoney"/><br><br>
-        背景宽度：<input class="topItemInput" type="text" value="975" id="createWidth"/><br><br>
-        背景高度：<input class="topItemInput" type="text" value="975" id="createHeight"/><br><br>
+        背景宽度：<input class="topItemInput" type="text" value="1950" id="createWidth"/><br><br>
+        背景高度：<input class="topItemInput" type="text" value="1950" id="createHeight"/><br><br>
+        子图数量：<input class="topItemInput" type="text" value="1" id="createIconNum"/><br><br>
         x&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createX"/><br><br>
         y&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createY"/><br><br>
-        文&ensp;件&ensp;夹：<input class="topItemSelect" type="file" id="createTempleItemsPath" name="uploadFile"/><br><br>
+        模板图标：<input class="topItemSelect" type="file" id="createTempleItemsPath" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
@@ -42,9 +43,10 @@
         价&emsp;&emsp;格：<input class="topItemInput" type="text" id="updateMoney"/><br><br>
         背景宽度：<input class="topItemInput" type="text" id="updateWidth"/><br><br>
         背景高度：<input class="topItemInput" type="text" id="updateHeight"/><br><br>
+        子图数量：<input class="topItemInput" type="text" id="updateIconNum"/><br><br>
         x&ensp;偏移量：<input class="topItemInput" type="text" id="updateX"/><br><br>
         y&ensp;偏移量：<input class="topItemInput" type="text" id="updateY"/><br><br>
-        文&ensp;件&ensp;夹：<input class="topItemSelect" id="updateTempleItemsPath" type="file" name="uploadFile"/><br><br>
+        模板图标：<input class="topItemSelect" id="updateTempleItemsPath" type="file" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="更新" onclick="update()"/>
     </div>
@@ -63,6 +65,8 @@
         <div class="topItemSelect" id="deleteWidth"></div>
         <br>
         <div class="topItemSelect" id="deleteHeight"></div>
+        <br>
+        <div class="topItemSelect" id="deleteIconNum"></div>
         <br>
         <div class="topItemSelect" id="deleteX"></div>
         <br>

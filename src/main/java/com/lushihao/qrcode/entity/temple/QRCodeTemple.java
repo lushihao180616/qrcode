@@ -38,6 +38,10 @@ public class QRCodeTemple {
      */
     private int height;
     /**
+     * 子图数量
+     */
+    private int iconNum;
+    /**
      * 起绘点X
      */
     private int x;
@@ -110,6 +114,14 @@ public class QRCodeTemple {
         this.height = height;
     }
 
+    public int getIconNum() {
+        return iconNum;
+    }
+
+    public void setIconNum(int iconNum) {
+        this.iconNum = iconNum;
+    }
+
     public int getX() {
         return x;
     }
@@ -126,7 +138,7 @@ public class QRCodeTemple {
         this.y = y;
     }
 
-    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int x, int y) {
+    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int iconNum, int x, int y) {
         this.code = code;
         this.money = money;
         this.ifOnly = ifOnly;
@@ -135,6 +147,7 @@ public class QRCodeTemple {
         this.arti = arti;
         this.width = width;
         this.height = height;
+        this.iconNum = iconNum;
         this.x = x;
         this.y = y;
     }

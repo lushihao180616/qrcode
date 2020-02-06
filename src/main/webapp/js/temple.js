@@ -26,8 +26,10 @@ function getTemple() {
                     '        <th class="bottomTh6">算法选择</th>\n' +
                     '        <th class="bottomTh7">背景宽度</th>\n' +
                     '        <th class="bottomTh8">背景高度</th>\n' +
-                    '        <th class="bottomTh9">X偏移量</th>\n' +
-                    '        <th class="bottomTh10">Y偏移量</th>\n' +
+                    '        <th class="bottomTh9">子图数量</th>\n' +
+                    '        <th class="bottomTh10">X偏移量</th>\n' +
+                    '        <th class="bottomTh11">Y偏移量</th>\n' +
+                    '        <th class="bottomTh12">模板样例</th>\n' +
                     '    </tr>';
 
                 for (var i = 0; i < templeList.length; i++) {
@@ -49,14 +51,6 @@ function getTemple() {
                     } else {
                         ifSelfBg += "否"
                     }
-                    var arti = ''
-                    if (templeList[i].arti == '0') {
-                        arti += "热门算法"
-                    } else if (templeList[i].arti == '1') {
-                        arti += "最初算法"
-                    } else if (templeList[i].arti == '2') {
-                        arti += "三角算法"
-                    }
                     temples.innerHTML += '\n' +
                         '    <tr>\n' +
                         '        <td class="bottomTd1">' + templeList[i].code + '</td>\n' +
@@ -64,11 +58,13 @@ function getTemple() {
                         '        <td class="bottomTd3">' + ifOnly + '</td>\n' +
                         '        <td class="bottomTd4">' + ifShowLogo + '</td>\n' +
                         '        <td class="bottomTd5">' + ifSelfBg + '</td>\n' +
-                        '        <td class="bottomTd6">' + arti + '</td>\n' +
+                        '        <td class="bottomTd6">' + templeList[i].arti + '</td>\n' +
                         '        <td class="bottomTd7">' + templeList[i].width + '</td>\n' +
                         '        <td class="bottomTd8">' + templeList[i].height + '</td>\n' +
-                        '        <td class="bottomTd9">' + templeList[i].x + '</td>\n' +
-                        '        <td class="bottomTd10">' + templeList[i].y + '</td>\n' +
+                        '        <td class="bottomTd9">' + templeList[i].iconNum + '</td>\n' +
+                        '        <td class="bottomTd10">' + templeList[i].x + '</td>\n' +
+                        '        <td class="bottomTd11">' + templeList[i].y + '</td>\n' +
+                        '        <td class="bottomTd12">' + templeList[i].path + '</td>\n' +
                         '    </tr>';
                 }
             }
@@ -83,6 +79,7 @@ function create() {
         money: document.getElementById("createMoney").value,
         width: parseInt(document.getElementById("createWidth").value),
         height: parseInt(document.getElementById("createHeight").value),
+        iconNum: parseInt(document.getElementById("createIconNum").value),
         x: parseInt(document.getElementById("createX").value),
         y: parseInt(document.getElementById("createY").value),
         templeItemsPath: document.getElementById('createTempleItemsPath').value
@@ -100,8 +97,9 @@ function create() {
                 init();
                 document.getElementById("createCode").value = '';
                 document.getElementById("createMoney").value = '';
-                document.getElementById("createWidth").value = '975';
-                document.getElementById("createHeight").value = '975';
+                document.getElementById("createWidth").value = '1950';
+                document.getElementById("createHeight").value = '1950';
+                document.getElementById("createIconNum").value = '1';
                 document.getElementById("createX").value = '0';
                 document.getElementById("createY").value = '0';
                 document.getElementById('createTempleItemsPath').value = '';
@@ -146,6 +144,7 @@ function updateTempleCode(id) {
     document.getElementById("updateMoney").value = temple.money;
     document.getElementById("updateWidth").value = temple.width;
     document.getElementById("updateHeight").value = temple.height;
+    document.getElementById("updateIconNum").value = temple.iconNum;
     document.getElementById("updateX").value = temple.x;
     document.getElementById("updateY").value = temple.y;
 }
@@ -156,6 +155,7 @@ function update() {
         money: document.getElementById("updateMoney").value,
         width: parseInt(document.getElementById("updateWidth").value),
         height: parseInt(document.getElementById("updateHeight").value),
+        iconNum: parseInt(document.getElementById("updateIconNum").value),
         x: parseInt(document.getElementById("updateX").value),
         y: parseInt(document.getElementById("updateY").value),
         templeItemsPath: document.getElementById('updateTempleItemsPath').value
@@ -175,6 +175,7 @@ function update() {
                 document.getElementById("updateMoney").value = '';
                 document.getElementById("updateWidth").value = '';
                 document.getElementById("updateHeight").value = '';
+                document.getElementById("updateIconNum").value = '';
                 document.getElementById("updateX").value = '';
                 document.getElementById("updateY").value = '';
                 document.getElementById('updateTempleItemsPath').value = '';
@@ -219,6 +220,7 @@ function deleteTempleCode(id) {
     document.getElementById("deleteMoney").innerText = '价        格：' + temple.money;
     document.getElementById("deleteWidth").innerText = '背景宽度：' + temple.width;
     document.getElementById("deleteHeight").innerText = '背景高度：' + temple.height;
+    document.getElementById("deleteIconNum").innerText = '子图数量：' + temple.iconNum;
     document.getElementById("deleteX").innerText = 'x  偏移量：' + temple.x;
     document.getElementById("deleteY").innerText = 'y  偏移量：' + temple.y;
 }
@@ -242,6 +244,7 @@ function deleteOne() {
                 document.getElementById("deleteMoney").innerText = '';
                 document.getElementById("deleteWidth").innerText = '';
                 document.getElementById("deleteHeight").innerText = '';
+                document.getElementById("deleteIconNum").innerText = '';
                 document.getElementById("deleteX").innerText = '';
                 document.getElementById("deleteY").innerText = '';
             }
