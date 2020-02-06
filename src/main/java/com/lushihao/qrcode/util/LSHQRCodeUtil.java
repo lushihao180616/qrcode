@@ -314,7 +314,7 @@ public class LSHQRCodeUtil {
                     //随机取图片，画50*50的图
                     int s0 = random.nextInt(max);
                     if (img0[0] != null) {
-                        gs.drawImage(img0[s0], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
+//                        gs.drawImage(img0[s0], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                     continue;
                 }
@@ -425,7 +425,7 @@ public class LSHQRCodeUtil {
                 if (i == -1 || j == -1 || i == codeLength || j == codeLength) {
                     //随机取图片，画50*50的图
                     if (img0[0] != null) {
-                        gs.drawImage(img0[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
+//                        gs.drawImage(img0[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                     continue;
                 }
