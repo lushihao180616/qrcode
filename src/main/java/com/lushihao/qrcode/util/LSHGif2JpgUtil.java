@@ -1,15 +1,19 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import com.madgag.gif.fmsware.GifDecoder;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
+@Component
 public class LSHGif2JpgUtil {
 
     /**
@@ -18,7 +22,7 @@ public class LSHGif2JpgUtil {
      * @param jpgDirectoryPath
      * @param gifFilePath
      */
-    public static void jpgToGif(String jpgDirectoryPath, String gifFilePath) throws IOException {
+    public void jpgToGif(String jpgDirectoryPath, String gifFilePath) throws IOException {
         Map<Integer, BufferedImage> map = new HashMap<>();
         //初始化文件复制
         File file1 = new File(jpgDirectoryPath);
@@ -48,7 +52,7 @@ public class LSHGif2JpgUtil {
      * @param map
      * @param gifFilePath
      */
-    public static void jpgToGif(Map<Integer, BufferedImage> map, String gifFilePath) throws IOException {
+    public void jpgToGif(Map<Integer, BufferedImage> map, String gifFilePath) throws IOException {
         AnimatedGifEncoder e = new AnimatedGifEncoder();
         e.setRepeat(1);
         e.start(gifFilePath);//生成gif图片位置名称
@@ -66,42 +70,19 @@ public class LSHGif2JpgUtil {
      *
      * @throws IOException
      */
-    public synchronized static void gifToJpg(String gifFilePath, String jpgDirectoryPath) throws IOException {
+    public synchronized Map<Integer, BufferedImage> gifToJpg(String gifFilePath) throws IOException {
+        Map<Integer, BufferedImage> backMap = new HashMap<>();
         GifDecoder decoder = new GifDecoder();
         InputStream is = new FileInputStream(gifFilePath);
         if (decoder.read(is) != 0) {
-            return;
+            return null;
         }
         is.close();
         for (int i = 0; i < decoder.getFrameCount(); i++) {
             BufferedImage frame = decoder.getFrame(i);
-            int delay = decoder.getDelay(i);
-            OutputStream out = new FileOutputStream(jpgDirectoryPath + "\\" + (i + 1) + ".jpg");
-            ImageIO.write(frame, "jpg", out);// 将frame 按jpeg格式 写入out中
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-            out.flush();
-            out.close();
+            backMap.put(i, frame);
         }
-    }
-
-    /**
-     * gif转jpg
-     *
-     * @throws IOException
-     */
-    public synchronized static Map<Integer, BufferedImage> gifToJpg(String gifFilePath) throws IOException {
-        Map<Integer, BufferedImage> map = new HashMap<>();
-        GifDecoder decoder = new GifDecoder();
-        InputStream is = new FileInputStream(gifFilePath);
-        if (decoder.read(is) != 0) {
-            return map;
-        }
-        is.close();
-        for (int i = 0; i < decoder.getFrameCount(); i++) {
-            BufferedImage frame = decoder.getFrame(i);
-            map.put(i, frame);
-        }
-        return map;
+        return backMap;
     }
 
 }

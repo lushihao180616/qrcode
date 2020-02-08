@@ -29,6 +29,7 @@ public class initProject implements ApplicationRunner {
         createDirectory(projectBasicInfo.getBusinessUrl());
         createDirectory(projectBasicInfo.getQrcodeUrl());
         createDirectory(projectBasicInfo.getModelUrl());
+        createDirectory(projectBasicInfo.getTempJpgUrl());
     }
 
     private void createDirectory(String directory) {

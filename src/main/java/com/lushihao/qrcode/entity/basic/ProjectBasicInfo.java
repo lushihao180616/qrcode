@@ -24,6 +24,10 @@ public class ProjectBasicInfo {
      */
     private String modelUrl;
     /**
+     * 生成mp4时临时jpg文件地址
+     */
+    private String tempJpgUrl;
+    /**
      * 删除模板的同时也删除模板图片文件
      */
     private boolean deleteAllTempleFiles;
@@ -64,6 +68,14 @@ public class ProjectBasicInfo {
         this.modelUrl = modelUrl;
     }
 
+    public String getTempJpgUrl() {
+        return tempJpgUrl;
+    }
+
+    public void setTempJpgUrl(String tempJpgUrl) {
+        this.tempJpgUrl = tempJpgUrl;
+    }
+
     public boolean isDeleteAllTempleFiles() {
         return deleteAllTempleFiles;
     }
@@ -80,11 +92,12 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
         this.modelUrl = modelUrl;
+        this.tempJpgUrl = tempJpgUrl;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }

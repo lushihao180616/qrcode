@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class QrcodeApplication {
 
 	public static void main(String[] args) {
+		System.setProperty("java.awt.headless","false");
 		SpringApplication.run(QrcodeApplication.class, args);
 	}
 
