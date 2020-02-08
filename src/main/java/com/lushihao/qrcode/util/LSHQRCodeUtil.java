@@ -12,14 +12,12 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
-import static java.lang.Math.PI;
+import java.util.*;
 
 /**
  * QrcodeText 二维码
@@ -61,10 +59,11 @@ public class LSHQRCodeUtil {
     private int max = 1;
     // 自定义背景图片较短边长度
     private int bgMinWidthOrHeight = 4800;
+    // 是否动态背景
+    private boolean isGif = false;
 
     //素材图片容器
     private BufferedImage image_eye;
-    private BufferedImage imageBG;
     private BufferedImage imageLogo;
     private BufferedImage imageLogoBorder;
 
@@ -84,9 +83,9 @@ public class LSHQRCodeUtil {
             //创建二维码
             BufferedImage image = getQRCode(qrCodeVo);
             //添加背景
-            image = addBG(image, qrCodeVo);
+            Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCodeVo);
             //输出图片
-            String filePath = outPutImage(image, qrCodeVo);
+            String filePath = outPutImage(imageAndBg, qrCodeVo);
             //记录一下
             qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
         } catch (Exception e) {
@@ -208,18 +207,15 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo
      * @return
      */
-    private BufferedImage addBG(BufferedImage image, QRCodeVo qrCodeVo) throws IOException {
-        if (!qrCodeVo.getQrCodeTemple().isIfOnly()) {
-            if (qrCodeVo.getQrCodeTemple().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {
-                imageBG = ImageIO.read(new FileInputStream(qrCodeVo.getBackGround()));
-            } else {
-                imageBG = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg"));
-            }
-        }
+    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo) throws IOException {
+        Map<Integer, BufferedImage> returnMap = new HashMap<>();
+        Map<Integer, BufferedImage> map = new HashMap<>();
+        BufferedImage imageBG = null;
         if (!qrCodeVo.getQrCodeTemple().isIfOnly()) {
             int bgWidth;
             int bgHeight;
-            if (qrCodeVo.getQrCodeTemple().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {//自定义图片处理方式
+            if (qrCodeVo.getQrCodeTemple().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {
+                imageBG = ImageIO.read(new FileInputStream(qrCodeVo.getBackGround()));
                 int width = imageBG.getWidth();
                 int height = imageBG.getHeight();
                 if (width > height) {
@@ -229,25 +225,49 @@ public class LSHQRCodeUtil {
                     bgWidth = bgMinWidthOrHeight * width / height;
                     bgHeight = bgMinWidthOrHeight;
                 }
-            } else {//非自定义图片处理方式
+            } else {
+                File file = new File(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg");
+                if (file.exists()) {//bg.jpg
+                    isGif = false;
+                    imageBG = ImageIO.read(new FileInputStream(file));
+                } else {
+                    isGif = true;
+                    map = LSHGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.gif");
+                }
                 bgWidth = qrCodeVo.getQrCodeTemple().getWidth();
                 bgHeight = qrCodeVo.getQrCodeTemple().getHeight();
             }
-            //获取图片缓存流对象
-            BufferedImage backGroundImage = new BufferedImage(bgWidth, bgHeight, BufferedImage.TYPE_INT_RGB);
-            Graphics2D bg = backGroundImage.createGraphics();
-            bg.drawImage(imageBG, 0, 0, bgWidth, bgHeight, null);
-            bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX(), qrCodeVo.getQrCodeTemple().getY(), defaultWidth, defaultHeight, null);
-            bg.dispose();
-            return backGroundImage;
+
+            if (isGif) {//动图背景
+                for (int i = 0; i < map.size(); i++) {
+                    //获取图片缓存流对象
+                    BufferedImage backGroundImage = map.get(i);
+                    Graphics2D bg = backGroundImage.createGraphics();
+                    bg.drawImage(imageBG, 0, 0, bgWidth, bgHeight, null);
+                    bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX(), qrCodeVo.getQrCodeTemple().getY(), defaultWidth, defaultHeight, null);
+                    bg.dispose();
+                    returnMap.put(i, backGroundImage);
+                }
+            } else {
+                //获取图片缓存流对象
+                BufferedImage backGroundImage = new BufferedImage(bgWidth, bgHeight, BufferedImage.TYPE_INT_RGB);
+                Graphics2D bg = backGroundImage.createGraphics();
+                bg.drawImage(imageBG, 0, 0, bgWidth, bgHeight, null);
+                bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX(), qrCodeVo.getQrCodeTemple().getY(), defaultWidth, defaultHeight, null);
+                bg.dispose();
+                returnMap.put(0, backGroundImage);
+            }
         } else {
+            //获取图片缓存流对象
             BufferedImage backGroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics2D bg = backGroundImage.createGraphics();
             bg.setBackground(Color.WHITE);
             bg.clearRect(0, 0, defaultWidth, defaultHeight);
             bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX(), qrCodeVo.getQrCodeTemple().getY(), defaultWidth, defaultHeight, null);
-            return backGroundImage;
+            bg.dispose();
+            returnMap.put(0, backGroundImage);
         }
+        return returnMap;
     }
 
     /**
@@ -517,9 +537,10 @@ public class LSHQRCodeUtil {
     /**
      * 输出图片
      *
+     * @param images
      * @param qrCodeVo
      */
-    private String outPutImage(BufferedImage image, QRCodeVo qrCodeVo) throws IOException {
+    private String outPutImage(Map<Integer, BufferedImage> images, QRCodeVo qrCodeVo) throws IOException {
         String filePath;
         if (!qrCodeVo.getBusinessCode().equals("00000000")) {//商家创建
             filePath = createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".jpg";
@@ -527,7 +548,11 @@ public class LSHQRCodeUtil {
             filePath = projectBasicInfo.getModelUrl() + "\\" + qrCodeVo.getFileName() + ".jpg";
         }
         //将文件输出
-        ImageIO.write(image, "jpg", new FileOutputStream(new File(filePath)));
+        if (isGif) {
+            LSHGif2JpgUtil.jpgToGif(images, filePath);
+        } else {
+            ImageIO.write(images.get(0), "jpg", new FileOutputStream(new File(filePath)));
+        }
         return filePath;
     }
 

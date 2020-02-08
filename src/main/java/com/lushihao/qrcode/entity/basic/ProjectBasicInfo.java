@@ -24,10 +24,6 @@ public class ProjectBasicInfo {
      */
     private String modelUrl;
     /**
-     * 输出动图地址
-     */
-    private String outputGif;
-    /**
      * 删除模板的同时也删除模板图片文件
      */
     private boolean deleteAllTempleFiles;
@@ -66,14 +62,6 @@ public class ProjectBasicInfo {
 
     public void setModelUrl(String modelUrl) {
         this.modelUrl = modelUrl;
-    }
-
-    public String getOutputGif() {
-        return outputGif;
-    }
-
-    public void setOutputGif(String outputGif) {
-        this.outputGif = outputGif;
     }
 
     public boolean isDeleteAllTempleFiles() {
