@@ -25,12 +25,11 @@ public class initProject implements ApplicationRunner {
      */
     @Override
     public void run(ApplicationArguments args) {
-
         createDirectory(projectBasicInfo.getTempleUrl());
         createDirectory(projectBasicInfo.getBusinessUrl());
         createDirectory(projectBasicInfo.getQrcodeUrl());
         createDirectory(projectBasicInfo.getModelUrl());
-
+        createDirectory(projectBasicInfo.getOutputGif());
     }
 
     private void createDirectory(String directory) {

@@ -165,6 +165,10 @@ public class LSHQRCodeUtil {
             imageLogo = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.jpg"));
             imageLogoBorder = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png"));
 
+            gs.translate(defaultWidth / 2, defaultHeight / 2);
+            gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
+            gs.translate(-defaultWidth / 2, -defaultHeight / 2);
+
             gs.drawImage(imageLogo, (defaultWidth - logoWidth) / 2, (defaultHeight - logoHeight) / 2, logoWidth, logoHeight, null);
             gs.drawImage(imageLogoBorder, (defaultWidth - logoBgWidth) / 2, (defaultHeight - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
         }
@@ -388,6 +392,7 @@ public class LSHQRCodeUtil {
         BufferedImage[] img2 = new BufferedImage[max];
         BufferedImage[] img5 = new BufferedImage[max];
         BufferedImage[] img6 = new BufferedImage[max];
+        BufferedImage[] img7 = new BufferedImage[max];
         for (int i = 1; i <= max; i++) {
             File file0 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png");
             if (file0.exists()) {
@@ -414,6 +419,11 @@ public class LSHQRCodeUtil {
                 BufferedImage image4 = ImageIO.read(new FileInputStream(file6));
                 img6[i - 1] = image4;
             }
+            File file7 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\7" + i + ".png");
+            if (file7.exists()) {
+                BufferedImage image5 = ImageIO.read(new FileInputStream(file7));
+                img7[i - 1] = image5;
+            }
         }
 
         Random random = new Random();
@@ -430,7 +440,27 @@ public class LSHQRCodeUtil {
                     continue;
                 }
                 if (code[i][j]) {
-                    if (img6[0] != null && i + 3 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j]) {
+                    if (img7[0] != null && i + 4 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j] && code[i + 4][j]) {
+                        //随机取图片，画200*50的图
+                        gs.drawImage(img7[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 5 * pix, pix, null);
+                        code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = code[i + 4][j] = false;
+                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
+                        String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
+                        String code3 = String.valueOf(i + 3) + ":" + String.valueOf(j);
+                        String code4 = String.valueOf(i + 4) + ":" + String.valueOf(j);
+                        if (!set.contains(code1)) {
+                            set.add(code1);
+                        }
+                        if (!set.contains(code2)) {
+                            set.add(code2);
+                        }
+                        if (!set.contains(code3)) {
+                            set.add(code3);
+                        }
+                        if (!set.contains(code4)) {
+                            set.add(code4);
+                        }
+                    } else if (img6[0] != null && i + 3 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j]) {
                         //随机取图片，画200*50的图
                         gs.drawImage(img6[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 4 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = false;
