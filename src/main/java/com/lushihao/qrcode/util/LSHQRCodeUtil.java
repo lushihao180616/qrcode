@@ -65,6 +65,8 @@ public class LSHQRCodeUtil {
     private int bgMinWidthOrHeight = 4800;
     // 是否动态背景
     private boolean isMp4 = false;
+    // 缩放倍数
+    private int multiple = 1;
 
     /**
      * 生成二维码
@@ -74,6 +76,7 @@ public class LSHQRCodeUtil {
      */
     public boolean qrcode(QRCodeVo qrCodeVo) {
         max = qrCodeVo.getQrCodeTemple().getIconNum();
+        multiple = qrCodeVo.getQrCodeTemple().getMultiple();
         FileOutputStream outputStream = null;
 
         try {
@@ -227,31 +230,35 @@ public class LSHQRCodeUtil {
             if (isMp4) {//动图背景
                 for (int i = 0; i < map.size(); i++) {
                     //获取图片缓存流对象
-                    BufferedImage backGroundImage = new BufferedImage(bgWidth / 5, bgHeight / 5, BufferedImage.TYPE_INT_RGB);
+                    BufferedImage backGroundImage = new BufferedImage(bgWidth / multiple, bgHeight / multiple, BufferedImage.TYPE_INT_RGB);
                     Graphics2D bg = backGroundImage.createGraphics();
-                    bg.drawImage(map.get(i), 0, 0, bgWidth / 5, bgHeight / 5, null);
-                    bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / 5, qrCodeVo.getQrCodeTemple().getY() / 5, defaultWidth / 5, defaultHeight / 5, null);
+                    bg.drawImage(map.get(i), 0, 0, bgWidth / multiple, bgHeight / multiple, null);
+                    if (qrCodeVo.getQrCodeTemple().getStartQRFrame() == 0 && qrCodeVo.getQrCodeTemple().getEndQRFrame() == 0) {
+                        bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                    } else if (i >= qrCodeVo.getQrCodeTemple().getStartQRFrame() && i <= qrCodeVo.getQrCodeTemple().getEndQRFrame()) {
+                        bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                    }
                     bg.dispose();
                     map.put(i, backGroundImage);
                 }
                 return map;
             } else {
                 //获取图片缓存流对象
-                BufferedImage backGroundImage = new BufferedImage(bgWidth, bgHeight, BufferedImage.TYPE_INT_RGB);
+                BufferedImage backGroundImage = new BufferedImage(bgWidth / multiple, bgHeight / multiple, BufferedImage.TYPE_INT_RGB);
                 Graphics2D bg = backGroundImage.createGraphics();
-                bg.drawImage(imageBG, 0, 0, bgWidth, bgHeight, null);
-                bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX(), qrCodeVo.getQrCodeTemple().getY(), defaultWidth, defaultHeight, null);
+                bg.drawImage(imageBG, 0, 0, bgWidth / multiple, bgHeight / multiple, null);
+                bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                 bg.dispose();
                 map.put(0, backGroundImage);
                 return map;
             }
         } else {
             //获取图片缓存流对象
-            BufferedImage backGroundImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            BufferedImage backGroundImage = new BufferedImage(width / multiple, height / multiple, BufferedImage.TYPE_INT_RGB);
             Graphics2D bg = backGroundImage.createGraphics();
             bg.setBackground(Color.WHITE);
-            bg.clearRect(0, 0, defaultWidth, defaultHeight);
-            bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX(), qrCodeVo.getQrCodeTemple().getY(), defaultWidth, defaultHeight, null);
+            bg.clearRect(0, 0, defaultWidth / multiple, defaultHeight / multiple);
+            bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
             bg.dispose();
             map.put(0, backGroundImage);
             return map;
@@ -537,7 +544,8 @@ public class LSHQRCodeUtil {
         }
         //将文件输出
         if (isMp4) {
-            LSHJpg2Mp4Util.convertPicToAvi(images, (filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".avi").replace("\\", "/"), 8, 1500, 1000);
+            new LSHGif2JpgUtil().jpgToGif(images, (filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif"), qrCodeVo.getQrCodeTemple().getFrame());
+//            LSHJpg2Mp4Util.convertPicToAvi(images, (filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".avi").replace("\\", "/"), qrCodeVo.getQrCodeTemple().getFrame(), 1500, 1000);
         } else {
             ImageIO.write(images.get(0), "jpg", new FileOutputStream(new File(filePath)));
         }

@@ -1,7 +1,7 @@
 .top {
     position: relative;
     width: 99%;
-    height: 650px;
+    height: 710px;
 }
 
 .topItem1, .topItem2, .topItem3, .topItem4 {
@@ -10,7 +10,7 @@
     left: 0px;
     top: 0px;
     width: 31%;
-    height: 650px;
+    height: 710px;
     background-color: #ddd;
     margin: 10px;
     padding: 10px;
@@ -18,12 +18,12 @@
 
 .topItem2 {
     left: 34%;
-    height: 650px;
+    height: 710px;
 }
 
 .topItem3 {
     left: 68%;
-    height: 650px;
+    height: 710px;
 }
 
 .topItem4 {
@@ -86,8 +86,8 @@
     width: 100%;
 }
 
-.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8, .bottomTh9, .bottomTh10, .bottomTh11, .bottomTh12, .bottomTh13 {
-    width: 7%;
+.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8, .bottomTh9, .bottomTh10, .bottomTh11, .bottomTh12, .bottomTh13, .bottomTh14, .bottomTh15 {
+    width: 5%;
     background-color: red;
     color: white;
     padding: 5px;
@@ -138,12 +138,20 @@
 }
 
 .bottomTh13 {
-    width: 16%;
     background-color: rebeccapurple;
 }
 
-.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6, .bottomTd7, .bottomTd8, .bottomTd9, .bottomTd10, .bottomTd11, .bottomTd12, .bottomTd13 {
-    width: 7%;
+.bottomTh14 {
+    background-color: burlywood;
+}
+
+.bottomTh15 {
+    width: 30%;
+    background-color: gold;
+}
+
+.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6, .bottomTd7, .bottomTd8, .bottomTd9, .bottomTd10, .bottomTd11, .bottomTd12, .bottomTd13, .bottomTd14, .bottomTd15 {
+    width: 5%;
     border: 2px solid red;
     padding: 5px;
 }
@@ -193,6 +201,14 @@
 }
 
 .bottomTd13 {
-    width: 16%;
     border: 2px solid rebeccapurple;
+}
+
+.bottomTd14 {
+    border: 2px solid burlywood;
+}
+
+.bottomTd15 {
+    width: 30%;
+    border: 2px solid gold;
 }

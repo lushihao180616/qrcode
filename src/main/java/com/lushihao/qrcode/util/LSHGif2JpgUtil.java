@@ -1,16 +1,15 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import com.madgag.gif.fmsware.GifDecoder;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Component
@@ -43,7 +42,7 @@ public class LSHGif2JpgUtil {
         for (int i = 0; i < list.size(); i++) {
             map.put(i, ImageIO.read(list.get(i)));
         }
-        jpgToGif(map, gifFilePath);
+//        jpgToGif(map, gifFilePath);
     }
 
     /**
@@ -52,15 +51,15 @@ public class LSHGif2JpgUtil {
      * @param map
      * @param gifFilePath
      */
-    public void jpgToGif(Map<Integer, BufferedImage> map, String gifFilePath) throws IOException {
+    public void jpgToGif(Map<Integer, BufferedImage> map, String gifFilePath, int frame) {
         AnimatedGifEncoder e = new AnimatedGifEncoder();
         e.setRepeat(1);
         e.start(gifFilePath);//生成gif图片位置名称
         //以文件名排序
         for (int i = 0; i < map.size(); i++) {
-            BufferedImage frame = map.get(i);
-            e.setDelay(150);//延时
-            e.addFrame(frame);
+            BufferedImage eachFrame = map.get(i);
+            e.setDelay(1000/frame);//延时
+            e.addFrame(eachFrame);
         }
         e.finish();
     }

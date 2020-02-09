@@ -98,7 +98,12 @@ public class QRTempleServiceImpl implements QRTempleService {
         List<QRCodeTemple> templeList = qrTempleMapper.filter(code);
         for (QRCodeTemple qrCodeTemple : templeList) {
             Map<String, Object> map = LSHMapUtils.entityToMap(qrCodeTemple);
-            map.put("path", projectBasicInfo.getModelUrl() + "\\" + qrCodeTemple.getCode() + ".jpg");
+            if (qrCodeTemple.isIfGif()) {
+                map.put("path", projectBasicInfo.getModelUrl() + "\\" + qrCodeTemple.getCode() + ".gif");
+            } else {
+                map.put("path", projectBasicInfo.getModelUrl() + "\\" + qrCodeTemple.getCode() + ".jpg");
+            }
+            map.put("frame", map.get("frame") + "/" + map.get("startQRFrame") + "/" + map.get("endQRFrame"));
             list.add(map);
         }
         return list;

@@ -28,6 +28,8 @@
         x&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createX"/><br><br>
         y&ensp;偏移量：<input class="topItemInput" type="text" value="0" id="createY"/><br><br>
         旋转角度：<input class="topItemInput" type="text" value="0" id="createAngle"/><br><br>
+        缩放倍数：<input class="topItemInput" type="text" value="1" id="createMultiple"/><br><br>
+        帧&ensp;管&ensp;理：<input class="topItemInput" type="text" value="0/0/0" id="createFrame"/><br><br>
         模板图标：<input class="topItemSelect" type="file" id="createTempleItemsPath" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
@@ -48,6 +50,8 @@
         x&ensp;偏移量：<input class="topItemInput" type="text" id="updateX"/><br><br>
         y&ensp;偏移量：<input class="topItemInput" type="text" id="updateY"/><br><br>
         旋转角度：<input class="topItemInput" type="text" id="updateAngle"/><br><br>
+        缩放倍数：<input class="topItemInput" type="text" value="1" id="updateMultiple"/><br><br>
+        帧&ensp;管&ensp;理：<input class="topItemInput" type="text" value="0/0/0" id="updateFrame"/><br><br>
         模板图标：<input class="topItemSelect" id="updateTempleItemsPath" type="file" name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="更新" onclick="update()"/>
@@ -75,6 +79,8 @@
         <div class="topItemSelect" id="deleteY"></div>
         <br>
         <div class="topItemSelect" id="deleteAngle"></div>
+        <br>
+        <div class="topItemSelect" id="deleteMultiple"></div>
         <br>
 
         <input class="topItemButton" type="button" value="删除" onclick="deleteOne()"/>

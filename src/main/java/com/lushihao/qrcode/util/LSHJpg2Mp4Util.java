@@ -4,11 +4,7 @@ import org.jim2mov.core.*;
 import org.jim2mov.utils.MovieUtils;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
 
 public class LSHJpg2Mp4Util {

@@ -30,7 +30,9 @@ function getTemple() {
                     '        <th class="bottomTh10">X偏移量</th>\n' +
                     '        <th class="bottomTh11">Y偏移量</th>\n' +
                     '        <th class="bottomTh12">旋转角度</th>\n' +
-                    '        <th class="bottomTh13">模板样例</th>\n' +
+                    '        <th class="bottomTh13">缩放倍数</th>\n' +
+                    '        <th class="bottomTh14">帧管理</th>\n' +
+                    '        <th class="bottomTh15">模板样例</th>\n' +
                     '    </tr>';
 
                 for (var i = 0; i < templeList.length; i++) {
@@ -66,7 +68,9 @@ function getTemple() {
                         '        <td class="bottomTd10">' + templeList[i].x + '</td>\n' +
                         '        <td class="bottomTd11">' + templeList[i].y + '</td>\n' +
                         '        <td class="bottomTd12">' + templeList[i].angle + '</td>\n' +
-                        '        <td class="bottomTd13">' + templeList[i].path + '</td>\n' +
+                        '        <td class="bottomTd13">' + templeList[i].multiple + '</td>\n' +
+                        '        <td class="bottomTd14">' + templeList[i].frame + '</td>\n' +
+                        '        <td class="bottomTd15">' + templeList[i].path + '</td>\n' +
                         '    </tr>';
                 }
             }
@@ -85,6 +89,8 @@ function create() {
         x: parseInt(document.getElementById("createX").value),
         y: parseInt(document.getElementById("createY").value),
         angle: parseInt(document.getElementById("createAngle").value),
+        multiple: parseInt(document.getElementById("createMultiple").value),
+        frame: document.getElementById("createFrame").value,
         templeItemsPath: document.getElementById('createTempleItemsPath').value
     };
     var xhr = new XMLHttpRequest();
@@ -106,6 +112,8 @@ function create() {
                 document.getElementById("createX").value = '0';
                 document.getElementById("createY").value = '0';
                 document.getElementById("createAngle").value = '0';
+                document.getElementById("createMultiple").value = '1';
+                document.getElementById("createFrame").value = '0/0/0';
                 document.getElementById('createTempleItemsPath').value = '';
             }
         }
@@ -152,6 +160,8 @@ function updateTempleCode(id) {
     document.getElementById("updateX").value = temple.x;
     document.getElementById("updateY").value = temple.y;
     document.getElementById("updateAngle").value = temple.angle;
+    document.getElementById("updateMultiple").value = temple.multiple;
+    document.getElementById("updateFrame").value = temple.frame;
 }
 
 function update() {
@@ -164,6 +174,8 @@ function update() {
         x: parseInt(document.getElementById("updateX").value),
         y: parseInt(document.getElementById("updateY").value),
         angle: parseInt(document.getElementById("updateAngle").value),
+        multiple: parseInt(document.getElementById("updateMultiple").value),
+        frame: document.getElementById("updateFrame").value,
         templeItemsPath: document.getElementById('updateTempleItemsPath').value
     };
     var xhr = new XMLHttpRequest();
@@ -185,6 +197,8 @@ function update() {
                 document.getElementById("updateX").value = '';
                 document.getElementById("updateY").value = '';
                 document.getElementById("updateAngle").value = '';
+                document.getElementById("updateMultiple").value = '';
+                document.getElementById("updateFrame").value = '';
                 document.getElementById('updateTempleItemsPath').value = '';
             }
         }
@@ -230,7 +244,8 @@ function deleteTempleCode(id) {
     document.getElementById("deleteIconNum").innerText = '子图数量：' + temple.iconNum;
     document.getElementById("deleteX").innerText = 'x  偏移量：' + temple.x;
     document.getElementById("deleteY").innerText = 'y  偏移量：' + temple.y;
-    document.getElementById("deleteAngle").innerText = '旋转角度：' + temple.y;
+    document.getElementById("deleteAngle").innerText = '旋转角度：' + temple.angle;
+    document.getElementById("deleteMultiple").innerText = '缩放倍数：' + temple.multiple;
 }
 
 function deleteOne() {
@@ -256,6 +271,7 @@ function deleteOne() {
                 document.getElementById("deleteX").innerText = '';
                 document.getElementById("deleteY").innerText = '';
                 document.getElementById("deleteAngle").innerText = '';
+                document.getElementById("deleteMultiple").innerText = '';
             }
         }
     }

@@ -42,6 +42,26 @@ public class QRCodeTemple {
      */
     private int iconNum;
     /**
+     * 放大缩小倍数
+     */
+    private int multiple;
+    /**
+     * 是否动图
+     */
+    private boolean ifGif;
+    /**
+     * 每秒显示多少帧
+     */
+    private int frame;
+    /**
+     * 第几帧开始加二维码
+     */
+    private int startQRFrame;
+    /**
+     * 第几帧结束加二维码
+     */
+    private int endQRFrame;
+    /**
      * 起绘点X
      */
     private int x;
@@ -126,6 +146,46 @@ public class QRCodeTemple {
         this.iconNum = iconNum;
     }
 
+    public int getFrame() {
+        return frame;
+    }
+
+    public void setFrame(int frame) {
+        this.frame = frame;
+    }
+
+    public boolean isIfGif() {
+        return ifGif;
+    }
+
+    public void setIfGif(boolean ifGif) {
+        this.ifGif = ifGif;
+    }
+
+    public int getMultiple() {
+        return multiple;
+    }
+
+    public void setMultiple(int multiple) {
+        this.multiple = multiple;
+    }
+
+    public int getStartQRFrame() {
+        return startQRFrame;
+    }
+
+    public void setStartQRFrame(int startQRFrame) {
+        this.startQRFrame = startQRFrame;
+    }
+
+    public int getEndQRFrame() {
+        return endQRFrame;
+    }
+
+    public void setEndQRFrame(int endQRFrame) {
+        this.endQRFrame = endQRFrame;
+    }
+
     public int getX() {
         return x;
     }
@@ -150,7 +210,7 @@ public class QRCodeTemple {
         this.angle = angle;
     }
 
-    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int iconNum, int x, int y, int angle) {
+    public QRCodeTemple(String code, double money, boolean ifOnly, boolean ifShowLogo, boolean ifSelfBg, String arti, int width, int height, int iconNum, int multiple, boolean ifGif, int frame, int startQRFrame, int endQRFrame, int x, int y, int angle) {
         this.code = code;
         this.money = money;
         this.ifOnly = ifOnly;
@@ -160,6 +220,11 @@ public class QRCodeTemple {
         this.width = width;
         this.height = height;
         this.iconNum = iconNum;
+        this.multiple = multiple;
+        this.ifGif = ifGif;
+        this.frame = frame;
+        this.startQRFrame = startQRFrame;
+        this.endQRFrame = endQRFrame;
         this.x = x;
         this.y = y;
         this.angle = angle;
