@@ -3,6 +3,7 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.service.BusinessService;
+import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,12 @@ public class BusinessController {
     @Resource
     private BusinessService businessService;
     @Resource
-    private CheckController checkController;
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if(!lshmacUtil.check()){
             return null;
         }
         String logoSrc = (String) reqMap.get("logoSrc");
@@ -37,7 +38,7 @@ public class BusinessController {
     @RequestMapping("update")
     @ResponseBody
     public String update(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if(!lshmacUtil.check()){
             return null;
         }
         String logoSrc = (String) reqMap.get("logoSrc");
@@ -49,7 +50,7 @@ public class BusinessController {
     @RequestMapping("delete")
     @ResponseBody
     public String delete(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if(!lshmacUtil.check()){
             return null;
         }
         String code = (String) reqMap.get("code");
@@ -60,7 +61,7 @@ public class BusinessController {
     @RequestMapping("filter")
     @ResponseBody
     public List<Business> filter(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if(!lshmacUtil.check()){
             return null;
         }
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);

@@ -3,6 +3,7 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRTempleService;
+import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,12 @@ public class QRTempleController {
     @Resource
     private QRTempleService qrTempleService;
     @Resource
-    private CheckController checkController;
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if (!lshmacUtil.check()) {
             return null;
         }
         QRCodeTemple qrCodeTemple = translate(reqMap);
@@ -37,7 +38,7 @@ public class QRTempleController {
     @RequestMapping("update")
     @ResponseBody
     public String update(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if (!lshmacUtil.check()) {
             return null;
         }
         QRCodeTemple qrCodeTemple = translate(reqMap);
@@ -49,7 +50,7 @@ public class QRTempleController {
     @RequestMapping("delete")
     @ResponseBody
     public String delete(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if (!lshmacUtil.check()) {
             return null;
         }
         String code = (String) reqMap.get("code");
@@ -60,7 +61,7 @@ public class QRTempleController {
     @RequestMapping("filter")
     @ResponseBody
     public List<Map<String, Object>> filter(@RequestBody Map<String, Object> reqMap) {
-        if(checkController.check().equals("0")){
+        if (!lshmacUtil.check()) {
             return null;
         }
         String code = (String) reqMap.get("code");
@@ -72,10 +73,11 @@ public class QRTempleController {
 
     /**
      * 前台转后台
+     *
      * @param reqMap
      * @return
      */
-    private QRCodeTemple translate(Map<String, Object> reqMap){
+    private QRCodeTemple translate(Map<String, Object> reqMap) {
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
         String code = (String) reqMap.get("code");
         if (code.charAt(0) == 'J') {
