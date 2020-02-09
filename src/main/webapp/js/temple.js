@@ -83,6 +83,29 @@ function getTemple() {
     xhr.send(JSON.stringify(filterTemple));
 }
 
+function downLoadTemple() {
+    var downLoadTemple = document.getElementById('downLoadTemple').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/temple/downLoad", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "error.jsp"
+                    return
+                }
+                var data = xhr.responseText;
+                alert(data);
+                init();
+            }
+        }
+    }
+    xhr.send(JSON.stringify(downLoadTemple));
+}
+
 function create() {
     var createTemple = {
         code: document.getElementById("createCode").value,

@@ -14,4 +14,6 @@ public interface QRTempleService {
     String delete(String code);
 
     List<Map<String, Object>> filter(String code);
+
+    String downLoad(String downLoad);
 }

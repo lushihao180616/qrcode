@@ -12,6 +12,11 @@
 <body onload="init()">
 
 <a style="margin: 10px;padding: 10px;background-color: burlywood" href="index.jsp">首页</a>
+<div style="float: right;margin-top: -5px;margin-right: 10px">
+    <label>更新模板二维码：</label><input class="topItemSelect" type="file" id="downLoadTemple"/><input class="topItemSearch"
+                                                                                                type="button" value="确定"
+                                                                                                onclick="downLoadTemple()">
+</div>
 
 <p style="background-color: burlywood;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
     模板变动

@@ -71,6 +71,15 @@ public class QRTempleController {
         return qrTempleService.filter(code);
     }
 
+    @RequestMapping("downLoad")
+    @ResponseBody
+    public String downLoad(@RequestBody String downLoad) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        return qrTempleService.downLoad(downLoad);
+    }
+
     /**
      * 前台转后台
      *

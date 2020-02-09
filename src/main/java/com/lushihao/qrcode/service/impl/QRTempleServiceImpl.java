@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
+import com.lushihao.myutils.qrcode.LSHQRCodeUtils;
 import com.lushihao.qrcode.dao.QRTempleMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
@@ -112,6 +113,14 @@ public class QRTempleServiceImpl implements QRTempleService {
             list.add(map);
         }
         return list;
+    }
+
+    @Override
+    @Transactional
+    public String downLoad(String downLoad) {
+        // 解码
+        // 下载模板、生成数据库数据
+        return "下载成功";
     }
 
     /**
