@@ -5,6 +5,7 @@ import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.service.BusinessService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -23,6 +24,7 @@ public class BusinessServiceImpl implements BusinessService {
     private ProjectBasicInfo projectBasicInfo;
 
     @Override
+    @Transactional
     public String create(Business business, String logoSrc) {
         business.setCode(UUID.randomUUID().toString().substring(0, 8));
 
@@ -50,6 +52,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    @Transactional
     public String update(Business business, String logoSrc) {
         int back = businessMapper.update(business);
         if (back > 0) {
@@ -65,6 +68,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    @Transactional
     public String delete(String code) {
         int back = businessMapper.delete(code);
         if (back > 0) {
@@ -83,6 +87,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    @Transactional
     public List<Business> filter(Business business) {
         return businessMapper.filter(business);
     }

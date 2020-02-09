@@ -8,6 +8,7 @@ import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.lushihao.qrcode.service.QRCodeService;
 import com.lushihao.qrcode.util.LSHQRCodeUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +24,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     private QRCodeRecordMapper qrCodeRecordMapper;
 
     @Override
+    @Transactional
     public String create(QRCodeRequest qrCodeRequest) {
         QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround());
         boolean back = lshqrCodeUtil.qrcode(qrCodeVo);
@@ -33,6 +35,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
+    @Transactional
     public List<QRCodeRecord> selectRecord(QRCodeRecord qrCodeRecord) {
         return qrCodeRecordMapper.select(qrCodeRecord);
     }

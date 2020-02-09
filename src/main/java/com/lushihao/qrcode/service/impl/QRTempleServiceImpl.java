@@ -8,6 +8,7 @@ import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRCodeService;
 import com.lushihao.qrcode.service.QRTempleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -29,6 +30,7 @@ public class QRTempleServiceImpl implements QRTempleService {
     private QRCodeService qrCodeService;
 
     @Override
+    @Transactional
     public String create(QRCodeTemple qrCodeTemple, String templeItemsPath) {
         int back = qrTempleMapper.create(qrCodeTemple);
         if (back > 0) {
@@ -53,6 +55,7 @@ public class QRTempleServiceImpl implements QRTempleService {
     }
 
     @Override
+    @Transactional
     public String update(QRCodeTemple qrCodeTemple, String templeItemsPath) {
         int back = qrTempleMapper.update(qrCodeTemple);
         if (back > 0) {
@@ -75,6 +78,7 @@ public class QRTempleServiceImpl implements QRTempleService {
     }
 
     @Override
+    @Transactional
     public String delete(String code) {
         int back = qrTempleMapper.delete(code);
         if (back > 0) {
@@ -93,6 +97,7 @@ public class QRTempleServiceImpl implements QRTempleService {
     }
 
     @Override
+    @Transactional
     public List<Map<String, Object>> filter(String code) {
         List<Map<String, Object>> list = new ArrayList<>();
         List<QRCodeTemple> templeList = qrTempleMapper.filter(code);

@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 @Component
@@ -42,7 +39,7 @@ public class LSHGif2JpgUtil {
         for (int i = 0; i < list.size(); i++) {
             map.put(i, ImageIO.read(list.get(i)));
         }
-//        jpgToGif(map, gifFilePath);
+        jpgToGif(map, gifFilePath, 10);
     }
 
     /**
@@ -58,7 +55,7 @@ public class LSHGif2JpgUtil {
         //以文件名排序
         for (int i = 0; i < map.size(); i++) {
             BufferedImage eachFrame = map.get(i);
-            e.setDelay(1000/frame);//延时
+            e.setDelay(1000 / frame);//延时
             e.addFrame(eachFrame);
         }
         e.finish();
@@ -84,4 +81,22 @@ public class LSHGif2JpgUtil {
         return backMap;
     }
 
+    /**
+     * gif转jpg
+     *
+     * @throws IOException
+     */
+    public static synchronized void gifToJpg(String jpgDirectoryPath, String gifFilePath) throws IOException {
+        Map<Integer, BufferedImage> backMap = new HashMap<>();
+        GifDecoder decoder = new GifDecoder();
+        InputStream is = new FileInputStream(gifFilePath);
+        if (decoder.read(is) != 0) {
+            return;
+        }
+        is.close();
+        for (int i = 0; i < decoder.getFrameCount(); i++) {
+            BufferedImage frame = decoder.getFrame(i);
+            ImageIO.write(frame, "jpg", new FileOutputStream(jpgDirectoryPath + "\\" + (i + 1) + ".jpg"));
+        }
+    }
 }
