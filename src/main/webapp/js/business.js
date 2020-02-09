@@ -18,11 +18,11 @@ function getBusiness() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var businessList = JSON.parse(xhr.responseText);
-                if(businessList == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var businessList = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("buisnesses");
                 businesses.innerHTML = '\n' +
                     '    <tr>\n' +
@@ -65,11 +65,11 @@ function create() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if(data == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("createName").value = '',
@@ -95,11 +95,11 @@ function modifySearch() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var businessList = JSON.parse(xhr.responseText);
-                if(businessList == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var businessList = JSON.parse(xhr.responseText);
                 var modifyBusinesses = document.getElementById("modifyBusinesses");
                 modifyBusinesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
@@ -142,11 +142,11 @@ function update() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if(data == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("modifyBusinesses").innerHTML = '';
@@ -173,11 +173,11 @@ function deleteSearch() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var businessList = JSON.parse(xhr.responseText);
-                if(businessList == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var businessList = JSON.parse(xhr.responseText);
                 var deleteBusinesses = document.getElementById("deleteBusinesses");
                 deleteBusinesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
@@ -215,11 +215,11 @@ function deleteOne() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if(data == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("deleteBusinesses").innerHTML = '';

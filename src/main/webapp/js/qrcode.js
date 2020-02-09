@@ -16,11 +16,11 @@ function getTemple() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var templeList = JSON.parse(xhr.responseText);
-                if (templeList == null) {
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var templeList = JSON.parse(xhr.responseText);
                 var temples = document.getElementById("temples");
                 temples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
@@ -50,11 +50,11 @@ function getBusiness() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var businessList = JSON.parse(xhr.responseText);
-                if (businessList == null) {
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var businessList = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("businesses");
                 businesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
@@ -128,11 +128,11 @@ function getRecord() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var recordList = JSON.parse(xhr.responseText);
-                if (recordList == null) {
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var recordList = JSON.parse(xhr.responseText);
                 var records = document.getElementById("records");
                 records.innerHTML = '\n' +
                     '    <tr>\n' +
@@ -177,11 +177,11 @@ function create() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if (data == null) {
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
                     return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("message").value = '';

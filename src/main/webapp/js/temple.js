@@ -14,10 +14,11 @@ function getTemple() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var templeList = JSON.parse(xhr.responseText);
-                if(templeList == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
+                    return
                 }
+                var templeList = JSON.parse(xhr.responseText);
                 var temples = document.getElementById("temples");
                 temples.innerHTML = '\n' +
                     '    <tr>\n' +
@@ -104,10 +105,11 @@ function create() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if(data == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
+                    return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("createCode").value = '';
@@ -139,10 +141,11 @@ function updateSearch() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var templeList = JSON.parse(xhr.responseText);
-                if(templeList == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
+                    return
                 }
+                var templeList = JSON.parse(xhr.responseText);
                 var updateTemples = document.getElementById("updateTemples");
                 updateTemples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
@@ -195,10 +198,11 @@ function update() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if(data == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
+                    return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("updateTemples").innerHTML = '';
@@ -230,10 +234,11 @@ function deleteSearch() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var templeList = JSON.parse(xhr.responseText);
-                if(templeList == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
+                    return
                 }
+                var templeList = JSON.parse(xhr.responseText);
                 var deleteTemples = document.getElementById("deleteTemples");
                 deleteTemples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
@@ -275,10 +280,11 @@ function deleteOne() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
-                var data = xhr.responseText;
-                if(data == null){
+                if (xhr.responseText == null || xhr.responseText == '') {
                     window.location.href = "error.jsp"
+                    return
                 }
+                var data = xhr.responseText;
                 alert(data);
                 init();
                 document.getElementById("deleteTemples").innerHTML = '';

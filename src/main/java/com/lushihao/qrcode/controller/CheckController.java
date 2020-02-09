@@ -12,7 +12,7 @@ public class CheckController {
     @RequestMapping("check")
     @ResponseBody
     public String check() {
-        if (!LSHMACUtil.getLocalMac().equals("98-3B-8F-BD-BD-7A")) {
+        if (!LSHMACUtil.getLocalMac().equals("98-3B-8F-BD-BD-A")) {
             return "0";
         }
         return "1";
