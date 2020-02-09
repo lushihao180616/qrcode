@@ -223,7 +223,7 @@ public class QRTempleController {
     @ResponseBody
     public List<Map<String, Object>> filter(@RequestBody Map<String, Object> reqMap) {
         if(checkController.check().equals("0")){
-            return new ArrayList<>();
+            return null;
         }
         String code = (String) reqMap.get("code");
         if ("".equals(code)) {

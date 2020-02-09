@@ -1,21 +1,5 @@
 function init() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/check/check", false);
-    // 添加http头，发送信息至服务器时内容编码类型
-    xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.setRequestHeader('dataType', 'json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200 || xhr.status == 304) {
-                if (xhr.responseText == '0') {
-                    window.location.href = "error.jsp"
-                } else {
-                    getTemple();
-                }
-            }
-        }
-    }
-    xhr.send();
+    getTemple();
 }
 
 function getTemple() {
@@ -32,7 +16,7 @@ function getTemple() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
                 if(templeList == null){
-                    return
+                    window.location.href = "error.jsp"
                 }
                 var temples = document.getElementById("temples");
                 temples.innerHTML = '\n' +
@@ -122,7 +106,7 @@ function create() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
                 if(data == null){
-                    return
+                    window.location.href = "error.jsp"
                 }
                 alert(data);
                 init();
@@ -157,7 +141,7 @@ function updateSearch() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
                 if(templeList == null){
-                    return
+                    window.location.href = "error.jsp"
                 }
                 var updateTemples = document.getElementById("updateTemples");
                 updateTemples.innerHTML = '';
@@ -213,7 +197,7 @@ function update() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
                 if(data == null){
-                    return
+                    window.location.href = "error.jsp"
                 }
                 alert(data);
                 init();
@@ -248,7 +232,7 @@ function deleteSearch() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
                 if(templeList == null){
-                    return
+                    window.location.href = "error.jsp"
                 }
                 var deleteTemples = document.getElementById("deleteTemples");
                 deleteTemples.innerHTML = '';
@@ -293,7 +277,7 @@ function deleteOne() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
                 if(data == null){
-                    return
+                    window.location.href = "error.jsp"
                 }
                 alert(data);
                 init();

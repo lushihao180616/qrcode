@@ -1,21 +1,5 @@
 function init() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/check/check", false);
-    // 添加http头，发送信息至服务器时内容编码类型
-    xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.setRequestHeader('dataType', 'json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200 || xhr.status == 304) {
-                if (xhr.responseText == '0') {
-                    window.location.href = "error.jsp"
-                } else {
-                    getBusiness();
-                }
-            }
-        }
-    }
-    xhr.send();
+    getBusiness();
 }
 
 function getBusiness() {
@@ -36,6 +20,7 @@ function getBusiness() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
                 if(businessList == null){
+                    window.location.href = "error.jsp"
                     return
                 }
                 var businesses = document.getElementById("buisnesses");
@@ -82,6 +67,7 @@ function create() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
                 if(data == null){
+                    window.location.href = "error.jsp"
                     return
                 }
                 alert(data);
@@ -111,6 +97,7 @@ function modifySearch() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
                 if(businessList == null){
+                    window.location.href = "error.jsp"
                     return
                 }
                 var modifyBusinesses = document.getElementById("modifyBusinesses");
@@ -157,6 +144,7 @@ function update() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
                 if(data == null){
+                    window.location.href = "error.jsp"
                     return
                 }
                 alert(data);
@@ -187,6 +175,7 @@ function deleteSearch() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
                 if(businessList == null){
+                    window.location.href = "error.jsp"
                     return
                 }
                 var deleteBusinesses = document.getElementById("deleteBusinesses");
@@ -228,6 +217,7 @@ function deleteOne() {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
                 if(data == null){
+                    window.location.href = "error.jsp"
                     return
                 }
                 alert(data);

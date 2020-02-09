@@ -61,7 +61,7 @@ public class BusinessController {
     @ResponseBody
     public List<Business> filter(@RequestBody Map<String, Object> reqMap) {
         if(checkController.check().equals("0")){
-            return new ArrayList<>();
+            return null;
         }
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         if ("".equals(business.getCode())) {

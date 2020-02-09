@@ -37,7 +37,7 @@ public class QRCodeController {
     @ResponseBody
     public List<QRCodeRecord> selectRecord(@RequestBody Map<String, Object> reqMap) {
         if(checkController.check().equals("0")){
-            return new ArrayList<>();
+            return null;
         }
         QRCodeRecord qrCodeRecord = LSHMapUtils.mapToEntity(reqMap, QRCodeRecord.class);
         return qrCodeService.selectRecord(qrCodeRecord);
