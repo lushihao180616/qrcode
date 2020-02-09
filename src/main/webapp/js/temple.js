@@ -31,6 +31,9 @@ function getTemple() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
+                if(templeList == null){
+                    return
+                }
                 var temples = document.getElementById("temples");
                 temples.innerHTML = '\n' +
                     '    <tr>\n' +
@@ -118,6 +121,9 @@ function create() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("createCode").value = '';
@@ -150,6 +156,9 @@ function updateSearch() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
+                if(templeList == null){
+                    return
+                }
                 var updateTemples = document.getElementById("updateTemples");
                 updateTemples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
@@ -203,6 +212,9 @@ function update() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("updateTemples").innerHTML = '';
@@ -235,6 +247,9 @@ function deleteSearch() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
+                if(templeList == null){
+                    return
+                }
                 var deleteTemples = document.getElementById("deleteTemples");
                 deleteTemples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
@@ -277,6 +292,9 @@ function deleteOne() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("deleteTemples").innerHTML = '';

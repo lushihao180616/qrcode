@@ -19,10 +19,15 @@ public class QRTempleController {
 
     @Resource
     private QRTempleService qrTempleService;
+    @Resource
+    private CheckController checkController;
 
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return null;
+        }
         String templeItemsPath = (String) reqMap.get("templeItemsPath");
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
         String code = (String) reqMap.get("code");
@@ -113,6 +118,9 @@ public class QRTempleController {
     @RequestMapping("update")
     @ResponseBody
     public String update(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return null;
+        }
         String templeItemsPath = (String) reqMap.get("templeItemsPath");
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
         String code = (String) reqMap.get("code");
@@ -203,6 +211,9 @@ public class QRTempleController {
     @RequestMapping("delete")
     @ResponseBody
     public String delete(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return null;
+        }
         String code = (String) reqMap.get("code");
         String back = qrTempleService.delete(code);
         return back;
@@ -211,6 +222,9 @@ public class QRTempleController {
     @RequestMapping("filter")
     @ResponseBody
     public List<Map<String, Object>> filter(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return new ArrayList<>();
+        }
         String code = (String) reqMap.get("code");
         if ("".equals(code)) {
             code = null;

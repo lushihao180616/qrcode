@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +19,15 @@ public class BusinessController {
 
     @Resource
     private BusinessService businessService;
+    @Resource
+    private CheckController checkController;
 
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return null;
+        }
         String logoSrc = (String) reqMap.get("logoSrc");
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         String back = businessService.create(business, logoSrc);
@@ -31,6 +37,9 @@ public class BusinessController {
     @RequestMapping("update")
     @ResponseBody
     public String update(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return null;
+        }
         String logoSrc = (String) reqMap.get("logoSrc");
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         String back = businessService.update(business, logoSrc);
@@ -40,6 +49,9 @@ public class BusinessController {
     @RequestMapping("delete")
     @ResponseBody
     public String delete(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return null;
+        }
         String code = (String) reqMap.get("code");
         String back = businessService.delete(code);
         return back;
@@ -48,6 +60,9 @@ public class BusinessController {
     @RequestMapping("filter")
     @ResponseBody
     public List<Business> filter(@RequestBody Map<String, Object> reqMap) {
+        if(checkController.check().equals("0")){
+            return new ArrayList<>();
+        }
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         if ("".equals(business.getCode())) {
             business.setCode(null);

@@ -11,7 +11,7 @@ public class CheckController {
 
     @RequestMapping("check")
     @ResponseBody
-    public String create() {
+    public String check() {
         if (!LSHMACUtil.getLocalMac().equals("98-3B-8F-BD-BD-7A")) {
             return "0";
         }

@@ -8,6 +8,6 @@
     <title>错误</title>
 </head>
 <body>
-<h1 style="width: 100%;text-align: center">网络连接不可用或本机不具备使用权限！！！</h1>
+<h1 style="width: 100%;text-align: center;color: red;margin-top: 300px">网络连接不可用或不具备使用权限，请联系管理员！！！</h1>
 </body>
 </html>

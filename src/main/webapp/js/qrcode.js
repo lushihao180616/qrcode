@@ -33,6 +33,9 @@ function getTemple() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var templeList = JSON.parse(xhr.responseText);
+                if(templeList == null){
+                    return
+                }
                 var temples = document.getElementById("temples");
                 temples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
@@ -63,6 +66,9 @@ function getBusiness() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
+                if(businessList == null){
+                    return
+                }
                 var businesses = document.getElementById("businesses");
                 businesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
@@ -137,6 +143,9 @@ function getRecord() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var recordList = JSON.parse(xhr.responseText);
+                if(recordList == null){
+                    return
+                }
                 var records = document.getElementById("records");
                 records.innerHTML = '\n' +
                     '    <tr>\n' +
@@ -182,6 +191,9 @@ function create() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("message").value = '';

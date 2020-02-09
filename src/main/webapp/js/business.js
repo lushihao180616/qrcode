@@ -35,6 +35,9 @@ function getBusiness() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
+                if(businessList == null){
+                    return
+                }
                 var businesses = document.getElementById("buisnesses");
                 businesses.innerHTML = '\n' +
                     '    <tr>\n' +
@@ -78,6 +81,9 @@ function create() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("createName").value = '',
@@ -104,6 +110,9 @@ function modifySearch() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
+                if(businessList == null){
+                    return
+                }
                 var modifyBusinesses = document.getElementById("modifyBusinesses");
                 modifyBusinesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
@@ -147,6 +156,9 @@ function update() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("modifyBusinesses").innerHTML = '';
@@ -174,6 +186,9 @@ function deleteSearch() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var businessList = JSON.parse(xhr.responseText);
+                if(businessList == null){
+                    return
+                }
                 var deleteBusinesses = document.getElementById("deleteBusinesses");
                 deleteBusinesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
@@ -212,6 +227,9 @@ function deleteOne() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 var data = xhr.responseText;
+                if(data == null){
+                    return
+                }
                 alert(data);
                 init();
                 document.getElementById("deleteBusinesses").innerHTML = '';
