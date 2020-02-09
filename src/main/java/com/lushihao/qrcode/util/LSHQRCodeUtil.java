@@ -214,6 +214,7 @@ public class LSHQRCodeUtil {
                     bgWidth = bgMinWidthOrHeight * width / height;
                     bgHeight = bgMinWidthOrHeight;
                 }
+                isMp4 = false;
             } else {
                 File file = new File(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg");
                 if (file.exists()) {//bg.jpg
@@ -261,6 +262,7 @@ public class LSHQRCodeUtil {
             bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
             bg.dispose();
             map.put(0, backGroundImage);
+            isMp4 = false;
             return map;
         }
     }
