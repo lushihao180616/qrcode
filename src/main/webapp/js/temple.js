@@ -22,7 +22,7 @@ function getTemple() {
                     '        <th class="bottomTh2">价格</th>\n' +
                     '        <th class="bottomTh3">仅二维码</th>\n' +
                     '        <th class="bottomTh4">显示商标</th>\n' +
-                    '        <th class="bottomTh5">自定义背景</th>\n' +
+                    '        <th class="bottomTh5">自定背景</th>\n' +
                     '        <th class="bottomTh6">算法选择</th>\n' +
                     '        <th class="bottomTh7">背景宽度</th>\n' +
                     '        <th class="bottomTh8">背景高度</th>\n' +
