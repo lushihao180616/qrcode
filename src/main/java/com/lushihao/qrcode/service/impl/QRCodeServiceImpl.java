@@ -27,11 +27,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Transactional
     public String create(QRCodeRequest qrCodeRequest) {
         QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround());
-        boolean back = lshqrCodeUtil.qrcode(qrCodeVo);
-        if (back) {
-            return "创建成功";
-        }
-        return "创建失败";
+        return lshqrCodeUtil.qrcode(qrCodeVo);
     }
 
     @Override

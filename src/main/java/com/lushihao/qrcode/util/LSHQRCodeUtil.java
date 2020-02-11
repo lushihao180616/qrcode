@@ -41,10 +41,14 @@ public class LSHQRCodeUtil {
     private int width = 1950;
     // 二维码高度
     private int height = 1950;
-    // 二维码宽度
+    // 二维码背景宽度
     private int defaultWidth = 3000;
-    // 二维码高度
+    // 二维码背景高度
     private int defaultHeight = 3000;
+    // 当前二维码宽度
+    int nowWidth = 3000;
+    // 当前二维码高度
+    int nowHeight = 3000;
     // 设置偏移量，不设置可能导致解析出错
     private int pixoff = 50;
     // 像素大小
@@ -74,7 +78,7 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo 二维码相关信息
      * @return
      */
-    public boolean qrcode(QRCodeVo qrCodeVo) {
+    public String qrcode(QRCodeVo qrCodeVo) {
         max = qrCodeVo.getQrCodeTemple().getIconNum();
         multiple = qrCodeVo.getQrCodeTemple().getMultiple();
         FileOutputStream outputStream = null;
@@ -82,6 +86,9 @@ public class LSHQRCodeUtil {
         try {
             //创建二维码
             BufferedImage image = getQRCode(qrCodeVo);
+            if (image == null) {
+                return "信息过长，创建失败";
+            }
             //添加背景
             Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCodeVo);
             //输出图片
@@ -90,7 +97,7 @@ public class LSHQRCodeUtil {
             qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "创建失败，请检查您的输入条件";
         } finally {
             try {
                 if (outputStream != null) {
@@ -100,7 +107,7 @@ public class LSHQRCodeUtil {
                 e.printStackTrace();
             }
         }
-        return true;
+        return "创建成功";
     }
 
     /**
@@ -116,27 +123,50 @@ public class LSHQRCodeUtil {
         qrcode.setQrcodeErrorCorrect('L'); //一般纠错级别小一点
         //设置二维码的编码模式 Binary(按照字节编码模式)
         qrcode.setQrcodeEncodeMode('B');
-        //设置二维码的版本号 1-40  1:20*21    2:25*25   40:177*177
-        qrcode.setQrcodeVersion(5);
-
-        BufferedImage image = new BufferedImage(defaultWidth, defaultHeight, BufferedImage.TYPE_INT_RGB);
-        //获取画笔
-        Graphics2D gs = image.createGraphics();
-        //设置透明
-        image = gs.getDeviceConfiguration().createCompatibleImage(defaultWidth, defaultHeight, Transparency.TRANSLUCENT);
-        gs = image.createGraphics();
 
         //设置内容
         String content = qrCodeVo.getMessage();
         byte[] contentsBytes = content.getBytes("utf-8");
-        //二维码
-        boolean[][] code = qrcode.calQrcode(contentsBytes);
+        boolean[][] code = new boolean[0][];
+        try {
+            //设置二维码的版本号 1-40  1:20*21    2:25*25   40:177*177
+            qrcode.setQrcodeVersion(5);
+            //二维码
+            code = qrcode.calQrcode(contentsBytes);
+            width = 1950;
+            height = 1950;
+            nowWidth = 3000;
+            nowHeight = 3000;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            try {
+                //设置二维码的版本号 1-40  1:20*21    2:25*25   40:177*177
+                qrcode.setQrcodeVersion(10);
+                //二维码
+                code = qrcode.calQrcode(contentsBytes);
+                width = 2950;
+                height = 2950;
+                nowWidth = 4538;
+                nowHeight = 4538;
+            } catch (ArrayIndexOutOfBoundsException c) {
+                System.out.println("特长文字");
+            }
+        }
+        if (code.length == 0) {
+            return null;
+        }
         //获取二维码数组的长度
         codeLength = code.length;
 
-        gs.translate(defaultWidth / 2, defaultHeight / 2);
+        BufferedImage image = new BufferedImage(nowWidth, nowHeight, BufferedImage.TYPE_INT_RGB);
+        //获取画笔
+        Graphics2D gs = image.createGraphics();
+        //设置透明
+        image = gs.getDeviceConfiguration().createCompatibleImage(nowWidth, nowHeight, Transparency.TRANSLUCENT);
+        gs = image.createGraphics();
+
+        gs.translate(nowWidth / 2, nowHeight / 2);
         gs.rotate(Math.toRadians(qrCodeVo.getQrCodeTemple().getAngle()));
-        gs.translate(-defaultWidth / 2, -defaultHeight / 2);
+        gs.translate(-nowWidth / 2, -nowHeight / 2);
         //处理码眼部分
         handleCodeEye(gs, code, qrCodeVo);
         //绘制二维码，选择算法
@@ -151,12 +181,12 @@ public class LSHQRCodeUtil {
             BufferedImage imageLogo = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.jpg"));
             BufferedImage imageLogoBorder = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png"));
 
-            gs.translate(defaultWidth / 2, defaultHeight / 2);
+            gs.translate(nowWidth / 2, nowHeight / 2);
             gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
-            gs.translate(-defaultWidth / 2, -defaultHeight / 2);
+            gs.translate(-nowWidth / 2, -nowHeight / 2);
 
-            gs.drawImage(imageLogo, (defaultWidth - logoWidth) / 2, (defaultHeight - logoHeight) / 2, logoWidth, logoHeight, null);
-            gs.drawImage(imageLogoBorder, (defaultWidth - logoBgWidth) / 2, (defaultHeight - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
+            gs.drawImage(imageLogo, (nowWidth - logoWidth) / 2, (nowHeight - logoHeight) / 2, logoWidth, logoHeight, null);
+            gs.drawImage(imageLogoBorder, (nowWidth - logoBgWidth) / 2, (nowHeight - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
         }
         //释放画笔
         gs.dispose();
@@ -185,9 +215,9 @@ public class LSHQRCodeUtil {
         }
 
         //通用地绘制码眼
-        gs.drawImage(image_eye, (defaultWidth - width) / 2 + pix, (defaultHeight - height) / 2 + pix, pix * 7, pix * 7, null);
-        gs.drawImage(image_eye, (defaultWidth - width) / 2 + (codeLength - 7) * pix + pixoff, (defaultHeight - height) / 2 + pix, pix * 7, pix * 7, null);
-        gs.drawImage(image_eye, (defaultWidth - width) / 2 + pix, (defaultHeight - height) / 2 + (codeLength - 7) * pix + pixoff, pix * 7, pix * 7, null);
+        gs.drawImage(image_eye, (nowWidth - width) / 2 + pix, (nowHeight - height) / 2 + pix, pix * 7, pix * 7, null);
+        gs.drawImage(image_eye, (nowWidth - width) / 2 + (codeLength - 7) * pix + pixoff, (nowHeight - height) / 2 + pix, pix * 7, pix * 7, null);
+        gs.drawImage(image_eye, (nowWidth - width) / 2 + pix, (nowHeight - height) / 2 + (codeLength - 7) * pix + pixoff, pix * 7, pix * 7, null);
     }
 
     /**
@@ -198,9 +228,11 @@ public class LSHQRCodeUtil {
      * @return
      */
     private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo) throws IOException {
+        BufferedImage nowImage = image;
+
         Map<Integer, BufferedImage> map = new HashMap<>();
         BufferedImage imageBG = null;
-        if (!qrCodeVo.getQrCodeTemple().isIfOnly()) {
+        if (!qrCodeVo.getQrCodeTemple().isIfOnly()) {//处理有背景
             int bgWidth;
             int bgHeight;
             if (qrCodeVo.getQrCodeTemple().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {
@@ -235,36 +267,79 @@ public class LSHQRCodeUtil {
                     Graphics2D bg = backGroundImage.createGraphics();
                     bg.drawImage(map.get(i), 0, 0, bgWidth / multiple, bgHeight / multiple, null);
                     if (qrCodeVo.getQrCodeTemple().getStartQRFrame() == 0 && qrCodeVo.getQrCodeTemple().getEndQRFrame() == 0) {
-                        bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                        bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                     } else if (i >= qrCodeVo.getQrCodeTemple().getStartQRFrame() && i <= qrCodeVo.getQrCodeTemple().getEndQRFrame()) {
-                        bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                        bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                     }
                     bg.dispose();
                     map.put(i, backGroundImage);
                 }
                 return map;
-            } else {
+            } else {//静态背景
                 //获取图片缓存流对象
                 BufferedImage backGroundImage = new BufferedImage(bgWidth / multiple, bgHeight / multiple, BufferedImage.TYPE_INT_RGB);
                 Graphics2D bg = backGroundImage.createGraphics();
                 bg.drawImage(imageBG, 0, 0, bgWidth / multiple, bgHeight / multiple, null);
-                bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                 bg.dispose();
                 map.put(0, backGroundImage);
                 return map;
             }
-        } else {
+        } else {//处理单码
             //获取图片缓存流对象
-            BufferedImage backGroundImage = new BufferedImage(width / multiple, height / multiple, BufferedImage.TYPE_INT_RGB);
+            BufferedImage backGroundImage = new BufferedImage(1950 / multiple, 1950 / multiple, BufferedImage.TYPE_INT_RGB);
             Graphics2D bg = backGroundImage.createGraphics();
             bg.setBackground(Color.WHITE);
-            bg.clearRect(0, 0, defaultWidth / multiple, defaultHeight / multiple);
-            bg.drawImage(image, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+            bg.clearRect(0, 0, 1950 / multiple, 1950 / multiple);
+            bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
             bg.dispose();
             map.put(0, backGroundImage);
             isMp4 = false;
             return map;
         }
+    }
+
+    /**
+     * 添加水印
+     *
+     * @param addFontImage
+     * @param content
+     * @return
+     */
+    public BufferedImage addWaterMark(BufferedImage addFontImage, String content) {
+        Color color = new Color(255, 255, 255, 255);// 水印颜色
+        Font font = new Font("微软雅黑", Font.ITALIC, 45); //水印字体
+        try {
+            int width = addFontImage.getWidth(); //图片宽
+            int height = addFontImage.getHeight(); //图片高
+
+            //添加水印
+            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
+            Graphics2D g = bufferedImage.createGraphics();
+            g.drawImage(addFontImage, 0, 0, width, height, null);
+            g.setColor(color); //水印颜色
+            g.setFont(font); //水印字体
+
+            int x = width - 2 * getWatermarkLength(content, g); //这是一个计算水印位置的函数，可以根据需求添加
+            int y = height - 1 * getWatermarkLength(content, g);
+            g.drawString(content, x, y); //水印位置
+            g.dispose(); //释放资源
+            return bufferedImage;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 计算水印位置
+     *
+     * @param waterMarkContent
+     * @param g
+     * @return
+     */
+    public int getWatermarkLength(String waterMarkContent, Graphics2D g) {
+        return g.getFontMetrics(g.getFont()).charsWidth(waterMarkContent.toCharArray(), 0, waterMarkContent.length());
     }
 
     /**
@@ -343,7 +418,7 @@ public class LSHQRCodeUtil {
                     if (img4[0] != null && i + 1 < codeLength && j + 1 < codeLength && code[i][j + 1] && code[i + 1][j + 1] && code[i + 1][j]) {
                         //随机取图片，画100*100的图
                         int s4 = random.nextInt(max);
-                        gs.drawImage(img4[s4], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 2 * pix, 2 * pix, null);
+                        gs.drawImage(img4[s4], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 2 * pix, 2 * pix, null);
                         code[i][j + 1] = code[i + 1][j] = code[i + 1][j + 1] = false;
                         String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
                         String code2 = String.valueOf(i) + ":" + String.valueOf(j + 1);
@@ -360,7 +435,7 @@ public class LSHQRCodeUtil {
                     } else if (img3[0] != null && j + 1 < codeLength && code[i][j + 1]) {
                         //随机取图片，画50*100的图
                         int s3 = random.nextInt(max);
-                        gs.drawImage(img3[s3], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, 2 * pix, null);
+                        gs.drawImage(img3[s3], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, 2 * pix, null);
                         code[i][j + 1] = false;
                         String code1 = String.valueOf(i) + ":" + String.valueOf(j + 1);
                         if (!set.contains(code1)) {
@@ -369,7 +444,7 @@ public class LSHQRCodeUtil {
                     } else if (img2[0] != null && i + 1 < codeLength && code[i + 1][j]) {
                         //随机取图片，画100*50的图
                         int s2 = random.nextInt(max);
-                        gs.drawImage(img2[s2], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 2 * pix, pix, null);
+                        gs.drawImage(img2[s2], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 2 * pix, pix, null);
                         code[i + 1][j] = false;
                         String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
                         if (!set.contains(code1)) {
@@ -378,7 +453,7 @@ public class LSHQRCodeUtil {
                     } else {
                         //随机取图片，画50*50的图
                         int s1 = random.nextInt(max);
-                        gs.drawImage(img1[s1], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
+                        gs.drawImage(img1[s1], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                 } else {
                     String code1 = String.valueOf(i) + ":" + String.valueOf(j);
@@ -388,7 +463,7 @@ public class LSHQRCodeUtil {
                     //随机取图片，画50*50的图
                     int s0 = random.nextInt(max);
                     if (img0[0] != null) {
-                        gs.drawImage(img0[s0], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
+                        gs.drawImage(img0[s0], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                 }
             }
@@ -459,7 +534,7 @@ public class LSHQRCodeUtil {
                 if (code[i][j]) {
                     if (img7[0] != null && i + 4 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j] && code[i + 4][j]) {
                         //随机取图片，画200*50的图
-                        gs.drawImage(img7[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 5 * pix, pix, null);
+                        gs.drawImage(img7[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 5 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = code[i + 4][j] = false;
                         String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
                         String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
@@ -479,7 +554,7 @@ public class LSHQRCodeUtil {
                         }
                     } else if (img6[0] != null && i + 3 < codeLength && code[i + 1][j] && code[i + 2][j] && code[i + 3][j]) {
                         //随机取图片，画200*50的图
-                        gs.drawImage(img6[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 4 * pix, pix, null);
+                        gs.drawImage(img6[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 4 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = false;
                         String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
                         String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
@@ -495,7 +570,7 @@ public class LSHQRCodeUtil {
                         }
                     } else if (img5[0] != null && i + 2 < codeLength && code[i + 1][j] && code[i + 2][j]) {
                         //随机取图片，画150*50的图
-                        gs.drawImage(img5[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 3 * pix, pix, null);
+                        gs.drawImage(img5[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 3 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = false;
                         String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
                         String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
@@ -507,7 +582,7 @@ public class LSHQRCodeUtil {
                         }
                     } else if (img2[0] != null && i + 1 < codeLength && code[i + 1][j]) {
                         //随机取图片，画100*50的图
-                        gs.drawImage(img2[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, 2 * pix, pix, null);
+                        gs.drawImage(img2[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 2 * pix, pix, null);
                         code[i + 1][j] = false;
                         String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
                         if (!set.contains(code1)) {
@@ -515,7 +590,7 @@ public class LSHQRCodeUtil {
                         }
                     } else {
                         //随机取图片，画50*50的图
-                        gs.drawImage(img1[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
+                        gs.drawImage(img1[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                 } else {
                     String code1 = String.valueOf(i) + ":" + String.valueOf(j);
@@ -524,7 +599,7 @@ public class LSHQRCodeUtil {
                     }
                     //随机取图片，画50*50的图
                     if (img0[0] != null) {
-                        gs.drawImage(img0[iconIndex], (defaultWidth - width) / 2 + i * pix + pixoff, (defaultHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
+                        gs.drawImage(img0[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                 }
             }

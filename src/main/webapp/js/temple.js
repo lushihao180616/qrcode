@@ -98,8 +98,8 @@ function downLoadTemple() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
             }
         }
     }
@@ -133,8 +133,8 @@ function create() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("createCode").value = '';
                 document.getElementById("createMoney").value = '';
                 document.getElementById("createWidth").value = '1950';
@@ -226,8 +226,8 @@ function update() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("updateTemples").innerHTML = '';
                 document.getElementById("updateMoney").value = '';
                 document.getElementById("updateWidth").value = '';
@@ -308,8 +308,8 @@ function deleteOne() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("deleteTemples").innerHTML = '';
                 document.getElementById("deleteMoney").innerText = '';
                 document.getElementById("deleteWidth").innerText = '';

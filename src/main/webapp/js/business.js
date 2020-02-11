@@ -70,8 +70,8 @@ function create() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("createName").value = '',
                     document.getElementById("createAddress").value = '',
                     document.getElementById("createPhone").value= '',
@@ -147,8 +147,8 @@ function update() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("modifyBusinesses").innerHTML = '';
                 document.getElementById("modifyName").value = '';
                 document.getElementById("modifyAddress").value = '';
@@ -220,8 +220,8 @@ function deleteOne() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("deleteBusinesses").innerHTML = '';
                 document.getElementById("deleteName").innerHTML = '';
                 document.getElementById("deleteAddress").innerHTML = '';

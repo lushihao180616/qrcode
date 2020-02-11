@@ -182,8 +182,8 @@ function create() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
                 init();
+                alert(data);
                 document.getElementById("message").value = '';
                 document.getElementById("temples").options[0].selected = true;
                 document.getElementById("businesses").options[0].selected = true;
