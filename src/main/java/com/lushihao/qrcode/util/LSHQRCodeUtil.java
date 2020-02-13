@@ -24,8 +24,7 @@ import java.util.*;
 /**
  * QrcodeText 二维码
  *
- * @author krry
- * @version 1.0
+ * @author lushihao
  */
 @Component
 public class LSHQRCodeUtil {
@@ -622,7 +621,6 @@ public class LSHQRCodeUtil {
         //将文件输出
         if (isMp4) {
             new LSHGif2JpgUtil().jpgToGif(images, (filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif"), qrCodeVo.getQrCodeTemple().getFrame());
-//            LSHJpg2Mp4Util.convertPicToAvi(images, (filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".avi").replace("\\", "/"), qrCodeVo.getQrCodeTemple().getFrame(), 1500, 1000);
         } else {
             ImageIO.write(images.get(0), "jpg", new FileOutputStream(new File(filePath)));
         }
