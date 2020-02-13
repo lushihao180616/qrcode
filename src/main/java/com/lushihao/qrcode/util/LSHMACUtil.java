@@ -1,7 +1,6 @@
 package com.lushihao.qrcode.util;
 
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
-import org.apache.logging.log4j.util.Base64Util;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
