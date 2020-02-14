@@ -299,49 +299,6 @@ public class LSHQRCodeUtil {
     }
 
     /**
-     * 添加水印
-     *
-     * @param addFontImage
-     * @param content
-     * @return
-     */
-    public BufferedImage addWaterMark(BufferedImage addFontImage, String content) {
-        Color color = new Color(255, 255, 255, 255);// 水印颜色
-        Font font = new Font("微软雅黑", Font.ITALIC, 45); //水印字体
-        try {
-            int width = addFontImage.getWidth(); //图片宽
-            int height = addFontImage.getHeight(); //图片高
-
-            //添加水印
-            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
-            Graphics2D g = bufferedImage.createGraphics();
-            g.drawImage(addFontImage, 0, 0, width, height, null);
-            g.setColor(color); //水印颜色
-            g.setFont(font); //水印字体
-
-            int x = width - 2 * getWatermarkLength(content, g); //这是一个计算水印位置的函数，可以根据需求添加
-            int y = height - 1 * getWatermarkLength(content, g);
-            g.drawString(content, x, y); //水印位置
-            g.dispose(); //释放资源
-            return bufferedImage;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 计算水印位置
-     *
-     * @param waterMarkContent
-     * @param g
-     * @return
-     */
-    public int getWatermarkLength(String waterMarkContent, Graphics2D g) {
-        return g.getFontMetrics(g.getFont()).charsWidth(waterMarkContent.toCharArray(), 0, waterMarkContent.length());
-    }
-
-    /**
      * 创建文件夹
      *
      * @param qrcodePath
@@ -620,7 +577,8 @@ public class LSHQRCodeUtil {
         }
         //将文件输出
         if (isMp4) {
-            new LSHGif2JpgUtil().jpgToGif(images, (filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif"), qrCodeVo.getQrCodeTemple().getFrame());
+            filePath = filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif";
+            new LSHGif2JpgUtil().jpgToGif(images, filePath, qrCodeVo.getQrCodeTemple().getFrame());
         } else {
             ImageIO.write(images.get(0), "jpg", new FileOutputStream(new File(filePath)));
         }
