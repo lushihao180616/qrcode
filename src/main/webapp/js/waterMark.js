@@ -54,6 +54,16 @@ function create() {
                 }
                 var data = xhr.responseText;
                 alert(data);
+
+                if (data == '添加成功') {
+                    var waterMarks = document.getElementById("waterMarks");
+                    waterMarks.innerHTML += '\n' +
+                        '    <tr>\n' +
+                        '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
+                        '        <td class="bottomTd2">' + document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_waterMark.jpg' + '</td>\n' +
+                        '    </tr>';
+                }
+
                 document.getElementById("createLogo")[0].selected = true;
                 document.getElementById("createFont")[0].selected = true;
                 document.getElementById("createWidth").value = '100';

@@ -18,6 +18,7 @@
 
 .topItem2 {
     left: 34%;
+    width: 65%;
     height: 750px;
 }
 
@@ -57,4 +58,30 @@
     bottom: 10px;
     right: 10px;
     color: green;
+}
+
+.bottomItemTable {
+    width: 100%;
+    overflow: scroll;
+}
+
+.bottomTh1, .bottomTh2 {
+    width: 50%;
+    background-color: burlywood;
+    color: white;
+    padding: 5px;
+}
+
+.bottomTh2 {
+    background-color: teal;
+}
+
+.bottomTd1, .bottomTd2 {
+    width: 50%;
+    border: 2px solid burlywood;
+    padding: 5px;
+}
+
+.bottomTd2 {
+    border: 2px solid teal;
 }
