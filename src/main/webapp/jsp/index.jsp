@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,8 +16,8 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200 || xhr.status == 304) {
-                        if(xhr.responseText == '0'){
-                            window.location.href="error.jsp"
+                        if (xhr.responseText == '0') {
+                            window.location.href = "error.jsp"
                         }
                     }
                 }
@@ -40,6 +40,9 @@
 </p>
 <p>
     <a style="margin: 10px;padding: 10px;background-color: burlywood" href="temple.jsp">模&emsp;板&emsp;管&emsp;理</a>
+</p>
+<p>
+    <a style="margin: 10px;padding: 10px;background-color: turquoise" href="waterMark.jsp">水&emsp;印&emsp;管&emsp;理</a>
 </p>
 
 <hr>
