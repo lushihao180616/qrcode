@@ -56,8 +56,8 @@ function create() {
                 alert(data);
                 document.getElementById("createLogo")[0].selected = true;
                 document.getElementById("createFont")[0].selected = true;
-                document.getElementById("createWidth").value = '200';
-                document.getElementById("createHeight").value = '200';
+                document.getElementById("createWidth").value = '100';
+                document.getElementById("createHeight").value = '100';
                 document.getElementById("createX").value = '50';
                 document.getElementById("createY").value = '50';
                 document.getElementById('createPath').value = '';

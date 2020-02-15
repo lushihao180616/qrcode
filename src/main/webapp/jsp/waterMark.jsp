@@ -32,8 +32,8 @@
         <option value="1">有</option>
         <option value="0">无</option>
     </select><br><br>
-        商标宽度：<input class="topItemInput" type="text" value="200" id="createWidth"/><br><br>
-        商标高度：<input class="topItemInput" type="text" value="200" id="createHeight"/><br><br>
+        商标宽度：<input class="topItemInput" type="text" value="100" id="createWidth"/><br><br>
+        商标高度：<input class="topItemInput" type="text" value="100" id="createHeight"/><br><br>
         x&ensp;偏移量：<input class="topItemInput" type="text" value="50" id="createX"/><br><br>
         y&ensp;偏移量：<input class="topItemInput" type="text" value="50" id="createY"/><br><br>
         图片位置：<input class="topItemSelect" type="file" id="createPath"/><br><br>
