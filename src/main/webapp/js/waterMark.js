@@ -71,8 +71,39 @@ function create() {
                 document.getElementById("createX").value = '50';
                 document.getElementById("createY").value = '50';
                 document.getElementById('createPath').value = '';
+
+                document.getElementById("createWidth").hidden = false;
+                document.getElementById("createHeight").hidden = false;
+                document.getElementById("createX").hidden = false;
+                document.getElementById("createY").hidden = false;
+                document.getElementById("createWidthSpan").hidden = false;
+                document.getElementById("createHeightSpan").hidden = false;
+                document.getElementById("createXSpan").hidden = false;
+                document.getElementById("createYSpan").hidden = false;
             }
         }
     }
     xhr.send(JSON.stringify(createWaterMark));
+}
+
+function showSomeThing() {
+    if (document.getElementById("createLogo")[1].selected) {
+        document.getElementById("createWidth").hidden = true;
+        document.getElementById("createHeight").hidden = true;
+        document.getElementById("createX").hidden = true;
+        document.getElementById("createY").hidden = true;
+        document.getElementById("createWidthSpan").hidden = true;
+        document.getElementById("createHeightSpan").hidden = true;
+        document.getElementById("createXSpan").hidden = true;
+        document.getElementById("createYSpan").hidden = true;
+    } else if (document.getElementById("createLogo")[0].selected) {
+        document.getElementById("createWidth").hidden = false;
+        document.getElementById("createHeight").hidden = false;
+        document.getElementById("createX").hidden = false;
+        document.getElementById("createY").hidden = false;
+        document.getElementById("createWidthSpan").hidden = false;
+        document.getElementById("createHeightSpan").hidden = false;
+        document.getElementById("createXSpan").hidden = false;
+        document.getElementById("createYSpan").hidden = false;
+    }
 }

@@ -24,7 +24,7 @@
                                                                   value="搜索"
                                                                   onclick="getBusiness()"/><br><br>
         商家选择：<select class="topItemSelect" id="createBusinesses"></select><br><br>
-        商&emsp;&emsp;标：<select class="topItemSelect" id="createLogo">
+        商&emsp;&emsp;标：<select class="topItemSelect" id="createLogo" onchange="showSomeThing()">
         <option value="1">有</option>
         <option value="0">无</option>
     </select><br><br>
@@ -32,11 +32,15 @@
         <option value="1">有</option>
         <option value="0">无</option>
     </select><br><br>
-        商标宽度：<input class="topItemInput" type="text" value="100" id="createWidth"/><br><br>
-        商标高度：<input class="topItemInput" type="text" value="100" id="createHeight"/><br><br>
-        x&ensp;偏移量：<input class="topItemInput" type="text" value="50" id="createX"/><br><br>
-        y&ensp;偏移量：<input class="topItemInput" type="text" value="50" id="createY"/><br><br>
         图片位置：<input class="topItemSelect" type="file" id="createPath"/><br><br>
+        <span id="createWidthSpan">商标宽度：</span><input class="topItemInput" type="text" value="100"
+                                                      id="createWidth"/><br><br>
+        <span id="createHeightSpan">商标高度：</span><input class="topItemInput" type="text" value="100"
+                                                       id="createHeight"/><br><br>
+        <span id="createXSpan">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
+                                                        id="createX"/><br><br>
+        <span id="createYSpan">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
+                                                        id="createY"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
