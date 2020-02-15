@@ -11,6 +11,10 @@ public class WaterMark {
      */
     private String businessCode;
     /**
+     * 商标
+     */
+    private boolean ifShowLogo;
+    /**
      * 是否显示底部文字
      */
     private boolean ifShowFont;
@@ -45,6 +49,14 @@ public class WaterMark {
 
     public void setBusinessCode(String businessCode) {
         this.businessCode = businessCode;
+    }
+
+    public boolean isIfShowLogo() {
+        return ifShowLogo;
+    }
+
+    public void setIfShowLogo(boolean ifShowLogo) {
+        this.ifShowLogo = ifShowLogo;
     }
 
     public boolean isIfShowFont() {
