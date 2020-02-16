@@ -1,0 +1,30 @@
+.topTitle {
+    background-color: black;
+}
+
+.linkItems {
+    justify-content: space-around;
+    display: flex;
+    width: 100%;
+}
+
+.lineItem1, .lineItem2, .lineItem3, .lineItem4 {
+    width: 24%;
+    display: inline;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    background-color: lightcoral;
+}
+
+.lineItem2 {
+    background-color: cadetblue;
+}
+
+.lineItem3 {
+    background-color: burlywood;
+}
+
+.lineItem4 {
+    background-color: turquoise;
+}
