@@ -85,7 +85,7 @@
             onclick="deleteSearch()"/><br><br>
         <span class="itemName">编&emsp;&emsp;号：</span><select class="topItemSelect" id="deleteTemples"
                                                              onchange="deleteTempleCode(this.id)"></select><br><br>
-        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
+        <div class="split"></div>
         <div class="topItemSelect" id="deleteMoney"></div>
         <br>
         <div class="topItemSelect" id="deleteWidth"></div>
@@ -101,7 +101,7 @@
         <div class="topItemSelect" id="deleteAngle"></div>
         <br>
         <div class="topItemSelect" id="deleteMultiple"></div>
-        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
+        <div class="split"></div>
 
         <input class="topItemButton" type="button" value="删除" onclick="deleteOne()"/>
     </div>

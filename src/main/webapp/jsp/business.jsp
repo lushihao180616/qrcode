@@ -63,7 +63,7 @@
             onclick="deleteSearch()"/><br><br>
         <span class="itemName">编&emsp;&emsp;号：</span><select class="topItemSelect" id="deleteBusinesses"
                                                              onchange="deleteBusinessCode(this.id)"></select><br><br>
-        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
+        <div class="split"></div>
         <div class="topItemSelect itemName" id="deleteName"></div>
         <br>
         <div class="topItemSelect itemName" id="deleteAddress"></div>
@@ -71,7 +71,7 @@
         <div class="topItemSelect itemName" id="deletePhone"></div>
         <br>
         <div class="topItemSelect itemName" id="deleteBusinessName"></div>
-        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
+        <div class="split"></div>
 
         <input class="topItemButton" type="submit" value="删除" onclick="deleteOne()"/>
     </div>
