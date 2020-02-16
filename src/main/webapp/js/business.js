@@ -24,15 +24,6 @@ function getBusiness() {
                 }
                 var businessList = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("buisnesses");
-                businesses.innerHTML = '\n' +
-                    '    <tr>\n' +
-                    '        <th class="bottomTh1">编号</th>\n' +
-                    '        <th class="bottomTh2">名称</th>\n' +
-                    '        <th class="bottomTh3">地址</th>\n' +
-                    '        <th class="bottomTh4">电话</th>\n' +
-                    '        <th class="bottomTh5">联系人</th>\n' +
-                    '    </tr>';
-
                 for (var i = 0; i < businessList.length; i++) {
                     businesses.innerHTML += '\n' +
                         '    <tr>\n' +

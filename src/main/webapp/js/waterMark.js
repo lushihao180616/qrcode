@@ -55,7 +55,7 @@ function create() {
                 var data = xhr.responseText;
                 alert(data);
 
-                if (data == '添加成功') {
+                if (data.substring(0, 4) == '添加成功') {
                     var waterMarks = document.getElementById("waterMarks");
                     waterMarks.innerHTML += '\n' +
                         '    <tr>\n' +

@@ -134,16 +134,6 @@ function getRecord() {
                 }
                 var recordList = JSON.parse(xhr.responseText);
                 var records = document.getElementById("records");
-                records.innerHTML = '\n' +
-                    '    <tr>\n' +
-                    '        <th class="bottomTh1">商家</th>\n' +
-                    '        <th class="bottomTh2">模板</th>\n' +
-                    '        <th class="bottomTh3">文件名</th>\n' +
-                    '        <th class="bottomTh4">位置</th>\n' +
-                    '        <th class="bottomTh5">价格</th>\n' +
-                    '        <th class="bottomTh6">创建时间</th>\n' +
-                    '    </tr>';
-
                 for (var i = 0; i < recordList.length; i++) {
                     records.innerHTML += '\n' +
                         '    <tr>\n' +

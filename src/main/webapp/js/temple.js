@@ -20,25 +20,6 @@ function getTemple() {
                 }
                 var templeList = JSON.parse(xhr.responseText);
                 var temples = document.getElementById("temples");
-                temples.innerHTML = '\n' +
-                    '    <tr>\n' +
-                    '        <th class="bottomTh1">编号</th>\n' +
-                    '        <th class="bottomTh2">价格</th>\n' +
-                    '        <th class="bottomTh3">仅二维码</th>\n' +
-                    '        <th class="bottomTh4">显示商标</th>\n' +
-                    '        <th class="bottomTh5">自定背景</th>\n' +
-                    '        <th class="bottomTh6">算法选择</th>\n' +
-                    '        <th class="bottomTh7">背景宽度</th>\n' +
-                    '        <th class="bottomTh8">背景高度</th>\n' +
-                    '        <th class="bottomTh9">子图数量</th>\n' +
-                    '        <th class="bottomTh10">X偏移量</th>\n' +
-                    '        <th class="bottomTh11">Y偏移量</th>\n' +
-                    '        <th class="bottomTh12">旋转角度</th>\n' +
-                    '        <th class="bottomTh13">缩放倍数</th>\n' +
-                    '        <th class="bottomTh14">帧管理</th>\n' +
-                    '        <th class="bottomTh15">模板样例</th>\n' +
-                    '    </tr>';
-
                 for (var i = 0; i < templeList.length; i++) {
                     var ifOnly = ''
                     if (templeList[i].ifOnly) {
@@ -59,7 +40,7 @@ function getTemple() {
                         ifSelfBg += "否"
                     }
                     temples.innerHTML += '\n' +
-                        '    <tr>\n' +
+                        '    <tr >\n' +
                         '        <td class="bottomTd1">' + templeList[i].code + '</td>\n' +
                         '        <td class="bottomTd2">' + templeList[i].money + '</td>\n' +
                         '        <td class="bottomTd3">' + ifOnly + '</td>\n' +

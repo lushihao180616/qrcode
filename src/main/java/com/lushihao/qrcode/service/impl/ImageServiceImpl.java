@@ -108,7 +108,7 @@ public class ImageServiceImpl implements ImageService {
         } catch (IOException e) {
             return "文件不存在";
         }
-        return "添加成功";
+        return "添加成功，加水印图片被导出到" + waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf("\\")) + "（原图片目录）下";
     }
 
 }

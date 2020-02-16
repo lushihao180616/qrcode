@@ -1,0 +1,114 @@
+.top {
+    justify-content: space-around;
+    display: flex;
+    width: 100%;
+    height: 0px;
+}
+
+.topItem1, .topItem2, .topItem3, .topItem4 {
+    float: left;
+    width: 31%;
+    height: 0px;
+    background-color: #ddd;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.topItem4 {
+    width: 100%;
+    height: 500px;
+    background-color: white;
+    margin: 0px;
+}
+
+input, select, textarea {
+    box-sizing: border-box;
+    width: 75%;
+    height: 35px;
+    position: absolute;
+}
+
+textarea {
+    height: 80px;
+}
+
+.itemName {
+    display: inline;
+    height: 35px;
+    line-height: 35px;
+}
+
+.topItemTitle {
+    padding: 15px;
+    color: #333;
+    font-weight: bolder;
+    position: absolute;
+}
+
+.topItemInput {
+    right: 5%;
+}
+
+.topItemSelect {
+    right: 5%;
+}
+
+.topItemFilter {
+    width: 55%;
+    right: 25%;
+}
+
+.topItemSearch {
+    width: 15%;
+    right: 5%;
+    color: green;
+    position: absolute;
+}
+
+.topItemButton {
+    width: 20%;
+    height: 30px;
+    bottom: 10px;
+    right: 5%;
+    color: green;
+    position: absolute;
+}
+
+.bottom {
+    justify-content: space-around;
+    display: flex;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.itemSearch {
+    width: 18%;
+    display: inline-block;
+}
+
+.bottomItemFilter {
+    box-sizing: border-box;
+    width: 13%;
+    height: 35px;
+    position: unset;
+}
+
+.bottomItemSearch {
+    width: 8%;
+    right: 1%;
+}
+
+.bottomItemTable1 {
+    width: 99%;
+}
+
+.tableItems {
+    width: 100%;
+    overflow-y: scroll;
+    height: 450px;
+}
+
+.bottomItemTable2 {
+    width: 100%;
+}

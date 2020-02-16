@@ -6,6 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>水印管理</title>
+    <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/waterMark.css">
     <script src="../js/waterMark.js"></script>
 </head>
@@ -19,20 +20,22 @@
 <div class="top">
     <div class="topItem1">
         <br>
-        <span class="topItemTitle">添加水印：</span><br><br><br>
-        商家搜索：<input class="topItemFilter" id="createCode"/><input class="topItemSearch" type="button"
-                                                                  value="搜索"
-                                                                  onclick="getBusiness()"/><br><br>
-        商家选择：<select class="topItemSelect" id="createBusinesses"></select><br><br>
-        商&emsp;&emsp;标：<select class="topItemSelect" id="createLogo" onchange="showSomeThing()">
+        <span class="topItemTitle">添加水印：</span></span><br><br><br>
+        <span class="itemName">商家搜索：</span><input class="topItemFilter" id="createCode"/><input class="topItemSearch"
+                                                                                                type="button"
+                                                                                                value="搜索"
+                                                                                                onclick="getBusiness()"/><br><br>
+        <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
+        <span class="itemName">商&emsp;&emsp;标：</span><select class="topItemSelect" id="createLogo"
+                                                             onchange="showSomeThing()">
         <option value="1">有</option>
         <option value="0">无</option>
     </select><br><br>
-        文&emsp;&emsp;字：<select class="topItemSelect" id="createFont">
+        <span class="itemName">文&emsp;&emsp;字：</span><select class="topItemSelect" id="createFont">
         <option value="1">有</option>
         <option value="0">无</option>
     </select><br><br>
-        图片位置：<input class="topItemSelect" type="file" id="createPath"/><br><br>
+        <span class="itemName">图片位置：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
         <span id="createWidthSpan">商标宽度：</span><input class="topItemInput" type="text" value="100"
                                                       id="createWidth"/><br><br>
         <span id="createHeightSpan">商标高度：</span><input class="topItemInput" type="text" value="100"
@@ -47,13 +50,17 @@
     <div class="topItem2">
         <br>
         <span class="topItemTitle">添加记录：</span><span
-            style="color: #999;font-size: 12px;margin-left: 20px;font-weight: bold">仅用于预览，关闭页面消失</span><br><br><br>
-        <table class="bottomItemTable" id="waterMarks">
+            style="color: #999;font-size: 12px;margin-left: 130px;line-height: 42px;font-weight: bold">仅用于预览，关闭页面消失</span><br><br><br>
+        <table class="bottomItemTable1">
             <tr>
                 <th class="bottomTh1">加水印前</th>
                 <th class="bottomTh2">加水印后</th>
             </tr>
         </table>
+        <div class="tableItems">
+            <table class="bottomItemTable2" id="waterMarks">
+            </table>
+        </div>
     </div>
 </div>
 
