@@ -1,4 +1,4 @@
-function getBusiness() {
+function init() {
     var filterBusinessCode = {
         code: document.getElementById("createCode").value
     };

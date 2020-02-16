@@ -1,8 +1,4 @@
 function init() {
-    getBusiness();
-}
-
-function getBusiness() {
     var filterBusiness = {
         code: document.getElementById("filterCode").value,
         name: document.getElementById("filterName").value,

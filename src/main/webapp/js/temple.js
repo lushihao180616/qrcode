@@ -1,8 +1,4 @@
 function init() {
-    getTemple();
-}
-
-function getTemple() {
     var filterTemple = {
         code: document.getElementById("filterCode").value
     };

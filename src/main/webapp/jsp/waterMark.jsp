@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../css/waterMark.css">
     <script src="../js/waterMark.js"></script>
 </head>
-<body onload="getBusiness()">
+<body onload="init()">
 
 <a class="toIndex" href="index.jsp">首页</a>
 
@@ -24,7 +24,7 @@
         <span class="itemName">商家搜索：</span><input class="topItemFilter" id="createCode"/><input class="topItemSearch"
                                                                                                 type="button"
                                                                                                 value="搜索"
-                                                                                                onclick="getBusiness()"/><br><br>
+                                                                                                onclick="init()"/><br><br>
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
         <span class="itemName">商&emsp;&emsp;标：</span><select class="topItemSelect" id="createLogo"
                                                              onchange="showSomeThing()">

@@ -1,7 +1,69 @@
 function init() {
-    getTemple();
-    getBusiness();
-    getRecord();
+    var filter = {
+        templeCode: document.getElementById("filterTemple").value
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/qrcode/qrcodeInit", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "error.jsp"
+                    return
+                }
+                var allData = JSON.parse(xhr.responseText);
+                var recordList = allData.record;
+                var templeList = allData.temple;
+                var businessList = allData.business;
+
+                var records = document.getElementById("records");
+                records.innerHTML = '';
+                for (var i = 0; i < recordList.length; i++) {
+                    records.innerHTML += '\n' +
+                        '    <tr>\n' +
+                        '        <td class="bottomTd1">' + recordList[i].businessCode + '</td>\n' +
+                        '        <td class="bottomTd2">' + recordList[i].templeCode + '</td>\n' +
+                        '        <td class="bottomTd3">' + recordList[i].fileName + '</td>\n' +
+                        '        <td class="bottomTd4">' + recordList[i].url + '</td>\n' +
+                        '        <td class="bottomTd5">' + recordList[i].money + '</td>\n' +
+                        '        <td class="bottomTd6">' + recordList[i].saveTime + '</td>\n' +
+                        '    </tr>';
+                }
+
+                var temples = document.getElementById("temples");
+                temples.innerHTML = '';
+                for (var i = 0; i < templeList.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = JSON.stringify(templeList[i]);
+                    option.text = templeList[i].code;
+                    temples.add(option);
+                }
+                if (templeList.length > 0) {
+                    updateTempleCode("temples");
+                }
+
+                var businesses = document.getElementById("businesses");
+                businesses.innerHTML = '';
+                for (var i = 0; i < businessList.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = JSON.stringify(businessList[i]);
+                    option.text = businessList[i].code;
+                    businesses.add(option);
+                }
+                if (businessList.length > 0) {
+                    updateBusinessCode("businesses");
+                }
+            }
+        }
+    }
+    xhr.send(JSON.stringify(filter));
+
+    // getTemple();
+    // getBusiness();
+    // getRecord();
 }
 
 function getTemple() {
