@@ -36,14 +36,14 @@
         <option value="0">无</option>
     </select><br><br>
         <span class="itemName">图片位置：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
-        <span id="createWidthSpan">商标宽度：</span><input class="topItemInput" type="text" value="100"
-                                                      id="createWidth"/><br><br>
-        <span id="createHeightSpan">商标高度：</span><input class="topItemInput" type="text" value="100"
-                                                       id="createHeight"/><br><br>
-        <span id="createXSpan">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
-                                                        id="createX"/><br><br>
-        <span id="createYSpan">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
-                                                        id="createY"/><br><br>
+        <span class="itemName" id="createWidthSpan">商标宽度：</span><input class="topItemInput" type="text" value="100"
+                                                                       id="createWidth"/><br><br>
+        <span class="itemName" id="createHeightSpan">商标高度：</span><input class="topItemInput" type="text" value="100"
+                                                                        id="createHeight"/><br><br>
+        <span class="itemName" id="createXSpan">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
+                                                                         id="createX"/><br><br>
+        <span class="itemName" id="createYSpan">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
+                                                                         id="createY"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>

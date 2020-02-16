@@ -24,6 +24,7 @@ function getBusiness() {
                 }
                 var businessList = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("buisnesses");
+                businesses.innerHTML = '';
                 for (var i = 0; i < businessList.length; i++) {
                     businesses.innerHTML += '\n' +
                         '    <tr>\n' +

@@ -20,6 +20,7 @@ function getTemple() {
                 }
                 var templeList = JSON.parse(xhr.responseText);
                 var temples = document.getElementById("temples");
+                temples.innerHTML = '';
                 for (var i = 0; i < templeList.length; i++) {
                     var ifOnly = ''
                     if (templeList[i].ifOnly) {

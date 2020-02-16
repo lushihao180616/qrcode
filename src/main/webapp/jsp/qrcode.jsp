@@ -46,7 +46,7 @@
         <br>
         <span class="topItemTitle">商家信息：</span><br><br><br>
 
-        <div style="height: 10px"></div>
+        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
         <div class="topItemSelect" id="nowBusiness_name"></div>
         <br>
         <div class="topItemSelect" id="nowBusiness_address"></div>
@@ -54,12 +54,13 @@
         <div class="topItemSelect" id="nowBusiness_phone"></div>
         <br>
         <div class="topItemSelect" id="nowBusiness_businessName"></div>
+        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
     </div>
     <div class="topItem3">
         <br>
         <span class="topItemTitle">模板信息：</span><br><br><br>
 
-        <div style="height: 10px"></div>
+        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
         <div class="topItemSelect" id="nowTemple_price"></div>
         <br>
         <div class="topItemSelect" id="nowTemple_ifOnly"></div>
@@ -75,6 +76,7 @@
         <div class="topItemSelect" id="nowTemple_x_y"></div>
         <br>
         <div class="topItemSelect" id="nowTemple_path"></div>
+        <div style="width: 100%;height: 30px;border-bottom: 1px dashed #333;margin-bottom: 20px"></div>
     </div>
 </div>
 

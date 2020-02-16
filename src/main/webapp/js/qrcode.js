@@ -134,6 +134,7 @@ function getRecord() {
                 }
                 var recordList = JSON.parse(xhr.responseText);
                 var records = document.getElementById("records");
+                records.innerHTML = '';
                 for (var i = 0; i < recordList.length; i++) {
                     records.innerHTML += '\n' +
                         '    <tr>\n' +
