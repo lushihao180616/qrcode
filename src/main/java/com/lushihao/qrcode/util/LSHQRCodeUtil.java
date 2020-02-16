@@ -5,13 +5,9 @@ import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
-import com.sun.imageio.plugins.jpeg.JPEG;
-import com.sun.imageio.plugins.jpeg.JPEGImageMetadataFormat;
-import com.sun.imageio.plugins.jpeg.JPEGStreamMetadataFormat;
 import com.swetake.util.Qrcode;
 import org.jim2mov.core.MovieSaveException;
 import org.springframework.stereotype.Component;
-import sun.awt.image.JPEGImageDecoder;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -34,7 +30,7 @@ public class LSHQRCodeUtil {
     @Resource
     private QRCodeRecordMapper qrCodeRecordMapper;
     @Resource
-    private LSHGif2JpgUtil lshGif2JpgUtil;
+    private LSHGifUtil lshGif2JpgUtil;
 
     // 二维码宽度
     private int width = 1950;
@@ -578,7 +574,7 @@ public class LSHQRCodeUtil {
         //将文件输出
         if (isMp4) {
             filePath = filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif";
-            new LSHGif2JpgUtil().jpgToGif(images, filePath, qrCodeVo.getQrCodeTemple().getFrame());
+            new LSHGifUtil().jpgToGif(images, filePath, qrCodeVo.getQrCodeTemple().getFrame());
         } else {
             ImageIO.write(images.get(0), "jpg", new FileOutputStream(new File(filePath)));
         }

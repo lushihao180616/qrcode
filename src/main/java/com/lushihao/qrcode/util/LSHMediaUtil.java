@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 
-public class LSHJpg2Mp4Util {
+public class LSHMediaUtil {
 
     public static void convertPicToAvi(Map<Integer, BufferedImage> map, String aviFileName, int fps, int mWidth, int mHeight) {
         // jpgs目录放置jpg图片,图片文件名为(1.jpg,2.jpg...)
@@ -42,7 +42,6 @@ public class LSHJpg2Mp4Util {
         } catch (MovieSaveException e) {
             System.err.println(e);
         }
-
     }
 
 }

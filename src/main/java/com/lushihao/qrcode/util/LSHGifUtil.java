@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.*;
 
 @Component
-public class LSHGif2JpgUtil {
+public class LSHGifUtil {
 
     /**
      * jpg转成gif
