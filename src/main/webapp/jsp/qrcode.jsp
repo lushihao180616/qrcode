@@ -12,11 +12,11 @@
 </head>
 <body onload="init()">
 
-<a style="margin: 10px;padding: 10px;background-color: lightcoral" href="index.jsp">首页</a><a
-        style="margin: 10px;padding: 10px;background-color: lightcoral" href="http://www.fhdq.net/">特殊符号</a>
+<a class="toIndex" href="index.jsp">首页</a><a
+        class="toIndex" href="http://www.fhdq.net/">特殊符号</a>
 
-<p style="background-color: lightcoral;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
-    二维码创建
+<p class="topTitle">
+    创建二维码
 </p>
 <div class="top">
     <div class="topItem1">
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<p style="background-color: lightcoral;margin: 100px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+<p class="middleTitle">
     二维码查询
 </p>
 

@@ -12,9 +12,9 @@
 </head>
 <body onload="init()">
 
-<a style="margin: 10px;padding: 10px;background-color: cadetblue" href="index.jsp">首页</a>
+<a class="toIndex" href="index.jsp">首页</a>
 
-<p style="background-color: cadetblue;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+<p class="topTitle">
     商家变动
 </p>
 <div class="top">
@@ -77,7 +77,7 @@
     </div>
 </div>
 
-<p style="background-color: cadetblue;margin: 100px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+<p class="middleTitle">
     商家查询
 </p>
 

@@ -12,9 +12,9 @@
 </head>
 <body onload="getBusiness()">
 
-<a style="margin: 10px;padding: 10px;background-color: turquoise" href="index.jsp">首页</a>
+<a class="toIndex" href="index.jsp">首页</a>
 
-<p style="background-color: turquoise;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+<p class="topTitle">
     添加水印
 </p>
 <div class="top">

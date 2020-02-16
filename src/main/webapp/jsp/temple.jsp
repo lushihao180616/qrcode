@@ -12,7 +12,7 @@
 </head>
 <body onload="init()">
 
-<a style="margin: 10px;padding: 10px;background-color: burlywood" href="index.jsp">首页</a>
+<a class="toIndex" href="index.jsp">首页</a>
 <div style="float: right;margin-top: -5px;margin-right: 10px">
     <label>更新模板二维码：</label><input class="topItemSelect_up" type="file" id="downLoadTemple"/><input
         class="topItemSearch_up"
@@ -20,7 +20,7 @@
         onclick="downLoadTemple()">
 </div>
 
-<p style="background-color: burlywood;margin: 20px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+<p class="topTitle">
     模板变动
 </p>
 <div class="top">
@@ -107,7 +107,7 @@
     </div>
 </div>
 
-<p style="background-color: burlywood;margin: 100px 10px 10px;padding: 10px;text-align: center;font-weight: bolder;color: white">
+<p class="middleTitle">
     模板查询
 </p>
 

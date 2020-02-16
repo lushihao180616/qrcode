@@ -1,3 +1,24 @@
+.toIndex {
+    margin: 10px;
+    padding: 10px;
+}
+
+.topTitle {
+    margin: 20px 10px 10px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bolder;
+    color: white;
+}
+
+.middleTitle {
+    margin: 100px 10px 10px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bolder;
+    color: white;
+}
+
 .top {
     justify-content: space-around;
     display: flex;
