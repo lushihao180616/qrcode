@@ -13,6 +13,7 @@ import java.util.Base64;
 
 @Component
 public class LSHMACUtil {
+
     @Resource
     private ProjectBasicInfo projectBasicInfo;
 

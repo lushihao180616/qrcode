@@ -1,0 +1,48 @@
+.toIndex {
+    background-color: yellowgreen;
+}
+
+.topTitle {
+    background-color: yellowgreen;
+}
+
+.middleTitle {
+    background-color: yellowgreen;
+}
+
+.topItemTitle {
+    background-color: yellowgreen;
+}
+
+.top {
+    height: 600px;
+}
+
+.topItem1, .topItem2 {
+    height: 600px;
+}
+
+.topItem2 {
+    width: 68%;
+}
+
+.bottomTh1, .bottomTh2 {
+    width: 50%;
+    background-color: burlywood;
+    color: white;
+    padding: 5px;
+}
+
+.bottomTh2 {
+    background-color: teal;
+}
+
+.bottomTd1, .bottomTd2 {
+    width: 50%;
+    border: 2px solid burlywood;
+    padding: 5px;
+}
+
+.bottomTd2 {
+    border: 2px solid teal;
+}

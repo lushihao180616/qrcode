@@ -44,13 +44,7 @@ public class ImageServiceImpl implements ImageService {
             BufferedImage bg = ImageIO.read(new FileInputStream(waterMark.getPath()));
             Graphics2D bgG2 = bg.createGraphics();
             if (waterMark.isIfShowLogo()) {
-                File waterMarkLogo = new File(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\waterMark.png");
-                BufferedImage waterMarkImage;
-                if (waterMarkLogo.exists()) {
-                    waterMarkImage = ImageIO.read(new FileInputStream(waterMarkLogo));
-                } else {
-                    waterMarkImage = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.jpg"));
-                }
+                BufferedImage waterMarkImage = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.png"));
                 bgG2.drawImage(waterMarkImage, waterMark.getX(), waterMark.getY(), waterMark.getWidth(), waterMark.getHeight(), null);
             }
             if (waterMark.isIfShowFont()) {
@@ -62,7 +56,7 @@ public class ImageServiceImpl implements ImageService {
                     coverHeight = (int) (bg.getHeight() * 0.04);
                 }
                 //获得水印
-                BufferedImage logoImage = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.jpg"));
+                BufferedImage logoImage = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.png"));
                 //下侧小商标画上去
                 BufferedImage logoBgImage = new BufferedImage(coverHeight, coverHeight, BufferedImage.TYPE_INT_RGB);
                 Graphics2D logoBgG2 = logoBgImage.createGraphics();

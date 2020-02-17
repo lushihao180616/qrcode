@@ -4,15 +4,21 @@ import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.service.BusinessService;
+import com.lushihao.qrcode.util.LSHVideoUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -30,8 +36,8 @@ public class BusinessServiceImpl implements BusinessService {
         int back = businessMapper.create(business);
         if (back > 0) {
             //商标地址
-            String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
-            File logoDirectory = new File(logoPath);
+            String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
+            File logoDirectory = new File(businessPath);
             if (!logoDirectory.exists()) {//如果文件夹不存在
                 logoDirectory.mkdir();//创建文件夹
             }
@@ -43,11 +49,33 @@ public class BusinessServiceImpl implements BusinessService {
                 qrcodeDirectory.mkdir();//创建文件夹
             }
 
-            copyFile(logoSrc, logoPath + "\\logo.jpg");
+            String logoPath = businessPath + "\\logo.png";
+            copyFile(logoSrc, logoPath);
+
+            createEndVideo(logoPath, businessPath);
 
             return "创建成功，商家编号为" + business.getCode();
         }
         return "创建失败";
+    }
+
+    private void createEndVideo(String logoPath, String businessPath) {
+        try {
+            BufferedImage endVideoImage = new BufferedImage(1080, 2280, BufferedImage.TYPE_INT_RGB);
+            Graphics2D endVideoG2 = endVideoImage.createGraphics();
+            endVideoG2.setBackground(Color.BLACK);
+            endVideoG2.clearRect(0, 0, 1080, 2280);
+            BufferedImage logoImage = ImageIO.read(new FileInputStream(logoPath));
+            endVideoG2.drawImage(logoImage, 360, 400, 360, 360, null);
+            endVideoG2.dispose();
+            Map<Integer, BufferedImage> map = new HashMap<>();
+            for (int i = 0; i < 25; i++) {
+                map.put(i, endVideoImage);
+            }
+            LSHVideoUtil.jpg2Mp4(map, businessPath + "\\endVideo.mp4", 25, 1080, 2280);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String ifExitCode() {
@@ -68,7 +96,7 @@ public class BusinessServiceImpl implements BusinessService {
             if (logoSrc != null && !"".equals(logoSrc)) {
                 //商标地址
                 String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
-                copyFile(logoSrc, logoPath + "\\logo.jpg");
+                copyFile(logoSrc, logoPath + "\\logo.png");
             }
 
             return "更新成功";
