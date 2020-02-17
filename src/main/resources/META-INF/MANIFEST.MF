@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Main-Class: com.lushihao.qrcode.QrcodeApplication
+Class-Path: jmf-2.1.1e.jar spring-jcl-5.2.2.RELEASE.jar tomcat-embed-jas
+ per-9.0.29.jar jakarta.annotation-api-1.3.5.jar javax.servlet-api-4.0.1
+ .jar spring-boot-starter-json-2.2.2.RELEASE.jar core-3.3.0.jar slf4j-ap
+ i-1.7.29.jar jackson-module-parameter-names-2.10.1.jar hibernate-valida
+ tor-6.0.18.Final.jar spring-boot-2.2.2.RELEASE.jar spring-core-5.2.2.RE
+ LEASE.jar tomcat-embed-core-9.0.29.jar spring-boot-starter-validation-2
+ .2.2.RELEASE.jar jackson-datatype-jdk8-2.10.1.jar mysql-connector-java-
+ 8.0.18.jar jstl-1.2.jar mybatis-spring-boot-starter-2.0.1.jar jboss-log
+ ging-3.4.1.Final.jar tomcat-annotations-api-9.0.29.jar spring-boot-auto
+ configure-2.2.2.RELEASE.jar HikariCP-3.4.1.jar classmate-1.5.1.jar spri
+ ng-context-5.2.2.RELEASE.jar spring-tx-5.2.2.RELEASE.jar jackson-annota
+ tions-2.10.1.jar jakarta.validation-api-2.0.1.jar jackson-datatype-jsr3
+ 10-2.10.1.jar tomcat-embed-websocket-9.0.29.jar mybatis-3.5.1.jar tomca
+ t-embed-el-9.0.29.jar animated-gif-lib-1.4.jar spring-expression-5.2.2.
+ RELEASE.jar snakeyaml-1.25.jar jackson-databind-2.10.1.jar spring-jdbc-
+ 5.2.2.RELEASE.jar spring-boot-starter-jdbc-2.2.2.RELEASE.jar Jim2mov.ja
+ r mybatis-spring-boot-autoconfigure-2.0.1.jar loadkit-v1.0.1.jar ecj-3.
+ 18.0.jar QRCode.jar myutils.jar xjar-v2.0.6.jar mybatis-spring-2.0.1.ja
+ r spring-web-5.2.2.RELEASE.jar spring-beans-5.2.2.RELEASE.jar spring-bo
+ ot-starter-tomcat-2.2.2.RELEASE.jar spring-aop-5.2.2.RELEASE.jar spring
+ -boot-starter-2.2.2.RELEASE.jar spring-webmvc-5.2.2.RELEASE.jar spring-
+ boot-starter-web-2.2.2.RELEASE.jar commons-compress-1.18.jar jackson-co
+ re-2.10.1.jar spring-boot-configuration-processor-2.2.2.RELEASE.jar
+
