@@ -32,13 +32,14 @@
             value="搜索"
             onclick="getBusiness()"/><br><br>
         <span class="itemName">模&emsp;&emsp;板：</span><select class="topItemSelect" id="temples"
-                                                             onchange="updateTempleCode(this.id)"></select><br><br>
+                                                             onchange="getTempleCode(this.id)"></select><br><br>
         <span class="itemName">商&emsp;&emsp;家：</span><select class="topItemSelect" id="businesses"
-                                                             onchange="updateBusinessCode(this.id)"></select><br><br>
+                                                             onchange="getBusinessCode(this.id)"></select><br><br>
         <span class="itemName">文&ensp;件&ensp;名：</span><input class="topItemInput" type="text" id="fileName"/><br><br>
-        <span class="itemName">信&emsp;&emsp;息：</span><textarea class="topItemInput" type="text" id="message"></textarea><br><br>
-        <label id="backGroundLabel">背景图片：</label><input class="topItemSelect" id="backGround" type="file"
-                                                        name="uploadFile"/><br><br>
+        <span class="itemName2">信&emsp;&emsp;息：</span><textarea class="topItemInput" type="text"
+                                                                id="message"></textarea><br><br>
+        <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
+                                                                       name="uploadFile"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>

@@ -42,7 +42,7 @@ function init() {
                     temples.add(option);
                 }
                 if (templeList.length > 0) {
-                    updateTempleCode("temples");
+                    getTempleCode("temples");
                 }
 
                 var businesses = document.getElementById("businesses");
@@ -54,7 +54,7 @@ function init() {
                     businesses.add(option);
                 }
                 if (businessList.length > 0) {
-                    updateBusinessCode("businesses");
+                    getBusinessCode("businesses");
                 }
             }
         }
@@ -92,7 +92,7 @@ function getTemple() {
                     temples.add(option);
                 }
                 if (templeList.length > 0) {
-                    updateTempleCode("temples");
+                    getTempleCode("temples");
                 }
             }
         }
@@ -126,7 +126,7 @@ function getBusiness() {
                     businesses.add(option);
                 }
                 if (businessList.length > 0) {
-                    updateBusinessCode("businesses");
+                    getBusinessCode("businesses");
                 }
             }
         }
@@ -134,29 +134,29 @@ function getBusiness() {
     xhr.send(JSON.stringify(filterBusinessCode));
 }
 
-function updateTempleCode(id) {
+function getTempleCode(id) {
     var temple = JSON.parse(document.getElementById(id).value);
-    var ifOnly = ''
+    var ifOnly = '';
     if (temple.ifOnly) {
-        ifOnly += "是"
+        ifOnly += "是";
     } else {
-        ifOnly += "否"
+        ifOnly += "否";
     }
-    var ifShowLogo = ''
+    var ifShowLogo = '';
     if (temple.ifShowLogo) {
-        ifShowLogo += "是"
+        ifShowLogo += "是";
     } else {
-        ifShowLogo += "否"
+        ifShowLogo += "否";
     }
-    var ifSelfBg = ''
+    var ifSelfBg = '';
     if (temple.ifSelfBg) {
-        ifSelfBg += "是"
-        document.getElementById("backGround").hidden = false;
-        document.getElementById("backGroundLabel").hidden = false;
+        ifSelfBg += "是";
+        document.getElementById("backGround").style.visibility = "visible";
+        document.getElementById("backGroundLabel").style.visibility = "visible";
     } else {
-        ifSelfBg += "否"
-        document.getElementById("backGround").hidden = true;
-        document.getElementById("backGroundLabel").hidden = true;
+        ifSelfBg += "否";
+        document.getElementById("backGround").style.visibility = "hidden";
+        document.getElementById("backGroundLabel").style.visibility = "hidden";
     }
     document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
     document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
@@ -168,7 +168,7 @@ function updateTempleCode(id) {
     document.getElementById("nowTemple_path").innerText = '模板样例：' + temple.path;
 }
 
-function updateBusinessCode(id) {
+function getBusinessCode(id) {
     var budiness = JSON.parse(document.getElementById(id).value);
     document.getElementById("nowBusiness_name").innerText = '名        称：' + budiness.name;
     document.getElementById("nowBusiness_address").innerText = '地        址：' + budiness.address;
@@ -215,12 +215,20 @@ function getRecord() {
 }
 
 function create() {
+    var message = document.getElementById("message").value;
+    var temple = document.getElementById("temples").value;
+    var business = document.getElementById("businesses").value;
+    var fileName = document.getElementById("fileName").value;
+    var backGround = document.getElementById("backGround").value;
+    if (!check(message, temple, business, fileName, backGround)) {
+        return
+    }
     var createQRCode = {
-        message: document.getElementById("message").value,
-        templeCode: JSON.parse(document.getElementById("temples").value).code,
-        businessCode: JSON.parse(document.getElementById("businesses").value).code,
-        fileName: document.getElementById("fileName").value,
-        backGround: document.getElementById("backGround").value
+        message: message,
+        templeCode: JSON.parse(temple).code,
+        businessCode: JSON.parse(business).code,
+        fileName: fileName,
+        backGround: backGround
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
@@ -246,4 +254,31 @@ function create() {
         }
     }
     xhr.send(JSON.stringify(createQRCode));
+}
+
+function check(message, temple, business, fileName, backGround) {
+    var checkStr = '';
+    if (message == '' || message == null) {
+        checkStr += '二维码信息必须填写 ';
+    }
+    if (temple == null) {
+        checkStr += '模板必须选择 ';
+    } else {
+        if (JSON.parse(temple).code.toString().charAt(5) == '1') {
+            if (backGround == '' || backGround == null) {
+                checkStr += '背景图片必须选择 ';
+            }
+        }
+    }
+    if (business == null) {
+        checkStr += '商家必须选择 ';
+    }
+    if (fileName == '' || fileName == null) {
+        checkStr += '文件名必须填写 ';
+    }
+    if (checkStr != '') {
+        alert(checkStr);
+        return false;
+    }
+    return true;
 }

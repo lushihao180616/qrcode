@@ -1,4 +1,4 @@
-function check() {
+function checkComputer() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/check/check", false);
     // 添加http头，发送信息至服务器时内容编码类型

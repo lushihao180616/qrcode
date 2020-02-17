@@ -30,15 +30,26 @@ function init() {
 }
 
 function create() {
+    var business = document.getElementById("createBusinesses").value;
+    var ifShowLogo = document.getElementById("createLogo").value;
+    var ifShowFont = document.getElementById("createFont").value;
+    var width = document.getElementById("createWidth").value;
+    var height = document.getElementById("createHeight").value;
+    var x = document.getElementById("createX").value;
+    var y = document.getElementById("createY").value;
+    var path = document.getElementById("createPath").value;
+    if (!check(business, ifShowLogo, ifShowFont, width, height, x, y, path)) {
+        return
+    }
     var createWaterMark = {
-        businessCode: JSON.parse(document.getElementById("createBusinesses").value).code,
-        ifShowLogo: parseInt(document.getElementById("createLogo").value),
-        ifShowFont: parseInt(document.getElementById("createFont").value),
-        width: parseInt(document.getElementById("createWidth").value),
-        height: parseInt(document.getElementById("createHeight").value),
-        x: parseInt(document.getElementById("createX").value),
-        y: parseInt(document.getElementById("createY").value),
-        path: document.getElementById('createPath').value
+        businessCode: JSON.parse(business).code,
+        ifShowLogo: parseInt(ifShowLogo),
+        ifShowFont: parseInt(ifShowFont),
+        width: parseInt(width),
+        height: parseInt(height),
+        x: parseInt(x),
+        y: parseInt(y),
+        path: path
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/waterMark/add", false);
@@ -62,7 +73,6 @@ function create() {
                         '        <td class="bottomTd2">' + document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_waterMark.jpg' + '</td>\n' +
                         '    </tr>';
                 }
-
                 document.getElementById("createLogo")[0].selected = true;
                 document.getElementById("createFont")[0].selected = true;
                 document.getElementById("createWidth").value = '100';
@@ -83,6 +93,40 @@ function create() {
         }
     }
     xhr.send(JSON.stringify(createWaterMark));
+}
+
+function check(business, ifShowLogo, ifShowFont, width, height, x, y, path) {
+    var checkStr = '';
+    if (business == null) {
+        checkStr += '商家必须选择 ';
+    }
+    if (isNaN(ifShowLogo)) {
+        checkStr += '是否加商标必须选择 ';
+    } else {
+        if (width == '' || isNaN(width)) {
+            checkStr += '请填写宽度（数字） ';
+        }
+        if (height == '' || isNaN(height)) {
+            checkStr += '请填写高度（数字） ';
+        }
+        if (x == '' || isNaN(x)) {
+            checkStr += '请填写x偏移量（数字） ';
+        }
+        if (y == '' || isNaN(y)) {
+            checkStr += '请填写y偏移量（数字） ';
+        }
+    }
+    if (isNaN(ifShowFont)) {
+        checkStr += '是否加底部文字必须选择 ';
+    }
+    if (path == null || path == '') {
+        checkStr += '图片位置必须选择 ';
+    }
+    if (checkStr != '') {
+        alert(checkStr);
+        return false;
+    }
+    return true;
 }
 
 function showSomeThing() {

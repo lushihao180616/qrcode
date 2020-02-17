@@ -38,6 +38,14 @@ function init() {
 }
 
 function create() {
+    var name = document.getElementById("createName").value;
+    var address = document.getElementById("createAddress").value;
+    var phone = document.getElementById("createPhone").value;
+    var businessName = document.getElementById("createBusinessName").value;
+    var logoSrc = document.getElementById("createLogo").value;
+    if (!check(name, address, phone, businessName, logoSrc)) {
+        return
+    }
     var createBusiness = {
         name: document.getElementById("createName").value,
         address: document.getElementById("createAddress").value,
@@ -62,9 +70,9 @@ function create() {
                 alert(data);
                 document.getElementById("createName").value = '',
                     document.getElementById("createAddress").value = '',
-                    document.getElementById("createPhone").value= '',
-                    document.getElementById("createBusinessName").value= '',
-                    document.getElementById("createLogo").value= ''
+                    document.getElementById("createPhone").value = '',
+                    document.getElementById("createBusinessName").value = '',
+                    document.getElementById("createLogo").value = ''
             }
         }
     }
@@ -114,13 +122,26 @@ function modifyBusinessCode(id) {
 }
 
 function update() {
+    var business = document.getElementById("modifyBusinesses").value;
+    var name = document.getElementById("modifyName").value;
+    var address = document.getElementById("modifyAddress").value;
+    var phone = document.getElementById("modifyPhone").value;
+    var businessName = document.getElementById("modifyBusinessName").value;
+    var logoSrc = document.getElementById("modifyLogo").value;
+    if (!check(name, address, phone, businessName, logoSrc)) {
+        return;
+    }
+    if (business == null) {
+        alert("商家必须选择");
+        return;
+    }
     var modifyBusiness = {
-        code: JSON.parse(document.getElementById("modifyBusinesses").value).code,
-        name: document.getElementById("modifyName").value,
-        address: document.getElementById("modifyAddress").value,
-        phone: document.getElementById("modifyPhone").value,
-        businessName: document.getElementById("modifyBusinessName").value,
-        logoSrc: document.getElementById("modifyLogo").value
+        code: JSON.parse(business).code,
+        name: name,
+        address: address,
+        phone: phone,
+        businessName: businessName,
+        logoSrc: logoSrc
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/business/update", false);
@@ -192,8 +213,13 @@ function deleteBusinessCode(id) {
 }
 
 function deleteOne() {
+    var business = document.getElementById("deleteBusinesses").value;
+    if (business == null) {
+        alert("商家必须选择")
+        return;
+    }
     var deleteBusiness = {
-        code: JSON.parse(document.getElementById("deleteBusinesses").value).code,
+        code: JSON.parse(business).code
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/business/delete", false);
@@ -219,4 +245,28 @@ function deleteOne() {
         }
     }
     xhr.send(JSON.stringify(deleteBusiness));
+}
+
+function check(name, address, phone, businessName, logoSrc) {
+    var checkStr = '';
+    if (name == "" || name == null) {
+        checkStr += '名称必须填写 '
+    }
+    if (address == "" || address == null) {
+        checkStr += '地址必须填写 '
+    }
+    if (phone == "" || phone == null) {
+        checkStr += '手机号必须填写 '
+    }
+    if (businessName == "" || businessName == null) {
+        checkStr += '联系人必须填写 '
+    }
+    if (logoSrc == "" || logoSrc == null) {
+        checkStr += '商标必须选择 '
+    }
+    if (checkStr != '') {
+        alert(checkStr);
+        return false;
+    }
+    return true;
 }

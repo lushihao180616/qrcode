@@ -85,18 +85,32 @@ function downLoadTemple() {
 }
 
 function create() {
+    var code = document.getElementById("createCode").value;
+    var money = document.getElementById("createMoney").value;
+    var width = document.getElementById("createWidth").value;
+    var height = document.getElementById("createHeight").value;
+    var iconNum = document.getElementById("createIconNum").value;
+    var x = document.getElementById("createX").value;
+    var y = document.getElementById("createY").value;
+    var angle = document.getElementById("createAngle").value;
+    var multiple = document.getElementById("createMultiple").value;
+    var frame = document.getElementById("createFrame").value;
+    var templeItemsPath = document.getElementById("createTempleItemsPath").value;
+    if (!check(code, money, width, height, iconNum, x, y, angle, multiple, frame, templeItemsPath)) {
+        return
+    }
     var createTemple = {
-        code: document.getElementById("createCode").value,
-        money: document.getElementById("createMoney").value,
-        width: parseInt(document.getElementById("createWidth").value),
-        height: parseInt(document.getElementById("createHeight").value),
-        iconNum: parseInt(document.getElementById("createIconNum").value),
-        x: parseInt(document.getElementById("createX").value),
-        y: parseInt(document.getElementById("createY").value),
-        angle: parseInt(document.getElementById("createAngle").value),
-        multiple: parseInt(document.getElementById("createMultiple").value),
-        frame: document.getElementById("createFrame").value,
-        templeItemsPath: document.getElementById('createTempleItemsPath').value
+        code: code,
+        money: parseFloat(money),
+        width: parseInt(width),
+        height: parseInt(height),
+        iconNum: parseInt(iconNum),
+        x: parseInt(x),
+        y: parseInt(y),
+        angle: parseInt(angle),
+        multiple: parseInt(multiple),
+        frame: frame,
+        templeItemsPath: templeItemsPath
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/temple/create", false);
@@ -178,18 +192,32 @@ function updateTempleCode(id) {
 }
 
 function update() {
+    var code = JSON.parse(document.getElementById("updateTemples").value).code;
+    var money = document.getElementById("updateMoney").value;
+    var width = document.getElementById("updateWidth").value;
+    var height = document.getElementById("updateHeight").value;
+    var iconNum = document.getElementById("updateIconNum").value;
+    var x = document.getElementById("updateX").value;
+    var y = document.getElementById("updateY").value;
+    var angle = document.getElementById("updateAngle").value;
+    var multiple = document.getElementById("updateMultiple").value;
+    var frame = document.getElementById("updateFrame").value;
+    var templeItemsPath = document.getElementById("updateTempleItemsPath").value;
+    if (!check(code, money, width, height, iconNum, x, y, angle, multiple, frame, templeItemsPath)) {
+        return
+    }
     var updateTemple = {
-        code: JSON.parse(document.getElementById("updateTemples").value).code,
-        money: document.getElementById("updateMoney").value,
-        width: parseInt(document.getElementById("updateWidth").value),
-        height: parseInt(document.getElementById("updateHeight").value),
-        iconNum: parseInt(document.getElementById("updateIconNum").value),
-        x: parseInt(document.getElementById("updateX").value),
-        y: parseInt(document.getElementById("updateY").value),
-        angle: parseInt(document.getElementById("updateAngle").value),
-        multiple: parseInt(document.getElementById("updateMultiple").value),
-        frame: document.getElementById("updateFrame").value,
-        templeItemsPath: document.getElementById('updateTempleItemsPath').value
+        code: code,
+        money: money,
+        width: parseInt(width),
+        height: parseInt(height),
+        iconNum: parseInt(iconNum),
+        x: parseInt(x),
+        y: parseInt(y),
+        angle: parseInt(angle),
+        multiple: parseInt(multiple),
+        frame: frame,
+        templeItemsPath: templeItemsPath
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/temple/update", false);
@@ -301,4 +329,46 @@ function deleteOne() {
         }
     }
     xhr.send(JSON.stringify(deleteTemple));
+}
+
+function check(code, money, width, height, iconNum, x, y, angle, multiple, frame, templeItemsPath) {
+    var checkStr = '';
+    if (code == "" || code == null) {
+        checkStr += '编号必须填写 '
+    }
+    if (money == '' || isNaN(money)) {
+        checkStr += '价格必须填写（数字） '
+    }
+    if (width == '' || isNaN(width)) {
+        checkStr += '宽度必须填写（数字） '
+    }
+    if (height == '' || isNaN(height)) {
+        checkStr += '高度必须填写（数字） '
+    }
+    if (iconNum == '' || isNaN(iconNum)) {
+        checkStr += '子图数量必须填写（数字） '
+    }
+    if (x == '' || isNaN(x)) {
+        checkStr += 'x偏移量必须填写（数字） '
+    }
+    if (y == '' || isNaN(y)) {
+        checkStr += 'y偏移量必须填写（数字） '
+    }
+    if (angle == '' || isNaN(angle)) {
+        checkStr += '角度必须填写（数字） '
+    }
+    if (multiple == '' || isNaN(multiple)) {
+        checkStr += '缩放倍数必须填写（数字） '
+    }
+    if (frame == '' || frame == null) {
+        checkStr += '帧管理必须填写（每秒多少帧/从第几帧开始加二维码/从第几帧停止加二维码） '
+    }
+    if (templeItemsPath == '' || templeItemsPath == null) {
+        checkStr += '模板图标必须选择 '
+    }
+    if (checkStr != '') {
+        alert(checkStr);
+        return false;
+    }
+    return true;
 }

@@ -61,10 +61,15 @@ textarea {
     height: 80px;
 }
 
-.itemName {
+.itemName, .itemName2 {
     display: inline;
     height: 35px;
     line-height: 35px;
+}
+
+.itemName2 {
+    height: 80px;
+    line-height: 80px;
 }
 
 .topItemTitle {
