@@ -1,19 +1,27 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class LSHFfmpegUtil {
+
+    @Resource
+    private ProjectBasicInfo projectBasicInfo;
 
     /**
      * ffmpeg安装目录
      */
-    public static String FFMPEG_PATH = "C:\\tempFile\\ffmpeg\\bin\\ffmpeg.exe";
+    public String FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
 
     /**
      * 设置图片大小
@@ -28,7 +36,7 @@ public class LSHFfmpegUtil {
      * @param timePoint
      * @return
      */
-    public static boolean ffmpegToImage(String videoPath, String imagePath, int timePoint) {
+    public boolean ffmpegToImage(String videoPath, String imagePath, int timePoint) {
         List<String> commands = new java.util.ArrayList<String>();
         FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
         commands.add(FFMPEG_PATH);
@@ -62,7 +70,7 @@ public class LSHFfmpegUtil {
      * @param fileName
      * @return
      */
-    public static int checkFileType(String fileName) {
+    public int checkFileType(String fileName) {
         String type = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length())
                 .toLowerCase();
         if (type.equals("avi")) {
@@ -89,7 +97,7 @@ public class LSHFfmpegUtil {
      * @param video_path
      * @return
      */
-    static int getVideoTime(String video_path) {
+    public int getVideoTime(String video_path) {
         List<String> commands = new java.util.ArrayList<String>();
         commands.add(FFMPEG_PATH);
         commands.add("-i");
@@ -130,7 +138,7 @@ public class LSHFfmpegUtil {
      * @param timelen
      * @return
      */
-    private static int getTimelen(String timelen) {
+    private int getTimelen(String timelen) {
         int min = 0;
         String strs[] = timelen.split(":");
         if (strs[0].compareTo("0") > 0) {
@@ -146,23 +154,6 @@ public class LSHFfmpegUtil {
     }
 
     /**
-     * 秒转化成 hh:mm:ss
-     *
-     * @param duration
-     * @return
-     */
-    public static String convertInt2Date(long duration) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        return formatter.format(cal.getTimeInMillis() + duration * 1000);
-    }
-
-    /**
      * 视频抽取音频文件
      *
      * @param videoPath
@@ -170,7 +161,7 @@ public class LSHFfmpegUtil {
      * @param audioPath
      * @return
      */
-    public static boolean ffmpegToAudio(String videoPath, String type, String audioPath) {
+    public boolean ffmpegToAudio(String videoPath, String type, String audioPath) {
         List<String> commands = new java.util.ArrayList<String>();
         FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
         commands.add(FFMPEG_PATH);
@@ -218,31 +209,33 @@ public class LSHFfmpegUtil {
     }
 
     /**
-     * wav 转 mp3
+     * 视频合并，只保留第一个的音频
      *
-     * @param wavPath
-     * @param mp3Path
+     * @param videoPath1
+     * @param videoPath2
+     * @param outputPath
      * @return
      */
-    public static boolean ffmpegOfwavTomp3(String wavPath, String mp3Path) {
+    public String videoAddVideo(String videoPath1, String videoPath2, String outputPath) {
+        if (checkFileType(videoPath1) != 0 || checkFileType(videoPath2) != 0) {
+            return "文件格式错误！！！";
+        }
+        String video1 = videoToTs(videoPath1);
+        String video2 = videoToTs(videoPath2);
         List<String> commands = new java.util.ArrayList<String>();
         FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
         commands.add(FFMPEG_PATH);
         commands.add("-i");
-        commands.add(wavPath);
-        commands.add("-f");
-        commands.add("mp3");
-        commands.add("-acodec");
-        commands.add("libmp3lame");
-        commands.add("-y");
-        commands.add(mp3Path);
+        commands.add("concat:" + video1 + "|" + video2);
+        commands.add("-c");
+        commands.add("copy");
+        commands.add(outputPath);
         try {
             ProcessBuilder builder = new ProcessBuilder();
             builder.command(commands);
             Process p = builder.start();
-            System.out.println("转换成功:" + mp3Path);
+            System.out.println("合并成功:" + outputPath);
 
-            // 1. start
             BufferedReader buf = null; // 保存ffmpeg的输出结果流
             String line = null;
 
@@ -255,35 +248,57 @@ public class LSHFfmpegUtil {
                 continue;
             }
             p.waitFor();// 这里线程阻塞，将等待外部转换进程运行成功运行结束后，才往下执行
-            // 1. end
-            return true;
+            new File(video1).delete();
+            new File(video2).delete();
+            return "生成成功";
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "发生未知错误，请重启服务！！！";
         }
     }
 
-    public static void main(String[] args) {
-//        // 视频文件
-//        String videoRealPath1 = "D:\\5.MOV";
-//        // 截图的路径（输出路径）
-//        String imageRealPath1 = "D:\\31.jpg";
-//        String imageRealPath2 = "D:\\32.jpg";
-//        if(checkFileType(videoRealPath1) ==0){
-//        	 ffmpegToImage(videoRealPath1,imageRealPath1,10);
-//        	 ffmpegToImage(videoRealPath1,imageRealPath2,11);
-//        }
-//		String videoRealPath = "C:\\Users\\86153\\Desktop\\model.mp4";
-//		String audioRealPath = "C:\\Users\\86153\\Desktop\\123.mp3";
-//		String audioType = "mp3";
-//		ffmpegToAudio(videoRealPath,audioType,audioRealPath);
+    /**
+     * 将video转换为ts格式，此格式能视频拼接
+     *
+     * @param videoPath1
+     * @return
+     */
+    public String videoToTs(String videoPath1) {
+        List<String> commands = new java.util.ArrayList<String>();
+        FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
+        commands.add(FFMPEG_PATH);
+        commands.add("-i");
+        commands.add(videoPath1);
+        commands.add("-c");
+        commands.add("copy");
+        commands.add("-bsf:v");
+        commands.add("h264_mp4toannexb");
+        commands.add("-f");
+        commands.add("mpegts");
+        String nowPath = videoPath1.substring(0, videoPath1.lastIndexOf("\\") + 1) + UUID.randomUUID().toString().replace("-", "") + ".ts";
+        commands.add(nowPath);
+        try {
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command(commands);
+            Process p = builder.start();
 
-        String videoRealPath = "C:\\Users\\86153\\Desktop\\model.mp4";
-        String imagePath = "C:\\Users\\86153\\Desktop\\001.jpg";
-        ffmpegToImage(videoRealPath, imagePath, 1);
+            BufferedReader buf = null; // 保存ffmpeg的输出结果流
+            String line = null;
 
-//        String wavPath = "D:\\HHH\\model.mp4";
-//        String mp3Path = "D:\\HHH\\123.mp3";
-//        ffmpegOfwavTomp3(wavPath, mp3Path);
+            buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            StringBuffer sb = new StringBuffer();
+            while ((line = buf.readLine()) != null) {
+                System.out.println(line);
+                sb.append(line);
+                continue;
+            }
+            p.waitFor();// 这里线程阻塞，将等待外部转换进程运行成功运行结束后，才往下执行
+            return nowPath;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
 }

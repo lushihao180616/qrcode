@@ -6,9 +6,9 @@ package com.lushihao.qrcode.entity.video;
 public class Video {
 
     /**
-     * 视频开始部分地址
+     * 商家标识
      */
-    private String startPath;
+    private String businessCode;
     /**
      * 视频结束部分地址
      */
@@ -22,12 +22,12 @@ public class Video {
      */
     private String newVideoPath;
 
-    public String getStartPath() {
-        return startPath;
+    public String getBusinessCode() {
+        return businessCode;
     }
 
-    public void setStartPath(String startPath) {
-        this.startPath = startPath;
+    public void setBusinessCode(String businessCode) {
+        this.businessCode = businessCode;
     }
 
     public String getEndPath() {
@@ -57,11 +57,10 @@ public class Video {
     public Video() {
     }
 
-    public Video(String startPath, String endPath, String oldVideoPath, String newVideoPath) {
-        this.startPath = startPath;
+    public Video(String businessCode, String endPath, String oldVideoPath, String newVideoPath) {
+        this.businessCode = businessCode;
         this.endPath = endPath;
         this.oldVideoPath = oldVideoPath;
         this.newVideoPath = newVideoPath;
     }
-
 }

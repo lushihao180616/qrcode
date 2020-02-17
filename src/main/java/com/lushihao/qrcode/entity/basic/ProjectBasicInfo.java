@@ -28,6 +28,10 @@ public class ProjectBasicInfo {
      */
     private String tempJpgUrl;
     /**
+     * Ffmpeg安装路径
+     */
+    private String ffmpegUrl;
+    /**
      * mac地址
      */
     private String macAddress;
@@ -80,6 +84,14 @@ public class ProjectBasicInfo {
         this.tempJpgUrl = tempJpgUrl;
     }
 
+    public String getFfmpegUrl() {
+        return ffmpegUrl;
+    }
+
+    public void setFfmpegUrl(String ffmpegUrl) {
+        this.ffmpegUrl = ffmpegUrl;
+    }
+
     public String getMacAddress() {
         return macAddress;
     }
@@ -104,12 +116,13 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String macAddress, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, String macAddress, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
         this.modelUrl = modelUrl;
         this.tempJpgUrl = tempJpgUrl;
+        this.ffmpegUrl = ffmpegUrl;
         this.macAddress = macAddress;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;

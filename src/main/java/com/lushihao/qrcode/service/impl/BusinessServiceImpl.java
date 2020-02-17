@@ -26,8 +26,7 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     @Transactional
     public String create(Business business, String logoSrc) {
-        business.setCode(UUID.randomUUID().toString().substring(0, 8));
-
+        business.setCode(ifExitCode());
         int back = businessMapper.create(business);
         if (back > 0) {
             //商标地址
@@ -49,6 +48,16 @@ public class BusinessServiceImpl implements BusinessService {
             return "创建成功，商家编号为" + business.getCode();
         }
         return "创建失败";
+    }
+
+    private String ifExitCode() {
+        String code = UUID.randomUUID().toString().substring(0, 8);
+        Business business = new Business();
+        business.setCode(code);
+        if (businessMapper.filter(business).size() > 0) {
+            return ifExitCode();
+        }
+        return code;
     }
 
     @Override
@@ -117,10 +126,10 @@ public class BusinessServiceImpl implements BusinessService {
         } finally {
             // 关闭流  先开后关  后开先关
             try {
-                if(fos != null){
+                if (fos != null) {
                     fos.close(); // 后开先关
                 }
-                if(fis != null){
+                if (fis != null) {
                     fis.close(); // 先开后关
                 }
             } catch (IOException e) {

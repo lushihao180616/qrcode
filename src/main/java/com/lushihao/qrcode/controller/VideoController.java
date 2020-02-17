@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.controller;
 
+import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.video.Video;
 import com.lushihao.qrcode.service.VideoService;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,7 @@ public class VideoController {
     @ResponseBody
     public String create() {
         Video video = new Video();
-        video.setStartPath("");
-        video.setEndPath("");
+        video.setBusinessCode("00000000");
         video.setOldVideoPath("");
         video.setNewVideoPath("");
         return videoService.create(video);
