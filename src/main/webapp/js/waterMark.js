@@ -65,6 +65,7 @@ function create() {
                 }
                 var data = xhr.responseText;
                 alert(data);
+                document.getElementById("tableTitle").style.visibility = "visible";
                 if (data.substring(0, 4) == '添加成功') {
                     var waterMarks = document.getElementById("waterMarks");
                     waterMarks.innerHTML += '\n' +

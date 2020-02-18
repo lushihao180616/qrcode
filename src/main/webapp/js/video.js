@@ -53,6 +53,7 @@ function create() {
                 }
                 var data = xhr.responseText;
                 alert(data);
+                document.getElementById("tableTitle").style.visibility = "visible";
                 if (data.substring(0, 4) == '生成成功') {
                     var videos = document.getElementById("videos");
                     videos.innerHTML += '\n' +

@@ -51,7 +51,7 @@
         <br>
         <span class="topItemTitle">添加记录：</span><span
             style="color: #999;font-size: 12px;margin-left: 130px;line-height: 42px;font-weight: bold">仅用于预览，关闭页面消失</span><br><br><br>
-        <table class="bottomItemTable1">
+        <table class="bottomItemTable1" id="tableTitle" style="visibility: hidden">
             <tr>
                 <th class="bottomTh1">加水印前</th>
                 <th class="bottomTh2">加水印后</th>
