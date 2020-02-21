@@ -63,10 +63,10 @@ public class BusinessServiceImpl implements BusinessService {
         try {
             BufferedImage endVideoImage = new BufferedImage(1080, 2280, BufferedImage.TYPE_INT_RGB);
             Graphics2D endVideoG2 = endVideoImage.createGraphics();
-            endVideoG2.setBackground(Color.BLACK);
-            endVideoG2.clearRect(0, 0, 1080, 2280);
             BufferedImage logoImage = ImageIO.read(new FileInputStream(logoPath));
             endVideoG2.drawImage(logoImage, 360, 400, 360, 360, null);
+            BufferedImage videoBgImage = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\videoBg.png"));
+            endVideoG2.drawImage(videoBgImage, 0, 0, 1080, 2280, null);
             endVideoG2.dispose();
             Map<Integer, BufferedImage> map = new HashMap<>();
             for (int i = 0; i < 25; i++) {
@@ -95,8 +95,12 @@ public class BusinessServiceImpl implements BusinessService {
         if (back > 0) {
             if (logoSrc != null && !"".equals(logoSrc)) {
                 //商标地址
-                String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
-                copyFile(logoSrc, logoPath + "\\logo.png");
+                String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
+
+                String logoPath = businessPath + "\\logo.png";
+                copyFile(logoSrc, logoPath);
+
+                createEndVideo(logoPath, businessPath);
             }
 
             return "更新成功";

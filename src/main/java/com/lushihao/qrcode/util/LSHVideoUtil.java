@@ -4,6 +4,7 @@ import org.jim2mov.core.*;
 import org.jim2mov.utils.MovieUtils;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,6 +26,10 @@ public class LSHVideoUtil {
     public static boolean jpg2Mp4(Map<Integer, BufferedImage> map, String mp4FileName, int fps, int mWidth, int mHeight) {
         if (map == null || map.size() == 0) {
             return false;
+        }
+        File mp4File = new File(mp4FileName);
+        if (mp4File.exists()) {
+            mp4File.delete();
         }
         // 生成视频的名称
         DefaultMovieInfoProvider dmip = new DefaultMovieInfoProvider(mp4FileName.substring(mp4FileName.lastIndexOf("/") + 1));
