@@ -1,12 +1,14 @@
 package com.lushihao.qrcode.util;
 
 import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.video.VideoInfo;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
+import it.sauronsoftware.jave.MultimediaInfo;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,8 +37,12 @@ public class LSHFfmpegUtil {
      * @return
      */
     public String videoAddVideo(String videoPath1, String videoPath2, String outputPath) {
-        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
+        FFMPEG_PATH = "D:\\ffmpeg\\bin\\ffmpeg.exe";
 
+        File outPutFile = new File(outputPath);
+        if (outPutFile.exists()) {
+            outPutFile.delete();
+        }
         if (checkFileType(videoPath1) != 0 || checkFileType(videoPath2) != 0) {
             return "文件格式错误！！！";
         }
@@ -75,6 +81,79 @@ public class LSHFfmpegUtil {
             e.printStackTrace();
             return "发生未知错误，请重启服务！！！";
         }
+    }
+
+    /**
+     * 改变视频宽高
+     *
+     * @param videoPath1
+     * @param outputPath
+     * @return
+     */
+    public String changeVideoWH(String videoPath1, String outputPath) {
+        FFMPEG_PATH = "D:\\ffmpeg\\bin\\ffmpeg.exe";
+
+        File outPutFile = new File(outputPath);
+        if (outPutFile.exists()) {
+            outPutFile.delete();
+        }
+        List<String> commands = new java.util.ArrayList<String>();
+        FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
+        commands.add(FFMPEG_PATH);
+        commands.add("-y");
+        commands.add("-i");
+        commands.add(videoPath1);
+        commands.add("-s");
+        commands.add("640*480");
+        commands.add(outputPath);
+        try {
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command(commands);
+            Process p = builder.start();
+
+            BufferedReader buf = null; // 保存ffmpeg的输出结果流
+            String line = null;
+
+            buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            StringBuffer sb = new StringBuffer();
+            while ((line = buf.readLine()) != null) {
+                System.out.println(line);
+                sb.append(line);
+                continue;
+            }
+            p.waitFor();// 这里线程阻塞，将等待外部转换进程运行成功运行结束后，才往下执行
+            return "生成成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "发生未知错误，请重启服务！！！";
+        }
+    }
+
+    /**
+     * 获取视频信息
+     *
+     * @return
+     */
+    public VideoInfo getVideoInfo(String videoPath) {
+        try {
+            File file = new File(videoPath);
+            Encoder encoder = new Encoder();
+            MultimediaInfo mmi = encoder.getInfo(file);
+
+            VideoInfo videoInfo = new VideoInfo();
+            videoInfo.setVideoLong(mmi.getDuration());
+            videoInfo.setWidth(mmi.getVideo().getSize().getWidth());
+            videoInfo.setHeight(mmi.getVideo().getSize().getHeight());
+            videoInfo.setFormat(mmi.getFormat());
+            videoInfo.setSize(new FileInputStream(file).getChannel().size());
+            return videoInfo;
+        } catch (EncoderException | FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

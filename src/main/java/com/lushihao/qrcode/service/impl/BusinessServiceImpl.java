@@ -48,11 +48,7 @@ public class BusinessServiceImpl implements BusinessService {
             if (!qrcodeDirectory.exists()) {//如果文件夹不存在
                 qrcodeDirectory.mkdir();//创建文件夹
             }
-
-            String logoPath = businessPath + "\\logo.png";
-            copyFile(logoSrc, logoPath);
-
-            createEndVideo(logoPath, businessPath);
+            copyFile(logoSrc, businessPath + "\\logo.png");
 
             return "创建成功，商家编号为" + business.getCode();
         }
@@ -96,11 +92,7 @@ public class BusinessServiceImpl implements BusinessService {
             if (logoSrc != null && !"".equals(logoSrc)) {
                 //商标地址
                 String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
-
-                String logoPath = businessPath + "\\logo.png";
-                copyFile(logoSrc, logoPath);
-
-                createEndVideo(logoPath, businessPath);
+                copyFile(logoSrc, businessPath + "\\logo.png");
             }
 
             return "更新成功";
