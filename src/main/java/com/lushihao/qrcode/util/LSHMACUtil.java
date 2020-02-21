@@ -52,7 +52,6 @@ public class LSHMACUtil {
             String str2 = str.substring(5, 10);
             String str3 = str.substring(10);
             String str4 = str2 + str1 + str3;
-            str4 = str4.substring(0, str4.length() - 3) + "=";
             byte[] macbytes = Base64.getDecoder().decode(str4);
             String mac = new String(macbytes);
             if (!mac.equals(getLocalMac())) {

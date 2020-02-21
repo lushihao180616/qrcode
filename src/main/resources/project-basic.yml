@@ -1,10 +1,10 @@
 basic:
-  templeUrl: C:\Users\86153\Desktop\qrcode\qrcodeTemple
-  qrcodeUrl: C:\Users\86153\Desktop\qrcode\outputQrcode
-  businessUrl: C:\Users\86153\Desktop\qrcode\businessLogo
-  modelUrl: C:\Users\86153\Desktop\qrcode\model
-  tempJpgUrl: C:\Users\86153\Desktop\qrcode\tempJpg
-  ffmpegUrl: C:\tempFile\ffmpeg\bin\ffmpeg.exe
-  macAddress: MEl0T0VPVGd0TVl0UWtRdFFrUXROMEUlM0Q
+  templeUrl: C:\Users\Administrator\Desktop\qrcode\qrcodeTemple
+  qrcodeUrl: C:\Users\Administrator\Desktop\qrcode\outputQrcode
+  businessUrl: C:\Users\Administrator\Desktop\qrcode\businessLogo
+  modelUrl: C:\Users\Administrator\Desktop\qrcode\model
+  tempJpgUrl: C:\Users\Administrator\Desktop\qrcode\tempJpg
+  ffmpegUrl: D:\ffmpeg\bin\ffmpeg.exe
+  macAddress: VEF0TkVNREF0Uk10TkVFdE9UQXRNREU9
   deleteAllTempleFiles: true
   deleteAllBusinessFiles: true

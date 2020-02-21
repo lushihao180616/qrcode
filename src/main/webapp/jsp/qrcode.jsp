@@ -36,7 +36,7 @@
         <span class="itemName">商&emsp;&emsp;家：</span><select class="topItemSelect" id="businesses"
                                                              onchange="getBusinessCode(this.id)"></select><br><br>
         <span class="itemName">文&ensp;件&ensp;名：</span><input class="topItemInput" type="text" id="fileName"/><br><br>
-        <span class="itemName2">信&emsp;&emsp;息：</span><textarea class="topItemInput" type="text"
+        <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none" class="topItemInput" type="text"
                                                                 id="message"></textarea><br><br>
         <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
                                                                        name="uploadFile"/><br><br>
