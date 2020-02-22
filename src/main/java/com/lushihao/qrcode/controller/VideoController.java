@@ -1,6 +1,5 @@
 package com.lushihao.qrcode.controller;
 
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.video.Video;
 import com.lushihao.qrcode.service.VideoService;
 import com.lushihao.qrcode.util.LSHMACUtil;

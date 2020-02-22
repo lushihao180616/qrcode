@@ -1,9 +1,8 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
-import com.lushihao.myutils.qrcode.LSHQRCodeUtils;
 import com.lushihao.qrcode.dao.QRTempleMapper;
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRCodeService;

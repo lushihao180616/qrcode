@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 

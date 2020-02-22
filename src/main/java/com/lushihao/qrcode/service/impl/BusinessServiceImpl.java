@@ -1,7 +1,7 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.service.BusinessService;
 import com.lushihao.qrcode.util.LSHVideoUtil;

@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.init;
 
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

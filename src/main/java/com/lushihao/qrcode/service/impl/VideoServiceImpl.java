@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.service.impl;
 
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.video.Video;
 import com.lushihao.qrcode.service.VideoService;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;

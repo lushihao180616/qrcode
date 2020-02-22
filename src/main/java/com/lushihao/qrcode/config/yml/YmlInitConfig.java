@@ -19,7 +19,8 @@ public class YmlInitConfig {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(
-                new ClassPathResource("project-basic.yml")
+                new ClassPathResource("project-basic.yml"),
+                new ClassPathResource("user-info.yml")
         );
         configurer.setProperties(yaml.getObject());
         return configurer;

@@ -2,7 +2,7 @@ package com.lushihao.qrcode.util;
 
 import com.lushihao.myutils.time.LSHDateUtils;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
-import com.lushihao.qrcode.entity.basic.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.swetake.util.Qrcode;
