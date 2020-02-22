@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.entity.user;
 
 public class UserType {
+
     /**
      * 类型标识
      */
@@ -33,4 +34,5 @@ public class UserType {
         this.code = code;
         this.name = name;
     }
+
 }
