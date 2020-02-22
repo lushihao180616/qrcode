@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "user")  // 配置文件中的前缀
-public class UserInfo {
+public class UserBasicInfo {
 
     /**
      * 用户标识
@@ -20,10 +20,10 @@ public class UserInfo {
         this.code = code;
     }
 
-    public UserInfo() {
+    public UserBasicInfo() {
     }
 
-    public UserInfo(String code) {
+    public UserBasicInfo(String code) {
         this.code = code;
     }
 

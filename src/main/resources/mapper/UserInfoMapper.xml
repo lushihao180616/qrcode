@@ -9,7 +9,7 @@
         VALUES
             (#{code},#{userType.code},#{count},#{macAddress})
     </insert>
-    <select id="filter" resultType="UserInfo">
+    <select id="filter" resultType="java.util.HashMap">
         SELECT
             *
         FROM

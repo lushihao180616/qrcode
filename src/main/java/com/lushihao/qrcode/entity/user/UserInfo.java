@@ -61,4 +61,14 @@ public class UserInfo {
         this.macAddress = macAddress;
     }
 
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "code='" + code + '\'' +
+                ", userType=" + userType +
+                ", count=" + count +
+                ", macAddress='" + macAddress + '\'' +
+                '}';
+    }
+
 }

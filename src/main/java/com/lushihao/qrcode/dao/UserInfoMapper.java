@@ -6,13 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserInfoMapper {
 
     int create(UserInfo userInfo);
 
-    List<UserInfo> filter(@Param("code") String code);
+    List<Map<String, Object>> filter(@Param("code") String code);
 
     List<UserType> filterType(@Param("code") String code);
 

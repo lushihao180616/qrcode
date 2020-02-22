@@ -35,4 +35,12 @@ public class UserType {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "UserType{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
 }
