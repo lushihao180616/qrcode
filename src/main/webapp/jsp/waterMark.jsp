@@ -13,7 +13,8 @@
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
+   onMouseOut="makevisible(this,1)">首页</a>
 
 <p class="topTitle">
     添加水印
@@ -27,24 +28,16 @@
                                                                                                 value="搜索"
                                                                                                 onclick="init()"/><br><br>
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
-        <span class="itemName">商&emsp;&emsp;标：</span><select class="topItemSelect" id="createLogo"
-                                                             onchange="showSomeThing()">
-        <option value="1">有</option>
-        <option value="0">无</option>
-    </select><br><br>
-        <span class="itemName">文&emsp;&emsp;字：</span><select class="topItemSelect" id="createFont">
-        <option value="1">有</option>
-        <option value="0">无</option>
-    </select><br><br>
         <span class="itemName">图片位置：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
-        <span class="itemName" id="createWidthSpan">商标宽度：</span><input class="topItemInput" type="text" value="100"
-                                                                       id="createWidth"/><br><br>
-        <span class="itemName" id="createHeightSpan">商标高度：</span><input class="topItemInput" type="text" value="100"
-                                                                        id="createHeight"/><br><br>
-        <span class="itemName" id="createXSpan">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
-                                                                         id="createX"/><br><br>
-        <span class="itemName" id="createYSpan">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="50"
-                                                                         id="createY"/><br><br>
+        <span class="itemName">高&emsp;&emsp;度：</span><input class="topItemInput" type="text"
+                                                            value="10"
+                                                            id="createHeight"/><span class="unit">%</span><br><br>
+        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="0"
+                                                        id="createX"/><span class="unit">%</span><br><br>
+        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="100"
+                                                        id="createY"/><span class="unit">%</span><br><br>
+        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
+                                                             id="createAlpha"/><span class="unit">%</span><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>

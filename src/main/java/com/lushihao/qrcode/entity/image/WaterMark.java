@@ -3,7 +3,7 @@ package com.lushihao.qrcode.entity.image;
 public class WaterMark {
 
     /**
-     * 文件地址
+     * 原图片地址
      */
     private String path;
     /**
@@ -11,29 +11,21 @@ public class WaterMark {
      */
     private String businessCode;
     /**
-     * 商标
+     * 水印高度百分比（0-100）
      */
-    private boolean ifShowLogo;
+    private int heightPercentage;
     /**
-     * 是否显示底部文字
+     * x偏移百分比（0-100）
      */
-    private boolean ifShowFont;
+    private int xPercentage;
     /**
-     * 宽度
+     * y偏移百分比（0-100）
      */
-    private int width;
+    private int yPercentage;
     /**
-     * 高度
+     * 透明度
      */
-    private int height;
-    /**
-     * x偏移量
-     */
-    private int x;
-    /**
-     * y偏移量
-     */
-    private int y;
+    private int alpha;
 
     public String getPath() {
         return path;
@@ -51,52 +43,36 @@ public class WaterMark {
         this.businessCode = businessCode;
     }
 
-    public boolean isIfShowLogo() {
-        return ifShowLogo;
+    public int getHeightPercentage() {
+        return heightPercentage;
     }
 
-    public void setIfShowLogo(boolean ifShowLogo) {
-        this.ifShowLogo = ifShowLogo;
+    public void setHeightPercentage(int heightPercentage) {
+        this.heightPercentage = heightPercentage;
     }
 
-    public boolean isIfShowFont() {
-        return ifShowFont;
+    public int getxPercentage() {
+        return xPercentage;
     }
 
-    public void setIfShowFont(boolean ifShowFont) {
-        this.ifShowFont = ifShowFont;
+    public void setxPercentage(int xPercentage) {
+        this.xPercentage = xPercentage;
     }
 
-    public int getWidth() {
-        return width;
+    public int getyPercentage() {
+        return yPercentage;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public void setyPercentage(int yPercentage) {
+        this.yPercentage = yPercentage;
     }
 
-    public int getHeight() {
-        return height;
+    public int getAlpha() {
+        return alpha;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    
 }

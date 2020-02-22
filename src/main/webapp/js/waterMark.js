@@ -31,21 +31,17 @@ function init() {
 
 function create() {
     var business = document.getElementById("createBusinesses").value;
-    var ifShowLogo = document.getElementById("createLogo").value;
-    var ifShowFont = document.getElementById("createFont").value;
-    var width = document.getElementById("createWidth").value;
+    var alpha = document.getElementById("createAlpha").value;
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
     var path = document.getElementById("createPath").value;
-    if (!check(business, ifShowLogo, ifShowFont, width, height, x, y, path)) {
+    if (!check(business, alpha, height, x, y, path)) {
         return
     }
     var createWaterMark = {
         businessCode: JSON.parse(business).code,
-        ifShowLogo: parseInt(ifShowLogo),
-        ifShowFont: parseInt(ifShowFont),
-        width: parseInt(width),
+        alpha: parseInt(alpha),
         height: parseInt(height),
         x: parseInt(x),
         y: parseInt(y),
@@ -74,51 +70,33 @@ function create() {
                         '        <td class="bottomTd2">' + document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_waterMark.jpg' + '</td>\n' +
                         '    </tr>';
                 }
-                document.getElementById("createLogo")[0].selected = true;
-                document.getElementById("createFont")[0].selected = true;
-                document.getElementById("createWidth").value = '100';
-                document.getElementById("createHeight").value = '100';
-                document.getElementById("createX").value = '50';
-                document.getElementById("createY").value = '50';
+                document.getElementById("createAlpha").value = '50';
+                document.getElementById("createHeight").value = '10';
+                document.getElementById("createX").value = '0';
+                document.getElementById("createY").value = '100';
                 document.getElementById('createPath').value = '';
-
-                document.getElementById("createWidth").style.visibility = "visible";
-                document.getElementById("createHeight").style.visibility = "visible";
-                document.getElementById("createX").style.visibility = "visible";
-                document.getElementById("createY").style.visibility = "visible";
-                document.getElementById("createWidthSpan").style.visibility = "visible";
-                document.getElementById("createHeightSpan").style.visibility = "visible";
-                document.getElementById("createXSpan").style.visibility = "visible";
-                document.getElementById("createYSpan").style.visibility = "visible";
             }
         }
     }
     xhr.send(JSON.stringify(createWaterMark));
 }
 
-function check(business, ifShowLogo, ifShowFont, width, height, x, y, path) {
+function check(business, alpha, height, x, y, path) {
     var checkStr = '';
     if (business == null) {
         checkStr += '商家必须选择 ';
     }
-    if (isNaN(ifShowLogo)) {
-        checkStr += '是否加商标必须选择 ';
-    } else {
-        if (width == '' || isNaN(width)) {
-            checkStr += '请填写宽度（数字） ';
-        }
-        if (height == '' || isNaN(height)) {
-            checkStr += '请填写高度（数字） ';
-        }
-        if (x == '' || isNaN(x)) {
-            checkStr += '请填写x偏移量（数字） ';
-        }
-        if (y == '' || isNaN(y)) {
-            checkStr += '请填写y偏移量（数字） ';
-        }
+    if (alpha == '' || isNaN(alpha) || alpha > 100 || alpha < 0) {
+        checkStr += '请填写透明度（0-100） ';
     }
-    if (isNaN(ifShowFont)) {
-        checkStr += '是否加底部文字必须选择 ';
+    if (height == '' || isNaN(height) || height > 25 || height < 0) {
+        checkStr += '请填写高度（0-25，建议填写15以下） ';
+    }
+    if (x == '' || isNaN(x) || x > 100 || x < 0) {
+        checkStr += '请填写x偏移量（0-100） ';
+    }
+    if (y == '' || isNaN(y) || x > 100 || x < 0) {
+        checkStr += '请填写y偏移量（0-100） ';
     }
     if (path == null || path == '') {
         checkStr += '图片位置必须选择 ';
@@ -128,26 +106,4 @@ function check(business, ifShowLogo, ifShowFont, width, height, x, y, path) {
         return false;
     }
     return true;
-}
-
-function showSomeThing() {
-    if (document.getElementById("createLogo")[1].selected) {
-        document.getElementById("createWidth").style.visibility = "hidden";
-        document.getElementById("createHeight").style.visibility = "hidden";
-        document.getElementById("createX").style.visibility = "hidden";
-        document.getElementById("createY").style.visibility = "hidden";
-        document.getElementById("createWidthSpan").style.visibility = "hidden";
-        document.getElementById("createHeightSpan").style.visibility = "hidden";
-        document.getElementById("createXSpan").style.visibility = "hidden";
-        document.getElementById("createYSpan").style.visibility = "hidden";
-    } else if (document.getElementById("createLogo")[0].selected) {
-        document.getElementById("createWidth").style.visibility = "visible";
-        document.getElementById("createHeight").style.visibility = "visible";
-        document.getElementById("createX").style.visibility = "visible";
-        document.getElementById("createY").style.visibility = "visible";
-        document.getElementById("createWidthSpan").style.visibility = "visible";
-        document.getElementById("createHeightSpan").style.visibility = "visible";
-        document.getElementById("createXSpan").style.visibility = "visible";
-        document.getElementById("createYSpan").style.visibility = "visible";
-    }
 }

@@ -92,6 +92,16 @@ textarea {
     right: 25%;
 }
 
+.unit {
+    right: 0%;
+    box-sizing: border-box;
+    height: 35px;
+    position: absolute;
+    width: 5%;
+    line-height: 35px;
+    text-align: center;
+}
+
 .topItemSearch {
     width: 15%;
     right: 5%;
