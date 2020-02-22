@@ -37,7 +37,7 @@ public class LSHFfmpegUtil {
      * @return
      */
     public String videoAddVideo(String videoPath1, String videoPath2, String outputPath) {
-        FFMPEG_PATH = "D:\\ffmpeg\\bin\\ffmpeg.exe";
+        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
 
         File outPutFile = new File(outputPath);
         if (outPutFile.exists()) {
@@ -60,7 +60,6 @@ public class LSHFfmpegUtil {
             ProcessBuilder builder = new ProcessBuilder();
             builder.command(commands);
             Process p = builder.start();
-            System.out.println("合并成功:" + outputPath);
 
             BufferedReader buf = null; // 保存ffmpeg的输出结果流
             String line = null;
@@ -91,7 +90,7 @@ public class LSHFfmpegUtil {
      * @return
      */
     public String changeVideoWH(String videoPath1, String outputPath) {
-        FFMPEG_PATH = "D:\\ffmpeg\\bin\\ffmpeg.exe";
+        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
 
         File outPutFile = new File(outputPath);
         if (outPutFile.exists()) {

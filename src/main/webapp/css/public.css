@@ -1,9 +1,11 @@
 .toIndex {
+    border-radius: 5px;
     margin: 10px;
     padding: 10px;
 }
 
-.topTitle {
+.topTitle, .middleTitle {
+    border-radius: 5px;
     margin: 20px 10px 10px;
     padding: 10px;
     text-align: center;
@@ -13,10 +15,6 @@
 
 .middleTitle {
     margin: 100px 10px 10px;
-    padding: 10px;
-    text-align: center;
-    font-weight: bolder;
-    color: white;
 }
 
 .split {
@@ -34,6 +32,7 @@
 }
 
 .topItem1, .topItem2, .topItem3, .topItem4 {
+    border-radius: 15px;
     float: left;
     width: 31%;
     height: 0px;
@@ -73,6 +72,7 @@ textarea {
 }
 
 .topItemTitle {
+    border-radius: 5px;
     padding: 15px;
     color: #333;
     font-weight: bolder;

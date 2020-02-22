@@ -8,11 +8,12 @@
     <title>视频合并</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/video.css">
+    <script src="../js/public.js"></script>
     <script src="../js/video.js"></script>
 </head>
 <body onload="init()">
 
-<a class="toIndex" href="index.jsp">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
 
 <p class="topTitle">
     视频处理

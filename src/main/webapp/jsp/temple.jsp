@@ -8,11 +8,12 @@
     <title>模板管理</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/temple.css">
+    <script src="../js/public.js"></script>
     <script src="../js/temple.js"></script>
 </head>
 <body onload="init()">
 
-<a class="toIndex" href="index.jsp">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
 <div style="float: right;margin-top: -5px;margin-right: 10px">
     <label>更新模板二维码：</label><input class="topItemSelect_up" type="file" id="downLoadTemple"/><input
         class="topItemSearch_up"
