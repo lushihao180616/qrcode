@@ -36,4 +36,20 @@ public class ImageAddController {
         return imageService.addWaterMark(wm);
     }
 
+    @RequestMapping("test")
+    @ResponseBody
+    public String testWaterMark(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        WaterMark wm = new WaterMark();
+        wm.setBusinessCode((String) reqMap.get("businessCode"));
+        wm.setPath((String) reqMap.get("path"));
+        wm.setHeightPercentage((Integer) reqMap.get("height"));
+        wm.setxPercentage((Integer) reqMap.get("x"));
+        wm.setyPercentage((Integer) reqMap.get("y"));
+        wm.setAlpha((Integer) reqMap.get("alpha"));
+        return imageService.testWaterMark(wm);
+    }
+
 }

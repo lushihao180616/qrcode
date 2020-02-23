@@ -28,7 +28,7 @@
                                                                                                 value="搜索"
                                                                                                 onclick="init()"/><br><br>
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
-        <span class="itemName">图片位置：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
+        <span class="itemName">原&emsp;&emsp;图：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
         <span class="itemName">高&emsp;&emsp;度：</span><input class="topItemInput" type="text"
                                                             value="10"
                                                             id="createHeight"/><span class="unit">%</span><br><br>
@@ -38,7 +38,12 @@
                                                         id="createY"/><span class="unit">%</span><br><br>
         <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
                                                              id="createAlpha"/><span class="unit">%</span><br><br>
+        <hr>
+        <br>
+        <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
+                                                             id="createTest"/><br><br>
 
+        <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
     <div class="topItem2">

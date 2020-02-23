@@ -126,7 +126,6 @@ function create() {
                 }
                 var data = xhr.responseText;
                 init();
-                alert(data);
                 document.getElementById("createCode").value = '';
                 document.getElementById("createMoney").value = '';
                 document.getElementById("createWidth").value = '1950';
@@ -138,6 +137,7 @@ function create() {
                 document.getElementById("createMultiple").value = '1';
                 document.getElementById("createFrame").value = '0/0/0';
                 document.getElementById('createTempleItemsPath').value = '';
+                alert(data);
             }
         }
     }
@@ -233,7 +233,6 @@ function update() {
                 }
                 var data = xhr.responseText;
                 init();
-                alert(data);
                 document.getElementById("updateTemples").innerHTML = '';
                 document.getElementById("updateMoney").value = '';
                 document.getElementById("updateWidth").value = '';
@@ -245,6 +244,7 @@ function update() {
                 document.getElementById("updateMultiple").value = '';
                 document.getElementById("updateFrame").value = '';
                 document.getElementById('updateTempleItemsPath').value = '';
+                alert(data);
             }
         }
     }
@@ -315,7 +315,6 @@ function deleteOne() {
                 }
                 var data = xhr.responseText;
                 init();
-                alert(data);
                 document.getElementById("deleteTemples").innerHTML = '';
                 document.getElementById("deleteMoney").innerText = '';
                 document.getElementById("deleteWidth").innerText = '';
@@ -325,6 +324,7 @@ function deleteOne() {
                 document.getElementById("deleteY").innerText = '';
                 document.getElementById("deleteAngle").innerText = '';
                 document.getElementById("deleteMultiple").innerText = '';
+                alert(data);
             }
         }
     }

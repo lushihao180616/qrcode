@@ -6,4 +6,6 @@ public interface ImageService {
 
     String addWaterMark(WaterMark waterMark);
 
+    String testWaterMark(WaterMark waterMark);
+
 }

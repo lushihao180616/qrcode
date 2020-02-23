@@ -52,9 +52,8 @@ function create() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
-                document.getElementById("tableTitle").style.visibility = "visible";
                 if (data.substring(0, 4) == '生成成功') {
+                    document.getElementById("tableTitle").style.visibility = "visible";
                     var videos = document.getElementById("videos");
                     videos.innerHTML += '\n' +
                         '    <tr>\n' +
@@ -63,6 +62,7 @@ function create() {
                         '    </tr>';
                 }
                 document.getElementById('createPath').value = '';
+                alert(data);
             }
         }
     }

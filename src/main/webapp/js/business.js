@@ -67,12 +67,12 @@ function create() {
                 }
                 var data = xhr.responseText;
                 init();
+                document.getElementById("createName").value = '';
+                document.getElementById("createAddress").value = '';
+                document.getElementById("createPhone").value = '';
+                document.getElementById("createBusinessName").value = '';
+                document.getElementById("createLogo").value = '';
                 alert(data);
-                document.getElementById("createName").value = '',
-                    document.getElementById("createAddress").value = '',
-                    document.getElementById("createPhone").value = '',
-                    document.getElementById("createBusinessName").value = '',
-                    document.getElementById("createLogo").value = ''
             }
         }
     }
@@ -157,13 +157,13 @@ function update() {
                 }
                 var data = xhr.responseText;
                 init();
-                alert(data);
                 document.getElementById("modifyBusinesses").innerHTML = '';
                 document.getElementById("modifyName").value = '';
                 document.getElementById("modifyAddress").value = '';
                 document.getElementById("modifyPhone").value = '';
                 document.getElementById("modifyBusinessName").value = '';
                 document.getElementById("modifyLogo").value = '';
+                alert(data);
             }
         }
     }
@@ -235,12 +235,12 @@ function deleteOne() {
                 }
                 var data = xhr.responseText;
                 init();
-                alert(data);
                 document.getElementById("deleteBusinesses").innerHTML = '';
                 document.getElementById("deleteName").innerHTML = '';
                 document.getElementById("deleteAddress").innerHTML = '';
                 document.getElementById("deletePhone").innerHTML = '';
                 document.getElementById("deleteBusinessName").innerHTML = '';
+                alert(data);
             }
         }
     }

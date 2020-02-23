@@ -60,9 +60,9 @@ function create() {
                     return
                 }
                 var data = xhr.responseText;
-                alert(data);
-                document.getElementById("tableTitle").style.visibility = "visible";
                 if (data.substring(0, 4) == '添加成功') {
+                    document.getElementById("tableTitle").style.visibility = "visible";
+                    document.getElementById("createTest").value = "";
                     var waterMarks = document.getElementById("waterMarks");
                     waterMarks.innerHTML += '\n' +
                         '    <tr>\n' +
@@ -75,6 +75,50 @@ function create() {
                 document.getElementById("createX").value = '0';
                 document.getElementById("createY").value = '100';
                 document.getElementById('createPath').value = '';
+                alert(data);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(createWaterMark));
+}
+
+function test() {
+    var business = document.getElementById("createBusinesses").value;
+    var alpha = document.getElementById("createAlpha").value;
+    var height = document.getElementById("createHeight").value;
+    var x = document.getElementById("createX").value;
+    var y = document.getElementById("createY").value;
+    var path = document.getElementById("createPath").value;
+    if (!check(business, alpha, height, x, y, path)) {
+        return
+    }
+    var createWaterMark = {
+        businessCode: JSON.parse(business).code,
+        alpha: parseInt(alpha),
+        height: parseInt(height),
+        x: parseInt(x),
+        y: parseInt(y),
+        path: path
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/waterMark/test", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "error.jsp"
+                    return
+                }
+                var data = xhr.responseText;
+                if (data == '添加成功') {
+                    document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_test.jpg';
+                } else {
+                    document.getElementById("createTest").value = '';
+                }
+                alert(data);
             }
         }
     }
@@ -86,20 +130,20 @@ function check(business, alpha, height, x, y, path) {
     if (business == null) {
         checkStr += '商家必须选择 ';
     }
-    if (alpha == '' || isNaN(alpha) || alpha > 100 || alpha < 0) {
+    if (alpha == '' || isNaN(alpha) || parseInt(alpha) > 100 || parseInt(alpha) < 0) {
         checkStr += '请填写透明度（0-100） ';
     }
-    if (height == '' || isNaN(height) || height > 25 || height < 0) {
+    if (height == '' || isNaN(height) || parseInt(height) > 25 || parseInt(height) < 0) {
         checkStr += '请填写高度（0-25，建议填写15以下） ';
     }
-    if (x == '' || isNaN(x) || x > 100 || x < 0) {
+    if (x == '' || isNaN(x) || parseInt(x) > 100 || parseInt(x) < 0) {
         checkStr += '请填写x偏移量（0-100） ';
     }
-    if (y == '' || isNaN(y) || x > 100 || x < 0) {
+    if (y == '' || isNaN(y) || parseInt(y) > 100 || parseInt(y) < 0) {
         checkStr += '请填写y偏移量（0-100） ';
     }
     if (path == null || path == '') {
-        checkStr += '图片位置必须选择 ';
+        checkStr += '原图必须选择 ';
     }
     if (checkStr != '') {
         alert(checkStr);

@@ -80,4 +80,67 @@ public class ImageServiceImpl implements ImageService {
         return "添加成功";
     }
 
+    /**
+     * 添加水印
+     *
+     * @param waterMark
+     * @return
+     */
+    @Override
+    @Transactional
+    public String testWaterMark(WaterMark waterMark) {
+        boolean ifOverFlow = false;
+        try {
+            //获取商家
+            Business business = new Business();
+            business.setCode(waterMark.getBusinessCode());
+            Business nowBusiness = businessMapper.filter(business).get(0);
+
+            BufferedImage bg = ImageIO.read(new FileInputStream(waterMark.getPath()));
+            int width = bg.getWidth();
+            int height = bg.getHeight();
+            int waterMarkHeight = height * waterMark.getHeightPercentage() / 100;
+            int fontSize = (int) (waterMarkHeight * 0.3);
+            int waterMarkWidth = (nowBusiness.getAddress().length() + 5) * fontSize + waterMarkHeight;
+
+            //需要画水印的图片
+            BufferedImage waterMarkImage = new BufferedImage(waterMarkWidth, waterMarkHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
+            waterMarkG2.setBackground(Color.WHITE);
+            waterMarkG2.clearRect(0, 0, waterMarkWidth, waterMarkHeight);
+            waterMarkG2.setColor(Color.BLACK);
+            waterMarkG2.drawString("信息", (float) (waterMarkHeight * 1.4), (float) (waterMarkHeight * 0.25 + fontSize));
+            BufferedImage logoImage = new BufferedImage(waterMarkHeight, waterMarkHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D logoG2 = logoImage.createGraphics();
+            logoG2.setBackground(Color.BLACK);
+            logoG2.clearRect(0, 0, waterMarkHeight, waterMarkHeight);
+            logoG2.setColor(Color.WHITE);
+            logoG2.drawString("头像", (float) (waterMarkHeight * 0.4), (float) (waterMarkHeight * 0.25 + fontSize));
+            waterMarkG2.drawImage(logoImage, 0, 0, waterMarkHeight, waterMarkHeight, null);
+
+            //遮罩层半透明绘制在图片上
+            Graphics2D bgG2 = bg.createGraphics();
+            bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) waterMark.getAlpha() / (float) 100));
+            bgG2.drawImage(waterMarkImage, waterMark.getxPercentage() * (width - waterMarkWidth) / 100, waterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
+            bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+            bgG2.dispose();
+
+            FileOutputStream outImgStream = new FileOutputStream(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_test.jpg");
+            ImageIO.write(bg, "jpg", outImgStream);
+            outImgStream.flush();
+            outImgStream.close();
+
+            if (waterMarkWidth > width) {
+                ifOverFlow = true;
+            }
+        } catch (IOException e) {
+            return "添加失败";
+        }
+        if (ifOverFlow) {
+            return "添加成功，但是信息不能完全显示，请尝试将高度调小";
+        } else {
+            return "添加成功";
+        }
+    }
+
 }

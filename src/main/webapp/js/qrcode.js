@@ -60,10 +60,6 @@ function init() {
         }
     }
     xhr.send(JSON.stringify(filter));
-
-    // getTemple();
-    // getBusiness();
-    // getRecord();
 }
 
 function getTemple() {
@@ -244,12 +240,12 @@ function create() {
                 }
                 var data = xhr.responseText;
                 init();
-                alert(data);
                 document.getElementById("message").value = '';
                 document.getElementById("temples").options[0].selected = true;
                 document.getElementById("businesses").options[0].selected = true;
                 document.getElementById("fileName").value = '';
                 document.getElementById("backGround").value = '';
+                alert(data);
             }
         }
     }
