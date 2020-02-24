@@ -27,6 +27,18 @@ public class QRCodeVo {
      * 背景图片
      */
     private String backGround;
+    /**
+     * 较短边长
+     */
+    private int shortLength;
+    /**
+     * x偏移量
+     */
+    private int x;
+    /**
+     * y偏移量
+     */
+    private int y;
 
     public String getMessage() {
         return message;
@@ -68,12 +80,39 @@ public class QRCodeVo {
         this.backGround = backGround;
     }
 
-    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String fileName, String backGround) {
+    public int getShortLength() {
+        return shortLength;
+    }
+
+    public void setShortLength(int shortLength) {
+        this.shortLength = shortLength;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String fileName, String backGround, int shortLength, int x, int y) {
         this.message = message;
         this.qrCodeTemple = qrCodeTemple;
         this.businessCode = businessCode;
         this.fileName = fileName;
         this.backGround = backGround;
+        this.shortLength = shortLength;
+        this.x = x;
+        this.y = y;
     }
 
     public QRCodeVo() {

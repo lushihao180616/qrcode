@@ -43,9 +43,21 @@ public class QRCodeController {
             return null;
         }
         QRCodeRequest qrCodeRequest = LSHMapUtils.mapToEntity(reqMap, QRCodeRequest.class);
-        qrCodeRequest.setShortLength((Integer) reqMap.get("shortLength"));
-        qrCodeRequest.setX((Integer) reqMap.get("x"));
-        qrCodeRequest.setY((Integer) reqMap.get("y"));
+        if (reqMap.get("shortLength") == null || "".equals(reqMap.get("shortLength"))) {
+            qrCodeRequest.setShortLength(0);
+        } else {
+            qrCodeRequest.setShortLength((Integer) reqMap.get("shortLength"));
+        }
+        if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {
+            qrCodeRequest.setX(0);
+        } else {
+            qrCodeRequest.setX((Integer) reqMap.get("x"));
+        }
+        if (reqMap.get("y") == null || "".equals(reqMap.get("y"))) {
+            qrCodeRequest.setY(0);
+        } else {
+            qrCodeRequest.setY((Integer) reqMap.get("y"));
+        }
         return qrCodeService.create(qrCodeRequest);
     }
 
@@ -56,9 +68,21 @@ public class QRCodeController {
             return null;
         }
         QRCodeRequest qrCodeRequest = LSHMapUtils.mapToEntity(reqMap, QRCodeRequest.class);
-        qrCodeRequest.setShortLength((Integer) reqMap.get("shortLength"));
-        qrCodeRequest.setX((Integer) reqMap.get("x"));
-        qrCodeRequest.setY((Integer) reqMap.get("y"));
+        if (reqMap.get("shortLength") == null || "".equals(reqMap.get("shortLength"))) {
+            qrCodeRequest.setShortLength(0);
+        } else {
+            qrCodeRequest.setShortLength((Integer) reqMap.get("shortLength"));
+        }
+        if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {
+            qrCodeRequest.setX(0);
+        } else {
+            qrCodeRequest.setX((Integer) reqMap.get("x"));
+        }
+        if (reqMap.get("y") == null || "".equals(reqMap.get("y"))) {
+            qrCodeRequest.setY(0);
+        } else {
+            qrCodeRequest.setY((Integer) reqMap.get("y"));
+        }
         return qrCodeService.test(qrCodeRequest);
     }
 

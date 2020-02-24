@@ -263,11 +263,11 @@ public class LSHQRCodeUtil {
                 int width = imageBG.getWidth();
                 int height = imageBG.getHeight();
                 if (width > height) {
-                    bgWidth = bgMinWidthOrHeight;
-                    bgHeight = bgMinWidthOrHeight * height / width;
+                    bgHeight = qrCodeVo.getShortLength();
+                    bgWidth = (int) ((float) width / height * bgHeight);
                 } else {
-                    bgWidth = bgMinWidthOrHeight * width / height;
-                    bgHeight = bgMinWidthOrHeight;
+                    bgWidth = qrCodeVo.getShortLength();
+                    bgHeight = (int) ((float) height / width * bgWidth);
                 }
                 isMp4 = false;
             } else {
@@ -292,18 +292,18 @@ public class LSHQRCodeUtil {
                     if (qrCodeVo.getQrCodeTemple().getStartQRFrame() == 0 && qrCodeVo.getQrCodeTemple().getEndQRFrame() == 0) {
                         if (ifTest) {
                             bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
-                            bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                             bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                         } else {
-                            bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                         }
                     } else if (i >= qrCodeVo.getQrCodeTemple().getStartQRFrame() && i <= qrCodeVo.getQrCodeTemple().getEndQRFrame()) {
                         if (ifTest) {
                             bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
-                            bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                             bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                         } else {
-                            bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                         }
                     }
                     bg.dispose();
@@ -317,10 +317,10 @@ public class LSHQRCodeUtil {
                 bg.drawImage(imageBG, 0, 0, bgWidth / multiple, bgHeight / multiple, null);
                 if (ifTest) {
                     bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
-                    bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                    bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                     bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                 } else {
-                    bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                    bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                 }
                 bg.dispose();
                 map.put(0, backGroundImage);

@@ -267,6 +267,7 @@ function create() {
                 document.getElementById("businesses").options[0].selected = true;
                 document.getElementById("fileName").value = '';
                 document.getElementById("backGround").value = '';
+                document.getElementById("createTest").value = '';
                 alert(data.result);
             }
         }
