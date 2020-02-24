@@ -108,14 +108,18 @@ public class ImageServiceImpl implements ImageService {
             Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
             waterMarkG2.setBackground(Color.WHITE);
             waterMarkG2.clearRect(0, 0, waterMarkWidth, waterMarkHeight);
+            Font font = new Font("微软雅黑", Font.PLAIN, fontSize);
+            waterMarkG2.setFont(font);              //设置字体
             waterMarkG2.setColor(Color.BLACK);
-            waterMarkG2.drawString("信息", (float) (waterMarkHeight * 1.4), (float) (waterMarkHeight * 0.25 + fontSize));
+            waterMarkG2.drawString("信息", (float) (waterMarkWidth / 2 + waterMarkHeight / 2 - fontSize), (float) (waterMarkHeight * 0.35 + fontSize));
             BufferedImage logoImage = new BufferedImage(waterMarkHeight, waterMarkHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D logoG2 = logoImage.createGraphics();
             logoG2.setBackground(Color.BLACK);
             logoG2.clearRect(0, 0, waterMarkHeight, waterMarkHeight);
+            Font font2 = new Font("微软雅黑", Font.PLAIN, fontSize);
+            logoG2.setFont(font2);              //设置字体
             logoG2.setColor(Color.WHITE);
-            logoG2.drawString("头像", (float) (waterMarkHeight * 0.4), (float) (waterMarkHeight * 0.25 + fontSize));
+            logoG2.drawString("头像", (float) (waterMarkHeight * 0.2), (float) (waterMarkHeight * 0.35 + fontSize));
             waterMarkG2.drawImage(logoImage, 0, 0, waterMarkHeight, waterMarkHeight, null);
 
             //遮罩层半透明绘制在图片上
