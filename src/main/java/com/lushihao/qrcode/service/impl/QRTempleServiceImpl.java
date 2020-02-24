@@ -48,7 +48,7 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null));
+            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0));
             return "创建成功";
         }
         return "创建失败";
@@ -71,7 +71,7 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null));
+            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0));
             return "更新成功";
         }
         return "更新失败";

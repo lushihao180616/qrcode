@@ -43,6 +43,9 @@ public class QRCodeController {
             return null;
         }
         QRCodeRequest qrCodeRequest = LSHMapUtils.mapToEntity(reqMap, QRCodeRequest.class);
+        qrCodeRequest.setShortLength((Integer) reqMap.get("shortLength"));
+        qrCodeRequest.setX((Integer) reqMap.get("x"));
+        qrCodeRequest.setY((Integer) reqMap.get("y"));
         return qrCodeService.create(qrCodeRequest);
     }
 
@@ -53,6 +56,9 @@ public class QRCodeController {
             return null;
         }
         QRCodeRequest qrCodeRequest = LSHMapUtils.mapToEntity(reqMap, QRCodeRequest.class);
+        qrCodeRequest.setShortLength((Integer) reqMap.get("shortLength"));
+        qrCodeRequest.setX((Integer) reqMap.get("x"));
+        qrCodeRequest.setY((Integer) reqMap.get("y"));
         return qrCodeService.test(qrCodeRequest);
     }
 

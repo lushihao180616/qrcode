@@ -114,20 +114,20 @@ function getBusiness() {
                 }
                 var businessList = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("businesses");
-    businesses.innerHTML = '';
-    for (var i = 0; i < businessList.length; i++) {
-        var option = document.createElement("option");
-        option.value = JSON.stringify(businessList[i]);
-        option.text = businessList[i].code;
-        businesses.add(option);
+                businesses.innerHTML = '';
+                for (var i = 0; i < businessList.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = JSON.stringify(businessList[i]);
+                    option.text = businessList[i].code;
+                    businesses.add(option);
+                }
+                if (businessList.length > 0) {
+                    getBusinessCode("businesses");
+                }
+            }
+        }
     }
-    if (businessList.length > 0) {
-        getBusinessCode("businesses");
-    }
-}
-}
-}
-xhr.send(JSON.stringify(filterBusinessCode));
+    xhr.send(JSON.stringify(filterBusinessCode));
 }
 
 function getTempleCode(id) {
@@ -149,10 +149,26 @@ function getTempleCode(id) {
         ifSelfBg += "是";
         document.getElementById("backGround").style.visibility = "visible";
         document.getElementById("backGroundLabel").style.visibility = "visible";
+        document.getElementById("shortLength").style.visibility = "visible";
+        document.getElementById("shortLengthLabel").style.visibility = "visible";
+        document.getElementById("x").style.visibility = "visible";
+        document.getElementById("xLabel").style.visibility = "visible";
+        document.getElementById("y").style.visibility = "visible";
+        document.getElementById("yLabel").style.visibility = "visible";
+        document.getElementsByClassName("unit")[0].style.visibility = "visible";
+        document.getElementsByClassName("unit")[1].style.visibility = "visible";
     } else {
         ifSelfBg += "否";
         document.getElementById("backGround").style.visibility = "hidden";
         document.getElementById("backGroundLabel").style.visibility = "hidden";
+        document.getElementById("shortLength").style.visibility = "hidden";
+        document.getElementById("shortLengthLabel").style.visibility = "hidden";
+        document.getElementById("x").style.visibility = "hidden";
+        document.getElementById("xLabel").style.visibility = "hidden";
+        document.getElementById("y").style.visibility = "hidden";
+        document.getElementById("yLabel").style.visibility = "hidden";
+        document.getElementsByClassName("unit")[0].style.visibility = "hidden";
+        document.getElementsByClassName("unit")[1].style.visibility = "hidden";
     }
     document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
     document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
@@ -216,7 +232,10 @@ function create() {
     var business = document.getElementById("businesses").value;
     var fileName = document.getElementById("fileName").value;
     var backGround = document.getElementById("backGround").value;
-    if (!check(message, temple, business, fileName, backGround)) {
+    var shortLength = document.getElementById("shortLength").value;
+    var x = document.getElementById("x").value;
+    var y = document.getElementById("y").value;
+    if (!check(message, temple, business, fileName, backGround, shortLength, x, y)) {
         return
     }
     var createQRCode = {
@@ -224,7 +243,10 @@ function create() {
         templeCode: JSON.parse(temple).code,
         businessCode: JSON.parse(business).code,
         fileName: fileName,
-        backGround: backGround
+        backGround: backGround,
+        shortLength: parseInt(shortLength),
+        x: parseInt(x),
+        y: parseInt(y)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
@@ -258,7 +280,10 @@ function test() {
     var business = document.getElementById("businesses").value;
     var fileName = document.getElementById("fileName").value;
     var backGround = document.getElementById("backGround").value;
-    if (!check(message, temple, business, fileName, backGround)) {
+    var shortLength = document.getElementById("shortLength").value;
+    var x = document.getElementById("x").value;
+    var y = document.getElementById("y").value;
+    if (!check(message, temple, business, fileName, backGround, shortLength, x, y)) {
         return
     }
     var createQRCode = {
@@ -266,7 +291,10 @@ function test() {
         templeCode: JSON.parse(temple).code,
         businessCode: JSON.parse(business).code,
         fileName: fileName,
-        backGround: backGround
+        backGround: backGround,
+        shortLength: parseInt(shortLength),
+        x: parseInt(x),
+        y: parseInt(y)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/test", false);
@@ -293,7 +321,7 @@ function test() {
     xhr.send(JSON.stringify(createQRCode));
 }
 
-function check(message, temple, business, fileName, backGround) {
+function check(message, temple, business, fileName, backGround, shortLength, x, y) {
     var checkStr = '';
     if (message == '' || message == null) {
         checkStr += '二维码信息必须填写 ';
@@ -304,6 +332,15 @@ function check(message, temple, business, fileName, backGround) {
         if (JSON.parse(temple).code.toString().charAt(4) == '1') {
             if (backGround == '' || backGround == null) {
                 checkStr += '背景图片必须选择 ';
+            }
+            if (shortLength == '' || shortLength == null || parseInt(shortLength) < 1950) {
+                checkStr += '较短边长必须填写（1950+） ';
+            }
+            if (x == '' || x == null || parseInt(x) > 100 || parseInt(y) < 0) {
+                checkStr += 'x偏移量必须填写（0-100） ';
+            }
+            if (y == '' || y == null || parseInt(y) > 100 || parseInt(y) < 0) {
+                checkStr += 'y偏移量必须填写（0-100） ';
             }
         }
     }

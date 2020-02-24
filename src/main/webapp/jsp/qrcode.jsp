@@ -42,6 +42,12 @@
                                                                 id="message"></textarea><br><br>
         <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
                                                                        name="uploadFile"/><br><br>
+        <span id="shortLengthLabel" class="itemName">较短边长：</span><input class="topItemInput" type="text"
+                                                                        id="shortLength" width=""/><br><br>
+        <span id="xLabel" class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" id="x"/><span
+            class="unit">%</span><br><br>
+        <span id="yLabel" class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" id="y"/><span
+            class="unit">%</span><br><br>
         <hr>
         <br>
         <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"

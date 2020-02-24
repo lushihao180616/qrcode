@@ -22,6 +22,18 @@ public class QRCodeRequest {
      * 背景图片
      */
     private String backGround;
+    /**
+     * 背景图片
+     */
+    private int shortLength;
+    /**
+     * 背景图片
+     */
+    private int x;
+    /**
+     * 背景图片
+     */
+    private int y;
 
     public String getMessage() {
         return message;
@@ -63,12 +75,39 @@ public class QRCodeRequest {
         this.backGround = backGround;
     }
 
-    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName, String backGround) {
+    public int getShortLength() {
+        return shortLength;
+    }
+
+    public void setShortLength(int shortLength) {
+        this.shortLength = shortLength;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName, String backGround, int shortLength, int x, int y) {
         this.message = message;
         this.templeCode = templeCode;
         this.businessCode = businessCode;
         this.fileName = fileName;
         this.backGround = backGround;
+        this.shortLength = shortLength;
+        this.x = x;
+        this.y = y;
     }
 
     public QRCodeRequest() {
