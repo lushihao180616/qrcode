@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QRCodeServiceImpl implements QRCodeService {
@@ -25,9 +26,16 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     @Override
     @Transactional
-    public String create(QRCodeRequest qrCodeRequest) {
+    public Map<String, String> create(QRCodeRequest qrCodeRequest) {
         QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround());
-        return lshqrCodeUtil.qrcode(qrCodeVo);
+        return lshqrCodeUtil.qrcode(qrCodeVo, false);
+    }
+
+    @Override
+    @Transactional
+    public Map<String, String> test(QRCodeRequest qrCodeRequest) {
+        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround());
+        return lshqrCodeUtil.qrcode(qrCodeVo, true);
     }
 
     @Override

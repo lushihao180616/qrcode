@@ -13,7 +13,8 @@
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
+   onMouseOut="makevisible(this,1)">首页</a>
 <a class="toIndex" href="http://www.fhdq.net/">特殊符号</a>
 
 <p class="topTitle">
@@ -41,7 +42,12 @@
                                                                 id="message"></textarea><br><br>
         <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
                                                                        name="uploadFile"/><br><br>
+        <hr>
+        <br>
+        <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
+                                                             id="createTest"/><br><br>
 
+        <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
     <div class="topItem2">

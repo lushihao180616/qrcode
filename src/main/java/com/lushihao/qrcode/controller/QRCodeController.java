@@ -4,6 +4,7 @@ import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.BusinessService;
 import com.lushihao.qrcode.service.QRCodeService;
 import com.lushihao.qrcode.service.QRTempleService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +33,27 @@ public class QRCodeController {
     private QRTempleService qrTempleService;
     @Resource
     private BusinessService businessService;
+    @Resource
+    private ProjectBasicInfo projectBasicInfo;
 
     @RequestMapping("create")
     @ResponseBody
-    public String create(@RequestBody Map<String, Object> reqMap) {
+    public Map<String, String> create(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
         QRCodeRequest qrCodeRequest = LSHMapUtils.mapToEntity(reqMap, QRCodeRequest.class);
         return qrCodeService.create(qrCodeRequest);
+    }
+
+    @RequestMapping("test")
+    @ResponseBody
+    public Map<String, String> test(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        QRCodeRequest qrCodeRequest = LSHMapUtils.mapToEntity(reqMap, QRCodeRequest.class);
+        return qrCodeService.test(qrCodeRequest);
     }
 
     @RequestMapping("selectRecord")

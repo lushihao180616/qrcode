@@ -114,20 +114,20 @@ function getBusiness() {
                 }
                 var businessList = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("businesses");
-                businesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(businessList[i]);
-                    option.text = businessList[i].code;
-                    businesses.add(option);
-                }
-                if (businessList.length > 0) {
-                    getBusinessCode("businesses");
-                }
-            }
-        }
+    businesses.innerHTML = '';
+    for (var i = 0; i < businessList.length; i++) {
+        var option = document.createElement("option");
+        option.value = JSON.stringify(businessList[i]);
+        option.text = businessList[i].code;
+        businesses.add(option);
     }
-    xhr.send(JSON.stringify(filterBusinessCode));
+    if (businessList.length > 0) {
+        getBusinessCode("businesses");
+    }
+}
+}
+}
+xhr.send(JSON.stringify(filterBusinessCode));
 }
 
 function getTempleCode(id) {
@@ -238,14 +238,55 @@ function create() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var data = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("message").value = '';
                 document.getElementById("temples").options[0].selected = true;
                 document.getElementById("businesses").options[0].selected = true;
                 document.getElementById("fileName").value = '';
                 document.getElementById("backGround").value = '';
-                alert(data);
+                alert(data.result);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(createQRCode));
+}
+
+function test() {
+    var message = document.getElementById("message").value;
+    var temple = document.getElementById("temples").value;
+    var business = document.getElementById("businesses").value;
+    var fileName = document.getElementById("fileName").value;
+    var backGround = document.getElementById("backGround").value;
+    if (!check(message, temple, business, fileName, backGround)) {
+        return
+    }
+    var createQRCode = {
+        message: message,
+        templeCode: JSON.parse(temple).code,
+        businessCode: JSON.parse(business).code,
+        fileName: fileName,
+        backGround: backGround
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/qrcode/test", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "error.jsp"
+                    return
+                }
+                var data = JSON.parse(xhr.responseText);
+                if (data.result == '创建成功') {
+                    document.getElementById("createTest").value = data.filePath;
+                } else {
+                    document.getElementById("createTest").value = '';
+                }
+                alert(data.result);
             }
         }
     }
@@ -260,7 +301,7 @@ function check(message, temple, business, fileName, backGround) {
     if (temple == null) {
         checkStr += '模板必须选择 ';
     } else {
-        if (JSON.parse(temple).code.toString().charAt(5) == '1') {
+        if (JSON.parse(temple).code.toString().charAt(4) == '1') {
             if (backGround == '' || backGround == null) {
                 checkStr += '背景图片必须选择 ';
             }
