@@ -203,7 +203,7 @@ function update() {
     var multiple = document.getElementById("updateMultiple").value;
     var frame = document.getElementById("updateFrame").value;
     var templeItemsPath = document.getElementById("updateTempleItemsPath").value;
-    if (!check(code, money, width, height, iconNum, x, y, angle, multiple, frame, templeItemsPath)) {
+    if (!check(code, money, width, height, iconNum, x, y, angle, multiple, frame, "1")) {
         return
     }
     var updateTemple = {
