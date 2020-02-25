@@ -39,6 +39,14 @@ public class QRCodeVo {
      * y偏移量
      */
     private int y;
+    /**
+     * 码透明度
+     */
+    private int alpha;
+    /**
+     * 旋转角度
+     */
+    private int angle;
 
     public String getMessage() {
         return message;
@@ -104,7 +112,23 @@ public class QRCodeVo {
         this.y = y;
     }
 
-    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String fileName, String backGround, int shortLength, int x, int y) {
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
+    }
+
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
         this.message = message;
         this.qrCodeTemple = qrCodeTemple;
         this.businessCode = businessCode;
@@ -113,6 +137,8 @@ public class QRCodeVo {
         this.shortLength = shortLength;
         this.x = x;
         this.y = y;
+        this.alpha = alpha;
+        this.angle = angle;
     }
 
     public QRCodeVo() {

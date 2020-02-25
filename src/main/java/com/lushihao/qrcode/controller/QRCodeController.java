@@ -58,6 +58,16 @@ public class QRCodeController {
         } else {
             qrCodeRequest.setY((Integer) reqMap.get("y"));
         }
+        if (reqMap.get("alpha") == null || "".equals(reqMap.get("alpha"))) {
+            qrCodeRequest.setAlpha(0);
+        } else {
+            qrCodeRequest.setAlpha((Integer) reqMap.get("alpha"));
+        }
+        if (reqMap.get("angle") == null || "".equals(reqMap.get("angle"))) {
+            qrCodeRequest.setAngle(0);
+        } else {
+            qrCodeRequest.setAngle((Integer) reqMap.get("angle"));
+        }
         return qrCodeService.create(qrCodeRequest);
     }
 
@@ -82,6 +92,16 @@ public class QRCodeController {
             qrCodeRequest.setY(0);
         } else {
             qrCodeRequest.setY((Integer) reqMap.get("y"));
+        }
+        if (reqMap.get("alpha") == null || "".equals(reqMap.get("alpha"))) {
+            qrCodeRequest.setAlpha(0);
+        } else {
+            qrCodeRequest.setAlpha((Integer) reqMap.get("alpha"));
+        }
+        if (reqMap.get("angle") == null || "".equals(reqMap.get("angle"))) {
+            qrCodeRequest.setAngle(0);
+        } else {
+            qrCodeRequest.setAngle((Integer) reqMap.get("angle"));
         }
         return qrCodeService.test(qrCodeRequest);
     }

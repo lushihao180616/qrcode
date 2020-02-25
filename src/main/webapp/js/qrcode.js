@@ -155,8 +155,14 @@ function getTempleCode(id) {
         document.getElementById("xLabel").style.visibility = "visible";
         document.getElementById("y").style.visibility = "visible";
         document.getElementById("yLabel").style.visibility = "visible";
+        document.getElementById("alpha").style.visibility = "visible";
+        document.getElementById("alphaLabel").style.visibility = "visible";
+        document.getElementById("angle").style.visibility = "visible";
+        document.getElementById("angleLabel").style.visibility = "visible";
         document.getElementsByClassName("unit")[0].style.visibility = "visible";
         document.getElementsByClassName("unit")[1].style.visibility = "visible";
+        document.getElementsByClassName("unit")[2].style.visibility = "visible";
+        document.getElementsByClassName("unit")[3].style.visibility = "visible";
     } else {
         ifSelfBg += "否";
         document.getElementById("backGround").style.visibility = "hidden";
@@ -167,8 +173,14 @@ function getTempleCode(id) {
         document.getElementById("xLabel").style.visibility = "hidden";
         document.getElementById("y").style.visibility = "hidden";
         document.getElementById("yLabel").style.visibility = "hidden";
+        document.getElementById("alpha").style.visibility = "hidden";
+        document.getElementById("alphaLabel").style.visibility = "hidden";
+        document.getElementById("angle").style.visibility = "hidden";
+        document.getElementById("angleLabel").style.visibility = "hidden";
         document.getElementsByClassName("unit")[0].style.visibility = "hidden";
         document.getElementsByClassName("unit")[1].style.visibility = "hidden";
+        document.getElementsByClassName("unit")[2].style.visibility = "hidden";
+        document.getElementsByClassName("unit")[3].style.visibility = "hidden";
     }
     document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
     document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
@@ -235,7 +247,9 @@ function create() {
     var shortLength = document.getElementById("shortLength").value;
     var x = document.getElementById("x").value;
     var y = document.getElementById("y").value;
-    if (!check(message, temple, business, fileName, backGround, shortLength, x, y)) {
+    var alpha = document.getElementById("alpha").value;
+    var angle = document.getElementById("angle").value;
+    if (!check(message, temple, business, fileName, backGround, shortLength, x, y, alpha, angle)) {
         return
     }
     var createQRCode = {
@@ -246,7 +260,9 @@ function create() {
         backGround: backGround,
         shortLength: parseInt(shortLength),
         x: parseInt(x),
-        y: parseInt(y)
+        y: parseInt(y),
+        alpha: parseInt(alpha),
+        angle: parseInt(angle)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
@@ -284,7 +300,9 @@ function test() {
     var shortLength = document.getElementById("shortLength").value;
     var x = document.getElementById("x").value;
     var y = document.getElementById("y").value;
-    if (!check(message, temple, business, fileName, backGround, shortLength, x, y)) {
+    var alpha = document.getElementById("alpha").value;
+    var angle = document.getElementById("angle").value;
+    if (!check(message, temple, business, fileName, backGround, shortLength, x, y, alpha, angle)) {
         return
     }
     var createQRCode = {
@@ -295,7 +313,9 @@ function test() {
         backGround: backGround,
         shortLength: parseInt(shortLength),
         x: parseInt(x),
-        y: parseInt(y)
+        y: parseInt(y),
+        alpha: parseInt(alpha),
+        angle: parseInt(angle)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/test", false);
@@ -322,7 +342,7 @@ function test() {
     xhr.send(JSON.stringify(createQRCode));
 }
 
-function check(message, temple, business, fileName, backGround, shortLength, x, y) {
+function check(message, temple, business, fileName, backGround, shortLength, x, y, alpha, angle) {
     var checkStr = '';
     if (message == '' || message == null) {
         checkStr += '二维码信息必须填写 ';
@@ -342,6 +362,12 @@ function check(message, temple, business, fileName, backGround, shortLength, x, 
             }
             if (y == '' || y == null || parseInt(y) > 100 || parseInt(y) < 0) {
                 checkStr += 'y偏移量必须填写（0-100） ';
+            }
+            if (alpha == '' || alpha == null || parseInt(alpha) > 50 || parseInt(alpha) < 0) {
+                checkStr += '码透明度必须填写（0-50） ';
+            }
+            if (angle == '' || angle == null || parseInt(angle) > 359 || parseInt(angle) < 0) {
+                checkStr += '旋转角度必须填写（0-359） ';
             }
         }
     }

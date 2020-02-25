@@ -44,10 +44,18 @@
                                                                        name="uploadFile"/><br><br>
         <span id="shortLengthLabel" class="itemName">较短边长：</span><input class="topItemInput" type="text"
                                                                         id="shortLength" value="1950"/><br><br>
-        <span id="xLabel" class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" id="x" value="0"/><span
+        <span id="xLabel" class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" id="x"
+                                                                    value="50"/><span
             class="unit">%</span><br><br>
-        <span id="yLabel" class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" id="y" value="0"/><span
+        <span id="yLabel" class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" id="y"
+                                                                    value="50"/><span
             class="unit">%</span><br><br>
+        <span id="alphaLabel" class="itemName">码透明度：</span><input class="topItemInput" type="text" id="alpha"
+                                                                  value="0"/><span
+            class="unit">%</span><br><br>
+        <span id="angleLabel" class="itemName">旋转角度：</span><input class="topItemInput" type="text" id="angle"
+                                                                  value="0"/><span
+            class="unit">°</span><br><br>
         <hr>
         <br>
         <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"

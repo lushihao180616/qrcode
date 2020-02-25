@@ -34,6 +34,14 @@ public class QRCodeRequest {
      * 背景图片
      */
     private int y;
+    /**
+     * 码透明度
+     */
+    private int alpha;
+    /**
+     * 旋转角度
+     */
+    private int angle;
 
     public String getMessage() {
         return message;
@@ -99,7 +107,23 @@ public class QRCodeRequest {
         this.y = y;
     }
 
-    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName, String backGround, int shortLength, int x, int y) {
+    public int getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
+    }
+
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
         this.message = message;
         this.templeCode = templeCode;
         this.businessCode = businessCode;
@@ -108,6 +132,8 @@ public class QRCodeRequest {
         this.shortLength = shortLength;
         this.x = x;
         this.y = y;
+        this.alpha = alpha;
+        this.angle = angle;
     }
 
     public QRCodeRequest() {

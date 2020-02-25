@@ -134,8 +134,15 @@ public class LSHQRCodeUtil {
             Font font = new Font("微软雅黑", Font.PLAIN, 200);
             qrcodeG2.setFont(font);              //设置字体
             qrcodeG2.setColor(Color.WHITE); //根据图片的背景设置水印颜色
+            qrcodeG2.translate(925, 925);
+            qrcodeG2.rotate(Math.toRadians(-qrCodeVo.getAngle()));
+            qrcodeG2.translate(-925, -925);
             qrcodeG2.drawString("二维码", 625, 1000);
             qrcodeG2.dispose();
+
+            bgG2.translate(nowWidth / 2, nowHeight / 2);
+            bgG2.rotate(Math.toRadians(qrCodeVo.getAngle()));
+            bgG2.translate(-nowWidth / 2, -nowHeight / 2);
 
             bgG2.drawImage(qrcodeImage, 575, 575, 1850, 1850, null);
             bgG2.dispose();
@@ -189,7 +196,11 @@ public class LSHQRCodeUtil {
             gs = image.createGraphics();
 
             gs.translate(nowWidth / 2, nowHeight / 2);
-            gs.rotate(Math.toRadians(qrCodeVo.getQrCodeTemple().getAngle()));
+            if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
+                gs.rotate(Math.toRadians(qrCodeVo.getAngle()));
+            } else {
+                gs.rotate(Math.toRadians(qrCodeVo.getQrCodeTemple().getAngle()));
+            }
             gs.translate(-nowWidth / 2, -nowHeight / 2);
             //处理码眼部分
             handleCodeEye(gs, code, qrCodeVo);
@@ -206,7 +217,11 @@ public class LSHQRCodeUtil {
                 BufferedImage imageLogoBorder = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png"));
 
                 gs.translate(nowWidth / 2, nowHeight / 2);
-                gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
+                if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
+                    gs.rotate(Math.toRadians(-qrCodeVo.getAngle()));
+                } else {
+                    gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
+                }
                 gs.translate(-nowWidth / 2, -nowHeight / 2);
 
                 gs.drawImage(imageLogo, (nowWidth - logoWidth) / 2, (nowHeight - logoHeight) / 2, logoWidth, logoHeight, null);
@@ -293,19 +308,23 @@ public class LSHQRCodeUtil {
                     bg.drawImage(map.get(i), 0, 0, bgWidth / multiple, bgHeight / multiple, null);
                     if (qrCodeVo.getQrCodeTemple().getStartQRFrame() == 0 && qrCodeVo.getQrCodeTemple().getEndQRFrame() == 0) {
                         if (ifTest) {
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
+                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                             bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                             bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                         } else {
+                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                             bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                         }
                     } else if (i >= qrCodeVo.getQrCodeTemple().getStartQRFrame() && i <= qrCodeVo.getQrCodeTemple().getEndQRFrame()) {
                         if (ifTest) {
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
+                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                             bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                             bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                         } else {
+                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                             bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                         }
                     }
                     bg.dispose();
@@ -318,11 +337,13 @@ public class LSHQRCodeUtil {
                 Graphics2D bg = backGroundImage.createGraphics();
                 bg.drawImage(imageBG, 0, 0, bgWidth / multiple, bgHeight / multiple, null);
                 if (ifTest) {
-                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
+                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                     bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                     bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                 } else {
+                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                     bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
                 }
                 bg.dispose();
                 map.put(0, backGroundImage);
@@ -335,11 +356,13 @@ public class LSHQRCodeUtil {
             bg.setBackground(Color.WHITE);
             bg.clearRect(0, 0, 1950 / multiple, 1950 / multiple);
             if (ifTest) {
-                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 0.5));
+                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                 bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
                 bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             } else {
+                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
                 bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             }
             bg.dispose();
             map.put(0, backGroundImage);
