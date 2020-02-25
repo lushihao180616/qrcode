@@ -92,7 +92,9 @@ public class LSHQRCodeUtil {
             String filePath = outPutImage(imageAndBg, qrCodeVo, ifTest);
             map.put("filePath", filePath);
             //记录一下
-            qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
+            if (!ifTest) {
+                qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             map.put("result", "创建失败，请检查您的输入条件");
@@ -621,7 +623,7 @@ public class LSHQRCodeUtil {
         //将文件输出
         if (!qrCodeVo.getBusinessCode().equals("00000000")) {//商家创建
             if (ifTest) {
-                filePath = createPath(projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date())) + qrCodeVo.getFileName() + "_test.jpg";
+                filePath = projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + "_test.jpg";
             } else {
                 filePath = createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".jpg";
             }
