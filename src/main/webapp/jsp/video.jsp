@@ -13,7 +13,8 @@
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
+   onMouseOut="makevisible(this,1)">首页</a>
 
 <p class="topTitle">
     视频处理
@@ -27,7 +28,8 @@
                                                                                                 value="搜索"
                                                                                                 onclick="init()"/><br><br>
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
-        <span class="itemName">原&ensp;视&ensp;频：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
+        <span class="itemName">原&ensp;视&ensp;频：</span><input class="topItemSelect" type="file" id="createPath"
+                                                             accept="video/*"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
