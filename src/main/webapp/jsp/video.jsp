@@ -46,6 +46,11 @@
         <option value="red">红色</option>
         <option value="yellow">黄色</option>
         <option value="pink">粉色</option>
+        <option value="brown">棕色</option>
+        <option value="cyan">青色</option>
+        <option value="grey">灰色</option>
+        <option value="silver">银色</option>
+        <option value="orange">橙色</option>
     </select><br><br>
         <span class="itemName">字体阴影：</span><select class="topItemSelect" id="createFontShadow">
         <option value="1">有</option>
