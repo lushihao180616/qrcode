@@ -1,6 +1,5 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;

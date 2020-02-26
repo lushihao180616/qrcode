@@ -37,8 +37,24 @@ public class VideoServiceImpl implements VideoService {
             return "当前文件格式不支持";
         }
         VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());
+        String name = videoWaterMark.getBusiness().getName();
+        int num = 0;
+        for (char c : name.toCharArray()) {
+            if (isChineseChar(c)) {
+                num += 2;
+            } else {
+                num += 1;
+            }
+        }
+        int fontWidth = (int) (num * ((float) videoWaterMark.getFontSize() / 2));
+        videoWaterMark.setFontX((int) ((videoInfo.getWidth() - fontWidth) * ((float) videoWaterMark.getFontX() / 100)));
+        videoWaterMark.setFontY((int) ((videoInfo.getHeight() - videoWaterMark.getFontSize()) * ((float) videoWaterMark.getFontY() / 100)));
         //执行加水印
         return lshFfmpegUtil.videoWaterMark(videoWaterMark);
+    }
+
+    private static boolean isChineseChar(char c) {
+        return String.valueOf(c).matches("[\u4e00-\u9fa5]");
     }
 
 }
