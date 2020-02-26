@@ -62,7 +62,7 @@ function create() {
                     return
                 }
                 var data = xhr.responseText;
-                if (data.substring(0, 4) == '添加成功') {
+                if (data == '添加成功') {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var videos = document.getElementById("videos");
                     videos.innerHTML += '\n' +
@@ -70,8 +70,54 @@ function create() {
                         '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
                         '        <td class="bottomTd2">' + document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".mp4")) + '_new.mp4' + '</td>\n' +
                         '    </tr>';
+                    document.getElementById('createPath').value = '';
+                    document.getElementById("createTest").value = '';
                 }
-                document.getElementById('createPath').value = '';
+                alert(data);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(createWaterMark));
+}
+
+function test() {
+    var business = document.getElementById("createBusinesses").value;
+    var path = document.getElementById("createPath").value;
+    var x = document.getElementById("createX").value;
+    var y = document.getElementById("createY").value;
+    var fontSize = document.getElementById("createFontSize").value;
+    var fontColor = document.getElementById("createFontColor").options[document.getElementById("createFontColor").selectedIndex].value;
+    var fontShadow = document.getElementById("createFontShadow").options[document.getElementById("createFontShadow").selectedIndex].value;
+    if (!check(business, path, x, y, fontSize)) {
+        return
+    }
+    var createWaterMark = {
+        businessCode: JSON.parse(business).code,
+        path: path,
+        x: parseInt(x),
+        y: parseInt(y),
+        fontSize: parseInt(fontSize),
+        fontColor: fontColor,
+        fontShadow: fontShadow
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/video/test", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "error.jsp"
+                    return
+                }
+                var data = xhr.responseText;
+                if (data == '添加成功') {
+                    document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_test.mp4';
+                } else {
+                    document.getElementById("createTest").value = '';
+                }
                 alert(data);
             }
         }

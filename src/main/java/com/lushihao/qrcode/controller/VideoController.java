@@ -49,4 +49,33 @@ public class VideoController {
         return videoService.create(videoWaterMark, code);
     }
 
+    @RequestMapping("test")
+    @ResponseBody
+    public String test(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        VideoWaterMark videoWaterMark = new VideoWaterMark();
+        String code = (String) reqMap.get("businessCode");
+        videoWaterMark.setOldVideoPath((String) reqMap.get("path"));
+        if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {
+            videoWaterMark.setFontX(0);
+        } else {
+            videoWaterMark.setFontX((Integer) reqMap.get("x"));
+        }
+        if (reqMap.get("y") == null || "".equals(reqMap.get("y"))) {
+            videoWaterMark.setFontY(0);
+        } else {
+            videoWaterMark.setFontY((Integer) reqMap.get("y"));
+        }
+        videoWaterMark.setFontSize((Integer) reqMap.get("fontSize"));
+        videoWaterMark.setFontColor((String) reqMap.get("fontColor"));
+        if (reqMap.get("fontShadow").equals("1")) {
+            videoWaterMark.setFontShadow(videoWaterMark.getFontSize() / 10);
+        } else {
+            videoWaterMark.setFontShadow(0);
+        }
+        return videoService.test(videoWaterMark, code);
+    }
+
 }

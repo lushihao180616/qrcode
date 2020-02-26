@@ -6,4 +6,6 @@ public interface VideoService {
 
     String create(VideoWaterMark video, String code);
 
+    String test(VideoWaterMark videoWaterMark, String code);
+
 }

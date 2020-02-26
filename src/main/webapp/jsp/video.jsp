@@ -56,7 +56,12 @@
         <option value="1">有</option>
         <option value="0">无</option>
     </select><br><br>
+        <hr>
+        <br>
+        <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
+                                                             id="createTest"/><br><br>
 
+        <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
     <div class="topItem2">
