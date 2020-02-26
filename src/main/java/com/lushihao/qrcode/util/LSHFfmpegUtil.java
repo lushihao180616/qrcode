@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.*;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class LSHFfmpegUtil {
@@ -95,6 +95,10 @@ public class LSHFfmpegUtil {
      * @return
      */
     public String videoWaterMark(VideoWaterMark videoWaterMark) {
+        File file = new File(videoWaterMark.getNewVideoPath());
+        if (file.exists()) {
+            file.delete();
+        }
         FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
         List<String> commands = new java.util.ArrayList<String>();
         FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
@@ -102,13 +106,28 @@ public class LSHFfmpegUtil {
         commands.add("-i");
         commands.add(videoWaterMark.getOldVideoPath());
         commands.add("-vf");
-        commands.add("\"drawtext=fontfile=simhei.ttf:text=\"" + videoWaterMark.getBusiness().getName() + "\":x=" + videoWaterMark.getFontX() + ":y=" + videoWaterMark.getFontY() + ":fontsize=" + videoWaterMark.getFontSize() + ":fontcolor=" + videoWaterMark.getFontColor() + ":shadowy=" + videoWaterMark.getFontColor() + "\"");
+        commands.add("\"drawtext=fontfile=simhei.ttf:text=\"" + videoWaterMark.getBusiness().getName() + "\":x=" + videoWaterMark.getFontX() + ":y=" + videoWaterMark.getFontY() + ":fontsize=" + videoWaterMark.getFontSize() + ":fontcolor=" + videoWaterMark.getFontColor() + ":shadowy=" + videoWaterMark.getFontShadow() + "\"");
         commands.add(videoWaterMark.getNewVideoPath());
 
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command(commands);
         try {
-            ProcessBuilder builder = new ProcessBuilder();
-            builder.command(commands);
-            builder.start();
+            Process process = builder.start();
+            InputStream errorStream = process.getErrorStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+            }
+            if (br != null) {
+                br.close();
+            }
+            if (inputStreamReader != null) {
+                inputStreamReader.close();
+            }
+            if (errorStream != null) {
+                errorStream.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return "添加失败";

@@ -30,6 +30,27 @@
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
         <span class="itemName">原&ensp;视&ensp;频：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="video/*"/><br><br>
+        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" id="createX"
+                                                        value="1"/><span
+            class="unit">%</span><br><br>
+        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" id="createY"
+                                                        value="1"/><span
+            class="unit">%</span><br><br>
+        <span class="itemName">字体大小：</span><input class="topItemInput" type="text" value="24"
+                                                  id="createFontSize"/><br><br>
+        <span class="itemName">字体颜色：</span><select class="topItemSelect" id="createFontColor">
+        <option value="black">黑色</option>
+        <option value="white">白色</option>
+        <option value="blue">蓝色</option>
+        <option value="green">绿色</option>
+        <option value="red">红色</option>
+        <option value="yellow">黄色</option>
+        <option value="pink">粉色</option>
+    </select><br><br>
+        <span class="itemName">字体阴影：</span><select class="topItemSelect" id="createFontShadow">
+        <option value="1">有</option>
+        <option value="0">无</option>
+    </select><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>

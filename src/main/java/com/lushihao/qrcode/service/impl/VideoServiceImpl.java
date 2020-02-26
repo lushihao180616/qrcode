@@ -2,6 +2,7 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.entity.business.Business;
+import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
@@ -35,6 +36,7 @@ public class VideoServiceImpl implements VideoService {
         if (lshFfmpegUtil.checkFileType(newVideoPath) != lshFfmpegUtil.VIDEO) {
             return "当前文件格式不支持";
         }
+        VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());
         //执行加水印
         return lshFfmpegUtil.videoWaterMark(videoWaterMark);
     }

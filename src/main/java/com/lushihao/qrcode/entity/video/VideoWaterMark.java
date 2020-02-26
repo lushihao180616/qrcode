@@ -34,7 +34,7 @@ public class VideoWaterMark {
     /**
      * 字体颜色
      */
-    private int fontColor;
+    private String fontColor;
     /**
      * 字体阴影
      */
@@ -88,11 +88,11 @@ public class VideoWaterMark {
         this.fontSize = fontSize;
     }
 
-    public int getFontColor() {
+    public String getFontColor() {
         return fontColor;
     }
 
-    public void setFontColor(int fontColor) {
+    public void setFontColor(String fontColor) {
         this.fontColor = fontColor;
     }
 
@@ -107,7 +107,7 @@ public class VideoWaterMark {
     public VideoWaterMark() {
     }
 
-    public VideoWaterMark(Business business, String oldVideoPath, String newVideoPath, int fontX, int fontY, int fontSize, int fontColor, int fontShadow) {
+    public VideoWaterMark(Business business, String oldVideoPath, String newVideoPath, int fontX, int fontY, int fontSize, String fontColor, int fontShadow) {
         this.business = business;
         this.oldVideoPath = oldVideoPath;
         this.newVideoPath = newVideoPath;
@@ -117,4 +117,5 @@ public class VideoWaterMark {
         this.fontColor = fontColor;
         this.fontShadow = fontShadow;
     }
+
 }

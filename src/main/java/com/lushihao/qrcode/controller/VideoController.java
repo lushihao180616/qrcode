@@ -29,7 +29,23 @@ public class VideoController {
         VideoWaterMark videoWaterMark = new VideoWaterMark();
         String code = (String) reqMap.get("businessCode");
         videoWaterMark.setOldVideoPath((String) reqMap.get("path"));
-        videoWaterMark.setFontShadow(videoWaterMark.getFontSize() / 9);
+        if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {
+            videoWaterMark.setFontX(0);
+        } else {
+            videoWaterMark.setFontX((Integer) reqMap.get("x"));
+        }
+        if (reqMap.get("y") == null || "".equals(reqMap.get("y"))) {
+            videoWaterMark.setFontY(0);
+        } else {
+            videoWaterMark.setFontY((Integer) reqMap.get("y"));
+        }
+        videoWaterMark.setFontSize((Integer) reqMap.get("fontSize"));
+        videoWaterMark.setFontColor((String) reqMap.get("fontColor"));
+        if (reqMap.get("fontShadow").equals("1")) {
+            videoWaterMark.setFontShadow(videoWaterMark.getFontSize() / 10);
+        } else {
+            videoWaterMark.setFontShadow(0);
+        }
         return videoService.create(videoWaterMark, code);
     }
 
