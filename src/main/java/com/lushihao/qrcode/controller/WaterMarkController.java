@@ -1,7 +1,7 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.image.WaterMark;
-import com.lushihao.qrcode.service.ImageService;
+import com.lushihao.qrcode.service.WaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +13,10 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("waterMark")
-public class ImageAddController {
+public class WaterMarkController {
 
     @Resource
-    private ImageService imageService;
+    private WaterMarkService waterMarkService;
     @Resource
     private LSHMACUtil lshmacUtil;
 
@@ -33,7 +33,7 @@ public class ImageAddController {
         wm.setxPercentage((Integer) reqMap.get("x"));
         wm.setyPercentage((Integer) reqMap.get("y"));
         wm.setAlpha((Integer) reqMap.get("alpha"));
-        return imageService.addWaterMark(wm);
+        return waterMarkService.addWaterMark(wm);
     }
 
     @RequestMapping("test")
@@ -49,7 +49,7 @@ public class ImageAddController {
         wm.setxPercentage((Integer) reqMap.get("x"));
         wm.setyPercentage((Integer) reqMap.get("y"));
         wm.setAlpha((Integer) reqMap.get("alpha"));
-        return imageService.testWaterMark(wm);
+        return waterMarkService.testWaterMark(wm);
     }
 
 }

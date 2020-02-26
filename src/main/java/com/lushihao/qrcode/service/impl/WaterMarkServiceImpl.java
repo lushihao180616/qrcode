@@ -4,7 +4,7 @@ import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.image.WaterMark;
-import com.lushihao.qrcode.service.ImageService;
+import com.lushihao.qrcode.service.WaterMarkService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Service
-public class ImageServiceImpl implements ImageService {
+public class WaterMarkServiceImpl implements WaterMarkService {
 
     @Resource
     private BusinessMapper businessMapper;
