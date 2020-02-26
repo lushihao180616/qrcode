@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.controller;
 
-import com.lushihao.qrcode.entity.video.Video;
+import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -26,10 +26,11 @@ public class VideoController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        Video video = new Video();
-        video.setBusinessCode((String) reqMap.get("businessCode"));
-        video.setOldVideoPath((String) reqMap.get("path"));
-        return videoService.create(video);
+        VideoWaterMark videoWaterMark = new VideoWaterMark();
+        String code = (String) reqMap.get("businessCode");
+        videoWaterMark.setOldVideoPath((String) reqMap.get("path"));
+        videoWaterMark.setFontShadow(videoWaterMark.getFontSize() / 9);
+        return videoService.create(videoWaterMark, code);
     }
 
 }

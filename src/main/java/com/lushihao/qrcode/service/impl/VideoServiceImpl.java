@@ -1,12 +1,14 @@
 package com.lushihao.qrcode.service.impl;
 
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.entity.video.Video;
+import com.lushihao.qrcode.dao.BusinessMapper;
+import com.lushihao.qrcode.entity.business.Business;
+import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class VideoServiceImpl implements VideoService {
@@ -14,13 +16,27 @@ public class VideoServiceImpl implements VideoService {
     @Resource
     private LSHFfmpegUtil lshFfmpegUtil;
     @Resource
-    private ProjectBasicInfo projectBasicInfo;
+    private BusinessMapper businessMapper;
 
     @Override
-    public String create(Video video) {
-        video.setEndPath(projectBasicInfo.getBusinessUrl() + "\\" + video.getBusinessCode() + "\\" + "endVideo.mp4");
-        video.setNewVideoPath(video.getOldVideoPath().substring(0, video.getOldVideoPath().lastIndexOf(".")) + "_new.mp4");
-        return lshFfmpegUtil.videoAddVideo(video.getOldVideoPath(), video.getEndPath(), video.getNewVideoPath());
+    public String create(VideoWaterMark videoWaterMark, String code) {
+        //获得商家
+        Business business = new Business();
+        business.setCode(code);
+        List<Business> list = businessMapper.filter(business);
+        if (list.size() > 0) {
+            videoWaterMark.setBusiness(list.get(0));
+        } else {
+            return "商家不存在";
+        }
+        //获得输出文件地址
+        String newVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_new.mp4";
+        videoWaterMark.setNewVideoPath(newVideoPath);
+        if (lshFfmpegUtil.checkFileType(newVideoPath) != lshFfmpegUtil.VIDEO) {
+            return "当前文件格式不支持";
+        }
+        //执行加水印
+        return lshFfmpegUtil.videoWaterMark(videoWaterMark);
     }
 
 }

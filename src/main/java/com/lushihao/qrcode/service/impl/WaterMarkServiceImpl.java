@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,7 +44,7 @@ public class WaterMarkServiceImpl implements WaterMarkService {
             int width = bg.getWidth();
             int height = bg.getHeight();
             int waterMarkHeight = height * waterMark.getHeightPercentage() / 100;
-            int fontSize = (int) (waterMarkHeight * 0.3);
+            int fontSize = (int) (waterMarkHeight * 0.2);
             int offSet = (int) (waterMarkHeight * 0.05);
             int waterMarkWidth = (nowBusiness.getAddress().length() + 5) * fontSize + waterMarkHeight;
 
@@ -53,19 +54,20 @@ public class WaterMarkServiceImpl implements WaterMarkService {
             waterMarkImage = waterMarkG2.getDeviceConfiguration().createCompatibleImage(waterMarkWidth, waterMarkHeight, Transparency.TRANSLUCENT);
             waterMarkG2 = waterMarkImage.createGraphics();
             BufferedImage logoImage = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.png"));
+            logoImage = roundImage(logoImage, logoImage.getWidth(), logoImage.getWidth());
             waterMarkG2.drawImage(logoImage, offSet, offSet, waterMarkHeight - offSet, waterMarkHeight - offSet, null);
 
             Font font = new Font("微软雅黑", Font.PLAIN, fontSize);
             waterMarkG2.setFont(font);              //设置字体
             waterMarkG2.setColor(Color.WHITE); //根据图片的背景设置水印颜色
-            waterMarkG2.drawString("店名：『" + nowBusiness.getName() + "』", waterMarkHeight + offSet, (float) (fontSize * 1.1));
-            waterMarkG2.drawString("电话：『" + nowBusiness.getPhone() + "』", waterMarkHeight + offSet, (float) (fontSize * 2.1));
-            waterMarkG2.drawString("地址：『" + nowBusiness.getAddress() + "』", waterMarkHeight + offSet, (float) (fontSize * 3.1));
+            waterMarkG2.drawString("店名：『" + nowBusiness.getName() + "』", waterMarkHeight + offSet, (float) (fontSize * 1.5));
+            waterMarkG2.drawString("电话：『" + nowBusiness.getPhone() + "』", waterMarkHeight + offSet, (float) (fontSize * 3.0));
+            waterMarkG2.drawString("地址：『" + nowBusiness.getAddress() + "』", waterMarkHeight + offSet, (float) (fontSize * 4.5));
             waterMarkG2.dispose();
 
             //遮罩层半透明绘制在图片上
             Graphics2D bgG2 = bg.createGraphics();
-            bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) waterMark.getAlpha() / (float) 100));
+            bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) waterMark.getAlpha() / 100));
             bgG2.drawImage(waterMarkImage, waterMark.getxPercentage() * (width - waterMarkWidth) / 100, waterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
             bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             bgG2.dispose();
@@ -124,7 +126,7 @@ public class WaterMarkServiceImpl implements WaterMarkService {
 
             //遮罩层半透明绘制在图片上
             Graphics2D bgG2 = bg.createGraphics();
-            bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) waterMark.getAlpha() / (float) 100));
+            bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) waterMark.getAlpha() / 100));
             bgG2.drawImage(waterMarkImage, waterMark.getxPercentage() * (width - waterMarkWidth) / 100, waterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
             bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             bgG2.dispose();
@@ -145,6 +147,27 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         } else {
             return "添加成功";
         }
+    }
+
+    /**
+     * 图片加圆角
+     *
+     * @param image
+     * @param targetSize
+     * @param cornerRadius
+     * @return
+     */
+    private BufferedImage roundImage(BufferedImage image, int targetSize, int cornerRadius) {
+        BufferedImage outputImage = new BufferedImage(targetSize, targetSize, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = outputImage.createGraphics();
+        g2.setComposite(AlphaComposite.Src);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(Color.WHITE);
+        g2.fill(new RoundRectangle2D.Float(0, 0, targetSize, targetSize, cornerRadius, cornerRadius));
+        g2.setComposite(AlphaComposite.SrcAtop);
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+        return outputImage;
     }
 
 }
