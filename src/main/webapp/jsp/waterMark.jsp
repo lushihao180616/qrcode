@@ -28,7 +28,8 @@
                                                                                                 value="搜索"
                                                                                                 onclick="init()"/><br><br>
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
-        <span class="itemName">原&emsp;&emsp;图：</span><input class="topItemSelect" type="file" id="createPath"/><br><br>
+        <span class="itemName">原&emsp;&emsp;图：</span><input class="topItemSelect" type="file" id="createPath"
+                                                            accept="image/jpeg, image/jpg, image/png"/><br><br>
         <span class="itemName">高&emsp;&emsp;度：</span><input class="topItemInput" type="text"
                                                             value="10"
                                                             id="createHeight"/><span class="unit">%</span><br><br>

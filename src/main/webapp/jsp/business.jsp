@@ -13,7 +13,8 @@
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
+   onMouseOut="makevisible(this,1)">首页</a>
 
 <p class="topTitle">
     商家变动
@@ -29,7 +30,8 @@
         <span class="itemName">联&ensp;系&ensp;人：</span><input class="topItemInput" type="text"
                                                              id="createBusinessName"/><br><br>
         <span class="itemName">商&emsp;&emsp;标：</span><input class="topItemSelect" id="createLogo" type="file"
-                                                            name="uploadFile"/><br><br>
+                                                            name="uploadFile"
+                                                            accept="image/jpeg, image/jpg, image/png"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
@@ -50,7 +52,8 @@
         <span class="itemName">联&ensp;系&ensp;人：</span><input class="topItemInput" type="text"
                                                              id="modifyBusinessName"/><br><br>
         <span class="itemName">商&emsp;&emsp;标：</span><input class="topItemSelect" id="modifyLogo" type="file"
-                                                            name="uploadFile"/><br><br>
+                                                            name="uploadFile"
+                                                            accept="image/jpeg, image/jpg, image/png"/><br><br>
 
         <input class="topItemButton" type="button" value="更新" onclick="update()"/>
     </div>

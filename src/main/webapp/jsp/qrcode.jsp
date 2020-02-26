@@ -41,7 +41,8 @@
         <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none" class="topItemInput" type="text"
                                                                 id="message"></textarea><br><br>
         <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
-                                                                       name="uploadFile"/><br><br>
+                                                                       name="uploadFile"
+                                                                       accept="image/gif, image/jpeg, image/jpg, image/png"/><br><br>
         <span id="shortLengthLabel" class="itemName">较短边长：</span><input class="topItemInput" type="text"
                                                                         id="shortLength" value="1950"/><br><br>
         <span id="xLabel" class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" id="x"

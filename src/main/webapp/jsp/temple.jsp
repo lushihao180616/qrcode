@@ -13,7 +13,8 @@
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)" onMouseOut="makevisible(this,1)">首页</a>
+<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
+   onMouseOut="makevisible(this,1)">首页</a>
 <div style="float: right;margin-top: -5px;margin-right: 10px">
     <label>更新模板二维码：</label><input class="topItemSelect_up" type="file" id="downLoadTemple"/><input
         class="topItemSearch_up"
@@ -46,7 +47,8 @@
         <span class="itemName">帧&ensp;管&ensp;理：</span><input class="topItemInput" type="text" value="0/0/0"
                                                              id="createFrame"/><br><br>
         <span class="itemName">模板图标：</span><input class="topItemSelect" type="file" id="createTempleItemsPath"
-                                                  name="uploadFile"/><br><br>
+                                                  name="uploadFile"
+                                                  accept="image/png"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
@@ -72,7 +74,8 @@
         <span class="itemName">帧&ensp;管&ensp;理：</span><input class="topItemInput" type="text" value="0/0/0"
                                                              id="updateFrame"/><br><br>
         <span class="itemName">模板图标：</span><input class="topItemSelect" id="updateTempleItemsPath" type="file"
-                                                  name="uploadFile"/><br><br>
+                                                  name="uploadFile"
+                                                  accept="image/png"/><br><br>
 
         <input class="topItemButton" type="button" value="更新" onclick="update()"/>
     </div>
