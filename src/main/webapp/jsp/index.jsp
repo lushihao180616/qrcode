@@ -11,7 +11,7 @@
     <script src="../js/public.js"></script>
     <script src="../js/index.js"></script>
 </head>
-<body onload="checkComputer()">
+<body onload="userInfo()">
 
 <p class="topTitle">
     页面信息

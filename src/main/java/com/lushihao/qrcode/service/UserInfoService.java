@@ -6,6 +6,6 @@ public interface UserInfoService {
 
     String create(UserInfo userInfo);
 
-    UserInfo filter(String code);
+    UserInfo filter();
 
 }

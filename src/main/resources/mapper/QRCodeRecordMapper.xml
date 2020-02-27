@@ -22,7 +22,7 @@
         FROM
             qrcoderecord
         WHERE
-            businesscode&lt;&gt;'00000000'
+            1=1
         <if test="templeCode != null">
             AND templeCode
             LIKE '${templeCode}%'

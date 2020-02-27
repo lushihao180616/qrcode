@@ -10,6 +10,10 @@ public class UserType {
      * 类型名称
      */
     private String name;
+    /**
+     * 类型类型
+     */
+    private String type;
 
     public String getCode() {
         return code;
@@ -27,20 +31,21 @@ public class UserType {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public UserType() {
     }
 
-    public UserType(String code, String name) {
+    public UserType(String code, String name, String type) {
         this.code = code;
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "UserType{" +
-                "code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        this.type = type;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.lushihao.qrcode.entity.user;
 
+import com.lushihao.qrcode.entity.business.Business;
+
 public class UserInfo {
 
     /**
@@ -18,6 +20,10 @@ public class UserInfo {
      * mac地址
      */
     private String macAddress;
+    /**
+     * 商家信息
+     */
+    private Business business;
 
     public String getCode() {
         return code;
@@ -51,24 +57,23 @@ public class UserInfo {
         this.macAddress = macAddress;
     }
 
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
     public UserInfo() {
     }
 
-    public UserInfo(String code, UserType userType, int count, String macAddress) {
+    public UserInfo(String code, UserType userType, int count, String macAddress, Business business) {
         this.code = code;
         this.userType = userType;
         this.count = count;
         this.macAddress = macAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "UserInfo{" +
-                "code='" + code + '\'' +
-                ", userType=" + userType +
-                ", count=" + count +
-                ", macAddress='" + macAddress + '\'' +
-                '}';
+        this.business = business;
     }
 
 }

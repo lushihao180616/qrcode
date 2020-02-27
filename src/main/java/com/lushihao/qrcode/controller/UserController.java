@@ -31,11 +31,11 @@ public class UserController {
 
     @RequestMapping("filter")
     @ResponseBody
-    public UserInfo filter(@RequestBody Map<String, Object> reqMap) {
+    public UserInfo filter() {
         if (!lshmacUtil.check()) {
             return null;
         }
-        return userInfoService.filter("00000000");
+        return userInfoService.filter();
     }
 
 }
