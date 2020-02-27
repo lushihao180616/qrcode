@@ -66,17 +66,29 @@ public class LSHGifUtil {
      *
      * @throws IOException
      */
-    public synchronized Map<Integer, BufferedImage> gifToJpg(String gifFilePath) throws IOException {
+    public synchronized Map<Integer, BufferedImage> gifToJpg(String gifFilePath) {
         Map<Integer, BufferedImage> backMap = new HashMap<>();
         GifDecoder decoder = new GifDecoder();
-        InputStream is = new FileInputStream(gifFilePath);
-        if (decoder.read(is) != 0) {
-            return null;
-        }
-        is.close();
-        for (int i = 0; i < decoder.getFrameCount(); i++) {
-            BufferedImage frame = decoder.getFrame(i);
-            backMap.put(i, frame);
+        InputStream is = null;
+        try {
+            is = new FileInputStream(gifFilePath);
+            if (decoder.read(is) != 0) {
+                return null;
+            }
+            for (int i = 0; i < decoder.getFrameCount(); i++) {
+                BufferedImage frame = decoder.getFrame(i);
+                backMap.put(i, frame);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return backMap;
     }

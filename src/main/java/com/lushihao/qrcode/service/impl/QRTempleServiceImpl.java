@@ -164,12 +164,13 @@ public class QRTempleServiceImpl implements QRTempleService {
                 fos.write(len);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
-            // 关闭流  先开后关  后开先关
             try {
-                fos.close(); // 后开先关
-                fis.close(); // 先开后关
+                fos.close();
+                fis.close();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

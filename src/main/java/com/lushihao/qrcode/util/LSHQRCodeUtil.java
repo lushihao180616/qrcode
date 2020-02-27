@@ -2,18 +2,17 @@ package com.lushihao.qrcode.util;
 
 import com.lushihao.myutils.time.LSHDateUtils;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.swetake.util.Qrcode;
-import org.jim2mov.core.MovieSaveException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -31,6 +30,8 @@ public class LSHQRCodeUtil {
     private QRCodeRecordMapper qrCodeRecordMapper;
     @Resource
     private LSHGifUtil lshGif2JpgUtil;
+    @Resource
+    private LSHImageUtil lshImageUtil;
 
     // 二维码宽度
     private int width = 1950;
@@ -76,7 +77,6 @@ public class LSHQRCodeUtil {
     public Map<String, String> qrcode(QRCodeVo qrCodeVo, boolean ifTest) {
         max = qrCodeVo.getQrCodeTemple().getIconNum();
         multiple = qrCodeVo.getQrCodeTemple().getMultiple();
-        FileOutputStream outputStream = null;
 
         Map<String, String> map = new HashMap<>();
         try {
@@ -95,18 +95,10 @@ public class LSHQRCodeUtil {
             if (!ifTest) {
                 qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
             }
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             map.put("result", "创建失败，请检查您的输入条件");
             return map;
-        } finally {
-            try {
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         map.put("result", "创建成功");
         return map;
@@ -117,7 +109,7 @@ public class LSHQRCodeUtil {
      *
      * @param qrCodeVo
      */
-    private BufferedImage getQRCode(QRCodeVo qrCodeVo, boolean ifTest) throws IOException {
+    private BufferedImage getQRCode(QRCodeVo qrCodeVo, boolean ifTest) throws UnsupportedEncodingException {
         BufferedImage image;
         if (ifTest) {//预览的情况
             image = new BufferedImage(3000, 3000, BufferedImage.TYPE_INT_RGB);
@@ -213,8 +205,8 @@ public class LSHQRCodeUtil {
 
             //添加logo
             if (qrCodeVo.getQrCodeTemple().isIfShowLogo()) {
-                BufferedImage imageLogo = ImageIO.read(new FileInputStream(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.png"));
-                BufferedImage imageLogoBorder = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png"));
+                BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.png");
+                BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png");
 
                 gs.translate(nowWidth / 2, nowHeight / 2);
                 if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
@@ -239,9 +231,8 @@ public class LSHQRCodeUtil {
      * @param gs
      * @param code
      */
-    private void handleCodeEye(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) throws IOException {
-        //加载码眼
-        BufferedImage image_eye = ImageIO.read(new FileInputStream(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\eye.png"));
+    private void handleCodeEye(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) {
+        BufferedImage image_eye = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\eye.png");
 
         //码眼部分全部设置为false
         for (int i = 0; i < 7; i++) {
@@ -267,16 +258,16 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo
      * @return
      */
-    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo, boolean ifTest) throws IOException {
+    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo, boolean ifTest) {
         BufferedImage nowImage = image;
 
         Map<Integer, BufferedImage> map = new HashMap<>();
         BufferedImage imageBG = null;
         if (!qrCodeVo.getQrCodeTemple().isIfOnly()) {//处理有背景
-            int bgWidth;
-            int bgHeight;
+            int bgWidth = 0;
+            int bgHeight = 0;
             if (qrCodeVo.getQrCodeTemple().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {
-                imageBG = ImageIO.read(new FileInputStream(qrCodeVo.getBackGround()));
+                imageBG = lshImageUtil.getImage(qrCodeVo.getBackGround());
                 int width = imageBG.getWidth();
                 int height = imageBG.getHeight();
                 if (width > height) {
@@ -291,7 +282,7 @@ public class LSHQRCodeUtil {
                 File file = new File(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg");
                 if (file.exists()) {//bg.jpg
                     isMp4 = false;
-                    imageBG = ImageIO.read(new FileInputStream(file));
+                    imageBG = lshImageUtil.getImage(file);
                 } else {
                     isMp4 = true;
                     map = lshGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.gif");
@@ -392,7 +383,7 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    private void drawQrcodeHot(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) throws IOException {
+    private void drawQrcodeHot(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) {
         String typeCode = qrCodeVo.getQrCodeTemple().getCode();
 
         //把图片素材放进数组
@@ -404,27 +395,27 @@ public class LSHQRCodeUtil {
         for (int i = 1; i <= max; i++) {
             File file0 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png");
             if (file0.exists()) {
-                BufferedImage image0 = ImageIO.read(new FileInputStream(file0));
+                BufferedImage image0 = lshImageUtil.getImage(file0);
                 img0[i - 1] = image0;
             }
             File file1 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\1" + i + ".png");
             if (file1.exists()) {
-                BufferedImage image1 = ImageIO.read(new FileInputStream(file1));
+                BufferedImage image1 = lshImageUtil.getImage(file1);
                 img1[i - 1] = image1;
             }
             File file2 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\2" + i + ".png");
             if (file2.exists()) {
-                BufferedImage image2 = ImageIO.read(new FileInputStream(file2));
+                BufferedImage image2 = lshImageUtil.getImage(file2);
                 img2[i - 1] = image2;
             }
             File file3 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\3" + i + ".png");
             if (file3.exists()) {
-                BufferedImage image3 = ImageIO.read(new FileInputStream(file3));
+                BufferedImage image3 = lshImageUtil.getImage(file3);
                 img3[i - 1] = image3;
             }
             File file4 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\4" + i + ".png");
             if (file4.exists()) {
-                BufferedImage image4 = ImageIO.read(new FileInputStream(file4));
+                BufferedImage image4 = lshImageUtil.getImage(file4);
                 img4[i - 1] = image4;
             }
         }
@@ -505,7 +496,7 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    private void drawQrcodeOrdi(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) throws IOException {
+    private void drawQrcodeOrdi(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) {
         String typeCode = qrCodeVo.getQrCodeTemple().getCode();
         //把图片素材放进数组
         BufferedImage[] img0 = new BufferedImage[max];
@@ -517,33 +508,33 @@ public class LSHQRCodeUtil {
         for (int i = 1; i <= max; i++) {
             File file0 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\0" + i + ".png");
             if (file0.exists()) {
-                BufferedImage image0 = ImageIO.read(new FileInputStream(file0));
+                BufferedImage image0 = lshImageUtil.getImage(file0);
                 img0[i - 1] = image0;
             }
             File file1 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\1" + i + ".png");
             if (file1.exists()) {
-                BufferedImage image1 = ImageIO.read(new FileInputStream(file1));
+                BufferedImage image1 = lshImageUtil.getImage(file1);
                 img1[i - 1] = image1;
             }
             File file2 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\2" + i + ".png");
             if (file2.exists()) {
-                BufferedImage image2 = ImageIO.read(new FileInputStream(file2));
+                BufferedImage image2 = lshImageUtil.getImage(file2);
                 img2[i - 1] = image2;
             }
             File file5 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\5" + i + ".png");
             if (file5.exists()) {
-                BufferedImage image3 = ImageIO.read(new FileInputStream(file5));
-                img5[i - 1] = image3;
+                BufferedImage image5 = lshImageUtil.getImage(file5);
+                img5[i - 1] = image5;
             }
             File file6 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\6" + i + ".png");
             if (file6.exists()) {
-                BufferedImage image4 = ImageIO.read(new FileInputStream(file6));
-                img6[i - 1] = image4;
+                BufferedImage image6 = lshImageUtil.getImage(file6);
+                img6[i - 1] = image6;
             }
             File file7 = new File(projectBasicInfo.getTempleUrl() + "\\" + typeCode + "\\7" + i + ".png");
             if (file7.exists()) {
-                BufferedImage image5 = ImageIO.read(new FileInputStream(file7));
-                img7[i - 1] = image5;
+                BufferedImage image7 = lshImageUtil.getImage(file7);
+                img7[i - 1] = image7;
             }
         }
 
@@ -641,7 +632,7 @@ public class LSHQRCodeUtil {
      * @param images
      * @param qrCodeVo
      */
-    private String outPutImage(Map<Integer, BufferedImage> images, QRCodeVo qrCodeVo, boolean ifTest) throws IOException, MovieSaveException {
+    private String outPutImage(Map<Integer, BufferedImage> images, QRCodeVo qrCodeVo, boolean ifTest) {
         String filePath;
         //将文件输出
         if (!qrCodeVo.getBusinessCode().equals("00000000")) {//商家创建
@@ -657,7 +648,7 @@ public class LSHQRCodeUtil {
             filePath = filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif";
             new LSHGifUtil().jpgToGif(images, filePath, qrCodeVo.getQrCodeTemple().getFrame());
         } else {
-            ImageIO.write(images.get(0), "jpg", new FileOutputStream(new File(filePath)));
+            lshImageUtil.sendImage(filePath, images.get(0));
         }
         return filePath;
     }

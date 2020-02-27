@@ -125,7 +125,7 @@ function test() {
                     return
                 }
                 var data = xhr.responseText;
-                if (data == '添加成功') {
+                if (data.substring(0, 4) == '添加成功') {
                     document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_test.jpg';
                 } else {
                     document.getElementById("createTest").value = '';
