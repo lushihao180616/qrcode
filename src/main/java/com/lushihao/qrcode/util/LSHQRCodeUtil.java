@@ -329,21 +329,6 @@ public class LSHQRCodeUtil {
     }
 
     /**
-     * 创建文件夹
-     *
-     * @param qrcodePath
-     * @return
-     */
-    private String createPath(String qrcodePath) {
-        File qrcodeDirectory = new File(qrcodePath);
-        if (!qrcodeDirectory.exists()) {//如果文件夹不存在
-            qrcodeDirectory.mkdir();//创建文件夹
-        }
-        return qrcodePath;
-    }
-
-
-    /**
      * 绘制 算法0  热门二维码   素材有50*50 50*100 100*50 100*100
      *
      * @param gs   画笔
@@ -406,9 +391,9 @@ public class LSHQRCodeUtil {
                         int s4 = random.nextInt(max);
                         gs.drawImage(img4[s4], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 2 * pix, 2 * pix, null);
                         code[i][j + 1] = code[i + 1][j] = code[i + 1][j + 1] = false;
-                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
-                        String code2 = String.valueOf(i) + ":" + String.valueOf(j + 1);
-                        String code3 = String.valueOf(i + 1) + ":" + String.valueOf(j + 1);
+                        String code1 = "" + (i + 1) + ":" + j;
+                        String code2 = "" + (i) + ":" + (j + 1);
+                        String code3 = "" + (i + 1) + ":" + (j + 1);
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -423,7 +408,7 @@ public class LSHQRCodeUtil {
                         int s3 = random.nextInt(max);
                         gs.drawImage(img3[s3], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, 2 * pix, null);
                         code[i][j + 1] = false;
-                        String code1 = String.valueOf(i) + ":" + String.valueOf(j + 1);
+                        String code1 = "" + (i) + ":" + (j + 1);
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -432,7 +417,7 @@ public class LSHQRCodeUtil {
                         int s2 = random.nextInt(max);
                         gs.drawImage(img2[s2], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 2 * pix, pix, null);
                         code[i + 1][j] = false;
-                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
+                        String code1 = "" + (i + 1) + ":" + j;
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -442,7 +427,7 @@ public class LSHQRCodeUtil {
                         gs.drawImage(img1[s1], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, pix, pix, null);
                     }
                 } else {
-                    String code1 = String.valueOf(i) + ":" + String.valueOf(j);
+                    String code1 = "" + (i) + ":" + j;
                     if (set.contains(code1) || i < 7 && j < 7 || i < 7 && j >= codeLength - 7 || j < 7 && i >= codeLength - 7) {
                         continue;
                     }
@@ -522,10 +507,10 @@ public class LSHQRCodeUtil {
                         //随机取图片，画200*50的图
                         gs.drawImage(img7[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 5 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = code[i + 4][j] = false;
-                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
-                        String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
-                        String code3 = String.valueOf(i + 3) + ":" + String.valueOf(j);
-                        String code4 = String.valueOf(i + 4) + ":" + String.valueOf(j);
+                        String code1 = "" + (i + 1) + ":" + j;
+                        String code2 = "" + (i + 2) + ":" + j;
+                        String code3 = "" + (i + 3) + ":" + j;
+                        String code4 = "" + (i + 4) + ":" + j;
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -542,9 +527,9 @@ public class LSHQRCodeUtil {
                         //随机取图片，画200*50的图
                         gs.drawImage(img6[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 4 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = code[i + 3][j] = false;
-                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
-                        String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
-                        String code3 = String.valueOf(i + 3) + ":" + String.valueOf(j);
+                        String code1 = "" + (i + 1) + ":" + j;
+                        String code2 = "" + (i + 2) + ":" + j;
+                        String code3 = "" + (i + 3) + ":" + j;
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -558,8 +543,8 @@ public class LSHQRCodeUtil {
                         //随机取图片，画150*50的图
                         gs.drawImage(img5[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 3 * pix, pix, null);
                         code[i + 1][j] = code[i + 2][j] = false;
-                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
-                        String code2 = String.valueOf(i + 2) + ":" + String.valueOf(j);
+                        String code1 = "" + (i + 1) + ":" + j;
+                        String code2 = "" + (i + 2) + ":" + j;
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -570,7 +555,7 @@ public class LSHQRCodeUtil {
                         //随机取图片，画100*50的图
                         gs.drawImage(img2[iconIndex], (nowWidth - width) / 2 + i * pix + pixoff, (nowHeight - height) / 2 + j * pix + pixoff, 2 * pix, pix, null);
                         code[i + 1][j] = false;
-                        String code1 = String.valueOf(i + 1) + ":" + String.valueOf(j);
+                        String code1 = "" + (i + 1) + ":" + j;
                         if (!set.contains(code1)) {
                             set.add(code1);
                         }
@@ -605,7 +590,7 @@ public class LSHQRCodeUtil {
             if (ifTest) {
                 filePath = projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + "_test.jpg";
             } else {
-                filePath = createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".jpg";
+                filePath = lshImageUtil.createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".jpg";
             }
         } else {//操作员创建
             filePath = projectBasicInfo.getModelUrl() + "\\" + qrCodeVo.getFileName() + ".jpg";

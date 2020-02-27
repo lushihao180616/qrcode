@@ -134,4 +134,18 @@ public class LSHImageUtil {
         sendImage(destPath, bufferedImage);
     }
 
+    /**
+     * 创建文件夹
+     *
+     * @param qrcodePath
+     * @return
+     */
+    public String createPath(String qrcodePath) {
+        File qrcodeDirectory = new File(qrcodePath);
+        if (!qrcodeDirectory.exists()) {//如果文件夹不存在
+            qrcodeDirectory.mkdir();//创建文件夹
+        }
+        return qrcodePath;
+    }
+
 }
