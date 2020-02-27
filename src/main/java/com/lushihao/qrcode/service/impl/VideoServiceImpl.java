@@ -5,6 +5,7 @@ import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
+import com.lushihao.qrcode.util.LSHCharUtil;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class VideoServiceImpl implements VideoService {
     private LSHFfmpegUtil lshFfmpegUtil;
     @Resource
     private BusinessMapper businessMapper;
+    @Resource
+    private LSHCharUtil lshCharUtil;
 
     @Override
     public String create(VideoWaterMark videoWaterMark, String code) {
@@ -46,7 +49,7 @@ public class VideoServiceImpl implements VideoService {
         String name = videoWaterMark.getBusiness().getName();
         int num = 0;
         for (char c : name.toCharArray()) {
-            if (isChineseChar(c)) {
+            if (lshCharUtil.isChineseChar(c)) {
                 num += 2;
             } else {
                 num += 1;
@@ -79,7 +82,7 @@ public class VideoServiceImpl implements VideoService {
         String name = videoWaterMark.getBusiness().getName();
         int num = 0;
         for (char c : name.toCharArray()) {
-            if (isChineseChar(c)) {
+            if (lshCharUtil.isChineseChar(c)) {
                 num += 2;
             } else {
                 num += 1;
@@ -117,10 +120,6 @@ public class VideoServiceImpl implements VideoService {
         videoWaterMark.setFontY((int) ((videoInfo.getHeight() - videoWaterMark.getFontSize()) * ((float) videoWaterMark.getFontY() / 100)));
         //执行加水印
         return lshFfmpegUtil.videoWaterMark(videoWaterMark);
-    }
-
-    private static boolean isChineseChar(char c) {
-        return String.valueOf(c).matches("[\u4e00-\u9fa5]");
     }
 
 }

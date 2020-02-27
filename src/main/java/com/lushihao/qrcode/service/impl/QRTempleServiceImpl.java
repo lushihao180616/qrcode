@@ -2,11 +2,13 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.QRTempleMapper;
+import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRCodeService;
 import com.lushihao.qrcode.service.QRTempleService;
+import com.lushihao.qrcode.util.LSHQRCodeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,8 @@ public class QRTempleServiceImpl implements QRTempleService {
     private ProjectBasicInfo projectBasicInfo;
     @Resource
     private QRCodeService qrCodeService;
+    @Resource
+    private LSHQRCodeUtil lshqrCodeUtil;
 
     @Override
     @Transactional
@@ -48,7 +52,9 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0));
+            QRCodeRequest qrCodeRequest = new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0);
+            QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+            lshqrCodeUtil.qrcode(qrCodeVo, false, true);
             return "创建成功";
         }
         return "创建失败";
@@ -71,7 +77,9 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            qrCodeService.create(new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0));
+            QRCodeRequest qrCodeRequest = new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0);
+            QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+            lshqrCodeUtil.qrcode(qrCodeVo, false, true);
             return "更新成功";
         }
         return "更新失败";

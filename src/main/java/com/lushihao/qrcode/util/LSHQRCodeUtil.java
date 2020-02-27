@@ -32,6 +32,8 @@ public class LSHQRCodeUtil {
     private LSHGifUtil lshGif2JpgUtil;
     @Resource
     private LSHImageUtil lshImageUtil;
+    @Resource
+    private LSHCharUtil lshCharUtil;
 
     // 二维码宽度
     private int width = 1950;
@@ -59,14 +61,10 @@ public class LSHQRCodeUtil {
     private int logoHeight = 200;
     // 二维码数组的长度
     private int codeLength;
-    // 随机数，生成[0,2]之间的随机整数,取长度为3的数组下标
+    // 子图数量
     private int max = 1;
-    // 自定义背景图片较短边长度
-    private int bgMinWidthOrHeight = 4800;
     // 是否动态背景
     private boolean isMp4 = false;
-    // 缩放倍数
-    private int multiple = 1;
 
     /**
      * 生成二维码
@@ -74,9 +72,18 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo 二维码相关信息
      * @return
      */
-    public Map<String, String> qrcode(QRCodeVo qrCodeVo, boolean ifTest) {
+    public Map<String, String> qrcode(QRCodeVo qrCodeVo, boolean ifTest, boolean ifModel) {
+        //删掉测试记录
+        if (!ifTest) {
+            lshImageUtil.delDirFile(projectBasicInfo.getQrcodeUrl() + "\\test");
+        }
         max = qrCodeVo.getQrCodeTemple().getIconNum();
-        multiple = qrCodeVo.getQrCodeTemple().getMultiple();
+        //判断是静态还是动态
+        if (qrCodeVo.getQrCodeTemple().getCode().startsWith("J")) {
+            isMp4 = false;
+        } else if (qrCodeVo.getQrCodeTemple().getCode().startsWith("D")) {
+            isMp4 = true;
+        }
 
         Map<String, String> map = new HashMap<>();
         try {
@@ -87,9 +94,9 @@ public class LSHQRCodeUtil {
                 return map;
             }
             //添加背景
-            Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCodeVo, ifTest);
+            Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCodeVo);
             //输出图片
-            String filePath = outPutImage(imageAndBg, qrCodeVo, ifTest);
+            String filePath = outPutImage(imageAndBg, qrCodeVo, ifTest, ifModel);
             map.put("filePath", filePath);
             //记录一下
             if (!ifTest) {
@@ -110,118 +117,82 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo
      */
     private BufferedImage getQRCode(QRCodeVo qrCodeVo, boolean ifTest) throws UnsupportedEncodingException {
-        BufferedImage image;
-        if (ifTest) {//预览的情况
-            image = new BufferedImage(3000, 3000, BufferedImage.TYPE_INT_RGB);
-            //获取画笔
-            Graphics2D bgG2 = image.createGraphics();
-            //设置透明
-            image = bgG2.getDeviceConfiguration().createCompatibleImage(nowWidth, nowHeight, Transparency.TRANSLUCENT);
-            bgG2 = image.createGraphics();
+        //创建二维码对象
+        Qrcode qrcode = new Qrcode();
+        //设置二维码的纠错级别
+        //L(7%) M(15%) Q(25%) H(30%)
+        qrcode.setQrcodeErrorCorrect('L'); //一般纠错级别小一点
+        //设置二维码的编码模式 Binary(按照字节编码模式)
+        qrcode.setQrcodeEncodeMode('B');
 
-            BufferedImage qrcodeImage = new BufferedImage(1850, 1850, BufferedImage.TYPE_INT_RGB);
-            Graphics2D qrcodeG2 = qrcodeImage.createGraphics();
-            qrcodeG2.setBackground(Color.BLACK);
-            qrcodeG2.clearRect(0, 0, 1850, 1850);
-            Font font = new Font("微软雅黑", Font.PLAIN, 200);
-            qrcodeG2.setFont(font);              //设置字体
-            qrcodeG2.setColor(Color.WHITE); //根据图片的背景设置水印颜色
-            qrcodeG2.translate(925, 925);
-            qrcodeG2.rotate(Math.toRadians(-qrCodeVo.getAngle()));
-            qrcodeG2.translate(-925, -925);
-            qrcodeG2.drawString("二维码", 625, 1000);
-            qrcodeG2.dispose();
-
-            bgG2.translate(nowWidth / 2, nowHeight / 2);
-            bgG2.rotate(Math.toRadians(qrCodeVo.getAngle()));
-            bgG2.translate(-nowWidth / 2, -nowHeight / 2);
-
-            bgG2.drawImage(qrcodeImage, 575, 575, 1850, 1850, null);
-            bgG2.dispose();
+        //设置内容
+        String content = qrCodeVo.getMessage();
+        content = qrCodeVo.getMessage();
+        byte[] contentsBytes = content.getBytes("utf-8");
+        int charLength = lshCharUtil.charLength(content);
+        boolean[][] code = new boolean[0][];
+        if (charLength <= 105) {
+            qrcode.setQrcodeVersion(5);
+            //二维码
+            code = qrcode.calQrcode(contentsBytes);
+            width = 1950;
+            height = 1950;
+            nowWidth = 3000;
+            nowHeight = 3000;
+        } else if (charLength <= 270) {
+            qrcode.setQrcodeVersion(10);
+            //二维码
+            code = qrcode.calQrcode(contentsBytes);
+            width = 2950;
+            height = 2950;
+            nowWidth = 4538;
+            nowHeight = 4538;
+        }
+        if (code.length == 0) {
+            return null;
         } else {
-            //创建二维码对象
-            Qrcode qrcode = new Qrcode();
-            //设置二维码的纠错级别
-            //L(7%) M(15%) Q(25%) H(30%)
-            qrcode.setQrcodeErrorCorrect('L'); //一般纠错级别小一点
-            //设置二维码的编码模式 Binary(按照字节编码模式)
-            qrcode.setQrcodeEncodeMode('B');
-
-            //设置内容
-            String content = qrCodeVo.getMessage();
-            byte[] contentsBytes = content.getBytes("utf-8");
-            boolean[][] code = new boolean[0][];
-            try {
-                //设置二维码的版本号 1-40  1:20*21    2:25*25   40:177*177
-                qrcode.setQrcodeVersion(5);
-                //二维码
-                code = qrcode.calQrcode(contentsBytes);
-                width = 1950;
-                height = 1950;
-                nowWidth = 3000;
-                nowHeight = 3000;
-            } catch (ArrayIndexOutOfBoundsException e) {
-                try {
-                    //设置二维码的版本号 1-40  1:20*21    2:25*25   40:177*177
-                    qrcode.setQrcodeVersion(10);
-                    //二维码
-                    code = qrcode.calQrcode(contentsBytes);
-                    width = 2950;
-                    height = 2950;
-                    nowWidth = 4538;
-                    nowHeight = 4538;
-                } catch (ArrayIndexOutOfBoundsException c) {
-                    System.out.println("特长文字");
-                }
-            }
-            if (code.length == 0) {
-                return null;
-            }
-            //获取二维码数组的长度
             codeLength = code.length;
+        }
 
-            image = new BufferedImage(nowWidth, nowHeight, BufferedImage.TYPE_INT_RGB);
-            //获取画笔
-            Graphics2D gs = image.createGraphics();
-            //设置透明
-            image = gs.getDeviceConfiguration().createCompatibleImage(nowWidth, nowHeight, Transparency.TRANSLUCENT);
-            gs = image.createGraphics();
+        //生成方框
+        BufferedImage image = new BufferedImage(nowWidth, nowHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D gs = image.createGraphics();
+        image = gs.getDeviceConfiguration().createCompatibleImage(nowWidth, nowHeight, Transparency.TRANSLUCENT);
+        gs = image.createGraphics();
+        gs.translate(nowWidth / 2, nowHeight / 2);
+        if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
+            gs.rotate(Math.toRadians(qrCodeVo.getAngle()));
+        } else {
+            gs.rotate(Math.toRadians(qrCodeVo.getQrCodeTemple().getAngle()));
+        }
+        gs.translate(-nowWidth / 2, -nowHeight / 2);
+
+        //开始回执二维码
+        handleCodeEye(gs, code, qrCodeVo);
+        if (qrCodeVo.getQrCodeTemple().getArti().equals("0-1-2-3-4")) {
+            drawQrcodeHot(gs, code, qrCodeVo); //0-1-2-3-4
+        } else if (qrCodeVo.getQrCodeTemple().getArti().equals("0-1-2-5-6")) {
+            drawQrcodeOrdi(gs, code, qrCodeVo); //0-1-2-5-6
+        }
+
+        //添加logo
+        if (qrCodeVo.getQrCodeTemple().isIfShowLogo()) {
+            BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.png");
+            BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png");
 
             gs.translate(nowWidth / 2, nowHeight / 2);
             if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
-                gs.rotate(Math.toRadians(qrCodeVo.getAngle()));
+                gs.rotate(Math.toRadians(-qrCodeVo.getAngle()));
             } else {
-                gs.rotate(Math.toRadians(qrCodeVo.getQrCodeTemple().getAngle()));
+                gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
             }
             gs.translate(-nowWidth / 2, -nowHeight / 2);
-            //处理码眼部分
-            handleCodeEye(gs, code, qrCodeVo);
-            //绘制二维码，选择算法
-            if (qrCodeVo.getQrCodeTemple().getArti().equals("0-1-2-3-4")) {
-                drawQrcodeHot(gs, code, qrCodeVo); //0-1-2-3-4
-            } else if (qrCodeVo.getQrCodeTemple().getArti().equals("0-1-2-5-6")) {
-                drawQrcodeOrdi(gs, code, qrCodeVo); //0-1-2-5-6
-            }
 
-            //添加logo
-            if (qrCodeVo.getQrCodeTemple().isIfShowLogo()) {
-                BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.png");
-                BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png");
-
-                gs.translate(nowWidth / 2, nowHeight / 2);
-                if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
-                    gs.rotate(Math.toRadians(-qrCodeVo.getAngle()));
-                } else {
-                    gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
-                }
-                gs.translate(-nowWidth / 2, -nowHeight / 2);
-
-                gs.drawImage(imageLogo, (nowWidth - logoWidth) / 2, (nowHeight - logoHeight) / 2, logoWidth, logoHeight, null);
-                gs.drawImage(imageLogoBorder, (nowWidth - logoBgWidth) / 2, (nowHeight - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
-            }
-            //释放画笔
-            gs.dispose();
+            gs.drawImage(imageLogo, (nowWidth - logoWidth) / 2, (nowHeight - logoHeight) / 2, logoWidth, logoHeight, null);
+            gs.drawImage(imageLogoBorder, (nowWidth - logoBgWidth) / 2, (nowHeight - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
         }
+        //释放画笔
+        gs.dispose();
         return image;
     }
 
@@ -258,108 +229,68 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo
      * @return
      */
-    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo, boolean ifTest) {
+    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo) {
         BufferedImage nowImage = image;
 
         Map<Integer, BufferedImage> map = new HashMap<>();
-        BufferedImage imageBG = null;
-        if (!qrCodeVo.getQrCodeTemple().isIfOnly()) {//处理有背景
-            int bgWidth = 0;
-            int bgHeight = 0;
-            if (qrCodeVo.getQrCodeTemple().isIfSelfBg() && !qrCodeVo.getBusinessCode().equals("00000000")) {
-                imageBG = lshImageUtil.getImage(qrCodeVo.getBackGround());
-                int width = imageBG.getWidth();
-                int height = imageBG.getHeight();
-                if (width > height) {
-                    bgHeight = qrCodeVo.getShortLength();
-                    bgWidth = (int) ((float) width / height * bgHeight);
-                } else {
-                    bgWidth = qrCodeVo.getShortLength();
-                    bgHeight = (int) ((float) height / width * bgWidth);
-                }
-                isMp4 = false;
-            } else {
-                File file = new File(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg");
-                if (file.exists()) {//bg.jpg
-                    isMp4 = false;
-                    imageBG = lshImageUtil.getImage(file);
-                } else {
-                    isMp4 = true;
-                    map = lshGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.gif");
-                }
-                bgWidth = qrCodeVo.getQrCodeTemple().getWidth();
-                bgHeight = qrCodeVo.getQrCodeTemple().getHeight();
-            }
+        int bgWidth;
+        int bgHeight;
+        int x;
+        int y;
+        float alpha = 1 - ((float) qrCodeVo.getAlpha() / 100);
+        int multiple;
 
-            if (isMp4) {//动图背景
-                for (int i = 0; i < map.size(); i++) {
-                    //获取图片缓存流对象
-                    BufferedImage backGroundImage = new BufferedImage(bgWidth / multiple, bgHeight / multiple, BufferedImage.TYPE_INT_RGB);
-                    Graphics2D bg = backGroundImage.createGraphics();
-                    bg.drawImage(map.get(i), 0, 0, bgWidth / multiple, bgHeight / multiple, null);
-                    if (qrCodeVo.getQrCodeTemple().getStartQRFrame() == 0 && qrCodeVo.getQrCodeTemple().getEndQRFrame() == 0) {
-                        if (ifTest) {
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-                        } else {
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-                        }
-                    } else if (i >= qrCodeVo.getQrCodeTemple().getStartQRFrame() && i <= qrCodeVo.getQrCodeTemple().getEndQRFrame()) {
-                        if (ifTest) {
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-                        } else {
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                            bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-                        }
-                    }
-                    bg.dispose();
-                    map.put(i, backGroundImage);
-                }
-                return map;
-            } else {//静态背景
-                //获取图片缓存流对象
-                BufferedImage backGroundImage = new BufferedImage(bgWidth / multiple, bgHeight / multiple, BufferedImage.TYPE_INT_RGB);
-                Graphics2D bg = backGroundImage.createGraphics();
-                bg.drawImage(imageBG, 0, 0, bgWidth / multiple, bgHeight / multiple, null);
-                if (ifTest) {
-                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                    bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-                } else {
-                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                    bg.drawImage(nowImage, (qrCodeVo.getQrCodeTemple().getX() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, (qrCodeVo.getQrCodeTemple().getY() + (bgWidth - 1950) * qrCodeVo.getX() / 100) / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                    bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-                }
-                bg.dispose();
-                map.put(0, backGroundImage);
-                return map;
-            }
-        } else {//处理单码
-            //获取图片缓存流对象
-            BufferedImage backGroundImage = new BufferedImage(1950 / multiple, 1950 / multiple, BufferedImage.TYPE_INT_RGB);
-            Graphics2D bg = backGroundImage.createGraphics();
-            bg.setBackground(Color.WHITE);
-            bg.clearRect(0, 0, 1950 / multiple, 1950 / multiple);
-            if (ifTest) {
-                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {//自定义背景
+            //缩小倍数
+            multiple = 1;
+            //获得背景图片
+            if (!isMp4) {
+                map.put(0, lshImageUtil.getImage(qrCodeVo.getBackGround()));
             } else {
-                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - ((float) qrCodeVo.getAlpha() / 100)));
-                bg.drawImage(nowImage, qrCodeVo.getQrCodeTemple().getX() / multiple, qrCodeVo.getQrCodeTemple().getY() / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
-                bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+                map = lshGif2JpgUtil.gifToJpg(qrCodeVo.getBackGround());
             }
-            bg.dispose();
-            map.put(0, backGroundImage);
-            isMp4 = false;
-            return map;
+            //获得背景宽高
+            int width = map.get(0).getWidth();
+            int height = map.get(0).getHeight();
+            if (width > height) {
+                bgHeight = qrCodeVo.getShortLength();
+                bgWidth = (int) ((float) width / height * bgHeight);
+            } else {
+                bgWidth = qrCodeVo.getShortLength();
+                bgHeight = (int) ((float) height / width * bgWidth);
+            }
+            //获得偏移量
+            x = (int) ((float) (bgWidth - 3000) * qrCodeVo.getX() / 100);
+            y = (int) ((float) (bgHeight - 3000) * qrCodeVo.getY() / 100);
+        } else {//非自定义背景
+            //缩小倍数
+            multiple = qrCodeVo.getQrCodeTemple().getMultiple();
+            //获得背景图片
+            if (!isMp4) {
+                map.put(0, lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg"));
+            } else {
+                map = lshGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.gif");
+            }
+            //获得背景宽高
+            bgWidth = qrCodeVo.getQrCodeTemple().getWidth();
+            bgHeight = qrCodeVo.getQrCodeTemple().getHeight();
+            //获得偏移量
+            x = qrCodeVo.getQrCodeTemple().getX();
+            y = qrCodeVo.getQrCodeTemple().getY();
         }
+
+        for (int i = 0; i < map.size(); i++) {
+            //获取图片缓存流对象
+            BufferedImage backGroundImage = new BufferedImage(bgWidth / multiple, bgHeight / multiple, BufferedImage.TYPE_INT_RGB);
+            Graphics2D bg = backGroundImage.createGraphics();
+            bg.drawImage(map.get(i), 0, 0, bgWidth / multiple, bgHeight / multiple, null);
+            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
+            bg.drawImage(nowImage, x / multiple, y / multiple, defaultWidth / multiple, defaultHeight / multiple, null);
+            bg.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+            bg.dispose();
+            map.put(i, backGroundImage);
+        }
+        return map;
     }
 
     /**
@@ -632,10 +563,10 @@ public class LSHQRCodeUtil {
      * @param images
      * @param qrCodeVo
      */
-    private String outPutImage(Map<Integer, BufferedImage> images, QRCodeVo qrCodeVo, boolean ifTest) {
+    private String outPutImage(Map<Integer, BufferedImage> images, QRCodeVo qrCodeVo, boolean ifTest, boolean ifModel) {
         String filePath;
         //将文件输出
-        if (!qrCodeVo.getBusinessCode().equals("00000000")) {//商家创建
+        if (!ifModel) {//商家创建
             if (ifTest) {
                 filePath = projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + "_test.jpg";
             } else {

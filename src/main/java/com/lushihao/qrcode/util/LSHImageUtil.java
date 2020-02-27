@@ -65,7 +65,7 @@ public class LSHImageUtil {
      */
     public boolean sendImage(File file, BufferedImage bufferedImage) {
         boolean back = false;
-        FileOutputStream fileOutputStream;
+        FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(file);
             back = ImageIO.write(bufferedImage, "jpg", fileOutputStream);
@@ -74,6 +74,14 @@ public class LSHImageUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            try {
+                if (fileOutputStream != null) {
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return back;
     }
@@ -90,14 +98,27 @@ public class LSHImageUtil {
         }
         if (file.isFile()) {
             file.delete();
-            return;
         } else {
             File[] fs = file.listFiles();
             for (File f : fs) {
                 f.delete();
             }
             file.delete();
-            return;
+        }
+    }
+
+    /**
+     * 删除文件夹下的文件
+     *
+     * @param dirPath
+     */
+    public void delDirFile(String dirPath) {
+        File file = new File(dirPath);
+        if (file.isDirectory()) {
+            File[] fs = file.listFiles();
+            for (File f : fs) {
+                f.delete();
+            }
         }
     }
 

@@ -40,6 +40,9 @@
         <span class="itemName">文&ensp;件&ensp;名：</span><input class="topItemInput" type="text" id="fileName"/><br><br>
         <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none" class="topItemInput" type="text"
                                                                 id="message"></textarea><br><br>
+        <span class="itemName">码透明度：</span><input class="topItemInput" type="text" id="alpha"
+                                                  value="0"/><span
+            class="unit">%</span><br><br>
         <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
                                                                        name="uploadFile"
                                                                        accept="image/gif, image/jpeg, image/jpg, image/png"/><br><br>
@@ -50,9 +53,6 @@
             class="unit">%</span><br><br>
         <span id="yLabel" class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" id="y"
                                                                     value="50"/><span
-            class="unit">%</span><br><br>
-        <span id="alphaLabel" class="itemName">码透明度：</span><input class="topItemInput" type="text" id="alpha"
-                                                                  value="0"/><span
             class="unit">%</span><br><br>
         <span id="angleLabel" class="itemName">旋转角度：</span><input class="topItemInput" type="text" id="angle"
                                                                   value="0"/><span

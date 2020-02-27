@@ -155,11 +155,8 @@ function getTempleCode(id) {
         document.getElementById("xLabel").style.visibility = "visible";
         document.getElementById("y").style.visibility = "visible";
         document.getElementById("yLabel").style.visibility = "visible";
-        document.getElementById("alpha").style.visibility = "visible";
-        document.getElementById("alphaLabel").style.visibility = "visible";
         document.getElementById("angle").style.visibility = "visible";
         document.getElementById("angleLabel").style.visibility = "visible";
-        document.getElementsByClassName("unit")[0].style.visibility = "visible";
         document.getElementsByClassName("unit")[1].style.visibility = "visible";
         document.getElementsByClassName("unit")[2].style.visibility = "visible";
         document.getElementsByClassName("unit")[3].style.visibility = "visible";
@@ -173,11 +170,8 @@ function getTempleCode(id) {
         document.getElementById("xLabel").style.visibility = "hidden";
         document.getElementById("y").style.visibility = "hidden";
         document.getElementById("yLabel").style.visibility = "hidden";
-        document.getElementById("alpha").style.visibility = "hidden";
-        document.getElementById("alphaLabel").style.visibility = "hidden";
         document.getElementById("angle").style.visibility = "hidden";
         document.getElementById("angleLabel").style.visibility = "hidden";
-        document.getElementsByClassName("unit")[0].style.visibility = "hidden";
         document.getElementsByClassName("unit")[1].style.visibility = "hidden";
         document.getElementsByClassName("unit")[2].style.visibility = "hidden";
         document.getElementsByClassName("unit")[3].style.visibility = "hidden";
@@ -363,9 +357,6 @@ function check(message, temple, business, fileName, backGround, shortLength, x, 
             if (y == '' || y == null || parseInt(y) > 100 || parseInt(y) < 0) {
                 checkStr += 'y偏移量必须填写（0-100） ';
             }
-            if (alpha == '' || alpha == null || parseInt(alpha) > 50 || parseInt(alpha) < 0) {
-                checkStr += '码透明度必须填写（0-50） ';
-            }
             if (angle == '' || angle == null || parseInt(angle) > 359 || parseInt(angle) < 0) {
                 checkStr += '旋转角度必须填写（0-359） ';
             }
@@ -376,6 +367,9 @@ function check(message, temple, business, fileName, backGround, shortLength, x, 
     }
     if (fileName == '' || fileName == null) {
         checkStr += '文件名必须填写 ';
+    }
+    if (alpha == '' || alpha == null || parseInt(alpha) > 50 || parseInt(alpha) < 0) {
+        checkStr += '码透明度必须填写（0-50） ';
     }
     if (checkStr != '') {
         alert(checkStr);
