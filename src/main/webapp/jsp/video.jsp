@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>视频合并</title>
+    <title>视频水印</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/video.css">
     <script src="../js/public.js"></script>
@@ -17,12 +17,12 @@
    onMouseOut="makevisible(this,1)">首页</a>
 
 <p class="topTitle">
-    视频处理
+    视频水印
 </p>
 <div class="top">
     <div class="topItem1">
         <br>
-        <span class="topItemTitle">拼接视频：</span></span><br><br><br>
+        <span class="topItemTitle">视频水印：</span></span><br><br><br>
         <span class="itemName">商家搜索：</span><input class="topItemFilter" id="createCode"/><input class="topItemSearch"
                                                                                                 type="button"
                                                                                                 value="搜索"
