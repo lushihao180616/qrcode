@@ -1,3 +1,5 @@
+var tableRow = [];
+
 function init() {
     var filterBusinessCode = {
         code: document.getElementById("createCode").value
@@ -62,19 +64,29 @@ function create() {
                 var data = xhr.responseText;
                 if (data.substring(0, 4) == '添加成功') {
                     document.getElementById("tableTitle").style.visibility = "visible";
-                    document.getElementById("createTest").value = "";
                     var waterMarks = document.getElementById("waterMarks");
-                    waterMarks.innerHTML += '\n' +
-                        '    <tr>\n' +
-                        '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
-                        '        <td class="bottomTd2">' + document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_waterMark.jpg' + '</td>\n' +
-                        '    </tr>';
+                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_waterMark.jpg';
+                    var ifHave = false;
+                    for (var i = 0; i < tableRow.length; i++) {
+                        if (tableRow[i] == url) {
+                            ifHave = true;
+                        }
+                    }
+                    if (!ifHave) {
+                        tableRow.push(url);
+                        waterMarks.innerHTML += '\n' +
+                            '    <tr>\n' +
+                            '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
+                            '        <td class="bottomTd2">' + url + '</td>\n' +
+                            '    </tr>';
+                    }
+                    document.getElementById('createPath').value = '';
+                    document.getElementById("createTest").value = '';
                 }
                 document.getElementById("createAlpha").value = '50';
                 document.getElementById("createHeight").value = '10';
                 document.getElementById("createX").value = '0';
                 document.getElementById("createY").value = '100';
-                document.getElementById('createPath').value = '';
                 alert(data);
             }
         }

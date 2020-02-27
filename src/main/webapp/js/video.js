@@ -81,9 +81,9 @@ function create() {
                             '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
                             '        <td class="bottomTd2">' + url + '</td>\n' +
                             '    </tr>';
-                        document.getElementById('createPath').value = '';
-                        document.getElementById("createTest").value = '';
                     }
+                    document.getElementById('createPath').value = '';
+                    document.getElementById("createTest").value = '';
                 }
                 alert(data);
             }
