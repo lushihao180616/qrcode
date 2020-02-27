@@ -1,9 +1,9 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.image.WaterMark;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.WaterMarkService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -72,7 +73,14 @@ public class WaterMarkServiceImpl implements WaterMarkService {
             bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             bgG2.dispose();
 
-            FileOutputStream outImgStream = new FileOutputStream(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_watermark.jpg");
+            //删除测试文件
+            File testFile = new File(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_test.jpg");
+            if (testFile.exists()) {
+                testFile.delete();
+            }
+            //加水印图片
+            String newImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_watermark.jpg";
+            FileOutputStream outImgStream = new FileOutputStream(newImagePath);
             ImageIO.write(bg, "jpg", outImgStream);
             outImgStream.flush();
             outImgStream.close();
@@ -131,7 +139,8 @@ public class WaterMarkServiceImpl implements WaterMarkService {
             bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             bgG2.dispose();
 
-            FileOutputStream outImgStream = new FileOutputStream(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_test.jpg");
+            String testImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_test.jpg";
+            FileOutputStream outImgStream = new FileOutputStream(testImagePath);
             ImageIO.write(bg, "jpg", outImgStream);
             outImgStream.flush();
             outImgStream.close();

@@ -9,6 +9,7 @@ import com.lushihao.qrcode.util.LSHFfmpegUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -29,6 +30,11 @@ public class VideoServiceImpl implements VideoService {
             videoWaterMark.setBusiness(list.get(0));
         } else {
             return "商家不存在";
+        }
+        //删除测试文件
+        File testFile = new File(videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_test.mp4");
+        if (testFile.exists()) {
+            testFile.delete();
         }
         //获得输出文件地址
         String newVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_new.mp4";
@@ -64,9 +70,9 @@ public class VideoServiceImpl implements VideoService {
             return "商家不存在";
         }
         //获得输出文件地址
-        String newVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_test.mp4";
-        videoWaterMark.setNewVideoPath(newVideoPath);
-        if (lshFfmpegUtil.checkFileType(newVideoPath) != lshFfmpegUtil.VIDEO) {
+        String testVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_test.mp4";
+        videoWaterMark.setNewVideoPath(testVideoPath);
+        if (lshFfmpegUtil.checkFileType(testVideoPath) != lshFfmpegUtil.VIDEO) {
             return "当前文件格式不支持";
         }
         VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());

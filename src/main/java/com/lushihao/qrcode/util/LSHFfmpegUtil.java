@@ -40,6 +40,7 @@ public class LSHFfmpegUtil {
      * @return
      */
     public VideoInfo getVideoInfo(String videoPath) {
+        FileInputStream fileInputStream = null;
         try {
             File file = new File(videoPath);
             Encoder encoder = new Encoder();
@@ -50,12 +51,21 @@ public class LSHFfmpegUtil {
             videoInfo.setWidth(mmi.getVideo().getSize().getWidth());
             videoInfo.setHeight(mmi.getVideo().getSize().getHeight());
             videoInfo.setFormat(mmi.getFormat());
-            videoInfo.setSize(new FileInputStream(file).getChannel().size());
+            fileInputStream = new FileInputStream(file);
+            videoInfo.setSize(fileInputStream.getChannel().size());
             return videoInfo;
         } catch (EncoderException | FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
