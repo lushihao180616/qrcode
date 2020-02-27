@@ -52,23 +52,23 @@
 input, select, textarea {
     box-sizing: border-box;
     width: 75%;
-    height: 35px;
+    height: 30px;
     position: absolute;
 }
 
 textarea {
-    height: 80px;
+    height: 75px;
 }
 
 .itemName, .itemName2 {
     display: inline;
-    height: 35px;
-    line-height: 35px;
+    height: 30px;
+    line-height: 30px;
 }
 
 .itemName2 {
-    height: 80px;
-    line-height: 80px;
+    height: 75px;
+    line-height: 75px;
 }
 
 .topItemTitle {
@@ -95,10 +95,10 @@ textarea {
 .unit {
     right: 0%;
     box-sizing: border-box;
-    height: 35px;
+    height: 30px;
     position: absolute;
     width: 5%;
-    line-height: 35px;
+    line-height: 30px;
     text-align: center;
 }
 
