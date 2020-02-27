@@ -65,7 +65,7 @@ function create() {
                 if (data.substring(0, 4) == '添加成功') {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var waterMarks = document.getElementById("waterMarks");
-                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_waterMark.jpg';
+                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_waterMark.jpg';
                     var ifHave = false;
                     for (var i = 0; i < tableRow.length; i++) {
                         if (tableRow[i] == url) {
@@ -126,7 +126,7 @@ function test() {
                 }
                 var data = xhr.responseText;
                 if (data.substring(0, 4) == '添加成功') {
-                    document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".jpg")) + '_test.jpg';
+                    document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_test.jpg';
                 } else {
                     document.getElementById("createTest").value = '';
                 }

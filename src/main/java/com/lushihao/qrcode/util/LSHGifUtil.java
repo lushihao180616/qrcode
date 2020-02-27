@@ -33,7 +33,7 @@ public class LSHGifUtil {
                     return -1;
                 if (o1.isFile() && o2.isDirectory())
                     return 1;
-                return Integer.valueOf(o1.getName().indexOf(".jpg")).compareTo(Integer.valueOf(o2.getName().indexOf(".jpg")));
+                return Integer.valueOf(o1.getName().lastIndexOf(".")).compareTo(Integer.valueOf(o2.getName().lastIndexOf(".")));
             }
         });
         for (int i = 0; i < list.size(); i++) {

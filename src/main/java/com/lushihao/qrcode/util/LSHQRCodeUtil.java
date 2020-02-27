@@ -596,7 +596,7 @@ public class LSHQRCodeUtil {
             filePath = projectBasicInfo.getModelUrl() + "\\" + qrCodeVo.getFileName() + ".jpg";
         }
         if (isMp4) {
-            filePath = filePath.substring(0, filePath.lastIndexOf(".jpg")) + ".gif";
+            filePath = filePath.substring(0, filePath.lastIndexOf(".")) + ".gif";
             new LSHGifUtil().jpgToGif(images, filePath, qrCodeVo.getQrCodeTemple().getFrame());
         } else {
             lshImageUtil.sendImage(filePath, images.get(0));

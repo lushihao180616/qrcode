@@ -2,6 +2,11 @@
     background-color: black;
 }
 
+.middleTitle {
+    background-color: black;
+    margin: 40px 10px 10px;
+}
+
 .linkItems {
     justify-content: space-around;
     display: flex;
@@ -16,8 +21,8 @@
     margin-right: 10px;
     width: 100%;
     display: inline-block;
-    height: 100px;
-    line-height: 100px;
+    height: 150px;
+    line-height: 150px;
     text-align: center;
     background-color: lightcoral;
 }

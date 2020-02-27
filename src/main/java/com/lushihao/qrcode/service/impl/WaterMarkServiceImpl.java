@@ -79,12 +79,12 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         bgG2.dispose();
 
         //删除测试文件
-        File testFile = new File(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_test.jpg");
+        File testFile = new File(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".")) + "_test.jpg");
         if (testFile.exists()) {
             testFile.delete();
         }
         //加水印图片
-        String newImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_watermark.jpg";
+        String newImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".")) + "_watermark.jpg";
         lshImageUtil.sendImage(newImagePath, bg);
         return "添加成功";
     }
@@ -141,7 +141,7 @@ public class WaterMarkServiceImpl implements WaterMarkService {
             bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
             bgG2.dispose();
 
-            String testImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".jpg")) + "_test.jpg";
+            String testImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".")) + "_test.jpg";
             outImgStream = new FileOutputStream(testImagePath);
             ImageIO.write(bg, "jpg", outImgStream);
 

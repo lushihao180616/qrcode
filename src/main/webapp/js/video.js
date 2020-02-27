@@ -67,7 +67,7 @@ function create() {
                 if (data == '添加成功') {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var videos = document.getElementById("videos");
-                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".mp4")) + '_new.mp4';
+                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_new.mp4';
                     var ifHave = false;
                     for (var i = 0; i < tableRow.length; i++) {
                         if (tableRow[i] == url) {
