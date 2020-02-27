@@ -82,21 +82,27 @@ public class VideoServiceImpl implements VideoService {
         int chineseNum = num / 2;
         String businessName = "";
         for (int i = 0; i < chineseNum; i++) {
-            if (i % 4 == 0) {
+            if (i % 6 == 0) {
                 businessName += "超";
             }
-            if (i % 4 == 1) {
+            if (i % 6 == 1) {
                 businessName += "级";
             }
-            if (i % 4 == 2) {
+            if (i % 6 == 2) {
                 businessName += "码";
             }
-            if (i % 4 == 3) {
+            if (i % 6 == 3) {
                 businessName += "丽";
+            }
+            if (i % 6 == 4) {
+                businessName += "CJ";
+            }
+            if (i % 6 == 5) {
+                businessName += "ML";
             }
         }
         if (num % 2 > 0) {
-            businessName += "M";
+            businessName += "0";
         }
         business.setName(businessName);
         videoWaterMark.setBusiness(business);

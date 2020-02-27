@@ -1,3 +1,5 @@
+var tableRow = [];
+
 function init() {
     var filterBusinessCode = {
         code: document.getElementById("createCode").value
@@ -65,13 +67,23 @@ function create() {
                 if (data == '添加成功') {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var videos = document.getElementById("videos");
-                    videos.innerHTML += '\n' +
-                        '    <tr>\n' +
-                        '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
-                        '        <td class="bottomTd2">' + document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".mp4")) + '_new.mp4' + '</td>\n' +
-                        '    </tr>';
-                    document.getElementById('createPath').value = '';
-                    document.getElementById("createTest").value = '';
+                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.indexOf(".mp4")) + '_new.mp4';
+                    var ifHave = false;
+                    for (var i = 0; i < tableRow.length; i++) {
+                        if (tableRow[i] == url) {
+                            ifHave = true;
+                        }
+                    }
+                    if (!ifHave) {
+                        tableRow.push(url);
+                        videos.innerHTML += '\n' +
+                            '    <tr>\n' +
+                            '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
+                            '        <td class="bottomTd2">' + url + '</td>\n' +
+                            '    </tr>';
+                        document.getElementById('createPath').value = '';
+                        document.getElementById("createTest").value = '';
+                    }
                 }
                 alert(data);
             }
