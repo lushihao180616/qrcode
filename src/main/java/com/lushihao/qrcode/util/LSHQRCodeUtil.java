@@ -35,35 +35,65 @@ public class LSHQRCodeUtil {
     @Resource
     private LSHCharUtil lshCharUtil;
 
-    // 二维码宽度
+    /**
+     * 二维码宽度
+     */
     private int width = 1950;
-    // 二维码高度
+    /**
+     * 二维码高度
+     */
     private int height = 1950;
-    // 二维码背景宽度
+    /**
+     * 二维码背景宽度
+     */
     private int defaultWidth = 3000;
-    // 二维码背景高度
+    /**
+     * 二维码背景高度
+     */
     private int defaultHeight = 3000;
-    // 当前二维码宽度
+    /**
+     * 当前二维码宽度
+     */
     int nowWidth = 3000;
-    // 当前二维码高度
+    /**
+     * 当前二维码高度
+     */
     int nowHeight = 3000;
-    // 设置偏移量，不设置可能导致解析出错
+    /**
+     * 偏移量
+     */
     private int pixoff = 50;
-    // 像素大小
+    /**
+     * 每个点位长度宽度
+     */
     private int pix = 50;
-    // logo背景宽度
+    /**
+     * logo宽度
+     */
     private int logoBgWidth = 240;
-    // logo背景高度
+    /**
+     * logo高度
+     */
     private int logoBgHeight = 240;
-    // logo宽度
+    /**
+     * logo图像宽度
+     */
     private int logoWidth = 200;
-    // logo高度
+    /**
+     * logo图像高度
+     */
     private int logoHeight = 200;
-    // 二维码数组的长度
+    /**
+     * 二维码数组的长度
+     */
     private int codeLength;
-    // 子图数量
+    /**
+     * 子图数量
+     */
     private int max = 1;
-    // 是否动态背景
+    /**
+     * 是否动态背景
+     */
     private boolean isMp4 = false;
 
     /**
@@ -216,10 +246,15 @@ public class LSHQRCodeUtil {
             }
         }
 
+        int x1 = (nowWidth - width) / 2 + pix;
+        int x2 = (nowWidth - width) / 2 + (codeLength - 7) * pix + pixoff;
+        int y1 = (nowHeight - height) / 2 + pix;
+        int y2 = (nowHeight - height) / 2 + (codeLength - 7) * pix + pixoff;
+        int eyeL = pix * 7;
         //通用地绘制码眼
-        gs.drawImage(image_eye, (nowWidth - width) / 2 + pix, (nowHeight - height) / 2 + pix, pix * 7, pix * 7, null);
-        gs.drawImage(image_eye, (nowWidth - width) / 2 + (codeLength - 7) * pix + pixoff, (nowHeight - height) / 2 + pix, pix * 7, pix * 7, null);
-        gs.drawImage(image_eye, (nowWidth - width) / 2 + pix, (nowHeight - height) / 2 + (codeLength - 7) * pix + pixoff, pix * 7, pix * 7, null);
+        gs.drawImage(image_eye, x1, y1, eyeL, eyeL, null);
+        gs.drawImage(image_eye, x2, y1, eyeL, eyeL, null);
+        gs.drawImage(image_eye, x1, y2, eyeL, eyeL, null);
     }
 
     /**
