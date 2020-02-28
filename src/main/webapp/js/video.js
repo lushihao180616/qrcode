@@ -16,13 +16,13 @@ function init() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var businessList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("createBusinesses");
                 businesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     var option = document.createElement("option");
-                    option.value = JSON.stringify(businessList[i]);
-                    option.text = businessList[i].code;
+                    option.value = JSON.stringify(result.bean[i]);
+                    option.text = result.bean[i].code;
                     businesses.add(option);
                 }
             }
@@ -63,8 +63,8 @@ function create() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
-                if (data == '添加成功') {
+                var result = JSON.parse(xhr.responseText);
+                if (result.info == '添加成功') {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var videos = document.getElementById("videos");
                     var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_new.mp4';
@@ -85,7 +85,7 @@ function create() {
                     document.getElementById('createPath').value = '';
                     document.getElementById("createTest").value = '';
                 }
-                alert(data);
+                alert(result.info);
             }
         }
     }
@@ -124,13 +124,13 @@ function test() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
-                if (data == '添加成功') {
+                var result = JSON.parse(xhr.responseText);
+                if (result.info == '添加成功') {
                     document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_test.mp4';
                 } else {
                     document.getElementById("createTest").value = '';
                 }
-                alert(data);
+                alert(result.info);
             }
         }
     }

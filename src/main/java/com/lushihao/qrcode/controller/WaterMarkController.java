@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.controller;
 
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.WaterMark;
 import com.lushihao.qrcode.service.WaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
@@ -22,7 +23,7 @@ public class WaterMarkController {
 
     @RequestMapping("add")
     @ResponseBody
-    public String addWaterMark(@RequestBody Map<String, Object> reqMap) {
+    public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
@@ -33,12 +34,13 @@ public class WaterMarkController {
         wm.setxPercentage((Integer) reqMap.get("x"));
         wm.setyPercentage((Integer) reqMap.get("y"));
         wm.setAlpha((Integer) reqMap.get("alpha"));
-        return waterMarkService.addWaterMark(wm);
+        Result result = new Result(true, null, waterMarkService.addWaterMark(wm), null);
+        return result;
     }
 
     @RequestMapping("test")
     @ResponseBody
-    public String testWaterMark(@RequestBody Map<String, Object> reqMap) {
+    public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
@@ -49,7 +51,8 @@ public class WaterMarkController {
         wm.setxPercentage((Integer) reqMap.get("x"));
         wm.setyPercentage((Integer) reqMap.get("y"));
         wm.setAlpha((Integer) reqMap.get("alpha"));
-        return waterMarkService.testWaterMark(wm);
+        Result result = new Result(true, null, waterMarkService.testWaterMark(wm), null);
+        return result;
     }
 
 }

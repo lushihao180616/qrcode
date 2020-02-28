@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.controller;
 
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
 import com.lushihao.qrcode.util.LSHMACUtil;
@@ -22,7 +23,7 @@ public class VideoController {
 
     @RequestMapping("add")
     @ResponseBody
-    public String create(@RequestBody Map<String, Object> reqMap) {
+    public Result create(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
@@ -46,12 +47,13 @@ public class VideoController {
         } else {
             videoWaterMark.setFontShadow(0);
         }
-        return videoService.create(videoWaterMark, code);
+        Result result = new Result(true, null, videoService.create(videoWaterMark, code), null);
+        return result;
     }
 
     @RequestMapping("test")
     @ResponseBody
-    public String test(@RequestBody Map<String, Object> reqMap) {
+    public Result test(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
@@ -75,7 +77,8 @@ public class VideoController {
         } else {
             videoWaterMark.setFontShadow(0);
         }
-        return videoService.test(videoWaterMark, code);
+        Result result = new Result(true, null, videoService.test(videoWaterMark, code), null);
+        return result;
     }
 
 }

@@ -14,45 +14,45 @@ function init() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var templeList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var temples = document.getElementById("temples");
                 temples.innerHTML = '';
-                for (var i = 0; i < templeList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     var ifOnly = ''
-                    if (templeList[i].ifOnly) {
+                    if (result.bean[i].ifOnly) {
                         ifOnly += "是"
                     } else {
                         ifOnly += "否"
                     }
                     var ifShowLogo = ''
-                    if (templeList[i].ifShowLogo) {
+                    if (result.bean[i].ifShowLogo) {
                         ifShowLogo += "是"
                     } else {
                         ifShowLogo += "否"
                     }
                     var ifSelfBg = ''
-                    if (templeList[i].ifSelfBg) {
+                    if (result.bean[i].ifSelfBg) {
                         ifSelfBg += "是"
                     } else {
                         ifSelfBg += "否"
                     }
                     temples.innerHTML += '\n' +
                         '    <tr >\n' +
-                        '        <td class="bottomTd1">' + templeList[i].code + '</td>\n' +
-                        '        <td class="bottomTd2">' + templeList[i].money + '</td>\n' +
+                        '        <td class="bottomTd1">' + result.bean[i].code + '</td>\n' +
+                        '        <td class="bottomTd2">' + result.bean[i].money + '</td>\n' +
                         '        <td class="bottomTd3">' + ifOnly + '</td>\n' +
                         '        <td class="bottomTd4">' + ifShowLogo + '</td>\n' +
                         '        <td class="bottomTd5">' + ifSelfBg + '</td>\n' +
-                        '        <td class="bottomTd6">' + templeList[i].arti + '</td>\n' +
-                        '        <td class="bottomTd7">' + templeList[i].width + '</td>\n' +
-                        '        <td class="bottomTd8">' + templeList[i].height + '</td>\n' +
-                        '        <td class="bottomTd9">' + templeList[i].iconNum + '</td>\n' +
-                        '        <td class="bottomTd10">' + templeList[i].x + '</td>\n' +
-                        '        <td class="bottomTd11">' + templeList[i].y + '</td>\n' +
-                        '        <td class="bottomTd12">' + templeList[i].angle + '</td>\n' +
-                        '        <td class="bottomTd13">' + templeList[i].multiple + '</td>\n' +
-                        '        <td class="bottomTd14">' + templeList[i].frame + '</td>\n' +
-                        '        <td class="bottomTd15">' + templeList[i].path + '</td>\n' +
+                        '        <td class="bottomTd6">' + result.bean[i].arti + '</td>\n' +
+                        '        <td class="bottomTd7">' + result.bean[i].width + '</td>\n' +
+                        '        <td class="bottomTd8">' + result.bean[i].height + '</td>\n' +
+                        '        <td class="bottomTd9">' + result.bean[i].iconNum + '</td>\n' +
+                        '        <td class="bottomTd10">' + result.bean[i].x + '</td>\n' +
+                        '        <td class="bottomTd11">' + result.bean[i].y + '</td>\n' +
+                        '        <td class="bottomTd12">' + result.bean[i].angle + '</td>\n' +
+                        '        <td class="bottomTd13">' + result.bean[i].multiple + '</td>\n' +
+                        '        <td class="bottomTd14">' + result.bean[i].frame + '</td>\n' +
+                        '        <td class="bottomTd15">' + result.bean[i].path + '</td>\n' +
                         '    </tr>';
                 }
             }
@@ -75,9 +75,9 @@ function downLoadTemple() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
-                alert(data);
+                alert(result.info);
             }
         }
     }
@@ -124,7 +124,7 @@ function create() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("createCode").value = '';
                 document.getElementById("createMoney").value = '';
@@ -137,7 +137,7 @@ function create() {
                 document.getElementById("createMultiple").value = '1';
                 document.getElementById("createFrame").value = '0/0/0';
                 document.getElementById('createTempleItemsPath').value = '';
-                alert(data);
+                alert(result.info);
             }
         }
     }
@@ -160,16 +160,16 @@ function updateSearch() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var templeList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var updateTemples = document.getElementById("updateTemples");
                 updateTemples.innerHTML = '';
-                for (var i = 0; i < templeList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     var option = document.createElement("option");
-                    option.value = JSON.stringify(templeList[i]);
-                    option.text = templeList[i].code;
+                    option.value = JSON.stringify(result.bean[i]);
+                    option.text = result.bean[i].code;
                     updateTemples.add(option);
                 }
-                if (templeList.length > 0) {
+                if (result.bean.length > 0) {
                     updateTempleCode("updateTemples")
                 }
             }
@@ -231,7 +231,7 @@ function update() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("updateTemples").innerHTML = '';
                 document.getElementById("updateMoney").value = '';
@@ -244,7 +244,7 @@ function update() {
                 document.getElementById("updateMultiple").value = '';
                 document.getElementById("updateFrame").value = '';
                 document.getElementById('updateTempleItemsPath').value = '';
-                alert(data);
+                alert(result.info);
             }
         }
     }
@@ -267,16 +267,16 @@ function deleteSearch() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var templeList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var deleteTemples = document.getElementById("deleteTemples");
                 deleteTemples.innerHTML = '';
-                for (var i = 0; i < templeList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     var option = document.createElement("option");
-                    option.value = JSON.stringify(templeList[i]);
-                    option.text = templeList[i].code;
+                    option.value = JSON.stringify(result.bean[i]);
+                    option.text = result.bean[i].code;
                     deleteTemples.add(option);
                 }
-                if (templeList.length > 0) {
+                if (result.bean.length > 0) {
                     deleteTempleCode("deleteTemples")
                 }
             }
@@ -313,7 +313,7 @@ function deleteOne() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("deleteTemples").innerHTML = '';
                 document.getElementById("deleteMoney").innerText = '';
@@ -324,7 +324,7 @@ function deleteOne() {
                 document.getElementById("deleteY").innerText = '';
                 document.getElementById("deleteAngle").innerText = '';
                 document.getElementById("deleteMultiple").innerText = '';
-                alert(data);
+                alert(result.info);
             }
         }
     }

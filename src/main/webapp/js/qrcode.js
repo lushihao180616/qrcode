@@ -14,10 +14,10 @@ function init() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var allData = JSON.parse(xhr.responseText);
-                var recordList = allData.record;
-                var templeList = allData.temple;
-                var businessList = allData.business;
+                var result = JSON.parse(xhr.responseText);
+                var recordList = result.bean.record;
+                var templeList = result.bean.temple;
+                var businessList = result.bean.business;
 
                 var records = document.getElementById("records");
                 records.innerHTML = '';
@@ -212,18 +212,18 @@ function getRecord() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var recordList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var records = document.getElementById("records");
                 records.innerHTML = '';
-                for (var i = 0; i < recordList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     records.innerHTML += '\n' +
                         '    <tr>\n' +
-                        '        <td class="bottomTd1">' + recordList[i].businessCode + '</td>\n' +
-                        '        <td class="bottomTd2">' + recordList[i].templeCode + '</td>\n' +
-                        '        <td class="bottomTd3">' + recordList[i].fileName + '</td>\n' +
-                        '        <td class="bottomTd4">' + recordList[i].url + '</td>\n' +
-                        '        <td class="bottomTd5">' + recordList[i].money + '</td>\n' +
-                        '        <td class="bottomTd6">' + recordList[i].saveTime + '</td>\n' +
+                        '        <td class="bottomTd1">' + result.bean[i].businessCode + '</td>\n' +
+                        '        <td class="bottomTd2">' + result.bean[i].templeCode + '</td>\n' +
+                        '        <td class="bottomTd3">' + result.bean[i].fileName + '</td>\n' +
+                        '        <td class="bottomTd4">' + result.bean[i].url + '</td>\n' +
+                        '        <td class="bottomTd5">' + result.bean[i].money + '</td>\n' +
+                        '        <td class="bottomTd6">' + result.bean[i].saveTime + '</td>\n' +
                         '    </tr>';
                 }
             }
@@ -270,7 +270,7 @@ function create() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("message").value = '';
                 document.getElementById("temples").options[0].selected = true;
@@ -278,7 +278,7 @@ function create() {
                 document.getElementById("fileName").value = '';
                 document.getElementById("backGround").value = '';
                 document.getElementById("createTest").value = '';
-                alert(data.result);
+                alert(result.result);
             }
         }
     }
@@ -323,13 +323,13 @@ function test() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 if (data.result == '创建成功') {
                     document.getElementById("createTest").value = data.filePath;
                 } else {
                     document.getElementById("createTest").value = '';
                 }
-                alert(data.result);
+                alert(result.result);
             }
         }
     }

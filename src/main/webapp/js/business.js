@@ -18,17 +18,17 @@ function init() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var businessList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var businesses = document.getElementById("buisnesses");
                 businesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     businesses.innerHTML += '\n' +
                         '    <tr>\n' +
-                        '        <td class="bottomTd1">' + businessList[i].code + '</td>\n' +
-                        '        <td class="bottomTd2">' + businessList[i].name + '</td>\n' +
-                        '        <td class="bottomTd3">' + businessList[i].address + '</td>\n' +
-                        '        <td class="bottomTd4">' + businessList[i].phone + '</td>\n' +
-                        '        <td class="bottomTd5">' + businessList[i].businessName + '</td>\n' +
+                        '        <td class="bottomTd1">' + result.bean[i].code + '</td>\n' +
+                        '        <td class="bottomTd2">' + result.bean[i].name + '</td>\n' +
+                        '        <td class="bottomTd3">' + result.bean[i].address + '</td>\n' +
+                        '        <td class="bottomTd4">' + result.bean[i].phone + '</td>\n' +
+                        '        <td class="bottomTd5">' + result.bean[i].businessName + '</td>\n' +
                         '    </tr>';
                 }
             }
@@ -65,14 +65,14 @@ function create() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("createName").value = '';
                 document.getElementById("createAddress").value = '';
                 document.getElementById("createPhone").value = '';
                 document.getElementById("createBusinessName").value = '';
                 document.getElementById("createLogo").value = '';
-                alert(data);
+                alert(result.info);
             }
         }
     }
@@ -95,16 +95,16 @@ function modifySearch() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var businessList = JSON.parse(xhr.responseText);
+                var result = JSON.parse(xhr.responseText);
                 var modifyBusinesses = document.getElementById("modifyBusinesses");
                 modifyBusinesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
+                for (var i = 0; i < result.bean.length; i++) {
                     var option = document.createElement("option");
-                    option.value = JSON.stringify(businessList[i]);
-                    option.text = businessList[i].code;
+                    option.value = JSON.stringify(result.bean[i]);
+                    option.text = result.bean[i].code;
                     modifyBusinesses.add(option);
                 }
-                if (businessList.length > 0) {
+                if (result.bean.length > 0) {
                     modifyBusinessCode("modifyBusinesses")
                 }
             }
@@ -155,7 +155,7 @@ function update() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("modifyBusinesses").innerHTML = '';
                 document.getElementById("modifyName").value = '';
@@ -163,7 +163,7 @@ function update() {
                 document.getElementById("modifyPhone").value = '';
                 document.getElementById("modifyBusinessName").value = '';
                 document.getElementById("modifyLogo").value = '';
-                alert(data);
+                alert(result.info);
             }
         }
     }
@@ -233,14 +233,14 @@ function deleteOne() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var data = xhr.responseText;
+                var result = JSON.parse(xhr.responseText);
                 init();
                 document.getElementById("deleteBusinesses").innerHTML = '';
                 document.getElementById("deleteName").innerHTML = '';
                 document.getElementById("deleteAddress").innerHTML = '';
                 document.getElementById("deletePhone").innerHTML = '';
                 document.getElementById("deleteBusinessName").innerHTML = '';
-                alert(data);
+                alert(result.info);
             }
         }
     }

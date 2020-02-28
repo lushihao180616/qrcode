@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.service.QRTempleService;
 import com.lushihao.qrcode.util.LSHMACUtil;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,42 +24,42 @@ public class QRTempleController {
 
     @RequestMapping("create")
     @ResponseBody
-    public String create(@RequestBody Map<String, Object> reqMap) {
+    public Result create(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
         QRCodeTemple qrCodeTemple = translate(reqMap);
         String templeItemsPath = (String) reqMap.get("templeItemsPath");
-        String back = qrTempleService.create(qrCodeTemple, templeItemsPath);
-        return back;
+        Result result = new Result(true, null, qrTempleService.create(qrCodeTemple, templeItemsPath), null);
+        return result;
     }
 
     @RequestMapping("update")
     @ResponseBody
-    public String update(@RequestBody Map<String, Object> reqMap) {
+    public Result update(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
         QRCodeTemple qrCodeTemple = translate(reqMap);
         String templeItemsPath = (String) reqMap.get("templeItemsPath");
-        String back = qrTempleService.update(qrCodeTemple, templeItemsPath);
-        return back;
+        Result result = new Result(true, null, qrTempleService.update(qrCodeTemple, templeItemsPath), null);
+        return result;
     }
 
     @RequestMapping("delete")
     @ResponseBody
-    public String delete(@RequestBody Map<String, Object> reqMap) {
+    public Result delete(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
         String code = (String) reqMap.get("code");
-        String back = qrTempleService.delete(code);
-        return back;
+        Result result = new Result(true, null, qrTempleService.delete(code), null);
+        return result;
     }
 
     @RequestMapping("filter")
     @ResponseBody
-    public List<Map<String, Object>> filter(@RequestBody Map<String, Object> reqMap) {
+    public Result filter(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
@@ -68,16 +67,18 @@ public class QRTempleController {
         if ("".equals(code)) {
             code = null;
         }
-        return qrTempleService.filter(code);
+        Result result = new Result(true, qrTempleService.filter(code), null, null);
+        return result;
     }
 
     @RequestMapping("downLoad")
     @ResponseBody
-    public String downLoad(@RequestBody String downLoad) {
+    public Result downLoad(@RequestBody String downLoad) {
         if (!lshmacUtil.check()) {
             return null;
         }
-        return qrTempleService.downLoad(downLoad);
+        Result result = new Result(true, null, qrTempleService.downLoad(downLoad), null);
+        return result;
     }
 
     /**

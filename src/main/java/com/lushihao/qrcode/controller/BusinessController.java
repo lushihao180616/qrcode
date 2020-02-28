@@ -2,6 +2,7 @@ package com.lushihao.qrcode.controller;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.business.Business;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.service.BusinessService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,43 +24,43 @@ public class BusinessController {
 
     @RequestMapping("create")
     @ResponseBody
-    public String create(@RequestBody Map<String, Object> reqMap) {
-        if(!lshmacUtil.check()){
+    public Result create(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
             return null;
         }
         String logoSrc = (String) reqMap.get("logoSrc");
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
-        String back = businessService.create(business, logoSrc);
-        return back;
+        Result result = new Result(true, null, businessService.create(business, logoSrc), null);
+        return result;
     }
 
     @RequestMapping("update")
     @ResponseBody
-    public String update(@RequestBody Map<String, Object> reqMap) {
-        if(!lshmacUtil.check()){
+    public Result update(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
             return null;
         }
         String logoSrc = (String) reqMap.get("logoSrc");
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
-        String back = businessService.update(business, logoSrc);
-        return back;
+        Result result = new Result(true, null, businessService.update(business, logoSrc), null);
+        return result;
     }
 
     @RequestMapping("delete")
     @ResponseBody
-    public String delete(@RequestBody Map<String, Object> reqMap) {
-        if(!lshmacUtil.check()){
+    public Result delete(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
             return null;
         }
         String code = (String) reqMap.get("code");
-        String back = businessService.delete(code);
-        return back;
+        Result result = new Result(true, null, businessService.delete(code), null);
+        return result;
     }
 
     @RequestMapping("filter")
     @ResponseBody
-    public List<Business> filter(@RequestBody Map<String, Object> reqMap) {
-        if(!lshmacUtil.check()){
+    public Result filter(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
             return null;
         }
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
@@ -80,7 +79,8 @@ public class BusinessController {
         if ("".equals(business.getBusinessName())) {
             business.setBusinessName(null);
         }
-        return businessService.filter(business);
+        Result result = new Result(true, businessService.filter(business), null, null);
+        return result;
     }
 
 }

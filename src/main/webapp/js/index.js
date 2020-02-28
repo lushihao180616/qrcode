@@ -12,17 +12,17 @@ function userInfo() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var userinfo = JSON.parse(xhr.responseText);
-                document.getElementById("code").innerText = userinfo.business.code;
-                document.getElementById("name").innerText = userinfo.business.name;
-                document.getElementById("businessName").innerText = userinfo.business.businessName;
-                document.getElementById("phone").innerText = userinfo.business.phone;
-                document.getElementById("address").innerText = userinfo.business.address;
-                document.getElementById("type").innerText = userinfo.userType.name;
-                if (userinfo.count == -1) {
+                var result = JSON.parse(xhr.responseText);
+                document.getElementById("code").innerText = result.bean.business.code;
+                document.getElementById("name").innerText = result.bean.business.name;
+                document.getElementById("businessName").innerText = result.bean.business.businessName;
+                document.getElementById("phone").innerText = result.bean.business.phone;
+                document.getElementById("address").innerText = result.bean.business.address;
+                document.getElementById("type").innerText = result.bean.userType.name;
+                if (result.bean.count == -1) {
                     document.getElementById("count").innerText = "无限";
                 } else {
-                    document.getElementById("count").innerText = userinfo.count;
+                    document.getElementById("count").innerText = result.bean.count;
                 }
             }
         }

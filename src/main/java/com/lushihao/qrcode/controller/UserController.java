@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.myutils.json.LSHJsonUtils;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.service.UserInfoService;
 import com.lushihao.qrcode.util.LSHMACUtil;
@@ -32,13 +33,13 @@ public class UserController {
 
     @RequestMapping("filter")
     @ResponseBody
-    public UserInfo filter() {
+    public Result filter() {
         if (!lshmacUtil.check()) {
             return null;
         }
         UserInfo userInfo = userInfoService.filter();
-        System.out.println(LSHJsonUtils.bean2Json(userInfo));
-        return userInfo;
+        Result result = new Result(true, userInfo, null, null);
+        return result;
     }
 
 }
