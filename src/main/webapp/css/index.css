@@ -14,9 +14,74 @@
     height: 200px;
 }
 
-.topItem1 {
-    width: 100%;
+.userInfo {
+    position: relative;
+    width: 1100px;
+    text-align: center;
+}
+
+.leftDiv, .rigthDiv {
+    display: inline-block;
+    width: 400px;
+    height: 180px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #ddd;
+    position: absolute;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.leftDiv {
+    left: 0px;
+}
+
+.rigthDiv {
+    right: 0px;
+}
+
+.logoDiv {
+    display: inline-block;
     height: 200px;
+}
+
+.logo {
+    width: 140px;
+    height: 140px;
+    margin: 30px;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.userInfoRow {
+    margin: 5px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.userInfoName {
+    display: inline-block;
+    width: 25%;
+    line-height: 30px;
+    background-color: #888;
+    color: white;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.userInfoValue {
+    display: inline-block;
+    width: 75%;
+    line-height: 30px;
+    color: #555;
+    background-color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.middleTitle {
+    margin: 50px 10px 10px;
 }
 
 .linkItems {

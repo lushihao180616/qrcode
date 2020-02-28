@@ -5,6 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="referrer" content="no-referrer">
     <title>首页</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/index.css">
@@ -18,7 +19,36 @@
 </p>
 
 <div class="top">
-    <div class="topItem1">
+    <div class="userInfo">
+        <div class="leftDiv">
+            <div class="userInfoRow">
+                <span class="userInfoName">标识</span><span class="userInfoValue" id="code"></span>
+            </div>
+            <div class="userInfoRow">
+                <span class="userInfoName">商家</span><span class="userInfoValue" id="name"></span>
+            </div>
+            <div class="userInfoRow">
+                <span class="userInfoName">联系人</span><span class="userInfoValue" id="businessName"></span>
+            </div>
+            <div class="userInfoRow">
+                <span class="userInfoName">手机号</span><span class="userInfoValue" id="phone"></span>
+            </div>
+            <div class="userInfoRow">
+                <span class="userInfoName">地址</span><span class="userInfoValue" id="address"></span>
+            </div>
+        </div>
+        <div class="logoDiv">
+            <img class="logo"
+                 src="../image/logo.jpg">
+        </div>
+        <div class="rigthDiv">
+            <div class="userInfoRow">
+                <span class="userInfoName">类型</span><span class="userInfoValue" id="type"></span>
+            </div>
+            <div class="userInfoRow">
+                <span class="userInfoName">金豆</span><span class="userInfoValue" id="count"></span>
+            </div>
+        </div>
     </div>
 </div>
 

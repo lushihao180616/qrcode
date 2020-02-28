@@ -41,6 +41,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfoList.size() > 0) {
             Map<String, Object> map = userInfoList.get(0);
             userInfo = LSHMapUtils.mapToEntity(map, UserInfo.class);
+            userInfo.setCount((Integer) map.get("count"));
             userInfo.setUserType(userInfoMapper.filterType((String) map.get("typecode")).get(0));
         }
 
