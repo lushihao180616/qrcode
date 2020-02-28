@@ -14,6 +14,15 @@
 <body onload="userInfo()">
 
 <p class="topTitle">
+    用户信息
+</p>
+
+<div class="top">
+    <div class="topItem1">
+    </div>
+</div>
+
+<p class="middleTitle">
     页面信息
 </p>
 
@@ -39,10 +48,6 @@
         <div>视&emsp;频&emsp;管&emsp;理</div>
     </div>
 </div>
-
-<p class="middleTitle">
-    用户信息
-</p>
 
 </body>
 </html>

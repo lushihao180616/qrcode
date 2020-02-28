@@ -13,7 +13,6 @@ function userInfo() {
                     return
                 }
                 var userinfo = JSON.parse(xhr.responseText);
-                alert(userinfo.business.name);
             }
         }
     }
