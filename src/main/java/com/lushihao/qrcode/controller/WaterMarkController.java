@@ -34,8 +34,7 @@ public class WaterMarkController {
         wm.setxPercentage((Integer) reqMap.get("x"));
         wm.setyPercentage((Integer) reqMap.get("y"));
         wm.setAlpha((Integer) reqMap.get("alpha"));
-        Result result = new Result(true, null, waterMarkService.addWaterMark(wm), null);
-        return result;
+        return waterMarkService.addWaterMark(wm);
     }
 
     @RequestMapping("test")

@@ -1,10 +1,11 @@
 package com.lushihao.qrcode.service;
 
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.WaterMark;
 
 public interface WaterMarkService {
 
-    String addWaterMark(WaterMark waterMark);
+    Result addWaterMark(WaterMark waterMark);
 
     String testWaterMark(WaterMark waterMark);
 
