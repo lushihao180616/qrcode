@@ -24,9 +24,9 @@ public class WaterMarkController {
     @RequestMapping("add")
     @ResponseBody
     public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         WaterMark wm = new WaterMark();
         wm.setBusinessCode((String) reqMap.get("businessCode"));
         wm.setPath((String) reqMap.get("path"));
@@ -40,9 +40,9 @@ public class WaterMarkController {
     @RequestMapping("test")
     @ResponseBody
     public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         WaterMark wm = new WaterMark();
         wm.setBusinessCode((String) reqMap.get("businessCode"));
         wm.setPath((String) reqMap.get("path"));

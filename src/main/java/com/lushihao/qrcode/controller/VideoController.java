@@ -24,9 +24,9 @@ public class VideoController {
     @RequestMapping("add")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         VideoWaterMark videoWaterMark = new VideoWaterMark();
         String code = (String) reqMap.get("businessCode");
         videoWaterMark.setOldVideoPath((String) reqMap.get("path"));
@@ -54,9 +54,9 @@ public class VideoController {
     @RequestMapping("test")
     @ResponseBody
     public Result test(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         VideoWaterMark videoWaterMark = new VideoWaterMark();
         String code = (String) reqMap.get("businessCode");
         videoWaterMark.setOldVideoPath((String) reqMap.get("path"));

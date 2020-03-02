@@ -32,10 +32,6 @@ public class ProjectBasicInfo {
      */
     private String ffmpegUrl;
     /**
-     * mac地址
-     */
-    private String macAddress;
-    /**
      * 删除模板的同时也删除模板图片文件
      */
     private boolean deleteAllTempleFiles;
@@ -92,14 +88,6 @@ public class ProjectBasicInfo {
         this.ffmpegUrl = ffmpegUrl;
     }
 
-    public String getMacAddress() {
-        return macAddress;
-    }
-
-    public void setMacAddress(String macAddress) {
-        this.macAddress = macAddress;
-    }
-
     public boolean isDeleteAllTempleFiles() {
         return deleteAllTempleFiles;
     }
@@ -116,14 +104,13 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, String macAddress, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
         this.modelUrl = modelUrl;
         this.tempJpgUrl = tempJpgUrl;
         this.ffmpegUrl = ffmpegUrl;
-        this.macAddress = macAddress;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }

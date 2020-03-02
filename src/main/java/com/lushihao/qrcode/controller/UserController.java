@@ -25,18 +25,18 @@ public class UserController {
     @RequestMapping("create")
     @ResponseBody
     public String create(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         return userInfoService.create(new UserInfo());
     }
 
     @RequestMapping("filter")
     @ResponseBody
     public Result filter() {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         UserInfo userInfo = userInfoService.filter();
         Result result = new Result(true, userInfo, null, null);
         return result;

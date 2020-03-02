@@ -34,9 +34,9 @@ public class QRCodeController {
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         QRCodeRequest qrCodeRequest = transform(reqMap);
         Result result = new Result(true, qrCodeService.create(qrCodeRequest), null, null);
         return result;
@@ -45,9 +45,9 @@ public class QRCodeController {
     @RequestMapping("test")
     @ResponseBody
     public Result test(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         QRCodeRequest qrCodeRequest = transform(reqMap);
         Result result = new Result(true, qrCodeService.test(qrCodeRequest), null, null);
         return result;
@@ -56,9 +56,9 @@ public class QRCodeController {
     @RequestMapping("selectRecord")
     @ResponseBody
     public Result selectRecord(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         QRCodeRecord qrCodeRecord = LSHMapUtils.mapToEntity(reqMap, QRCodeRecord.class);
         Result result = new Result(true, qrCodeService.selectRecord(qrCodeRecord), null, null);
         return result;
@@ -68,9 +68,9 @@ public class QRCodeController {
     @ResponseBody
     public Result qrcodeInit(@RequestBody Map<String, Object> reqMap) {
         Map<String, Object> map = new HashMap<>();
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         map.put("record", qrCodeService.selectRecord(new QRCodeRecord()));
         map.put("temple", qrTempleService.filter(""));
         map.put("business", businessService.filter(new Business()));

@@ -25,9 +25,9 @@ public class BusinessController {
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         String logoSrc = (String) reqMap.get("logoSrc");
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         Result result = new Result(true, null, businessService.create(business, logoSrc), null);
@@ -37,9 +37,9 @@ public class BusinessController {
     @RequestMapping("update")
     @ResponseBody
     public Result update(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         String logoSrc = (String) reqMap.get("logoSrc");
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         Result result = new Result(true, null, businessService.update(business, logoSrc), null);
@@ -49,9 +49,9 @@ public class BusinessController {
     @RequestMapping("delete")
     @ResponseBody
     public Result delete(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         String code = (String) reqMap.get("code");
         Result result = new Result(true, null, businessService.delete(code), null);
         return result;
@@ -60,9 +60,9 @@ public class BusinessController {
     @RequestMapping("filter")
     @ResponseBody
     public Result filter(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
+//        if (!lshmacUtil.check()) {
+//            return null;
+//        }
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         if ("".equals(business.getCode())) {
             business.setCode(null);
