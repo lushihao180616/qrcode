@@ -7,6 +7,6 @@ public interface WaterMarkService {
 
     Result addWaterMark(WaterMark waterMark);
 
-    String testWaterMark(WaterMark waterMark);
+    Result testWaterMark(WaterMark waterMark);
 
 }

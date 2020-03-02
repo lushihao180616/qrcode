@@ -18,40 +18,31 @@ public class WaterMarkController {
 
     @Resource
     private WaterMarkService waterMarkService;
-    @Resource
-    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("add")
     @ResponseBody
     public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
-        WaterMark wm = new WaterMark();
+        WaterMark wm = transform(reqMap);
         wm.setBusinessCode((String) reqMap.get("businessCode"));
-        wm.setPath((String) reqMap.get("path"));
-        wm.setHeightPercentage((Integer) reqMap.get("height"));
-        wm.setxPercentage((Integer) reqMap.get("x"));
-        wm.setyPercentage((Integer) reqMap.get("y"));
-        wm.setAlpha((Integer) reqMap.get("alpha"));
         return waterMarkService.addWaterMark(wm);
     }
 
     @RequestMapping("test")
     @ResponseBody
     public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
+        WaterMark wm = transform(reqMap);
+        wm.setBusinessCode("00000000");
+        return waterMarkService.testWaterMark(wm);
+    }
+
+    private WaterMark transform(Map<String, Object> reqMap) {
         WaterMark wm = new WaterMark();
-        wm.setBusinessCode((String) reqMap.get("businessCode"));
         wm.setPath((String) reqMap.get("path"));
         wm.setHeightPercentage((Integer) reqMap.get("height"));
         wm.setxPercentage((Integer) reqMap.get("x"));
         wm.setyPercentage((Integer) reqMap.get("y"));
         wm.setAlpha((Integer) reqMap.get("alpha"));
-        Result result = new Result(true, null, waterMarkService.testWaterMark(wm), null);
-        return result;
+        return wm;
     }
 
 }

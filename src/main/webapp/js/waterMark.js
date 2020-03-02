@@ -65,7 +65,7 @@ function create() {
                 if (result.ifSuccess) {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var waterMarks = document.getElementById("waterMarks");
-                    var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_waterMark.jpg';
+                    var url = result.bean;
                     var ifHave = false;
                     for (var i = 0; i < tableRow.length; i++) {
                         if (tableRow[i] == url) {
@@ -127,12 +127,13 @@ function test() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                if (result.info.substring(0, 4) == '添加成功') {
-                    document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_test.jpg';
+                if (result.ifSuccess) {
+                    document.getElementById("createTest").value = result.bean;
+                    alert(result.info);
                 } else {
                     document.getElementById("createTest").value = '';
+                    alert(result.errorInfo);
                 }
-                alert(result.info);
             }
         }
     }
