@@ -23,8 +23,7 @@ public class VideoController {
     public Result create(@RequestBody Map<String, Object> reqMap) {
         VideoWaterMark videoWaterMark = transform(reqMap);
         String code = (String) reqMap.get("businessCode");
-        Result result = new Result(true, null, videoService.create(videoWaterMark, code), null);
-        return result;
+        return videoService.create(videoWaterMark, code);
     }
 
     @RequestMapping("test")
@@ -32,8 +31,7 @@ public class VideoController {
     public Result test(@RequestBody Map<String, Object> reqMap) {
         VideoWaterMark videoWaterMark = transform(reqMap);
         String code = "00000000";
-        Result result = new Result(true, null, videoService.test(videoWaterMark, code), null);
-        return result;
+        return videoService.test(videoWaterMark, code);
     }
 
     private VideoWaterMark transform(Map<String, Object> reqMap) {

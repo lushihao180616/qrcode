@@ -64,7 +64,7 @@ function create() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                if (result.info == '添加成功') {
+                if (result.ifSuccess) {
                     document.getElementById("tableTitle").style.visibility = "visible";
                     var videos = document.getElementById("videos");
                     var url = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_new.mp4';
@@ -81,11 +81,13 @@ function create() {
                             '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
                             '        <td class="bottomTd2">' + url + '</td>\n' +
                             '    </tr>';
+                        document.getElementById('createPath').value = '';
+                        document.getElementById("createTest").value = '';
                     }
-                    document.getElementById('createPath').value = '';
-                    document.getElementById("createTest").value = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
-                alert(result.info);
             }
         }
     }
@@ -125,12 +127,13 @@ function test() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                if (result.info == '添加成功') {
-                    document.getElementById("createTest").value = document.getElementById('createPath').value.substring(0, document.getElementById('createPath').value.lastIndexOf(".")) + '_test.mp4';
-                } else {
+                if (result.ifSuccess) {
+                    document.getElementById("createTest").value = result.bean;
+                    alert(result.info);
+                }else{
                     document.getElementById("createTest").value = '';
+                    alert(result.errorInfo);
                 }
-                alert(result.info);
             }
         }
     }

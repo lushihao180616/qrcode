@@ -2,6 +2,7 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.entity.business.Business;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
@@ -24,7 +25,7 @@ public class VideoServiceImpl implements VideoService {
     private LSHCharUtil lshCharUtil;
 
     @Override
-    public String create(VideoWaterMark videoWaterMark, String code) {
+    public Result create(VideoWaterMark videoWaterMark, String code) {
         //获得商家
         Business business = new Business();
         business.setCode(code);
@@ -32,8 +33,9 @@ public class VideoServiceImpl implements VideoService {
         if (list.size() > 0) {
             videoWaterMark.setBusiness(list.get(0));
         } else {
-            return "商家不存在";
+            return new Result(false, null, null, "商家不存在");
         }
+
         //删除测试文件
         File testFile = new File(videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_test.mp4");
         if (testFile.exists()) {
@@ -43,9 +45,12 @@ public class VideoServiceImpl implements VideoService {
         String newVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_new.mp4";
         videoWaterMark.setNewVideoPath(newVideoPath);
         if (lshFfmpegUtil.checkFileType(newVideoPath) != lshFfmpegUtil.VIDEO) {
-            return "当前文件格式不支持";
+            return new Result(false, null, null, "不支持此文件格式");
         }
         VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());
+        if (videoInfo == null) {
+            return new Result(false, null, null, "读取文件信息失败");
+        }
         String name = videoWaterMark.getBusiness().getName();
         int num = 0;
         for (char c : name.toCharArray()) {
@@ -59,10 +64,14 @@ public class VideoServiceImpl implements VideoService {
         videoWaterMark.setFontX((int) ((videoInfo.getWidth() - fontWidth) * ((float) videoWaterMark.getFontX() / 100)));
         videoWaterMark.setFontY((int) ((videoInfo.getHeight() - videoWaterMark.getFontSize()) * ((float) videoWaterMark.getFontY() / 100)));
         //执行加水印
-        return lshFfmpegUtil.videoWaterMark(videoWaterMark);
+        if (!lshFfmpegUtil.videoWaterMark(videoWaterMark)) {
+            return new Result(false, null, null, "添加失败，请重启软件后再试");
+        } else {
+            return new Result(true, videoWaterMark.getNewVideoPath(), "添加成功", null);
+        }
     }
 
-    public String test(VideoWaterMark videoWaterMark, String code) {
+    public Result test(VideoWaterMark videoWaterMark, String code) {
         //获得商家
         Business business = new Business();
         business.setCode(code);
@@ -70,15 +79,19 @@ public class VideoServiceImpl implements VideoService {
         if (list.size() > 0) {
             videoWaterMark.setBusiness(list.get(0));
         } else {
-            return "商家不存在";
+            return new Result(false, null, null, "商家不存在");
         }
+
         //获得输出文件地址
         String testVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_test.mp4";
         videoWaterMark.setNewVideoPath(testVideoPath);
         if (lshFfmpegUtil.checkFileType(testVideoPath) != lshFfmpegUtil.VIDEO) {
-            return "当前文件格式不支持";
+            return new Result(false, null, null, "不支持此文件格式");
         }
         VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());
+        if (videoInfo == null) {
+            return new Result(false, null, null, "读取文件信息失败");
+        }
         String name = videoWaterMark.getBusiness().getName();
         int num = 0;
         for (char c : name.toCharArray()) {
@@ -111,7 +124,7 @@ public class VideoServiceImpl implements VideoService {
             }
         }
         if (num % 2 > 0) {
-            businessName += "0";
+            businessName += "-";
         }
         business.setName(businessName);
         videoWaterMark.setBusiness(business);
@@ -119,7 +132,11 @@ public class VideoServiceImpl implements VideoService {
         videoWaterMark.setFontX((int) ((videoInfo.getWidth() - fontWidth) * ((float) videoWaterMark.getFontX() / 100)));
         videoWaterMark.setFontY((int) ((videoInfo.getHeight() - videoWaterMark.getFontSize()) * ((float) videoWaterMark.getFontY() / 100)));
         //执行加水印
-        return lshFfmpegUtil.videoWaterMark(videoWaterMark);
+        if (!lshFfmpegUtil.videoWaterMark(videoWaterMark)) {
+            return new Result(false, null, null, "添加失败，请重启软件后再试");
+        } else {
+            return new Result(true, videoWaterMark.getNewVideoPath(), "添加成功", null);
+        }
     }
 
 }

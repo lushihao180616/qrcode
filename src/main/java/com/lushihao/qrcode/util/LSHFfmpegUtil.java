@@ -103,7 +103,7 @@ public class LSHFfmpegUtil {
      * @param videoWaterMark
      * @return
      */
-    public String videoWaterMark(VideoWaterMark videoWaterMark) {
+    public boolean videoWaterMark(VideoWaterMark videoWaterMark) {
         File file = new File(videoWaterMark.getNewVideoPath());
         if (file.exists()) {
             file.delete();
@@ -139,9 +139,9 @@ public class LSHFfmpegUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "添加失败";
+            return false;
         }
-        return "添加成功";
+        return true;
     }
 
 }
