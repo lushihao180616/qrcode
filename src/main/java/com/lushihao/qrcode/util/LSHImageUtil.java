@@ -123,6 +123,26 @@ public class LSHImageUtil {
     }
 
     /**
+     * 拷贝文件夹
+     *
+     * @param srcPath
+     * @param destPath
+     */
+    public void copyDirectory(String srcPath, String destPath) {
+        //初始化文件复制
+        File file1 = new File(srcPath);
+        //把文件里面内容放进数组
+        File[] fs = file1.listFiles();
+        //遍历文件及文件夹
+        for (File f : fs) {
+            if (f.isFile()) {
+                //文件
+                copyFile(f.getPath(), destPath + "\\" + f.getName()); //调用文件拷贝的方法
+            }
+        }
+    }
+
+    /**
      * 拷贝文件
      *
      * @param srcPath

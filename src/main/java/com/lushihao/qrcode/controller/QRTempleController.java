@@ -19,15 +19,10 @@ public class QRTempleController {
 
     @Resource
     private QRTempleService qrTempleService;
-    @Resource
-    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
         QRCodeTemple qrCodeTemple = translate(reqMap);
         String templeItemsPath = (String) reqMap.get("templeItemsPath");
         Result result = new Result(true, null, qrTempleService.create(qrCodeTemple, templeItemsPath), null);
@@ -37,9 +32,6 @@ public class QRTempleController {
     @RequestMapping("update")
     @ResponseBody
     public Result update(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
         QRCodeTemple qrCodeTemple = translate(reqMap);
         String templeItemsPath = (String) reqMap.get("templeItemsPath");
         Result result = new Result(true, null, qrTempleService.update(qrCodeTemple, templeItemsPath), null);
@@ -49,9 +41,6 @@ public class QRTempleController {
     @RequestMapping("delete")
     @ResponseBody
     public Result delete(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
         String code = (String) reqMap.get("code");
         Result result = new Result(true, null, qrTempleService.delete(code), null);
         return result;
@@ -60,9 +49,6 @@ public class QRTempleController {
     @RequestMapping("filter")
     @ResponseBody
     public Result filter(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
         String code = (String) reqMap.get("code");
         if ("".equals(code)) {
             code = null;
@@ -74,9 +60,6 @@ public class QRTempleController {
     @RequestMapping("downLoad")
     @ResponseBody
     public Result downLoad(@RequestBody String downLoad) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
         Result result = new Result(true, null, qrTempleService.downLoad(downLoad), null);
         return result;
     }

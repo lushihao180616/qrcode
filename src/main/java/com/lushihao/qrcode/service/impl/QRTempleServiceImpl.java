@@ -2,21 +2,18 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.QRTempleMapper;
-import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
+import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
-import com.lushihao.qrcode.service.QRCodeService;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.QRTempleService;
+import com.lushihao.qrcode.util.LSHImageUtil;
 import com.lushihao.qrcode.util.LSHQRCodeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +26,9 @@ public class QRTempleServiceImpl implements QRTempleService {
     @Resource
     private ProjectBasicInfo projectBasicInfo;
     @Resource
-    private QRCodeService qrCodeService;
-    @Resource
     private LSHQRCodeUtil lshqrCodeUtil;
+    @Resource
+    private LSHImageUtil lshImageUtil;
 
     @Override
     @Transactional
@@ -45,7 +42,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 templeDirectory.mkdir();//创建文件夹
             }
             //下面需要拷贝文件夹中所有文件
-            copyDirectory(templeItemsPath.substring(0, templeItemsPath.lastIndexOf("\\")), templePath);
+            lshImageUtil.copyDirectory(templeItemsPath.substring(0, templeItemsPath.lastIndexOf("\\")), templePath);
 
             String modelPath = projectBasicInfo.getModelUrl();
             File modelDirectory = new File(modelPath);
@@ -69,7 +66,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 //商标地址
                 String templePath = projectBasicInfo.getTempleUrl() + "\\" + qrCodeTemple.getCode();
                 //下面需要拷贝文件夹中所有文件
-                copyDirectory(templeItemsPath.substring(0, templeItemsPath.lastIndexOf("\\")), templePath);
+                lshImageUtil.copyDirectory(templeItemsPath.substring(0, templeItemsPath.lastIndexOf("\\")), templePath);
             }
 
             String modelPath = projectBasicInfo.getModelUrl();
@@ -93,10 +90,10 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (projectBasicInfo.isDeleteAllTempleFiles()) {
                 //模板地址
                 String logoPath = projectBasicInfo.getTempleUrl() + "\\" + code;
-                delFile(logoPath);
+                lshImageUtil.delFileOrDir(logoPath);
                 //模板地址
                 String modelPath = projectBasicInfo.getModelUrl() + "\\" + code + ".jpg";
-                delFile(modelPath);
+                lshImageUtil.delFileOrDir(modelPath);
             }
 
             return "删除成功";
@@ -128,82 +125,6 @@ public class QRTempleServiceImpl implements QRTempleService {
         // 解码
         // 下载模板、生成数据库数据
         return "下载成功";
-    }
-
-    /**
-     * 拷贝文件夹
-     *
-     * @param from
-     * @param to
-     */
-    private void copyDirectory(String from, String to) {
-        //初始化文件复制
-        File file1 = new File(from);
-        //把文件里面内容放进数组
-        File[] fs = file1.listFiles();
-        //遍历文件及文件夹
-        for (File f : fs) {
-            if (f.isFile()) {
-                //文件
-                copyFile(f.getPath(), to + "\\" + f.getName()); //调用文件拷贝的方法
-            }
-        }
-    }
-
-    /**
-     * 拷贝文件
-     *
-     * @param srcPath
-     * @param destPath
-     * @throws IOException
-     */
-    private void copyFile(String srcPath, String destPath) {
-        FileOutputStream fos = null;
-        FileInputStream fis = null;
-        try {
-            // 打开输入流
-            fis = new FileInputStream(srcPath);
-            // 打开输出流
-            fos = new FileOutputStream(destPath);
-
-            // 读取和写入信息
-            int len = 0;
-            while ((len = fis.read()) != -1) {
-                fos.write(len);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 删除文件或文件夹下所有内容
-     *
-     * @param filename
-     */
-    private void delFile(String filename) {
-        File file = new File(filename);
-        if (!file.exists()) {
-            return;
-        }
-        if (file.isFile()) {
-            file.delete();
-            return;
-        } else {
-            File[] fs = file.listFiles();
-            for (File f : fs) {
-                f.delete();
-            }
-            file.delete();
-            return;
-        }
     }
 
 }
