@@ -39,7 +39,7 @@
         </div>
         <div class="logoDiv">
             <img class="logo"
-                 src="../image/logo.jpg">
+                 src="http://sinacloud.net/cjml-qrcode/00000000/d.va.jpg?KID=sina,30b747sMR3OcrzNJwhpn&Expires=1583235510&ssig=TkVvHLNDEb">
         </div>
         <div class="rigthDiv">
             <div class="userInfoRow">
