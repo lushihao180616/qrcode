@@ -71,7 +71,7 @@
     </div>
     <div class="lineItem4" onclick="navigate('waterMark.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
-        <div>水&emsp;印&emsp;管&emsp;理</div>
+        <div>图&emsp;片&emsp;管&emsp;理</div>
     </div>
     <div class="lineItem5" onclick="navigate('video.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
