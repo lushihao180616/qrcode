@@ -13,16 +13,20 @@ function userInfo() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                document.getElementById("code").innerText = result.bean.business.code;
-                document.getElementById("name").innerText = result.bean.business.name;
-                document.getElementById("businessName").innerText = result.bean.business.businessName;
-                document.getElementById("phone").innerText = result.bean.business.phone;
-                document.getElementById("address").innerText = result.bean.business.address;
-                document.getElementById("type").innerText = result.bean.userType.name;
-                if (result.bean.count == -1) {
-                    document.getElementById("count").innerText = "无限";
+                if (result.ifSuccess) {
+                    document.getElementById("code").innerText = result.bean.business.code;
+                    document.getElementById("name").innerText = result.bean.business.name;
+                    document.getElementById("businessName").innerText = result.bean.business.businessName;
+                    document.getElementById("phone").innerText = result.bean.business.phone;
+                    document.getElementById("address").innerText = result.bean.business.address;
+                    document.getElementById("type").innerText = result.bean.userType.name;
+                    if (result.bean.count == -1) {
+                        document.getElementById("count").innerText = "无限";
+                    } else {
+                        document.getElementById("count").innerText = result.bean.count;
+                    }
                 } else {
-                    document.getElementById("count").innerText = result.bean.count;
+                    alert(result.errorInfo);
                 }
             }
         }

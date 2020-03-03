@@ -36,4 +36,8 @@ public class LSHMACUtil {
         return sb.toString().toUpperCase();
     }
 
+//    public static void main(String[] args) {
+//        System.out.println(new LSHMACUtil().getLocalMac());
+//    }
+
 }

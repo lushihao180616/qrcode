@@ -19,9 +19,7 @@ public class UserController {
     @RequestMapping("filter")
     @ResponseBody
     public Result filter() {
-        UserInfo userInfo = userInfoService.filter();
-        Result result = new Result(true, userInfo, null, null);
-        return result;
+        return new Result(true, userInfoService.filter(), "搜索完成", null);
     }
 
 }
