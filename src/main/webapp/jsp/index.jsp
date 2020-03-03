@@ -53,21 +53,21 @@
 </div>
 
 <p class="middleTitle">
-    页面信息
+    基础信息管理模块
 </p>
 
 <div class="linkItems">
-    <div class="lineItem1" onclick="navigate('qrcode.jsp')" onMouseOver="makevisible(this,0)"
-         onMouseOut="makevisible(this,1)">
-        <div>二&ensp;维&ensp;码&ensp;管&ensp;理</div>
-    </div>
-    <div class="lineItem2" onclick="navigate('business.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem1" onclick="navigate('business.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>商&emsp;家&emsp;管&emsp;理</div>
     </div>
-    <div class="lineItem3" onclick="navigate('temple.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem2" onclick="navigate('temple.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>模&emsp;板&emsp;管&emsp;理</div>
+    </div>
+    <div class="lineItem3" onclick="navigate('qrcode.jsp')" onMouseOver="makevisible(this,0)"
+         onMouseOut="makevisible(this,1)">
+        <div>二&ensp;维&ensp;码&ensp;管&ensp;理</div>
     </div>
     <div class="lineItem4" onclick="navigate('waterMark.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
