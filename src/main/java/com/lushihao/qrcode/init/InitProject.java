@@ -56,7 +56,7 @@ public class InitProject implements ApplicationRunner {
         }
     }
 
-    private void getUserInfo(){
+    public void getUserInfo() {
         List<Map<String, Object>> userInfoList = userInfoMapper.filter(userBasicInfo.getCode());
 
         if (userInfoList.size() > 0) {
@@ -69,7 +69,7 @@ public class InitProject implements ApplicationRunner {
         Business business = new Business();
         business.setCode(userBasicInfo.getCode());
         List<Business> businessList = businessMapper.filter(business);
-        if(businessList.size() > 0){
+        if (businessList.size() > 0) {
             business = businessMapper.filter(business).get(0);
         }
         userInfo.setBusiness(business);
