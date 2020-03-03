@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lushihao.qrcode.dao.ManagerMapper">
+    <insert id="create" parameterType="Manager">
+        INSERT INTO
+            manager
+            (code,name,phone,idCard)
+        VALUES
+            (
+            #{code},
+            #{name},
+            #{phone},
+            #{idCard}
+            )
+    </insert>
+    <update id="update" parameterType="Manager">
+        UPDATE
+            manager
+        SET
+            name=#{name},
+            phone=#{phone},
+            idCard=#{idCard}
+        WHERE
+            code=#{code}
+    </update>
+    <delete id="delete">
+        DELETE FROM
+            manager
+        WHERE
+            code=#{code}
+    </delete>
+    <select id="filter" parameterType="Manager" resultType="Manager">
+        SELECT
+        *
+        FROM
+        manager
+        WHERE
+        1=1
+        <if test="code != null">
+            AND code
+            LIKE '${code}%'
+        </if>
+        <if test="name != null">
+            AND name
+            LIKE '%${name}%'
+        </if>
+        <if test="phone != null">
+            AND phone
+            LIKE '${phone}%'
+        </if>
+        <if test="idCard != null">
+            AND idCard
+            LIKE '${idCard}%'
+        </if>
+    </select>
+</mapper>

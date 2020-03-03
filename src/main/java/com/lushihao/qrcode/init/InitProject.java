@@ -4,6 +4,7 @@ import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.dao.UserInfoMapper;
 import com.lushihao.qrcode.entity.business.Business;
+import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
@@ -64,15 +65,21 @@ public class InitProject implements ApplicationRunner {
             userInfo = LSHMapUtils.mapToEntity(map, UserInfo.class);
             userInfo.setCount((Integer) map.get("count"));
             userInfo.setUserType(userInfoMapper.filterType((String) map.get("typecode")).get(0));
+            if (userInfo.getUserType().getType().equals("1")) {//商家信息
+                Business business = new Business();
+                business.setCode(userBasicInfo.getCode());
+                List<Business> businessList = businessMapper.filter(business);
+                if (businessList.size() > 0) {
+                    business = businessMapper.filter(business).get(0);
+                }
+                userInfo.setBusiness(business);
+            } else {//管理员信息
+                Manager manager = new Manager();
+                manager.setCode(userBasicInfo.getCode());
+            }
         }
 
-        Business business = new Business();
-        business.setCode(userBasicInfo.getCode());
-        List<Business> businessList = businessMapper.filter(business);
-        if (businessList.size() > 0) {
-            business = businessMapper.filter(business).get(0);
-        }
-        userInfo.setBusiness(business);
+
     }
 
 }
