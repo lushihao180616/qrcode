@@ -2,7 +2,7 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.QRTempleMapper;
-import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
@@ -32,9 +32,11 @@ public class QRTempleServiceImpl implements QRTempleService {
 
     @Override
     @Transactional
-    public String create(QRCodeTemple qrCodeTemple, String templeItemsPath) {
+    public Result create(QRCodeTemple qrCodeTemple, String templeItemsPath) {
         int back = qrTempleMapper.create(qrCodeTemple);
-        if (back > 0) {
+        if (back == 0) {
+            return new Result(false, null, null, "创建失败");
+        } else {
             //模板地址
             String templePath = projectBasicInfo.getTempleUrl() + "\\" + qrCodeTemple.getCode();
             File templeDirectory = new File(templePath);
@@ -49,19 +51,18 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            QRCodeRequest qrCodeRequest = new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0);
-            QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
-            lshqrCodeUtil.qrcode(qrCodeVo, false, true);
-            return "创建成功";
+            lshqrCodeUtil.qrcode(new QRCodeVo("超级码丽", qrTempleMapper.filter(qrCodeTemple.getCode()).get(0), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0), false, true);
+            return new Result(true, filter(null), "创建成功", null);
         }
-        return "创建失败";
     }
 
     @Override
     @Transactional
-    public String update(QRCodeTemple qrCodeTemple, String templeItemsPath) {
+    public Result update(QRCodeTemple qrCodeTemple, String templeItemsPath) {
         int back = qrTempleMapper.update(qrCodeTemple);
-        if (back > 0) {
+        if (back == 0) {
+            return new Result(false, null, null, "更新失败");
+        } else {
             if (templeItemsPath != null && !"".equals(templeItemsPath)) {
                 //商标地址
                 String templePath = projectBasicInfo.getTempleUrl() + "\\" + qrCodeTemple.getCode();
@@ -74,19 +75,18 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            QRCodeRequest qrCodeRequest = new QRCodeRequest("超级码丽", qrCodeTemple.getCode(), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0);
-            QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
-            lshqrCodeUtil.qrcode(qrCodeVo, false, true);
-            return "更新成功";
+            lshqrCodeUtil.qrcode(new QRCodeVo("超级码丽", qrTempleMapper.filter(qrCodeTemple.getCode()).get(0), "00000000", qrCodeTemple.getCode(), null, 1950, 0, 0, 0, 0), false, true);
+            return new Result(true, filter(null), "更新成功", null);
         }
-        return "更新失败";
     }
 
     @Override
     @Transactional
-    public String delete(String code) {
+    public Result delete(String code) {
         int back = qrTempleMapper.delete(code);
-        if (back > 0) {
+        if (back == 0) {
+            return new Result(false, null, null, "删除失败");
+        } else {
             if (projectBasicInfo.isDeleteAllTempleFiles()) {
                 //模板地址
                 String logoPath = projectBasicInfo.getTempleUrl() + "\\" + code;
@@ -95,10 +95,8 @@ public class QRTempleServiceImpl implements QRTempleService {
                 String modelPath = projectBasicInfo.getModelUrl() + "\\" + code + ".jpg";
                 lshImageUtil.delFileOrDir(modelPath);
             }
-
-            return "删除成功";
+            return new Result(true, filter(null), "删除成功", null);
         }
-        return "删除失败";
     }
 
     @Override

@@ -15,50 +15,58 @@ function init() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var temples = document.getElementById("temples");
-                temples.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    var ifOnly = ''
-                    if (result.bean[i].ifOnly) {
-                        ifOnly += "是"
-                    } else {
-                        ifOnly += "否"
-                    }
-                    var ifShowLogo = ''
-                    if (result.bean[i].ifShowLogo) {
-                        ifShowLogo += "是"
-                    } else {
-                        ifShowLogo += "否"
-                    }
-                    var ifSelfBg = ''
-                    if (result.bean[i].ifSelfBg) {
-                        ifSelfBg += "是"
-                    } else {
-                        ifSelfBg += "否"
-                    }
-                    temples.innerHTML += '\n' +
-                        '    <tr >\n' +
-                        '        <td class="bottomTd1">' + result.bean[i].code + '</td>\n' +
-                        '        <td class="bottomTd2">' + result.bean[i].money + '</td>\n' +
-                        '        <td class="bottomTd3">' + ifOnly + '</td>\n' +
-                        '        <td class="bottomTd4">' + ifShowLogo + '</td>\n' +
-                        '        <td class="bottomTd5">' + ifSelfBg + '</td>\n' +
-                        '        <td class="bottomTd6">' + result.bean[i].arti + '</td>\n' +
-                        '        <td class="bottomTd7">' + result.bean[i].width + '</td>\n' +
-                        '        <td class="bottomTd8">' + result.bean[i].height + '</td>\n' +
-                        '        <td class="bottomTd9">' + result.bean[i].iconNum + '</td>\n' +
-                        '        <td class="bottomTd10">' + result.bean[i].x + '</td>\n' +
-                        '        <td class="bottomTd11">' + result.bean[i].y + '</td>\n' +
-                        '        <td class="bottomTd12">' + result.bean[i].angle + '</td>\n' +
-                        '        <td class="bottomTd13">' + result.bean[i].multiple + '</td>\n' +
-                        '        <td class="bottomTd14">' + result.bean[i].frame + '</td>\n' +
-                        '        <td class="bottomTd15">' + result.bean[i].path + '</td>\n' +
-                        '    </tr>';
+                if (result.ifSuccess) {
+                    handleTemples(result.bean);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
     }
     xhr.send(JSON.stringify(filterTemple));
+}
+
+function handleTemples(templeList) {
+    var temples = document.getElementById("temples");
+    temples.innerHTML = '';
+    for (var i = 0; i < templeList.length; i++) {
+        var ifOnly = ''
+        if (templeList[i].ifOnly) {
+            ifOnly += "是"
+        } else {
+            ifOnly += "否"
+        }
+        var ifShowLogo = ''
+        if (templeList[i].ifShowLogo) {
+            ifShowLogo += "是"
+        } else {
+            ifShowLogo += "否"
+        }
+        var ifSelfBg = ''
+        if (templeList[i].ifSelfBg) {
+            ifSelfBg += "是"
+        } else {
+            ifSelfBg += "否"
+        }
+        temples.innerHTML += '\n' +
+            '    <tr >\n' +
+            '        <td class="bottomTd1">' + templeList[i].code + '</td>\n' +
+            '        <td class="bottomTd2">' + templeList[i].money + '</td>\n' +
+            '        <td class="bottomTd3">' + ifOnly + '</td>\n' +
+            '        <td class="bottomTd4">' + ifShowLogo + '</td>\n' +
+            '        <td class="bottomTd5">' + ifSelfBg + '</td>\n' +
+            '        <td class="bottomTd6">' + templeList[i].arti + '</td>\n' +
+            '        <td class="bottomTd7">' + templeList[i].width + '</td>\n' +
+            '        <td class="bottomTd8">' + templeList[i].height + '</td>\n' +
+            '        <td class="bottomTd9">' + templeList[i].iconNum + '</td>\n' +
+            '        <td class="bottomTd10">' + templeList[i].x + '</td>\n' +
+            '        <td class="bottomTd11">' + templeList[i].y + '</td>\n' +
+            '        <td class="bottomTd12">' + templeList[i].angle + '</td>\n' +
+            '        <td class="bottomTd13">' + templeList[i].multiple + '</td>\n' +
+            '        <td class="bottomTd14">' + templeList[i].frame + '</td>\n' +
+            '        <td class="bottomTd15">' + templeList[i].path + '</td>\n' +
+            '    </tr>';
+    }
 }
 
 function downLoadTemple() {
@@ -125,19 +133,23 @@ function create() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("createCode").value = '';
-                document.getElementById("createMoney").value = '';
-                document.getElementById("createWidth").value = '1950';
-                document.getElementById("createHeight").value = '1950';
-                document.getElementById("createIconNum").value = '1';
-                document.getElementById("createX").value = '0';
-                document.getElementById("createY").value = '0';
-                document.getElementById("createAngle").value = '0';
-                document.getElementById("createMultiple").value = '1';
-                document.getElementById("createFrame").value = '0/0/0';
-                document.getElementById('createTempleItemsPath').value = '';
-                alert(result.info);
+                if (result.ifSuccess) {
+                    handleTemples(result.bean);
+                    document.getElementById("createCode").value = '';
+                    document.getElementById("createMoney").value = '';
+                    document.getElementById("createWidth").value = '1950';
+                    document.getElementById("createHeight").value = '1950';
+                    document.getElementById("createIconNum").value = '1';
+                    document.getElementById("createX").value = '0';
+                    document.getElementById("createY").value = '0';
+                    document.getElementById("createAngle").value = '0';
+                    document.getElementById("createMultiple").value = '1';
+                    document.getElementById("createFrame").value = '0/0/0';
+                    document.getElementById('createTempleItemsPath').value = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
+                }
             }
         }
     }
@@ -161,16 +173,21 @@ function updateSearch() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var updateTemples = document.getElementById("updateTemples");
-                updateTemples.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(result.bean[i]);
-                    option.text = result.bean[i].code;
-                    updateTemples.add(option);
-                }
-                if (result.bean.length > 0) {
-                    updateTempleCode("updateTemples")
+                if (result.ifSuccess) {
+                    var updateTemples = document.getElementById("updateTemples");
+                    updateTemples.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = JSON.stringify(result.bean[i]);
+                        option.text = result.bean[i].code;
+                        updateTemples.add(option);
+                    }
+                    if (result.bean.length > 0) {
+                        updateTempleCode("updateTemples")
+                    }
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -232,19 +249,23 @@ function update() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("updateTemples").innerHTML = '';
-                document.getElementById("updateMoney").value = '';
-                document.getElementById("updateWidth").value = '';
-                document.getElementById("updateHeight").value = '';
-                document.getElementById("updateIconNum").value = '';
-                document.getElementById("updateX").value = '';
-                document.getElementById("updateY").value = '';
-                document.getElementById("updateAngle").value = '';
-                document.getElementById("updateMultiple").value = '';
-                document.getElementById("updateFrame").value = '';
-                document.getElementById('updateTempleItemsPath').value = '';
-                alert(result.info);
+                if (result.ifSuccess) {
+                    handleTemples(result.bean);
+                    document.getElementById("updateTemples").innerHTML = '';
+                    document.getElementById("updateMoney").value = '';
+                    document.getElementById("updateWidth").value = '';
+                    document.getElementById("updateHeight").value = '';
+                    document.getElementById("updateIconNum").value = '';
+                    document.getElementById("updateX").value = '';
+                    document.getElementById("updateY").value = '';
+                    document.getElementById("updateAngle").value = '';
+                    document.getElementById("updateMultiple").value = '';
+                    document.getElementById("updateFrame").value = '';
+                    document.getElementById('updateTempleItemsPath').value = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
+                }
             }
         }
     }
@@ -268,16 +289,21 @@ function deleteSearch() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var deleteTemples = document.getElementById("deleteTemples");
-                deleteTemples.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(result.bean[i]);
-                    option.text = result.bean[i].code;
-                    deleteTemples.add(option);
-                }
-                if (result.bean.length > 0) {
-                    deleteTempleCode("deleteTemples")
+                if (result.ifSuccess) {
+                    var deleteTemples = document.getElementById("deleteTemples");
+                    deleteTemples.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = JSON.stringify(result.bean[i]);
+                        option.text = result.bean[i].code;
+                        deleteTemples.add(option);
+                    }
+                    if (result.bean.length > 0) {
+                        deleteTempleCode("deleteTemples")
+                    }
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -314,17 +340,21 @@ function deleteOne() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("deleteTemples").innerHTML = '';
-                document.getElementById("deleteMoney").innerText = '';
-                document.getElementById("deleteWidth").innerText = '';
-                document.getElementById("deleteHeight").innerText = '';
-                document.getElementById("deleteIconNum").innerText = '';
-                document.getElementById("deleteX").innerText = '';
-                document.getElementById("deleteY").innerText = '';
-                document.getElementById("deleteAngle").innerText = '';
-                document.getElementById("deleteMultiple").innerText = '';
-                alert(result.info);
+                if (result.ifSuccess) {
+                    handleTemples(result.bean);
+                    document.getElementById("deleteTemples").innerHTML = '';
+                    document.getElementById("deleteMoney").innerText = '';
+                    document.getElementById("deleteWidth").innerText = '';
+                    document.getElementById("deleteHeight").innerText = '';
+                    document.getElementById("deleteIconNum").innerText = '';
+                    document.getElementById("deleteX").innerText = '';
+                    document.getElementById("deleteY").innerText = '';
+                    document.getElementById("deleteAngle").innerText = '';
+                    document.getElementById("deleteMultiple").innerText = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
+                }
             }
         }
     }

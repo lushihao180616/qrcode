@@ -23,27 +23,19 @@ public class QRTempleController {
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-        QRCodeTemple qrCodeTemple = translate(reqMap);
-        String templeItemsPath = (String) reqMap.get("templeItemsPath");
-        Result result = new Result(true, null, qrTempleService.create(qrCodeTemple, templeItemsPath), null);
-        return result;
+        return qrTempleService.create(translate(reqMap), (String) reqMap.get("templeItemsPath"));
     }
 
     @RequestMapping("update")
     @ResponseBody
     public Result update(@RequestBody Map<String, Object> reqMap) {
-        QRCodeTemple qrCodeTemple = translate(reqMap);
-        String templeItemsPath = (String) reqMap.get("templeItemsPath");
-        Result result = new Result(true, null, qrTempleService.update(qrCodeTemple, templeItemsPath), null);
-        return result;
+        return qrTempleService.update(translate(reqMap), (String) reqMap.get("templeItemsPath"));
     }
 
     @RequestMapping("delete")
     @ResponseBody
     public Result delete(@RequestBody Map<String, Object> reqMap) {
-        String code = (String) reqMap.get("code");
-        Result result = new Result(true, null, qrTempleService.delete(code), null);
-        return result;
+        return qrTempleService.delete((String) reqMap.get("code"));
     }
 
     @RequestMapping("filter")
@@ -53,8 +45,7 @@ public class QRTempleController {
         if ("".equals(code)) {
             code = null;
         }
-        Result result = new Result(true, qrTempleService.filter(code), null, null);
-        return result;
+        return new Result(true, qrTempleService.filter(code), "搜索完成", null);
     }
 
     @RequestMapping("downLoad")
