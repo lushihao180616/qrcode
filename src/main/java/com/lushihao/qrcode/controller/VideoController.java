@@ -3,6 +3,7 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
+import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,15 @@ public class VideoController {
 
     @Resource
     private VideoService videoService;
+    @Resource
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("add")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         VideoWaterMark videoWaterMark = transform(reqMap);
         String code = (String) reqMap.get("businessCode");
         return videoService.create(videoWaterMark, code);
@@ -29,6 +35,9 @@ public class VideoController {
     @RequestMapping("test")
     @ResponseBody
     public Result test(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         VideoWaterMark videoWaterMark = transform(reqMap);
         String code = "00000000";
         return videoService.test(videoWaterMark, code);

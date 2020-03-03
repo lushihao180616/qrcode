@@ -19,28 +19,42 @@ public class QRTempleController {
 
     @Resource
     private QRTempleService qrTempleService;
+    @Resource
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-        return qrTempleService.create(translate(reqMap), (String) reqMap.get("templeItemsPath"));
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        return qrTempleService.create(transform(reqMap), (String) reqMap.get("templeItemsPath"));
     }
 
     @RequestMapping("update")
     @ResponseBody
     public Result update(@RequestBody Map<String, Object> reqMap) {
-        return qrTempleService.update(translate(reqMap), (String) reqMap.get("templeItemsPath"));
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        return qrTempleService.update(transform(reqMap), (String) reqMap.get("templeItemsPath"));
     }
 
     @RequestMapping("delete")
     @ResponseBody
     public Result delete(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         return qrTempleService.delete((String) reqMap.get("code"));
     }
 
     @RequestMapping("filter")
     @ResponseBody
     public Result filter(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         String code = (String) reqMap.get("code");
         if ("".equals(code)) {
             code = null;
@@ -51,6 +65,9 @@ public class QRTempleController {
     @RequestMapping("downLoad")
     @ResponseBody
     public Result downLoad(@RequestBody String downLoad) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         Result result = new Result(true, null, qrTempleService.downLoad(downLoad), null);
         return result;
     }
@@ -61,7 +78,7 @@ public class QRTempleController {
      * @param reqMap
      * @return
      */
-    private QRCodeTemple translate(Map<String, Object> reqMap) {
+    private QRCodeTemple transform(Map<String, Object> reqMap) {
         QRCodeTemple qrCodeTemple = LSHMapUtils.mapToEntity(reqMap, QRCodeTemple.class);
         String code = (String) reqMap.get("code");
         if (code.charAt(0) == 'J') {

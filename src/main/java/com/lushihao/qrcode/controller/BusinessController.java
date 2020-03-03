@@ -4,6 +4,7 @@ import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.service.BusinessService;
+import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,15 @@ public class BusinessController {
 
     @Resource
     private BusinessService businessService;
+    @Resource
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         String logoSrc = (String) reqMap.get("logoSrc");
         return businessService.create(LSHMapUtils.mapToEntity(reqMap, Business.class), logoSrc);
     }
@@ -29,6 +35,9 @@ public class BusinessController {
     @RequestMapping("update")
     @ResponseBody
     public Result update(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         String logoSrc = (String) reqMap.get("logoSrc");
         return businessService.update(LSHMapUtils.mapToEntity(reqMap, Business.class), logoSrc);
     }
@@ -36,6 +45,9 @@ public class BusinessController {
     @RequestMapping("delete")
     @ResponseBody
     public Result delete(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         String code = (String) reqMap.get("code");
         return businessService.delete(code);
     }
@@ -43,6 +55,9 @@ public class BusinessController {
     @RequestMapping("filter")
     @ResponseBody
     public Result filter(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         Business business = LSHMapUtils.mapToEntity(reqMap, Business.class);
         if ("".equals(business.getCode())) {
             business.setCode(null);

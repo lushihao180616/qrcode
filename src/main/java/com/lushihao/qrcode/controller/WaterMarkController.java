@@ -18,10 +18,15 @@ public class WaterMarkController {
 
     @Resource
     private WaterMarkService waterMarkService;
+    @Resource
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("add")
     @ResponseBody
     public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         WaterMark wm = transform(reqMap);
         wm.setBusinessCode((String) reqMap.get("businessCode"));
         return waterMarkService.addWaterMark(wm);
@@ -30,6 +35,9 @@ public class WaterMarkController {
     @RequestMapping("test")
     @ResponseBody
     public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         WaterMark wm = transform(reqMap);
         wm.setBusinessCode("00000000");
         return waterMarkService.testWaterMark(wm);

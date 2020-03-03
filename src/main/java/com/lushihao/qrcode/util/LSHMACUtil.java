@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.qrcode.init.InitProject;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
@@ -36,8 +37,11 @@ public class LSHMACUtil {
         return sb.toString().toUpperCase();
     }
 
-//    public static void main(String[] args) {
-//        System.out.println(new LSHMACUtil().getLocalMac());
-//    }
+    public boolean check() {
+        if (InitProject.userInfo.getMacAddress().equals(getLocalMac())) {
+            return true;
+        }
+        return false;
+    }
 
 }

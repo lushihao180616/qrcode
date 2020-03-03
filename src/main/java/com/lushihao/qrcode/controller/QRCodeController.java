@@ -28,28 +28,42 @@ public class QRCodeController {
     private QRTempleService qrTempleService;
     @Resource
     private BusinessService businessService;
+    @Resource
+    private LSHMACUtil lshmacUtil;
 
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         return qrCodeService.create(transform(reqMap));
     }
 
     @RequestMapping("test")
     @ResponseBody
     public Result test(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         return qrCodeService.test(transform(reqMap));
     }
 
     @RequestMapping("selectRecord")
     @ResponseBody
     public Result selectRecord(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         return new Result(true, qrCodeService.selectRecord(LSHMapUtils.mapToEntity(reqMap, QRCodeRecord.class)), "搜索完成", null);
     }
 
     @RequestMapping("qrcodeInit")
     @ResponseBody
     public Result qrcodeInit(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("record", qrCodeService.selectRecord(new QRCodeRecord()));
         map.put("temple", qrTempleService.filter(null));
