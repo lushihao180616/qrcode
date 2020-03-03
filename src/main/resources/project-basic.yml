@@ -1,9 +1,9 @@
 basic:
-  templeUrl: F:\360MoveData\Users\Administrator\Desktop\qrcode\qrcodeTemple
-  qrcodeUrl: F:\360MoveData\Users\Administrator\Desktop\qrcode\outputQrcode
-  businessUrl: F:\360MoveData\Users\Administrator\Desktop\qrcode\businessLogo
-  modelUrl: F:\360MoveData\Users\Administrator\Desktop\qrcode\model
-  tempJpgUrl: F:\360MoveData\Users\Administrator\Desktop\qrcode\tempJpg
+  templeUrl: F:\qrcode\qrcodeTemple
+  qrcodeUrl: F:\qrcode\outputQrcode
+  businessUrl: F:\qrcode\businessLogo
+  modelUrl: F:\qrcode\model
+  tempJpgUrl: F:\qrcode\tempJpg
   ffmpegUrl: D:\ffmpeg\ffmpeg-20200213-6d37ca8-win64-static\bin\ffmpeg.exe
   deleteAllTempleFiles: true
   deleteAllBusinessFiles: true
