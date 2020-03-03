@@ -15,51 +15,65 @@ function init() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var recordList = result.bean.record;
-                var templeList = result.bean.temple;
-                var businessList = result.bean.business;
+                if (result.ifSuccess) {
+                    var recordList = result.bean.record;
+                    var templeList = result.bean.temple;
+                    var businessList = result.bean.business;
 
-                var records = document.getElementById("records");
-                records.innerHTML = '';
-                for (var i = 0; i < recordList.length; i++) {
-                    records.innerHTML += '\n' +
-                        '    <tr>\n' +
-                        '        <td class="bottomTd1">' + recordList[i].businessCode + '</td>\n' +
-                        '        <td class="bottomTd2">' + recordList[i].templeCode + '</td>\n' +
-                        '        <td class="bottomTd3">' + recordList[i].fileName + '</td>\n' +
-                        '        <td class="bottomTd4">' + recordList[i].url + '</td>\n' +
-                        '        <td class="bottomTd5">' + recordList[i].money + '</td>\n' +
-                        '        <td class="bottomTd6">' + recordList[i].saveTime + '</td>\n' +
-                        '    </tr>';
-                }
-
-                var temples = document.getElementById("temples");
-                temples.innerHTML = '';
-                for (var i = 0; i < templeList.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(templeList[i]);
-                    option.text = templeList[i].code;
-                    temples.add(option);
-                }
-                if (templeList.length > 0) {
-                    getTempleCode("temples");
-                }
-
-                var businesses = document.getElementById("businesses");
-                businesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(businessList[i]);
-                    option.text = businessList[i].code;
-                    businesses.add(option);
-                }
-                if (businessList.length > 0) {
-                    getBusinessCode("businesses");
+                    handleRecord(recordList);
+                    handleTemples(templeList);
+                    handleBusiness(businessList);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
     }
     xhr.send(JSON.stringify(filter));
+}
+
+function handleRecord(recordList) {
+    var records = document.getElementById("records");
+    records.innerHTML = '';
+    for (var i = 0; i < recordList.length; i++) {
+        records.innerHTML += '\n' +
+            '    <tr>\n' +
+            '        <td class="bottomTd1">' + recordList[i].businessCode + '</td>\n' +
+            '        <td class="bottomTd2">' + recordList[i].templeCode + '</td>\n' +
+            '        <td class="bottomTd3">' + recordList[i].fileName + '</td>\n' +
+            '        <td class="bottomTd4">' + recordList[i].url + '</td>\n' +
+            '        <td class="bottomTd5">' + recordList[i].money + '</td>\n' +
+            '        <td class="bottomTd6">' + recordList[i].saveTime + '</td>\n' +
+            '    </tr>';
+    }
+}
+
+function handleTemples(templeList) {
+    var temples = document.getElementById("temples");
+    temples.innerHTML = '';
+    for (var i = 0; i < templeList.length; i++) {
+        var option = document.createElement("option");
+        option.value = JSON.stringify(templeList[i]);
+        option.text = templeList[i].code;
+        temples.add(option);
+    }
+    if (templeList.length > 0) {
+        getTempleCode("temples");
+    }
+}
+
+function handleBusiness(businessList) {
+    var businesses = document.getElementById("businesses");
+    businesses.innerHTML = '';
+    for (var i = 0; i < businessList.length; i++) {
+        var option = document.createElement("option");
+        option.value = JSON.stringify(businessList[i]);
+        option.text = businessList[i].code;
+        businesses.add(option);
+    }
+    if (businessList.length > 0) {
+        getBusinessCode("businesses");
+    }
 }
 
 function getTemple() {
@@ -78,17 +92,12 @@ function getTemple() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var templeList = JSON.parse(xhr.responseText);
-                var temples = document.getElementById("temples");
-                temples.innerHTML = '';
-                for (var i = 0; i < templeList.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(templeList[i]);
-                    option.text = templeList[i].code;
-                    temples.add(option);
-                }
-                if (templeList.length > 0) {
-                    getTempleCode("temples");
+                var result = JSON.parse(xhr.responseText);
+                if (result.ifSuccess) {
+                    handleTemples(result.bean);
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -112,17 +121,22 @@ function getBusiness() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var businessList = JSON.parse(xhr.responseText);
-                var businesses = document.getElementById("businesses");
-                businesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(businessList[i]);
-                    option.text = businessList[i].code;
-                    businesses.add(option);
-                }
-                if (businessList.length > 0) {
-                    getBusinessCode("businesses");
+                var result = JSON.parse(xhr.responseText);
+                if (result.ifSuccess) {
+                    var businesses = document.getElementById("businesses");
+                    businesses.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = JSON.stringify(result.bean[i]);
+                        option.text = result.bean[i].code;
+                        businesses.add(option);
+                    }
+                    if (result.bean.length > 0) {
+                        getBusinessCode("businesses");
+                    }
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -213,18 +227,23 @@ function getRecord() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var records = document.getElementById("records");
-                records.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    records.innerHTML += '\n' +
-                        '    <tr>\n' +
-                        '        <td class="bottomTd1">' + result.bean[i].businessCode + '</td>\n' +
-                        '        <td class="bottomTd2">' + result.bean[i].templeCode + '</td>\n' +
-                        '        <td class="bottomTd3">' + result.bean[i].fileName + '</td>\n' +
-                        '        <td class="bottomTd4">' + result.bean[i].url + '</td>\n' +
-                        '        <td class="bottomTd5">' + result.bean[i].money + '</td>\n' +
-                        '        <td class="bottomTd6">' + result.bean[i].saveTime + '</td>\n' +
-                        '    </tr>';
+                if (result.ifSuccess) {
+                    var records = document.getElementById("records");
+                    records.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        records.innerHTML += '\n' +
+                            '    <tr>\n' +
+                            '        <td class="bottomTd1">' + result.bean[i].businessCode + '</td>\n' +
+                            '        <td class="bottomTd2">' + result.bean[i].templeCode + '</td>\n' +
+                            '        <td class="bottomTd3">' + result.bean[i].fileName + '</td>\n' +
+                            '        <td class="bottomTd4">' + result.bean[i].url + '</td>\n' +
+                            '        <td class="bottomTd5">' + result.bean[i].money + '</td>\n' +
+                            '        <td class="bottomTd6">' + result.bean[i].saveTime + '</td>\n' +
+                            '    </tr>';
+                    }
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -271,14 +290,18 @@ function create() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("message").value = '';
-                document.getElementById("temples").options[0].selected = true;
-                document.getElementById("businesses").options[0].selected = true;
-                document.getElementById("fileName").value = '';
-                document.getElementById("backGround").value = '';
-                document.getElementById("createTest").value = '';
-                alert(result.result);
+                if (result.ifSuccess) {
+                    handleRecord(result.bean.record);
+                    document.getElementById("message").value = '';
+                    document.getElementById("temples").options[0].selected = true;
+                    document.getElementById("businesses").options[0].selected = true;
+                    document.getElementById("fileName").value = '';
+                    document.getElementById("backGround").value = '';
+                    document.getElementById("createTest").value = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo)
+                }
             }
         }
     }
@@ -324,12 +347,13 @@ function test() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                if (data.result == '创建成功') {
-                    document.getElementById("createTest").value = data.filePath;
+                if (result.ifSuccess) {
+                    document.getElementById("createTest").value = result.bean.filePath;
+                    alert(result.info);
                 } else {
                     document.getElementById("createTest").value = '';
+                    alert(result.errorInfo)
                 }
-                alert(result.result);
             }
         }
     }

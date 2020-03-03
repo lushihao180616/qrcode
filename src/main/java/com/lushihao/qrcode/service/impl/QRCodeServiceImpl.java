@@ -2,6 +2,7 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.dao.QRTempleMapper;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
@@ -26,16 +27,24 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     @Override
     @Transactional
-    public Map<String, String> create(QRCodeRequest qrCodeRequest) {
+    public Result create(QRCodeRequest qrCodeRequest) {
         QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
-        return lshqrCodeUtil.qrcode(qrCodeVo, false, false);
+        Result result = lshqrCodeUtil.qrcode(qrCodeVo, false, false);
+        Map<String, Object> map = (Map<String, Object>) result.getBean();
+        map.put("record", selectRecord(new QRCodeRecord()));
+        result.setBean(map);
+        return result;
     }
 
     @Override
     @Transactional
-    public Map<String, String> test(QRCodeRequest qrCodeRequest) {
+    public Result test(QRCodeRequest qrCodeRequest) {
         QRCodeVo qrCodeVo = new QRCodeVo("超级码丽", qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
-        return lshqrCodeUtil.qrcode(qrCodeVo, true, false);
+        Result result = lshqrCodeUtil.qrcode(qrCodeVo, true, false);
+        Map<String, Object> map = (Map<String, Object>) result.getBean();
+        map.put("record", selectRecord(new QRCodeRecord()));
+        result.setBean(map);
+        return result;
     }
 
     @Override

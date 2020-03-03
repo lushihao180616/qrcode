@@ -2,6 +2,7 @@ package com.lushihao.qrcode.util;
 
 import com.lushihao.myutils.time.LSHDateUtils;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
+import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
@@ -102,7 +103,7 @@ public class LSHQRCodeUtil {
      * @param qrCodeVo 二维码相关信息
      * @return
      */
-    public Map<String, String> qrcode(QRCodeVo qrCodeVo, boolean ifTest, boolean ifModel) {
+    public Result qrcode(QRCodeVo qrCodeVo, boolean ifTest, boolean ifModel) {
         //删掉测试记录
         if (!ifTest) {
             lshImageUtil.delDirFile(projectBasicInfo.getQrcodeUrl() + "\\test");
@@ -115,13 +116,12 @@ public class LSHQRCodeUtil {
             isMp4 = true;
         }
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         try {
             //创建二维码
             BufferedImage image = getQRCode(qrCodeVo, ifTest);
             if (image == null) {
-                map.put("result", "信息过长，创建失败");
-                return map;
+                return new Result(false, null, null, "信息过长，创建失败");
             }
             //添加背景
             Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCodeVo);
@@ -133,12 +133,9 @@ public class LSHQRCodeUtil {
                 qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            map.put("result", "创建失败，请检查您的输入条件");
-            return map;
+            return new Result(false, null, null, "创建失败");
         }
-        map.put("result", "创建成功");
-        return map;
+        return new Result(true, map, "创建成功", null);
     }
 
     /**

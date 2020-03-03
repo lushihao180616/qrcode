@@ -17,13 +17,17 @@ function init() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var businesses = document.getElementById("createBusinesses");
-                businesses.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(result.bean[i]);
-                    option.text = result.bean[i].code;
-                    businesses.add(option);
+                if (result.ifSuccess) {
+                    var businesses = document.getElementById("createBusinesses");
+                    businesses.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = JSON.stringify(result.bean[i]);
+                        option.text = result.bean[i].code;
+                        businesses.add(option);
+                    }
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }

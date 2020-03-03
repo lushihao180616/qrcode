@@ -25,8 +25,6 @@ public class QRCodeController {
     @Resource
     private QRCodeService qrCodeService;
     @Resource
-    private LSHMACUtil lshmacUtil;
-    @Resource
     private QRTempleService qrTempleService;
     @Resource
     private BusinessService businessService;
@@ -34,47 +32,29 @@ public class QRCodeController {
     @RequestMapping("create")
     @ResponseBody
     public Result create(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
-        QRCodeRequest qrCodeRequest = transform(reqMap);
-        Result result = new Result(true, qrCodeService.create(qrCodeRequest), null, null);
-        return result;
+        return qrCodeService.create(transform(reqMap));
     }
 
     @RequestMapping("test")
     @ResponseBody
     public Result test(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
-        QRCodeRequest qrCodeRequest = transform(reqMap);
-        Result result = new Result(true, qrCodeService.test(qrCodeRequest), null, null);
-        return result;
+        return qrCodeService.test(transform(reqMap));
     }
 
     @RequestMapping("selectRecord")
     @ResponseBody
     public Result selectRecord(@RequestBody Map<String, Object> reqMap) {
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
-        QRCodeRecord qrCodeRecord = LSHMapUtils.mapToEntity(reqMap, QRCodeRecord.class);
-        Result result = new Result(true, qrCodeService.selectRecord(qrCodeRecord), null, null);
-        return result;
+        return new Result(true, qrCodeService.selectRecord(LSHMapUtils.mapToEntity(reqMap, QRCodeRecord.class)), "搜索完成", null);
     }
 
     @RequestMapping("qrcodeInit")
     @ResponseBody
     public Result qrcodeInit(@RequestBody Map<String, Object> reqMap) {
         Map<String, Object> map = new HashMap<>();
-//        if (!lshmacUtil.check()) {
-//            return null;
-//        }
         map.put("record", qrCodeService.selectRecord(new QRCodeRecord()));
-        map.put("temple", qrTempleService.filter(""));
+        map.put("temple", qrTempleService.filter(null));
         map.put("business", businessService.filter(new Business()));
-        Result result = new Result(true, map, null, null);
+        Result result = new Result(true, map, "搜索完成", null);
         return result;
     }
 
