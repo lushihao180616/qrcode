@@ -11,6 +11,10 @@ public class WaterMark {
      */
     private String businessCode;
     /**
+     * 管理员标识
+     */
+    private String managerCode;
+    /**
      * 水印高度百分比（0-100）
      */
     private int heightPercentage;
@@ -41,6 +45,14 @@ public class WaterMark {
 
     public void setBusinessCode(String businessCode) {
         this.businessCode = businessCode;
+    }
+
+    public String getManagerCode() {
+        return managerCode;
+    }
+
+    public void setManagerCode(String managerCode) {
+        this.managerCode = managerCode;
     }
 
     public int getHeightPercentage() {
@@ -74,5 +86,5 @@ public class WaterMark {
     public void setAlpha(int alpha) {
         this.alpha = alpha;
     }
-    
+
 }

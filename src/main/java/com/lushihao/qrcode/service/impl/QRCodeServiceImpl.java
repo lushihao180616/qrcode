@@ -28,7 +28,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public Result create(QRCodeRequest qrCodeRequest) {
-        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getManagerCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
         Result result = lshqrCodeUtil.qrcode(qrCodeVo, false, false);
         Map<String, Object> map = (Map<String, Object>) result.getBean();
         map.put("record", selectRecord(new QRCodeRecord()));
@@ -39,7 +39,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public Result test(QRCodeRequest qrCodeRequest) {
-        QRCodeVo qrCodeVo = new QRCodeVo("超级码丽", qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+        QRCodeVo qrCodeVo = new QRCodeVo("超级码丽", qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
         Result result = lshqrCodeUtil.qrcode(qrCodeVo, true, false);
         Map<String, Object> map = (Map<String, Object>) result.getBean();
         map.put("record", selectRecord(new QRCodeRecord()));

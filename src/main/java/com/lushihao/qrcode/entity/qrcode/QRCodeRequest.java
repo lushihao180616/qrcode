@@ -15,6 +15,10 @@ public class QRCodeRequest {
      */
     private String businessCode;
     /**
+     * 管理员
+     */
+    private String managerCode;
+    /**
      * 文件名
      */
     private String fileName;
@@ -65,6 +69,14 @@ public class QRCodeRequest {
 
     public void setBusinessCode(String businessCode) {
         this.businessCode = businessCode;
+    }
+
+    public String getManagerCode() {
+        return managerCode;
+    }
+
+    public void setManagerCode(String managerCode) {
+        this.managerCode = managerCode;
     }
 
     public String getFileName() {
@@ -123,10 +135,14 @@ public class QRCodeRequest {
         this.angle = angle;
     }
 
-    public QRCodeRequest(String message, String templeCode, String businessCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
+    public QRCodeRequest() {
+    }
+
+    public QRCodeRequest(String message, String templeCode, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
         this.message = message;
         this.templeCode = templeCode;
         this.businessCode = businessCode;
+        this.managerCode = managerCode;
         this.fileName = fileName;
         this.backGround = backGround;
         this.shortLength = shortLength;
@@ -136,6 +152,4 @@ public class QRCodeRequest {
         this.angle = angle;
     }
 
-    public QRCodeRequest() {
-    }
 }

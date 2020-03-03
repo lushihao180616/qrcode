@@ -1,9 +1,11 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
+import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.WaterMark;
+import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.WaterMarkService;
 import com.lushihao.qrcode.util.LSHImageUtil;
@@ -22,6 +24,8 @@ public class WaterMarkServiceImpl implements WaterMarkService {
 
     @Resource
     private BusinessMapper businessMapper;
+    @Resource
+    private ManagerMapper managerMapper;
     @Resource
     private ProjectBasicInfo projectBasicInfo;
     @Resource
@@ -111,18 +115,18 @@ public class WaterMarkServiceImpl implements WaterMarkService {
     public Result testWaterMark(WaterMark waterMark) {
         boolean ifOverFlow = false;
         //获取商家
-        Business business = new Business();
-        business.setCode(waterMark.getBusinessCode());
-        List<Business> list = businessMapper.filter(business);
+        Manager manager = new Manager();
+        manager.setCode(waterMark.getManagerCode());
+        List<Manager> list = managerMapper.filter(manager);
         if (list.size() == 1) {
-            business = list.get(0);
+            manager = list.get(0);
         } else {
-            return new Result(false, null, null, "商家不存在");
+            return new Result(false, null, null, "管理员不存在");
         }
 
         int fontLength = 7;
-        fontLength = business.getName().length() > fontLength ? business.getName().length() : fontLength;
-        fontLength = business.getAddress().length() > fontLength ? business.getAddress().length() : fontLength;
+        fontLength = manager.getName().length() > fontLength ? manager.getName().length() : fontLength;
+        fontLength = manager.getAddress().length() > fontLength ? manager.getAddress().length() : fontLength;
         BufferedImage bg = lshImageUtil.getImage(waterMark.getPath());
         if (bg == null) {
             return new Result(false, null, null, "背景图片不存在");
@@ -150,9 +154,9 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         Font font = new Font("微软雅黑", Font.PLAIN, fontSize);
         waterMarkG2.setFont(font);              //设置字体
         waterMarkG2.setColor(Color.WHITE); //根据图片的背景设置水印颜色
-        waterMarkG2.drawString("店名：『" + business.getName() + "』", waterMarkHeight + offSet, (float) (fontSize * 1.5));
-        waterMarkG2.drawString("电话：『" + business.getPhone() + "』", waterMarkHeight + offSet, (float) (fontSize * 3.0));
-        waterMarkG2.drawString("地址：『" + business.getAddress() + "』", waterMarkHeight + offSet, (float) (fontSize * 4.5));
+        waterMarkG2.drawString("名称：『" + manager.getName() + "』", waterMarkHeight + offSet, (float) (fontSize * 1.5));
+        waterMarkG2.drawString("电话：『" + manager.getPhone() + "』", waterMarkHeight + offSet, (float) (fontSize * 3.0));
+        waterMarkG2.drawString("地址：『" + manager.getAddress() + "』", waterMarkHeight + offSet, (float) (fontSize * 4.5));
         waterMarkG2.dispose();
 
         //遮罩层半透明绘制在图片上

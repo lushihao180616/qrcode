@@ -119,7 +119,7 @@ public class LSHQRCodeUtil {
         Map<String, Object> map = new HashMap<>();
         try {
             //创建二维码
-            BufferedImage image = getQRCode(qrCodeVo, ifTest);
+            BufferedImage image = getQRCode(qrCodeVo);
             if (image == null) {
                 return new Result(false, null, null, "信息过长，创建失败");
             }
@@ -143,7 +143,7 @@ public class LSHQRCodeUtil {
      *
      * @param qrCodeVo
      */
-    private BufferedImage getQRCode(QRCodeVo qrCodeVo, boolean ifTest) throws UnsupportedEncodingException {
+    private BufferedImage getQRCode(QRCodeVo qrCodeVo) throws UnsupportedEncodingException {
         //创建二维码对象
         Qrcode qrcode = new Qrcode();
         //设置二维码的纠错级别
@@ -154,7 +154,6 @@ public class LSHQRCodeUtil {
 
         //设置内容
         String content = qrCodeVo.getMessage();
-        content = qrCodeVo.getMessage();
         byte[] contentsBytes = content.getBytes("utf-8");
         int charLength = lshCharUtil.charLength(content);
         boolean[][] code = new boolean[0][];

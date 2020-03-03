@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.entity.user;
 
 import com.lushihao.qrcode.entity.business.Business;
+import com.lushihao.qrcode.entity.manager.Manager;
 
 public class UserInfo {
 
@@ -24,6 +25,10 @@ public class UserInfo {
      * 商家信息
      */
     private Business business;
+    /**
+     * 管理员信息
+     */
+    private Manager manager;
 
     public String getCode() {
         return code;
@@ -65,15 +70,24 @@ public class UserInfo {
         this.business = business;
     }
 
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
     public UserInfo() {
     }
 
-    public UserInfo(String code, UserType userType, int count, String macAddress, Business business) {
+    public UserInfo(String code, UserType userType, int count, String macAddress, Business business, Manager manager) {
         this.code = code;
         this.userType = userType;
         this.count = count;
         this.macAddress = macAddress;
         this.business = business;
+        this.manager = manager;
     }
 
 }

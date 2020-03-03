@@ -5,12 +5,13 @@
     <insert id="create" parameterType="Manager">
         INSERT INTO
             manager
-            (code,name,phone,idCard)
+            (code,name,phone,address,idCard)
         VALUES
             (
             #{code},
             #{name},
             #{phone},
+            #{address},
             #{idCard}
             )
     </insert>
@@ -20,6 +21,7 @@
         SET
             name=#{name},
             phone=#{phone},
+            address=#{address},
             idCard=#{idCard}
         WHERE
             code=#{code}
@@ -48,6 +50,10 @@
         <if test="phone != null">
             AND phone
             LIKE '${phone}%'
+        </if>
+        <if test="address != null">
+            AND address
+            LIKE '%${address}%'
         </if>
         <if test="idCard != null">
             AND idCard

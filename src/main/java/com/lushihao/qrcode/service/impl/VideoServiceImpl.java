@@ -1,8 +1,10 @@
 package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
+import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
+import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoService;
@@ -21,6 +23,8 @@ public class VideoServiceImpl implements VideoService {
     private LSHFfmpegUtil lshFfmpegUtil;
     @Resource
     private BusinessMapper businessMapper;
+    @Resource
+    private ManagerMapper managerMapper;
     @Resource
     private LSHCharUtil lshCharUtil;
 
@@ -73,11 +77,11 @@ public class VideoServiceImpl implements VideoService {
 
     public Result test(VideoWaterMark videoWaterMark, String code) {
         //获得商家
-        Business business = new Business();
-        business.setCode(code);
-        List<Business> list = businessMapper.filter(business);
+        Manager manager = new Manager();
+        manager.setCode(code);
+        List<Manager> list = managerMapper.filter(manager);
         if (list.size() > 0) {
-            videoWaterMark.setBusiness(list.get(0));
+            videoWaterMark.setManager(list.get(0));
         } else {
             return new Result(false, null, null, "商家不存在");
         }
@@ -92,7 +96,7 @@ public class VideoServiceImpl implements VideoService {
         if (videoInfo == null) {
             return new Result(false, null, null, "读取文件信息失败");
         }
-        String name = videoWaterMark.getBusiness().getName();
+        String name = videoWaterMark.getManager().getName();
         int num = 0;
         for (char c : name.toCharArray()) {
             if (lshCharUtil.isChineseChar(c)) {
@@ -101,33 +105,6 @@ public class VideoServiceImpl implements VideoService {
                 num += 1;
             }
         }
-        int chineseNum = num / 2;
-        String businessName = "";
-        for (int i = 0; i < chineseNum; i++) {
-            if (i % 6 == 0) {
-                businessName += "超";
-            }
-            if (i % 6 == 1) {
-                businessName += "级";
-            }
-            if (i % 6 == 2) {
-                businessName += "码";
-            }
-            if (i % 6 == 3) {
-                businessName += "丽";
-            }
-            if (i % 6 == 4) {
-                businessName += "CJ";
-            }
-            if (i % 6 == 5) {
-                businessName += "ML";
-            }
-        }
-        if (num % 2 > 0) {
-            businessName += "-";
-        }
-        business.setName(businessName);
-        videoWaterMark.setBusiness(business);
         int fontWidth = (int) (num * ((float) videoWaterMark.getFontSize() / 2));
         videoWaterMark.setFontX((int) ((videoInfo.getWidth() - fontWidth) * ((float) videoWaterMark.getFontX() / 100)));
         videoWaterMark.setFontY((int) ((videoInfo.getHeight() - videoWaterMark.getFontSize()) * ((float) videoWaterMark.getFontY() / 100)));

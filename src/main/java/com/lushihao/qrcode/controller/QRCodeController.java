@@ -37,7 +37,8 @@ public class QRCodeController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        return qrCodeService.create(transform(reqMap));
+        QRCodeRequest qrCodeRequest = transform(reqMap);
+        return qrCodeService.create(qrCodeRequest);
     }
 
     @RequestMapping("test")
@@ -46,7 +47,9 @@ public class QRCodeController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        return qrCodeService.test(transform(reqMap));
+        QRCodeRequest qrCodeRequest = transform(reqMap);
+        qrCodeRequest.setManagerCode("00000000");
+        return qrCodeService.test(qrCodeRequest);
     }
 
     @RequestMapping("selectRecord")

@@ -20,6 +20,10 @@ public class QRCodeVo {
      */
     private String businessCode;
     /**
+     * 管理员
+     */
+    private String managerCode;
+    /**
      * 文件名
      */
     private String fileName;
@@ -70,6 +74,14 @@ public class QRCodeVo {
 
     public void setBusinessCode(String businessCode) {
         this.businessCode = businessCode;
+    }
+
+    public String getManagerCode() {
+        return managerCode;
+    }
+
+    public void setManagerCode(String managerCode) {
+        this.managerCode = managerCode;
     }
 
     public String getFileName() {
@@ -128,10 +140,14 @@ public class QRCodeVo {
         this.angle = angle;
     }
 
-    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
+    public QRCodeVo() {
+    }
+
+    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
         this.message = message;
         this.qrCodeTemple = qrCodeTemple;
         this.businessCode = businessCode;
+        this.managerCode = managerCode;
         this.fileName = fileName;
         this.backGround = backGround;
         this.shortLength = shortLength;
@@ -139,9 +155,6 @@ public class QRCodeVo {
         this.y = y;
         this.alpha = alpha;
         this.angle = angle;
-    }
-
-    public QRCodeVo() {
     }
 
 }

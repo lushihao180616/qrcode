@@ -2,6 +2,7 @@ package com.lushihao.qrcode.init;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.BusinessMapper;
+import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.dao.UserInfoMapper;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.manager.Manager;
@@ -32,6 +33,8 @@ public class InitProject implements ApplicationRunner {
     private UserBasicInfo userBasicInfo;
     @Resource
     private BusinessMapper businessMapper;
+    @Resource
+    private ManagerMapper managerMapper;
 
     /**
      * 根据配置文件获取需要执行的任务，并通过任务调度器执行
@@ -70,12 +73,17 @@ public class InitProject implements ApplicationRunner {
                 business.setCode(userBasicInfo.getCode());
                 List<Business> businessList = businessMapper.filter(business);
                 if (businessList.size() > 0) {
-                    business = businessMapper.filter(business).get(0);
+                    business = businessList.get(0);
                 }
                 userInfo.setBusiness(business);
             } else {//管理员信息
                 Manager manager = new Manager();
                 manager.setCode(userBasicInfo.getCode());
+                List<Manager> managerList = managerMapper.filter(manager);
+                if (managerList.size() > 0) {
+                    manager = managerList.get(0);
+                }
+                userInfo.setManager(manager);
             }
         }
 

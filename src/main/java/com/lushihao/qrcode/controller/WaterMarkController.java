@@ -39,7 +39,7 @@ public class WaterMarkController {
             return null;
         }
         WaterMark wm = transform(reqMap);
-        wm.setBusinessCode("00000000");
+        wm.setManagerCode("00000000");
         return waterMarkService.testWaterMark(wm);
     }
 

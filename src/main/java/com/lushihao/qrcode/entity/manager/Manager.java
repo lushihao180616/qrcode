@@ -15,6 +15,10 @@ public class Manager {
      */
     private String phone;
     /**
+     * 管理员手机号
+     */
+    private String address;
+    /**
      * 管理员身份证号
      */
     private String idCard;
@@ -43,6 +47,14 @@ public class Manager {
         this.phone = phone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getIdCard() {
         return idCard;
     }
@@ -54,10 +66,11 @@ public class Manager {
     public Manager() {
     }
 
-    public Manager(String code, String name, String phone, String idCard) {
+    public Manager(String code, String name, String phone, String address, String idCard) {
         this.code = code;
         this.name = name;
         this.phone = phone;
+        this.address = address;
         this.idCard = idCard;
     }
 
