@@ -19,22 +19,30 @@ function init() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var businesses = document.getElementById("buisnesses");
-                businesses.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    businesses.innerHTML += '\n' +
-                        '    <tr>\n' +
-                        '        <td class="bottomTd1">' + result.bean[i].code + '</td>\n' +
-                        '        <td class="bottomTd2">' + result.bean[i].name + '</td>\n' +
-                        '        <td class="bottomTd3">' + result.bean[i].address + '</td>\n' +
-                        '        <td class="bottomTd4">' + result.bean[i].phone + '</td>\n' +
-                        '        <td class="bottomTd5">' + result.bean[i].businessName + '</td>\n' +
-                        '    </tr>';
+                if (result.ifSuccess) {
+                    handleBusinesses(result.bean);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
     }
     xhr.send(JSON.stringify(filterBusiness));
+}
+
+function handleBusinesses(businessList) {
+    var businesses = document.getElementById("buisnesses");
+    businesses.innerHTML = '';
+    for (var i = 0; i < businessList.length; i++) {
+        businesses.innerHTML += '\n' +
+            '    <tr>\n' +
+            '        <td class="bottomTd1">' + businessList[i].code + '</td>\n' +
+            '        <td class="bottomTd2">' + businessList[i].name + '</td>\n' +
+            '        <td class="bottomTd3">' + businessList[i].address + '</td>\n' +
+            '        <td class="bottomTd4">' + businessList[i].phone + '</td>\n' +
+            '        <td class="bottomTd5">' + businessList[i].businessName + '</td>\n' +
+            '    </tr>';
+    }
 }
 
 function create() {
@@ -43,8 +51,11 @@ function create() {
     var phone = document.getElementById("createPhone").value;
     var businessName = document.getElementById("createBusinessName").value;
     var logoSrc = document.getElementById("createLogo").value;
-    if (!check(name, address, phone, businessName, logoSrc)) {
+    if (!check(name, address, phone, businessName)) {
         return
+    }
+    if (logoSrc == "" || logoSrc == null) {
+        alert('商标必须选择');
     }
     var createBusiness = {
         name: document.getElementById("createName").value,
@@ -66,13 +77,17 @@ function create() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("createName").value = '';
-                document.getElementById("createAddress").value = '';
-                document.getElementById("createPhone").value = '';
-                document.getElementById("createBusinessName").value = '';
-                document.getElementById("createLogo").value = '';
-                alert(result.info);
+                if (result.ifSuccess) {
+                    handleBusinesses(result.bean);
+                    document.getElementById("createName").value = '';
+                    document.getElementById("createAddress").value = '';
+                    document.getElementById("createPhone").value = '';
+                    document.getElementById("createBusinessName").value = '';
+                    document.getElementById("createLogo").value = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
+                }
             }
         }
     }
@@ -96,16 +111,21 @@ function modifySearch() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                var modifyBusinesses = document.getElementById("modifyBusinesses");
-                modifyBusinesses.innerHTML = '';
-                for (var i = 0; i < result.bean.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(result.bean[i]);
-                    option.text = result.bean[i].code;
-                    modifyBusinesses.add(option);
-                }
-                if (result.bean.length > 0) {
-                    modifyBusinessCode("modifyBusinesses")
+                if (result.ifSuccess) {
+                    var modifyBusinesses = document.getElementById("modifyBusinesses");
+                    modifyBusinesses.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = JSON.stringify(result.bean[i]);
+                        option.text = result.bean[i].code;
+                        modifyBusinesses.add(option);
+                    }
+                    if (result.bean.length > 0) {
+                        modifyBusinessCode("modifyBusinesses");
+                    }
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -128,7 +148,7 @@ function update() {
     var phone = document.getElementById("modifyPhone").value;
     var businessName = document.getElementById("modifyBusinessName").value;
     var logoSrc = document.getElementById("modifyLogo").value;
-    if (!check(name, address, phone, businessName, logoSrc)) {
+    if (!check(name, address, phone, businessName)) {
         return;
     }
     if (business == null) {
@@ -156,14 +176,18 @@ function update() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("modifyBusinesses").innerHTML = '';
-                document.getElementById("modifyName").value = '';
-                document.getElementById("modifyAddress").value = '';
-                document.getElementById("modifyPhone").value = '';
-                document.getElementById("modifyBusinessName").value = '';
-                document.getElementById("modifyLogo").value = '';
-                alert(result.info);
+                if (result.ifSuccess) {
+                    handleBusinesses(result.bean);
+                    document.getElementById("modifyBusinesses").innerHTML = '';
+                    document.getElementById("modifyName").value = '';
+                    document.getElementById("modifyAddress").value = '';
+                    document.getElementById("modifyPhone").value = '';
+                    document.getElementById("modifyBusinessName").value = '';
+                    document.getElementById("modifyLogo").value = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
+                }
             }
         }
     }
@@ -186,17 +210,22 @@ function deleteSearch() {
                     window.location.href = "error.jsp"
                     return
                 }
-                var businessList = JSON.parse(xhr.responseText);
-                var deleteBusinesses = document.getElementById("deleteBusinesses");
-                deleteBusinesses.innerHTML = '';
-                for (var i = 0; i < businessList.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = JSON.stringify(businessList[i]);
-                    option.text = businessList[i].code;
-                    deleteBusinesses.add(option);
-                }
-                if (businessList.length > 0) {
-                    deleteBusinessCode("deleteBusinesses")
+                var result = JSON.parse(xhr.responseText);
+                if (result.ifSuccess) {
+                    var deleteBusinesses = document.getElementById("deleteBusinesses");
+                    deleteBusinesses.innerHTML = '';
+                    for (var i = 0; i < result.bean.length; i++) {
+                        var option = document.createElement("option");
+                        option.value = JSON.stringify(result.bean[i]);
+                        option.text = result.bean[i].code;
+                        deleteBusinesses.add(option);
+                    }
+                    if (result.bean.length > 0) {
+                        deleteBusinessCode("deleteBusinesses")
+                    }
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
                 }
             }
         }
@@ -234,20 +263,24 @@ function deleteOne() {
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
-                init();
-                document.getElementById("deleteBusinesses").innerHTML = '';
-                document.getElementById("deleteName").innerHTML = '';
-                document.getElementById("deleteAddress").innerHTML = '';
-                document.getElementById("deletePhone").innerHTML = '';
-                document.getElementById("deleteBusinessName").innerHTML = '';
-                alert(result.info);
+                if (result.ifSuccess) {
+                    handleBusinesses(result.bean);
+                    document.getElementById("deleteBusinesses").innerHTML = '';
+                    document.getElementById("deleteName").innerHTML = '';
+                    document.getElementById("deleteAddress").innerHTML = '';
+                    document.getElementById("deletePhone").innerHTML = '';
+                    document.getElementById("deleteBusinessName").innerHTML = '';
+                    alert(result.info);
+                } else {
+                    alert(result.errorInfo);
+                }
             }
         }
     }
     xhr.send(JSON.stringify(deleteBusiness));
 }
 
-function check(name, address, phone, businessName, logoSrc) {
+function check(name, address, phone, businessName) {
     var checkStr = '';
     if (name == "" || name == null) {
         checkStr += '名称必须填写 '
@@ -260,9 +293,6 @@ function check(name, address, phone, businessName, logoSrc) {
     }
     if (businessName == "" || businessName == null) {
         checkStr += '联系人必须填写 '
-    }
-    if (logoSrc == "" || logoSrc == null) {
-        checkStr += '商标必须选择 '
     }
     if (checkStr != '') {
         alert(checkStr);
