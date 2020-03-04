@@ -24,11 +24,11 @@
             <div class="userInfoRow">
                 <span class="userInfoName">标识</span><span class="userInfoValue" id="code"></span>
             </div>
-            <div class="userInfoRow">
+            <div class="userInfoRow" id="businessItem">
                 <span class="userInfoName">商家</span><span class="userInfoValue" id="name"></span>
             </div>
             <div class="userInfoRow">
-                <span class="userInfoName">联系人</span><span class="userInfoValue" id="businessName"></span>
+                <span class="userInfoName">姓名</span><span class="userInfoValue" id="businessName"></span>
             </div>
             <div class="userInfoRow">
                 <span class="userInfoName">手机号</span><span class="userInfoValue" id="phone"></span>

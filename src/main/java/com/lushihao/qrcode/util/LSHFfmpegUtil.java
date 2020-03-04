@@ -115,7 +115,13 @@ public class LSHFfmpegUtil {
         commands.add("-i");
         commands.add(videoWaterMark.getOldVideoPath());
         commands.add("-vf");
-        commands.add("\"drawtext=fontfile=simhei.ttf:text=\"" + videoWaterMark.getBusiness().getName() + "\":x=" + videoWaterMark.getFontX() + ":y=" + videoWaterMark.getFontY() + ":fontsize=" + videoWaterMark.getFontSize() + ":fontcolor=" + videoWaterMark.getFontColor() + ":shadowy=" + videoWaterMark.getFontShadow() + "\"");
+        String name;
+        if (videoWaterMark.getBusiness() != null) {
+            name = videoWaterMark.getBusiness().getName();
+        } else {
+            name = videoWaterMark.getManager().getName();
+        }
+        commands.add("\"drawtext=fontfile=simhei.ttf:text=\"" + name + "\":x=" + videoWaterMark.getFontX() + ":y=" + videoWaterMark.getFontY() + ":fontsize=" + videoWaterMark.getFontSize() + ":fontcolor=" + videoWaterMark.getFontColor() + ":shadowy=" + videoWaterMark.getFontShadow() + "\"");
         commands.add(videoWaterMark.getNewVideoPath());
 
         ProcessBuilder builder = new ProcessBuilder();

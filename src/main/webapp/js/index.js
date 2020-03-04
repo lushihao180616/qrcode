@@ -14,11 +14,19 @@ function userInfo() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    document.getElementById("code").innerText = result.bean.business.code;
-                    document.getElementById("name").innerText = result.bean.business.name;
-                    document.getElementById("businessName").innerText = result.bean.business.businessName;
-                    document.getElementById("phone").innerText = result.bean.business.phone;
-                    document.getElementById("address").innerText = result.bean.business.address;
+                    if (result.bean.userType.type == "0") {
+                        document.getElementById("code").innerText = result.bean.manager.code;
+                        document.getElementById("businessItem").style.display = "none";
+                        document.getElementById("businessName").innerText = result.bean.manager.name;
+                        document.getElementById("phone").innerText = result.bean.manager.phone;
+                        document.getElementById("address").innerText = result.bean.manager.address;
+                    } else if (result.bean.userType.type == "1") {
+                        document.getElementById("code").innerText = result.bean.business.code;
+                        document.getElementById("name").innerText = result.bean.business.name;
+                        document.getElementById("businessName").innerText = result.bean.business.businessName;
+                        document.getElementById("phone").innerText = result.bean.business.phone;
+                        document.getElementById("address").innerText = result.bean.business.address;
+                    }
                     document.getElementById("type").innerText = result.bean.userType.name;
                     if (result.bean.count == -1) {
                         document.getElementById("count").innerText = "无限";

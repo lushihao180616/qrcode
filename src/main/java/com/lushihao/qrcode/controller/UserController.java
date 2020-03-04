@@ -1,7 +1,6 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
-import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.service.UserInfoService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;

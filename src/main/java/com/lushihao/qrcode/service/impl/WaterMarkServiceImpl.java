@@ -144,7 +144,7 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
         waterMarkImage = waterMarkG2.getDeviceConfiguration().createCompatibleImage(waterMarkWidth, waterMarkHeight, Transparency.TRANSLUCENT);
         waterMarkG2 = waterMarkImage.createGraphics();
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getManagerCode() + "\\logo.png");
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
