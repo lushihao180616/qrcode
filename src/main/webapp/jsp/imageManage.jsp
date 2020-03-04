@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="referrer" content="no-referrer">
-    <title>首页</title>
+    <title>图片管理</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/imageManage.css">
     <script src="../js/public.js"></script>
@@ -18,11 +18,11 @@
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
-    基础信息管理模块
+    图片管理模块
 </p>
 
 <div class="linkItems">
-    <div class="lineItem1" onclick="navigate('image.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem1" onclick="navigate('imageCut.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>图&emsp;片&emsp;截&emsp;取</div>
     </div>
