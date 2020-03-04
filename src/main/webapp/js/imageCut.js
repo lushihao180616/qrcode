@@ -51,7 +51,7 @@ function create() {
         path: path
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/imageCut/add", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/image/addCut", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
@@ -111,7 +111,7 @@ function test() {
         path: path
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/imageCut/test", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/image/testCut", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
