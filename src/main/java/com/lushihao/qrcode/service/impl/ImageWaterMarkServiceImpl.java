@@ -4,10 +4,10 @@ import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
-import com.lushihao.qrcode.entity.image.WaterMark;
+import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.service.WaterMarkService;
+import com.lushihao.qrcode.service.ImageWaterMarkService;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class WaterMarkServiceImpl implements WaterMarkService {
+public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
 
     @Resource
     private BusinessMapper businessMapper;
@@ -34,15 +34,15 @@ public class WaterMarkServiceImpl implements WaterMarkService {
     /**
      * 添加水印
      *
-     * @param waterMark
+     * @param imageWaterMark
      * @return
      */
     @Override
     @Transactional
-    public Result addWaterMark(WaterMark waterMark) {
+    public Result addWaterMark(ImageWaterMark imageWaterMark) {
         //获取商家
         Business business = new Business();
-        business.setCode(waterMark.getBusinessCode());
+        business.setCode(imageWaterMark.getBusinessCode());
         List<Business> list = businessMapper.filter(business);
         if (list.size() == 1) {
             business = list.get(0);
@@ -53,13 +53,13 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         int fontLength = 7;
         fontLength = business.getName().length() > fontLength ? business.getName().length() : fontLength;
         fontLength = business.getAddress().length() > fontLength ? business.getAddress().length() : fontLength;
-        BufferedImage bg = lshImageUtil.getImage(waterMark.getPath());
+        BufferedImage bg = lshImageUtil.getImage(imageWaterMark.getPath());
         if (bg == null) {
             return new Result(false, null, null, "背景图片不存在");
         }
         int width = bg.getWidth();
         int height = bg.getHeight();
-        int waterMarkHeight = height * waterMark.getHeightPercentage() / 100;
+        int waterMarkHeight = height * imageWaterMark.getHeightPercentage() / 100;
         int fontSize = (int) (waterMarkHeight * 0.2);
         int offSet = (int) (waterMarkHeight * 0.05);
         int waterMarkWidth = (fontLength + 5) * fontSize + waterMarkHeight;
@@ -69,7 +69,7 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
         waterMarkImage = waterMarkG2.getDeviceConfiguration().createCompatibleImage(waterMarkWidth, waterMarkHeight, Transparency.TRANSLUCENT);
         waterMarkG2 = waterMarkImage.createGraphics();
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getBusinessCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + imageWaterMark.getBusinessCode() + "\\logo.png");
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
@@ -86,18 +86,18 @@ public class WaterMarkServiceImpl implements WaterMarkService {
 
         //遮罩层半透明绘制在图片上
         Graphics2D bgG2 = bg.createGraphics();
-        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) waterMark.getAlpha() / 100));
-        bgG2.drawImage(waterMarkImage, waterMark.getxPercentage() * (width - waterMarkWidth) / 100, waterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
+        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) imageWaterMark.getAlpha() / 100));
+        bgG2.drawImage(waterMarkImage, imageWaterMark.getxPercentage() * (width - waterMarkWidth) / 100, imageWaterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
         bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
         bgG2.dispose();
 
         //删除测试文件
-        File testFile = new File(waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".")) + "_test.jpg");
+        File testFile = new File(imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_test.jpg");
         if (testFile.exists()) {
             testFile.delete();
         }
         //加水印图片
-        String newImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".")) + "_watermark.jpg";
+        String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_watermark.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
             return new Result(false, null, null, "输出图片失败");
         }
@@ -107,16 +107,16 @@ public class WaterMarkServiceImpl implements WaterMarkService {
     /**
      * 添加水印
      *
-     * @param waterMark
+     * @param imageWaterMark
      * @return
      */
     @Override
     @Transactional
-    public Result testWaterMark(WaterMark waterMark) {
+    public Result testWaterMark(ImageWaterMark imageWaterMark) {
         boolean ifOverFlow = false;
         //获取商家
         Manager manager = new Manager();
-        manager.setCode(waterMark.getManagerCode());
+        manager.setCode(imageWaterMark.getManagerCode());
         List<Manager> list = managerMapper.filter(manager);
         if (list.size() == 1) {
             manager = list.get(0);
@@ -127,14 +127,14 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         int fontLength = 7;
         fontLength = manager.getName().length() > fontLength ? manager.getName().length() : fontLength;
         fontLength = manager.getAddress().length() > fontLength ? manager.getAddress().length() : fontLength;
-        BufferedImage bg = lshImageUtil.getImage(waterMark.getPath());
+        BufferedImage bg = lshImageUtil.getImage(imageWaterMark.getPath());
         if (bg == null) {
             return new Result(false, null, null, "背景图片不存在");
         }
 
         int width = bg.getWidth();
         int height = bg.getHeight();
-        int waterMarkHeight = height * waterMark.getHeightPercentage() / 100;
+        int waterMarkHeight = height * imageWaterMark.getHeightPercentage() / 100;
         int fontSize = (int) (waterMarkHeight * 0.2);
         int offSet = (int) (waterMarkHeight * 0.05);
         int waterMarkWidth = (fontLength + 5) * fontSize + waterMarkHeight;
@@ -144,7 +144,7 @@ public class WaterMarkServiceImpl implements WaterMarkService {
         Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
         waterMarkImage = waterMarkG2.getDeviceConfiguration().createCompatibleImage(waterMarkWidth, waterMarkHeight, Transparency.TRANSLUCENT);
         waterMarkG2 = waterMarkImage.createGraphics();
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + waterMark.getManagerCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + imageWaterMark.getManagerCode() + "\\logo.png");
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
@@ -161,13 +161,13 @@ public class WaterMarkServiceImpl implements WaterMarkService {
 
         //遮罩层半透明绘制在图片上
         Graphics2D bgG2 = bg.createGraphics();
-        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) waterMark.getAlpha() / 100));
-        bgG2.drawImage(waterMarkImage, waterMark.getxPercentage() * (width - waterMarkWidth) / 100, waterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
+        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) imageWaterMark.getAlpha() / 100));
+        bgG2.drawImage(waterMarkImage, imageWaterMark.getxPercentage() * (width - waterMarkWidth) / 100, imageWaterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
         bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
         bgG2.dispose();
 
         //测试图片
-        String testImagePath = waterMark.getPath().substring(0, waterMark.getPath().lastIndexOf(".")) + "_test.jpg";
+        String testImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_test.jpg";
         if (!lshImageUtil.sendImage(testImagePath, bg)) {
             return new Result(false, null, null, "输出图片失败");
         }

@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.entity.image;
 
-public class WaterMark {
+public class ImageWaterMark {
 
     /**
      * 原图片地址
