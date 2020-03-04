@@ -19,6 +19,7 @@
 <p class="topTitle">
     图片截取
 </p>
+
 <div class="top">
     <div class="topItem1">
         <br>
@@ -30,13 +31,12 @@
         <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
         <span class="itemName">原&ensp;图&ensp;片：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="image/jpeg, image/jpg, image/png"/><br><br>
-        <span class="itemName">水印高度：</span><input class="topItemInput" type="text"
-                                                  value="10"
+        <span class="itemName">截取宽度：</span><input class="topItemInput" type="text"
+                                                  value="100"
+                                                  id="createWidth"/><span class="unit">%</span><br><br>
+        <span class="itemName">截取高度：</span><input class="topItemInput" type="text"
+                                                  value="100"
                                                   id="createHeight"/><span class="unit">%</span><br><br>
-        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="0"
-                                                        id="createX"/><span class="unit">%</span><br><br>
-        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="100"
-                                                        id="createY"/><span class="unit">%</span><br><br>
         <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
                                                              id="createAlpha"/><span class="unit">%</span><br><br>
         <hr>
@@ -53,12 +53,12 @@
             style="color: #999;font-size: 12px;margin-left: 130px;line-height: 42px;font-weight: bold">仅用于预览，关闭页面消失</span><br><br><br>
         <table class="bottomItemTable1" id="tableTitle" style="visibility: hidden">
             <tr>
-                <th class="bottomTh1">加水印前</th>
-                <th class="bottomTh2">加水印后</th>
+                <th class="bottomTh1">截取前</th>
+                <th class="bottomTh2">截取后</th>
             </tr>
         </table>
         <div class="tableItems">
-            <table class="bottomItemTable2" id="waterMarks">
+            <table class="bottomItemTable2" id="imageCuts">
             </table>
         </div>
     </div>

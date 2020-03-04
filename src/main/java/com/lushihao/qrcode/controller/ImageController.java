@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("imageWaterMark")
-public class ImageWaterMarkController {
+public class ImageController {
 
     @Resource
     private ImageWaterMarkService imageWaterMarkService;
