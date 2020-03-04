@@ -22,7 +22,7 @@
     <div class="userInfo">
         <div class="leftDiv">
             <div class="userInfoRow">
-                <span class="userInfoName">标识</span><span class="userInfoValue" id="code"></span>
+                <span class="userInfoName">编号</span><span class="userInfoValue" id="code"></span>
             </div>
             <div class="userInfoRow" id="businessItem">
                 <span class="userInfoName">商家</span><span class="userInfoValue" id="name"></span>
@@ -39,7 +39,8 @@
         </div>
         <div class="logoDiv">
             <img class="logo"
-                 src="http://sinacloud.net/cjml-qrcode/00000000/d.va.jpg?KID=sina,30b747sMR3OcrzNJwhpn&Expires=1583235510&ssig=TkVvHLNDEb">
+                 src="http://sinacloud.net/cjml-qrcode/00000000/d.va.jpg?KID=sina,30b747sMR3OcrzNJwhpn&Expires=1583235510&ssig=TkVvHLNDEb"
+                 onerror="this.src='../image/logo.jpg'">
         </div>
         <div class="rigthDiv">
             <div class="userInfoRow">
