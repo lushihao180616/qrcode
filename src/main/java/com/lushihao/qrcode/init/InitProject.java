@@ -86,8 +86,6 @@ public class InitProject implements ApplicationRunner {
                 userInfo.setManager(manager);
             }
         }
-
-
     }
 
 }
