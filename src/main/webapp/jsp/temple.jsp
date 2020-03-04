@@ -14,7 +14,8 @@
 <body onload="init()">
 
 <a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
-   onMouseOut="makevisible(this,1)">首页</a>
+   onMouseOut="makevisible(this,1)">上一页</a>
+
 <div style="float: right;margin-top: -5px;margin-right: 10px">
     <label>更新模板二维码：</label><input class="topItemSelect_up" type="file" id="downLoadTemple"/><input
         class="topItemSearch_up"

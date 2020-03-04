@@ -14,7 +14,8 @@
 <body onload="init()">
 
 <a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
-   onMouseOut="makevisible(this,1)">首页</a>
+   onMouseOut="makevisible(this,1)">上一页</a>
+
 <a class="toIndex" href="http://www.fhdq.net/">特殊符号</a>
 
 <p class="topTitle">

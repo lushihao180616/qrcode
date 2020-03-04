@@ -70,7 +70,7 @@
          onMouseOut="makevisible(this,1)">
         <div>二&ensp;维&ensp;码&ensp;管&ensp;理</div>
     </div>
-    <div class="lineItem4" onclick="navigate('waterMark.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem4" onclick="navigate('imageManage.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>图&emsp;片&emsp;管&emsp;理</div>
     </div>

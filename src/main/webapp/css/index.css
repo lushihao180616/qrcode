@@ -84,32 +84,16 @@
     margin: 50px 10px 10px;
 }
 
-.linkItems {
-    justify-content: space-around;
-    display: flex;
-    margin: 20px 10px 10px;
-}
-
-.lineItem1, .lineItem2, .lineItem3, .lineItem4, .lineItem5 {
-    color: #333333;
-    font-weight: bolder;
-    border-radius: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 100%;
-    display: inline-block;
-    height: 150px;
-    line-height: 150px;
-    text-align: center;
-    background-color: lightcoral;
-}
-
 .lineItem1 {
     background-color: cadetblue;
 }
 
 .lineItem2 {
     background-color: burlywood;
+}
+
+.lineItem3 {
+    background-color: lightcoral;
 }
 
 .lineItem4 {

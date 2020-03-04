@@ -7,14 +7,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>图片水印</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/waterMark.css">
+    <link rel="stylesheet" type="text/css" href="../css/imageWaterMark.css">
     <script src="../js/public.js"></script>
-    <script src="../js/waterMark.js"></script>
+    <script src="../js/imageWaterMark.js"></script>
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
-   onMouseOut="makevisible(this,1)">首页</a>
+<a class="toIndex" onclick="navigate('imageManage.jsp')" onMouseOver="makevisible(this,0)"
+   onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
     图片水印
