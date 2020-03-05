@@ -7,7 +7,8 @@ function create() {
     var path = document.getElementById("createPath").value;
     var size = document.getElementById("createSize").value;
     var layout = document.getElementById("createLayout").options[document.getElementById("createLayout").selectedIndex].value;
-    if (!check(message, x, y, path, size, layout)) {
+    var color = document.getElementById("createColor").options[document.getElementById("createColor").selectedIndex].value;
+    if (!check(message, x, y, path, size, layout, color)) {
         return
     }
     var createFont = {
@@ -16,7 +17,8 @@ function create() {
         y: parseInt(y),
         path: path,
         layout: layout,
-        size: parseInt(size)
+        size: parseInt(size),
+        color: color
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/image/addFont", false);
@@ -56,6 +58,7 @@ function create() {
                     document.getElementById('createPath').value = '';
                     document.getElementById("createTest").value = '';
                     document.getElementById("createLayout").options[0].selected = true;
+                    document.getElementById("createColor").options[0].selected = true;
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -73,7 +76,8 @@ function test() {
     var path = document.getElementById("createPath").value;
     var size = document.getElementById("createSize").value;
     var layout = document.getElementById("createLayout").options[document.getElementById("createLayout").selectedIndex].value;
-    if (!check(message, x, y, path, size, layout)) {
+    var color = document.getElementById("createColor").options[document.getElementById("createColor").selectedIndex].value;
+    if (!check(message, x, y, path, size, layout, color)) {
         return
     }
     var createFont = {
@@ -82,7 +86,8 @@ function test() {
         y: parseInt(y),
         path: path,
         layout: layout,
-        size: parseInt(size)
+        size: parseInt(size),
+        color: color
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/image/testFont", false);

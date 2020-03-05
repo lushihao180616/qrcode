@@ -32,7 +32,7 @@ public class ImageFontServiceImpl implements ImageFontService {
         }
         String[] lines = imageFont.getMessage().split("\\n");
         Graphics2D bgG2 = bg.createGraphics();
-        bgG2.setColor(Color.BLACK);
+        bgG2.setColor(getColor(imageFont.getColor()));
         Font font = new Font("宋体", Font.PLAIN, imageFont.getSize());
         bgG2.setFont(font);
         bgG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -96,7 +96,7 @@ public class ImageFontServiceImpl implements ImageFontService {
             lines[i] = lineFont;
         }
         Graphics2D bgG2 = bg.createGraphics();
-        bgG2.setColor(Color.BLACK);
+        bgG2.setColor(getColor(imageFont.getColor()));
         Font font = new Font("宋体", Font.PLAIN, imageFont.getSize());
         bgG2.setFont(font);
         bgG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -117,6 +117,31 @@ public class ImageFontServiceImpl implements ImageFontService {
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, testImagePath, "添加成功", null);
+    }
+
+    private Color getColor(String color) {
+        if (color.equals("black")) {
+            return Color.black;
+        } else if (color.equals("white")) {
+            return Color.white;
+        } else if (color.equals("blue")) {
+            return Color.blue;
+        } else if (color.equals("green")) {
+            return Color.green;
+        } else if (color.equals("red")) {
+            return Color.red;
+        } else if (color.equals("yellow")) {
+            return Color.yellow;
+        } else if (color.equals("pink")) {
+            return Color.pink;
+        } else if (color.equals("cyan")) {
+            return Color.cyan;
+        } else if (color.equals("gray")) {
+            return Color.gray;
+        } else if (color.equals("orange")) {
+            return Color.orange;
+        }
+        return null;
     }
 
     private int getWidth(String[] lines, FontMetrics fm) {

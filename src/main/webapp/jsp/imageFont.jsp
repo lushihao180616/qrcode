@@ -38,6 +38,18 @@
         <span class="itemName">字体大小：</span><input class="topItemInput" type="text"
                                                   value="24"
                                                   id="createSize"/><br><br>
+        <span class="itemName">字体颜色：</span><select class="topItemSelect" id="createColor">
+        <option value="black">黑色</option>
+        <option value="white">白色</option>
+        <option value="blue">蓝色</option>
+        <option value="green">绿色</option>
+        <option value="red">红色</option>
+        <option value="yellow">黄色</option>
+        <option value="pink">粉色</option>
+        <option value="cyan">青色</option>
+        <option value="gray">灰色</option>
+        <option value="orange">橙色</option>
+    </select><br><br>
         <span class="itemName">布局方式：</span><select class="topItemSelect" id="createLayout">
         <option value="left">左对齐</option>
         <option value="center">居中对齐</option>

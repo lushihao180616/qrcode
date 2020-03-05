@@ -26,6 +26,10 @@ public class ImageFont {
      * 信息
      */
     private String message;
+    /**
+     * 字体颜色
+     */
+    private String color;
 
     public String getPath() {
         return path;
@@ -75,16 +79,25 @@ public class ImageFont {
         this.message = message;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public ImageFont() {
     }
 
-    public ImageFont(String path, int x, int y, int size, String layout, String message) {
+    public ImageFont(String path, int x, int y, int size, String layout, String message, String color) {
         this.path = path;
         this.x = x;
         this.y = y;
         this.size = size;
         this.layout = layout;
         this.message = message;
+        this.color = color;
     }
 
 }

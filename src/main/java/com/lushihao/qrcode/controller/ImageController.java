@@ -120,6 +120,7 @@ public class ImageController {
         font.setY((Integer) reqMap.get("y"));
         font.setPath((String) reqMap.get("path"));
         font.setSize((Integer) reqMap.get("size"));
+        font.setColor((String) reqMap.get("color"));
         return font;
     }
 
