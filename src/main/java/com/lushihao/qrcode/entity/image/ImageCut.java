@@ -7,14 +7,6 @@ public class ImageCut {
      */
     private String path;
     /**
-     * 商家标识
-     */
-    private String businessCode;
-    /**
-     * 管理员标识
-     */
-    private String managerCode;
-    /**
      * 宽度
      */
     private int width;
@@ -22,6 +14,14 @@ public class ImageCut {
      * 高度
      */
     private int height;
+    /**
+     * x偏移量
+     */
+    private int x;
+    /**
+     * y偏移量
+     */
+    private int y;
     /**
      * 透明度
      */
@@ -33,22 +33,6 @@ public class ImageCut {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getBusinessCode() {
-        return businessCode;
-    }
-
-    public void setBusinessCode(String businessCode) {
-        this.businessCode = businessCode;
-    }
-
-    public String getManagerCode() {
-        return managerCode;
-    }
-
-    public void setManagerCode(String managerCode) {
-        this.managerCode = managerCode;
     }
 
     public int getWidth() {
@@ -67,6 +51,22 @@ public class ImageCut {
         this.height = height;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public int getAlpha() {
         return alpha;
     }
@@ -78,12 +78,12 @@ public class ImageCut {
     public ImageCut() {
     }
 
-    public ImageCut(String path, String businessCode, String managerCode, int width, int height, int alpha) {
+    public ImageCut(String path, int width, int height, int x, int y, int alpha) {
         this.path = path;
-        this.businessCode = businessCode;
-        this.managerCode = managerCode;
         this.width = width;
         this.height = height;
+        this.x = x;
+        this.y = y;
         this.alpha = alpha;
     }
 

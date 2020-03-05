@@ -1,54 +1,22 @@
 var tableRow = [];
 
-function init() {
-    var filterBusinessCode = {
-        code: document.getElementById("createCode").value
-    };
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/business/filter", false);
-    // 添加http头，发送信息至服务器时内容编码类型
-    xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.setRequestHeader('dataType', 'json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200 || xhr.status == 304) {
-                if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
-                    return
-                }
-                var result = JSON.parse(xhr.responseText);
-                if (result.ifSuccess) {
-                    var businesses = document.getElementById("createBusinesses");
-                    businesses.innerHTML = '';
-                    for (var i = 0; i < result.bean.length; i++) {
-                        var option = document.createElement("option");
-                        option.value = JSON.stringify(result.bean[i]);
-                        option.text = result.bean[i].code;
-                        businesses.add(option);
-                    }
-                } else {
-                    alert(result.errorInfo);
-                }
-            }
-        }
-    }
-    xhr.send(JSON.stringify(filterBusinessCode));
-}
-
 function create() {
-    var business = document.getElementById("createBusinesses").value;
     var width = document.getElementById("createWidth").value;
     var height = document.getElementById("createHeight").value;
+    var x = document.getElementById("createX").value;
+    var y = document.getElementById("createY").value;
     var path = document.getElementById("createPath").value;
     var alpha = document.getElementById("createAlpha").value;
-    if (!check(business, width, height, path, alpha)) {
+    if (!check(width, height, x, y, path, alpha)) {
         return
     }
     var imageCut = {
-        businessCode: JSON.parse(business).code,
         width: parseInt(width),
         height: parseInt(height),
-        path: path
+        x: parseInt(x),
+        y: parseInt(y),
+        path: path,
+        alpha: parseInt(alpha)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/image/addCut", false);
@@ -81,10 +49,13 @@ function create() {
                             '        <td class="bottomTd2">' + url + '</td>\n' +
                             '    </tr>';
                     }
-                    document.getElementById('createPath').value = '';
-                    document.getElementById("createTest").value = '';
                     document.getElementById("createWidth").value = '100';
                     document.getElementById("createHeight").value = '100';
+                    document.getElementById("createX").value = '0';
+                    document.getElementById("createY").value = '0';
+                    document.getElementById('createPath').value = '';
+                    document.getElementById("createAlpha").value = '0';
+                    document.getElementById("createTest").value = '';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -96,19 +67,22 @@ function create() {
 }
 
 function test() {
-    var business = document.getElementById("createBusinesses").value;
     var width = document.getElementById("createWidth").value;
     var height = document.getElementById("createHeight").value;
+    var x = document.getElementById("createX").value;
+    var y = document.getElementById("createY").value;
     var path = document.getElementById("createPath").value;
     var alpha = document.getElementById("createAlpha").value;
-    if (!check(business, width, height, path, alpha)) {
+    if (!check(width, height, x, y, path, alpha)) {
         return
     }
     var createCut = {
-        businessCode: JSON.parse(business).code,
         width: parseInt(width),
         height: parseInt(height),
-        path: path
+        x: parseInt(x),
+        y: parseInt(y),
+        path: path,
+        alpha: parseInt(alpha)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/image/testCut", false);
@@ -136,16 +110,27 @@ function test() {
     xhr.send(JSON.stringify(createCut));
 }
 
-function check(business, width, height, path, alpha) {
+function check(width, height, x, y, path, alpha) {
     var checkStr = '';
-    if (business == null) {
-        checkStr += '商家必须选择 ';
-    }
     if (width == '' || isNaN(width) || parseInt(width) > 100 || parseInt(width) < 0) {
         checkStr += '请填写宽度（0-100） ';
     }
     if (height == '' || isNaN(height) || parseInt(height) > 100 || parseInt(height) < 0) {
         checkStr += '请填写高度（0-100） ';
+    }
+    if (x == '' || isNaN(x) || parseInt(x) > 100 || parseInt(x) < 0) {
+        checkStr += '请填写x偏移量（0-100） ';
+    }
+    if (y == '' || isNaN(y) || parseInt(y) > 100 || parseInt(y) < 0) {
+        checkStr += '请填写y偏移量（0-100） ';
+    }
+    if (checkStr == '') {
+        if (parseInt(x) + parseInt(width) > 100) {
+            checkStr += '宽度与x偏移量的和不能超过100% ';
+        }
+        if (parseInt(y) + parseInt(height) > 100) {
+            checkStr += '高度与y偏移量的和不能超过100% ';
+        }
     }
     if (path == null || path == '') {
         checkStr += '原图必须选择 ';

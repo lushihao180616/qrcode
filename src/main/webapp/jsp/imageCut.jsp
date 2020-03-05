@@ -11,7 +11,7 @@
     <script src="../js/public.js"></script>
     <script src="../js/imageCut.js"></script>
 </head>
-<body onload="init()">
+<body>
 
 <a class="toIndex" onclick="navigate('imageManage.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
@@ -24,11 +24,6 @@
     <div class="topItem1">
         <br>
         <span class="topItemTitle">图片截取：</span></span><br><br><br>
-        <span class="itemName">商家搜索：</span><input class="topItemFilter" id="createCode"/><input class="topItemSearch"
-                                                                                                type="button"
-                                                                                                value="搜索"
-                                                                                                onclick="init()"/><br><br>
-        <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
         <span class="itemName">原&ensp;图&ensp;片：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="image/jpeg, image/jpg, image/png"/><br><br>
         <span class="itemName">截取宽度：</span><input class="topItemInput" type="text"
@@ -37,7 +32,13 @@
         <span class="itemName">截取高度：</span><input class="topItemInput" type="text"
                                                   value="100"
                                                   id="createHeight"/><span class="unit">%</span><br><br>
-        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
+        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text"
+                                                  value="0"
+                                                  id="createX"/><span class="unit">%</span><br><br>
+        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text"
+                                                  value="0"
+                                                  id="createY"/><span class="unit">%</span><br><br>
+        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="0"
                                                              id="createAlpha"/><span class="unit">%</span><br><br>
         <hr>
         <br>

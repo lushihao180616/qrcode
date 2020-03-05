@@ -64,7 +64,6 @@ public class ImageController {
             return null;
         }
         ImageCut cut = transformCut(reqMap);
-        cut.setBusinessCode((String) reqMap.get("businessCode"));
         return imageCutService.addCut(cut);
     }
 
@@ -75,15 +74,16 @@ public class ImageController {
             return null;
         }
         ImageCut cut = transformCut(reqMap);
-        cut.setManagerCode("00000000");
         return imageCutService.testCut(cut);
     }
 
     private ImageCut transformCut(Map<String, Object> reqMap) {
         ImageCut cut = new ImageCut();
-        cut.setPath((String) reqMap.get("path"));
         cut.setWidth((Integer) reqMap.get("width"));
         cut.setHeight((Integer) reqMap.get("height"));
+        cut.setX((Integer) reqMap.get("x"));
+        cut.setY((Integer) reqMap.get("y"));
+        cut.setPath((String) reqMap.get("path"));
         cut.setAlpha((Integer) reqMap.get("alpha"));
         return cut;
     }
