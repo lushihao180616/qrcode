@@ -21,9 +21,9 @@ public class VideoController {
     @Resource
     private LSHMACUtil lshmacUtil;
 
-    @RequestMapping("add")
+    @RequestMapping("addWaterMark")
     @ResponseBody
-    public Result create(@RequestBody Map<String, Object> reqMap) {
+    public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }
@@ -32,9 +32,9 @@ public class VideoController {
         return videoService.create(videoWaterMark, code);
     }
 
-    @RequestMapping("test")
+    @RequestMapping("testWaterMark")
     @ResponseBody
-    public Result test(@RequestBody Map<String, Object> reqMap) {
+    public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
         if (!lshmacUtil.check()) {
             return null;
         }

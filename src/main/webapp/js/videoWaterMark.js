@@ -56,7 +56,7 @@ function create() {
         fontShadow: fontShadow
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/video/add", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/video/addWaterMark", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
@@ -119,7 +119,7 @@ function test() {
         fontShadow: fontShadow
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/video/test", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/video/testWaterMark", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
