@@ -33,11 +33,11 @@
                                                   value="100"
                                                   id="createHeight"/><span class="unit">%</span><br><br>
         <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                  value="0"
-                                                  id="createX"/><span class="unit">%</span><br><br>
+                                                        value="0"
+                                                        id="createX"/><span class="unit">%</span><br><br>
         <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                  value="0"
-                                                  id="createY"/><span class="unit">%</span><br><br>
+                                                        value="0"
+                                                        id="createY"/><span class="unit">%</span><br><br>
         <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="0"
                                                              id="createAlpha"/><span class="unit">%</span><br><br>
         <hr>
