@@ -7,9 +7,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>视频水印</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/video.css">
+    <link rel="stylesheet" type="text/css" href="../css/videoManage.css">
     <script src="../js/public.js"></script>
-    <script src="../js/video.js"></script>
+    <script src="../js/videoManage.js"></script>
 </head>
 <body onload="init()">
 
