@@ -2,8 +2,10 @@ package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageCut;
+import com.lushihao.qrcode.entity.image.ImageFont;
 import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.service.ImageCutService;
+import com.lushihao.qrcode.service.ImageFontService;
 import com.lushihao.qrcode.service.ImageWaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ public class ImageController {
     private ImageWaterMarkService imageWaterMarkService;
     @Resource
     private ImageCutService imageCutService;
+    @Resource
+    private ImageFontService imageFontService;
     @Resource
     private LSHMACUtil lshmacUtil;
 
@@ -86,6 +90,37 @@ public class ImageController {
         cut.setPath((String) reqMap.get("path"));
         cut.setAlpha((Integer) reqMap.get("alpha"));
         return cut;
+    }
+
+    @RequestMapping("addFont")
+    @ResponseBody
+    public Result addFont(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        ImageFont font = transformFont(reqMap);
+        return imageFontService.addFont(font);
+    }
+
+    @RequestMapping("testFont")
+    @ResponseBody
+    public Result testFont(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        ImageFont font = transformFont(reqMap);
+        return imageFontService.testFont(font);
+    }
+
+    private ImageFont transformFont(Map<String, Object> reqMap) {
+        ImageFont font = new ImageFont();
+        font.setMessage((String) reqMap.get("message"));
+        font.setLayout((String) reqMap.get("layout"));
+        font.setX((Integer) reqMap.get("x"));
+        font.setY((Integer) reqMap.get("y"));
+        font.setPath((String) reqMap.get("path"));
+        font.setSize((Integer) reqMap.get("size"));
+        return font;
     }
 
 }

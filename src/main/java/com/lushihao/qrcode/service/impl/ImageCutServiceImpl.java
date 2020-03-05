@@ -2,7 +2,6 @@ package com.lushihao.qrcode.service.impl;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageCut;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.ImageCutService;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
@@ -15,8 +14,6 @@ import java.io.File;
 @Service
 public class ImageCutServiceImpl implements ImageCutService {
 
-    @Resource
-    private ProjectBasicInfo projectBasicInfo;
     @Resource
     private LSHImageUtil lshImageUtil;
 
