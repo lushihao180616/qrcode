@@ -7,7 +7,7 @@ import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
-import com.lushihao.qrcode.service.VideoService;
+import com.lushihao.qrcode.service.VideoWaterMarkService;
 import com.lushihao.qrcode.util.LSHCharUtil;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class VideoServiceImpl implements VideoService {
+public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
 
     @Resource
     private LSHFfmpegUtil lshFfmpegUtil;
