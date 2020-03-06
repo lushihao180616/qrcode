@@ -3,9 +3,11 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageCut;
 import com.lushihao.qrcode.entity.image.ImageFont;
+import com.lushihao.qrcode.entity.image.ImageIcon;
 import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.service.ImageCutService;
 import com.lushihao.qrcode.service.ImageFontService;
+import com.lushihao.qrcode.service.ImageIconService;
 import com.lushihao.qrcode.service.ImageWaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -21,45 +23,15 @@ import java.util.Map;
 public class ImageController {
 
     @Resource
-    private ImageWaterMarkService imageWaterMarkService;
-    @Resource
     private ImageCutService imageCutService;
     @Resource
     private ImageFontService imageFontService;
     @Resource
+    private ImageIconService imageIconService;
+    @Resource
+    private ImageWaterMarkService imageWaterMarkService;
+    @Resource
     private LSHMACUtil lshmacUtil;
-
-    @RequestMapping("addWaterMark")
-    @ResponseBody
-    public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
-        ImageWaterMark wm = transformWaterMark(reqMap);
-        wm.setBusinessCode((String) reqMap.get("businessCode"));
-        return imageWaterMarkService.addWaterMark(wm);
-    }
-
-    @RequestMapping("testWaterMark")
-    @ResponseBody
-    public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
-        ImageWaterMark wm = transformWaterMark(reqMap);
-        wm.setManagerCode("00000000");
-        return imageWaterMarkService.testWaterMark(wm);
-    }
-
-    private ImageWaterMark transformWaterMark(Map<String, Object> reqMap) {
-        ImageWaterMark wm = new ImageWaterMark();
-        wm.setPath((String) reqMap.get("path"));
-        wm.setHeightPercentage((Integer) reqMap.get("height"));
-        wm.setxPercentage((Integer) reqMap.get("x"));
-        wm.setyPercentage((Integer) reqMap.get("y"));
-        wm.setAlpha((Integer) reqMap.get("alpha"));
-        return wm;
-    }
 
     @RequestMapping("addCut")
     @ResponseBody
@@ -122,6 +94,63 @@ public class ImageController {
         font.setSize((Integer) reqMap.get("size"));
         font.setColor((String) reqMap.get("color"));
         return font;
+    }
+
+    @RequestMapping("addIcon")
+    @ResponseBody
+    public Result addIcon(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        ImageIcon icon = transformIcon(reqMap);
+        return imageIconService.addIcon(icon);
+    }
+
+    @RequestMapping("testIcon")
+    @ResponseBody
+    public Result testIcon(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        ImageIcon icon = transformIcon(reqMap);
+        return imageIconService.testIcon(icon);
+    }
+
+    private ImageIcon transformIcon(Map<String, Object> reqMap) {
+        ImageIcon icon = new ImageIcon();
+        return icon;
+    }
+
+    @RequestMapping("addWaterMark")
+    @ResponseBody
+    public Result addWaterMark(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        ImageWaterMark wm = transformWaterMark(reqMap);
+        wm.setBusinessCode((String) reqMap.get("businessCode"));
+        return imageWaterMarkService.addWaterMark(wm);
+    }
+
+    @RequestMapping("testWaterMark")
+    @ResponseBody
+    public Result testWaterMark(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        ImageWaterMark wm = transformWaterMark(reqMap);
+        wm.setManagerCode("00000000");
+        return imageWaterMarkService.testWaterMark(wm);
+    }
+
+    private ImageWaterMark transformWaterMark(Map<String, Object> reqMap) {
+        ImageWaterMark wm = new ImageWaterMark();
+        wm.setPath((String) reqMap.get("path"));
+        wm.setHeightPercentage((Integer) reqMap.get("height"));
+        wm.setxPercentage((Integer) reqMap.get("x"));
+        wm.setyPercentage((Integer) reqMap.get("y"));
+        wm.setAlpha((Integer) reqMap.get("alpha"));
+        return wm;
     }
 
 }

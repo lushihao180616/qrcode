@@ -1,25 +1,25 @@
 var tableRow = [];
 
 function create() {
+    var path = document.getElementById("createPath").value;
+    var icon = document.getElementById("createIcon").value;
     var width = document.getElementById("createWidth").value;
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
-    var path = document.getElementById("createPath").value;
-    var alpha = document.getElementById("createAlpha").value;
-    if (!check(width, height, x, y, path, alpha)) {
+    if (!check(path, icon, width, height, x, y)) {
         return
     }
-    var imageCut = {
+    var createIcon = {
+        path: path,
+        icon: icon,
         width: parseInt(width),
         height: parseInt(height),
         x: parseInt(x),
-        y: parseInt(y),
-        path: path,
-        alpha: parseInt(alpha)
+        y: parseInt(y)
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/image/addCut", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/image/addIcon", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
@@ -33,7 +33,7 @@ function create() {
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
                     document.getElementById("tableTitle").style.visibility = "visible";
-                    var imageCuts = document.getElementById("imageCuts");
+                    var imageCuts = document.getElementById("imageIcons");
                     var url = result.bean;
                     var ifHave = false;
                     for (var i = 0; i < tableRow.length; i++) {
@@ -49,13 +49,13 @@ function create() {
                             '        <td class="bottomTd2">' + url + '</td>\n' +
                             '    </tr>';
                     }
-                    document.getElementById("createWidth").value = '100';
-                    document.getElementById("createHeight").value = '100';
-                    document.getElementById("createX").value = '0';
-                    document.getElementById("createY").value = '0';
                     document.getElementById('createPath').value = '';
-                    document.getElementById("createAlpha").value = '0';
+                    document.getElementById("createIcon").value = '';
                     document.getElementById("createTest").value = '';
+                    document.getElementById("createWidth").value = '10';
+                    document.getElementById("createHeight").value = '10';
+                    document.getElementById("createX").value = '50';
+                    document.getElementById("createY").value = '50';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -63,29 +63,29 @@ function create() {
             }
         }
     }
-    xhr.send(JSON.stringify(imageCut));
+    xhr.send(JSON.stringify(createIcon));
 }
 
 function test() {
+    var path = document.getElementById("createPath").value;
+    var icon = document.getElementById("createIcon").value;
     var width = document.getElementById("createWidth").value;
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
-    var path = document.getElementById("createPath").value;
-    var alpha = document.getElementById("createAlpha").value;
-    if (!check(width, height, x, y, path, alpha)) {
+    if (!check(path, icon, width, height, x, y)) {
         return
     }
-    var createCut = {
+    var createIcon = {
+        path: path,
+        icon: icon,
         width: parseInt(width),
         height: parseInt(height),
         x: parseInt(x),
-        y: parseInt(y),
-        path: path,
-        alpha: parseInt(alpha)
+        y: parseInt(y)
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/image/testCut", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/image/testIcon", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
@@ -107,11 +107,17 @@ function test() {
             }
         }
     }
-    xhr.send(JSON.stringify(createCut));
+    xhr.send(JSON.stringify(createIcon));
 }
 
-function check(width, height, x, y, path, alpha) {
+function check(path, icon, width, height, x, y) {
     var checkStr = '';
+    if (path == null || path == '') {
+        checkStr += '原图必须选择 ';
+    }
+    if (icon == null || icon == '') {
+        checkStr += '添加图标必须选择 ';
+    }
     if (width == '' || isNaN(width) || parseInt(width) > 100 || parseInt(width) < 0) {
         checkStr += '请填写宽度（0-100） ';
     }
@@ -123,12 +129,6 @@ function check(width, height, x, y, path, alpha) {
     }
     if (y == '' || isNaN(y) || parseInt(y) > 100 || parseInt(y) < 0) {
         checkStr += '请填写y偏移量（0-100） ';
-    }
-    if (path == null || path == '') {
-        checkStr += '原图必须选择 ';
-    }
-    if (alpha == '' || isNaN(alpha) || parseInt(alpha) > 50 || parseInt(alpha) < 0) {
-        checkStr += '请填写透明度（0-50） ';
     }
     if (checkStr != '') {
         alert(checkStr);

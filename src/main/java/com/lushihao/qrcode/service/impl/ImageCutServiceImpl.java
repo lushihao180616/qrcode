@@ -27,8 +27,8 @@ public class ImageCutServiceImpl implements ImageCutService {
         int bgHeight = bg.getHeight();
         int cutWidth = bgWidth * imageCut.getWidth() / 100;
         int cutHeight = bgHeight * imageCut.getHeight() / 100;
-        int xWidth = bgWidth * imageCut.getX() / 100;
-        int yHeight = bgHeight * imageCut.getY() / 100;
+        int xWidth = (bgWidth - cutWidth) * imageCut.getX() / 100;
+        int yHeight = (bgWidth - cutWidth) * imageCut.getY() / 100;
         //截取的图片
         BufferedImage cutImage = new BufferedImage(cutWidth, cutHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D cutImageG2 = cutImage.createGraphics();
@@ -61,8 +61,8 @@ public class ImageCutServiceImpl implements ImageCutService {
         int bgHeight = bg.getHeight();
         int cutWidth = bgWidth * imageCut.getWidth() / 100;
         int cutHeight = bgHeight * imageCut.getHeight() / 100;
-        int xWidth = bgWidth * imageCut.getX() / 100;
-        int yHeight = bgWidth * imageCut.getY() / 100;
+        int xWidth = (bgWidth - cutWidth) * imageCut.getX() / 100;
+        int yHeight = (bgWidth - cutWidth) * imageCut.getY() / 100;
         //截取的图片
         BufferedImage cutImage = new BufferedImage(cutWidth, cutHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D cutImageG2 = cutImage.createGraphics();
