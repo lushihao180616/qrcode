@@ -74,7 +74,7 @@
          onMouseOut="makevisible(this,1)">
         <div>图&emsp;片&emsp;管&emsp;理</div>
     </div>
-    <div class="lineItem5" onclick="navigate('videoWaterMark.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem5" onclick="navigate('videoManage.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>视&emsp;频&emsp;管&emsp;理</div>
     </div>
