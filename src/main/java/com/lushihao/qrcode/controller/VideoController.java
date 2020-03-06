@@ -38,8 +38,8 @@ public class VideoController {
     private VideoCut transformCut(Map<String, Object> reqMap) {
         VideoCut videoCut = new VideoCut();
         videoCut.setPath((String) reqMap.get("path"));
-        videoCut.setStart((Double) reqMap.get("start"));
-        videoCut.setEnd((Double) reqMap.get("end"));
+        videoCut.setStart((Integer) reqMap.get("start"));
+        videoCut.setEnd((Integer) reqMap.get("end"));
         return videoCut;
     }
 

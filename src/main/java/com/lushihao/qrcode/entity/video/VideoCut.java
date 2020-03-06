@@ -3,17 +3,21 @@ package com.lushihao.qrcode.entity.video;
 public class VideoCut {
 
     /**
-     * 路径
+     * 原视频路径
      */
     private String path;
     /**
+     * 生成视频路径
+     */
+    private String newPath;
+    /**
      * 开始时间
      */
-    private double start;
+    private int start;
     /**
      * 结束时间
      */
-    private double end;
+    private int end;
 
     public String getPath() {
         return path;
@@ -23,27 +27,36 @@ public class VideoCut {
         this.path = path;
     }
 
-    public double getStart() {
+    public String getNewPath() {
+        return newPath;
+    }
+
+    public void setNewPath(String newPath) {
+        this.newPath = newPath;
+    }
+
+    public int getStart() {
         return start;
     }
 
-    public void setStart(double start) {
+    public void setStart(int start) {
         this.start = start;
     }
 
-    public double getEnd() {
+    public int getEnd() {
         return end;
     }
 
-    public void setEnd(double end) {
+    public void setEnd(int end) {
         this.end = end;
     }
 
     public VideoCut() {
     }
 
-    public VideoCut(String path, double start, double end) {
+    public VideoCut(String path, String newPath, int start, int end) {
         this.path = path;
+        this.newPath = newPath;
         this.start = start;
         this.end = end;
     }

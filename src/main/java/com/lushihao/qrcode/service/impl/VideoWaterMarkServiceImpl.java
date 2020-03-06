@@ -30,6 +30,13 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
 
     @Override
     public Result addWaterMark(VideoWaterMark videoWaterMark, String code) {
+        VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());
+        if (videoInfo == null) {
+            return new Result(false, null, null, "读取文件信息失败");
+        }
+        if (lshFfmpegUtil.checkFileType(videoWaterMark.getOldVideoPath()) != lshFfmpegUtil.VIDEO) {
+            return new Result(false, null, null, "不支持此文件格式");
+        }
         //获得商家
         Business business = new Business();
         business.setCode(code);
@@ -48,16 +55,8 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         //获得输出文件地址
         String newVideoPath = videoWaterMark.getOldVideoPath().substring(0, videoWaterMark.getOldVideoPath().lastIndexOf(".")) + "_new.mp4";
         videoWaterMark.setNewVideoPath(newVideoPath);
-        if (lshFfmpegUtil.checkFileType(newVideoPath) != lshFfmpegUtil.VIDEO) {
-            return new Result(false, null, null, "不支持此文件格式");
-        }
-        VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoWaterMark.getOldVideoPath());
-        if (videoInfo == null) {
-            return new Result(false, null, null, "读取文件信息失败");
-        }
-        String name = videoWaterMark.getBusiness().getName();
         int num = 0;
-        for (char c : name.toCharArray()) {
+        for (char c : videoWaterMark.getBusiness().getName().toCharArray()) {
             if (lshCharUtil.isChineseChar(c)) {
                 num += 2;
             } else {

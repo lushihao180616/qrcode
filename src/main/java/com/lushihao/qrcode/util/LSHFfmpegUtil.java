@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.util;
 
+import com.lushihao.qrcode.entity.video.VideoCut;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
@@ -108,6 +109,13 @@ public class LSHFfmpegUtil {
         if (file.exists()) {
             file.delete();
         }
+        String name;
+        if (videoWaterMark.getBusiness() != null) {
+            name = videoWaterMark.getBusiness().getName();
+        } else {
+            name = videoWaterMark.getManager().getName();
+        }
+
         FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
         List<String> commands = new java.util.ArrayList<String>();
         FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
@@ -115,14 +123,65 @@ public class LSHFfmpegUtil {
         commands.add("-i");
         commands.add(videoWaterMark.getOldVideoPath());
         commands.add("-vf");
-        String name;
-        if (videoWaterMark.getBusiness() != null) {
-            name = videoWaterMark.getBusiness().getName();
-        } else {
-            name = videoWaterMark.getManager().getName();
-        }
         commands.add("\"drawtext=fontfile=simhei.ttf:text=\"" + name + "\":x=" + videoWaterMark.getFontX() + ":y=" + videoWaterMark.getFontY() + ":fontsize=" + videoWaterMark.getFontSize() + ":fontcolor=" + videoWaterMark.getFontColor() + ":shadowy=" + videoWaterMark.getFontShadow() + "\"");
         commands.add(videoWaterMark.getNewVideoPath());
+
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command(commands);
+        try {
+            Process process = builder.start();
+            InputStream errorStream = process.getErrorStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+            }
+            if (br != null) {
+                br.close();
+            }
+            if (inputStreamReader != null) {
+                inputStreamReader.close();
+            }
+            if (errorStream != null) {
+                errorStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 视频截取
+     *
+     * @param videoCut
+     * @return
+     */
+    public boolean videoCut(VideoCut videoCut) {
+        File file = new File(videoCut.getNewPath());
+        if (file.exists()) {
+            file.delete();
+        }
+        int startMinute = (int) (videoCut.getStart() / 60);
+        int startSecond = (int) (videoCut.getStart() % 60);
+        int minute = (int) ((videoCut.getEnd() - videoCut.getStart()) / 60);
+        int second = (int) ((videoCut.getEnd() - videoCut.getStart()) % 60);
+        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
+        List<String> commands = new java.util.ArrayList<String>();
+        FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
+        commands.add(FFMPEG_PATH);
+        commands.add("-ss");
+        commands.add("0:" + startMinute + ":" + startSecond);
+        commands.add("-t");
+        commands.add("0:" + minute + ":" + second);
+        commands.add("-i");
+        commands.add(videoCut.getPath());
+        commands.add("-vcodec");
+        commands.add("copy");
+        commands.add("-acodec");
+        commands.add("copy");
+        commands.add(videoCut.getNewPath());
 
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(commands);

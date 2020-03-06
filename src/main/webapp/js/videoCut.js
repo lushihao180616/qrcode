@@ -9,8 +9,8 @@ function create() {
     }
     var videoCut = {
         path: path,
-        start: parseFloat(start),
-        end: parseFloat(end)
+        start: parseInt(start),
+        end: parseInt(end)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/video/addCut", false);
@@ -65,8 +65,8 @@ function test() {
     }
     var videoCut = {
         path: path,
-        start: parseFloat(start),
-        end: parseFloat(end)
+        start: parseInt(start),
+        end: parseInt(end)
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/video/testCut", false);
@@ -102,6 +102,11 @@ function check(path, start, end) {
     }
     if (end == '' || isNaN(end) || parseInt(end) < 0) {
         checkStr += '请填写结束时间（≥0） ';
+    }
+    if (checkStr == '') {
+        if (parseInt(start) >= parseInt(end)) {
+            checkStr += '开始时间应早于结束时间 ';
+        }
     }
     if (checkStr != '') {
         alert(checkStr);
