@@ -118,6 +118,12 @@ public class ImageController {
 
     private ImageIcon transformIcon(Map<String, Object> reqMap) {
         ImageIcon icon = new ImageIcon();
+        icon.setPath((String) reqMap.get("path"));
+        icon.setIcon((String) reqMap.get("icon"));
+        icon.setWidth((Integer) reqMap.get("width"));
+        icon.setHeight((Integer) reqMap.get("height"));
+        icon.setX((Integer) reqMap.get("x"));
+        icon.setY((Integer) reqMap.get("y"));
         return icon;
     }
 

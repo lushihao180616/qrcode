@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>添加图片</title>
+    <title>添加图标</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <link rel="stylesheet" type="text/css" href="../css/imageIcon.css">
     <script src="../js/public.js"></script>
@@ -17,13 +17,13 @@
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
-    添加图片
+    添加图标
 </p>
 
 <div class="top">
     <div class="topItem1">
         <br>
-        <span class="topItemTitle">添加图片：</span></span><br><br><br>
+        <span class="topItemTitle">添加图标：</span></span><br><br><br>
         <span class="itemName">原&ensp;图&ensp;片：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="image/jpeg, image/jpg, image/png"/><br><br>
         <span class="itemName">添加图标：</span><input class="topItemSelect" type="file" id="createIcon"
