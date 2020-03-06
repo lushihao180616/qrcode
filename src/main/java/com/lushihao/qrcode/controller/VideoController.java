@@ -1,7 +1,9 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
+import com.lushihao.qrcode.entity.video.VideoCut;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
+import com.lushihao.qrcode.service.VideoCutService;
 import com.lushihao.qrcode.service.VideoWaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -17,9 +19,29 @@ import java.util.Map;
 public class VideoController {
 
     @Resource
+    private VideoCutService videoCutService;
+    @Resource
     private VideoWaterMarkService videoWaterMarkService;
     @Resource
     private LSHMACUtil lshmacUtil;
+
+    @RequestMapping("addCut")
+    @ResponseBody
+    public Result addCut(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        VideoCut videoCut = transformCut(reqMap);
+        return videoCutService.addCut(videoCut);
+    }
+
+    private VideoCut transformCut(Map<String, Object> reqMap) {
+        VideoCut videoCut = new VideoCut();
+        videoCut.setPath((String) reqMap.get("path"));
+        videoCut.setStart((Double) reqMap.get("start"));
+        videoCut.setEnd((Double) reqMap.get("end"));
+        return videoCut;
+    }
 
     @RequestMapping("addWaterMark")
     @ResponseBody
@@ -27,9 +49,9 @@ public class VideoController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        VideoWaterMark videoWaterMark = transform(reqMap);
+        VideoWaterMark videoWaterMark = transformWaterMark(reqMap);
         String code = (String) reqMap.get("businessCode");
-        return videoWaterMarkService.create(videoWaterMark, code);
+        return videoWaterMarkService.addWaterMark(videoWaterMark, code);
     }
 
     @RequestMapping("testWaterMark")
@@ -38,12 +60,12 @@ public class VideoController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        VideoWaterMark videoWaterMark = transform(reqMap);
+        VideoWaterMark videoWaterMark = transformWaterMark(reqMap);
         String code = "00000000";
-        return videoWaterMarkService.test(videoWaterMark, code);
+        return videoWaterMarkService.testWaterMark(videoWaterMark, code);
     }
 
-    private VideoWaterMark transform(Map<String, Object> reqMap) {
+    private VideoWaterMark transformWaterMark(Map<String, Object> reqMap) {
         VideoWaterMark videoWaterMark = new VideoWaterMark();
         videoWaterMark.setOldVideoPath((String) reqMap.get("path"));
         if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {

@@ -58,8 +58,8 @@
     </select><br><br>
         <hr>
         <br>
-        <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
-                                                             id="createTest"/><br><br>
+        <span class="itemName">预览视频：</span><input class="topItemInput" readonly="readonly" type="text"
+                                                  id="createTest"/><br><br>
 
         <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>

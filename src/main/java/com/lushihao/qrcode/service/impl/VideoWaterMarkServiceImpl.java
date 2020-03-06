@@ -29,7 +29,7 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
     private LSHCharUtil lshCharUtil;
 
     @Override
-    public Result create(VideoWaterMark videoWaterMark, String code) {
+    public Result addWaterMark(VideoWaterMark videoWaterMark, String code) {
         //获得商家
         Business business = new Business();
         business.setCode(code);
@@ -75,7 +75,7 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         }
     }
 
-    public Result test(VideoWaterMark videoWaterMark, String code) {
+    public Result testWaterMark(VideoWaterMark videoWaterMark, String code) {
         //获得商家
         Manager manager = new Manager();
         manager.setCode(code);

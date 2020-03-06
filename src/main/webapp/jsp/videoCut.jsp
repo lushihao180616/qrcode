@@ -26,24 +26,13 @@
         <span class="topItemTitle">视频截取：</span></span><br><br><br>
         <span class="itemName">原&ensp;视&ensp;频：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="video/*"/><br><br>
-        <span class="itemName">截取宽度：</span><input class="topItemInput" type="text"
-                                                  value="100"
-                                                  id="createWidth"/><span class="unit">%</span><br><br>
-        <span class="itemName">截取高度：</span><input class="topItemInput" type="text"
-                                                  value="100"
-                                                  id="createHeight"/><span class="unit">%</span><br><br>
-        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                        value="0"
-                                                        id="createX"/><span class="unit">%</span><br><br>
-        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                        value="0"
-                                                        id="createY"/><span class="unit">%</span><br><br>
-        <hr>
-        <br>
-        <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
-                                                             id="createTest"/><br><br>
+        <span class="itemName">开始时间：</span><input class="topItemInput" type="text"
+                                                  value="0"
+                                                  id="createStart"/><span class="unit">秒</span><br><br>
+        <span class="itemName">结束时间：</span><input class="topItemInput" type="text"
+                                                  value="1"
+                                                  id="createEnd"/><span class="unit">秒</span><br><br>
 
-        <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
     <div class="topItem2">
@@ -57,7 +46,7 @@
             </tr>
         </table>
         <div class="tableItems">
-            <table class="bottomItemTable2" id="imageCuts">
+            <table class="bottomItemTable2" id="videoCuts">
             </table>
         </div>
     </div>
