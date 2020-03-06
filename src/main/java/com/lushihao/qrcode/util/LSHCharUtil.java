@@ -33,4 +33,8 @@ public class LSHCharUtil {
         return String.valueOf(c).matches("[\u4e00-\u9fa5]");
     }
 
+    public boolean isDefaultChar(String str) {
+        return str.matches("^[a-zA-Z0-9\\u4e00-\\u9fa5\\n]+$");
+    }
+
 }

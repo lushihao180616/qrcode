@@ -30,6 +30,9 @@ public class ImageFontServiceImpl implements ImageFontService {
         if (bg == null) {
             return new Result(false, null, null, "背景图片不存在");
         }
+        if (!lshCharUtil.isDefaultChar(imageFont.getMessage())) {
+            return new Result(false, null, null, "只支持汉字、英文字母、数字");
+        }
         String[] lines = imageFont.getMessage().split("\\n");
         Graphics2D bgG2 = bg.createGraphics();
         bgG2.setColor(getColor(imageFont.getColor()));
