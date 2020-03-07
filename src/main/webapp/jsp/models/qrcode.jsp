@@ -24,7 +24,30 @@
 <div class="top">
     <div class="topItem1">
         <br>
-        <span class="topItemTitle">二维码信息：</span><br><br><br>
+        <span class="topItemTitle">类型及信息：</span><br><br><br>
+        <span class="itemName">类&emsp;&emsp;型：</span><select class="topItemSelect" id="createLayout"
+                                                             onchange="changeType(this.id)">
+        <option value="text">文本</option>
+        <option value="image">图片</option>
+        <option value="video">视频</option>
+    </select><br><br>
+        <div id="textInfo">
+            <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none"
+                                                                    class="topItemInput" type="text"
+                                                                    id="textMessage"></textarea><br><br>
+        </div>
+        <div id="imageInfo" style="display: none">
+            <span class="itemName">图&emsp;&emsp;片：</span><input class="topItemSelect" type="file" id="imageMessage"
+                                                                accept="image/jpeg, image/jpg, image/png"/><br><br>
+        </div>
+        <div id="videoInfo" style="display: none">
+            <span class="itemName">视&emsp;&emsp;频：</span><input class="topItemSelect" type="file" id="videoMessage"
+                                                                accept="video/*"/><br><br>
+        </div>
+    </div>
+    <div class="topItem2">
+        <br>
+        <span class="topItemTitle">其他：</span><br><br><br>
         <span class="itemName">模&emsp;&emsp;板：</span><input class="topItemFilter" id="filterTemple"/><input
             class="topItemSearch"
             type="button"
@@ -39,8 +62,6 @@
         <span class="itemName">商&emsp;&emsp;家：</span><select class="topItemSelect" id="businesses"
                                                              onchange="getBusinessCode(this.id)"></select><br><br>
         <span class="itemName">文&ensp;件&ensp;名：</span><input class="topItemInput" type="text" id="fileName"/><br><br>
-        <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none" class="topItemInput" type="text"
-                                                                id="message"></textarea><br><br>
         <span class="itemName">码透明度：</span><input class="topItemInput" type="text" id="alpha"
                                                   value="0"/><span
             class="unit">%</span><br><br>
@@ -66,11 +87,10 @@
         <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
-    <div class="topItem2">
+    <div class="topItem3">
         <br>
         <span class="topItemTitle">商家信息：</span><br><br><br>
-
-        <div class="split"></div>
+        <br>
         <div class="topItemSelect" id="nowBusiness_name"></div>
         <br>
         <div class="topItemSelect" id="nowBusiness_address"></div>
@@ -78,13 +98,9 @@
         <div class="topItemSelect" id="nowBusiness_phone"></div>
         <br>
         <div class="topItemSelect" id="nowBusiness_businessName"></div>
-        <div class="split"></div>
-    </div>
-    <div class="topItem3">
         <br>
         <span class="topItemTitle">模板信息：</span><br><br><br>
-
-        <div class="split"></div>
+        <br>
         <div class="topItemSelect" id="nowTemple_price"></div>
         <br>
         <div class="topItemSelect" id="nowTemple_ifOnly"></div>
@@ -93,14 +109,7 @@
         <br>
         <div class="topItemSelect" id="nowTemple_ifSelfBg"></div>
         <br>
-        <div class="topItemSelect" id="nowTemple_arti"></div>
-        <br>
-        <div class="topItemSelect" id="nowTemple_width_height"></div>
-        <br>
-        <div class="topItemSelect" id="nowTemple_x_y"></div>
-        <br>
         <div class="topItemSelect" id="nowTemple_path"></div>
-        <div class="split"></div>
     </div>
 </div>
 

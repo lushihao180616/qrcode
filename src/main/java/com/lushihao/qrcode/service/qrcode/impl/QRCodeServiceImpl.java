@@ -5,7 +5,7 @@ import com.lushihao.qrcode.dao.QRTempleMapper;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
-import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
+import com.lushihao.qrcode.entity.qrcode.QRCode;
 import com.lushihao.qrcode.service.qrcode.QRCodeService;
 import com.lushihao.qrcode.util.LSHQRCodeUtil;
 import org.springframework.stereotype.Service;
@@ -28,8 +28,8 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public Result create(QRCodeRequest qrCodeRequest) {
-        QRCodeVo qrCodeVo = new QRCodeVo(qrCodeRequest.getMessage(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getManagerCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
-        Result result = lshqrCodeUtil.qrcode(qrCodeVo, false, false);
+        QRCode qrCode = new QRCode(qrCodeRequest.getMessage(), qrCodeRequest.getType(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getManagerCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+        Result result = lshqrCodeUtil.qrcode(qrCode, false, false);
         Map<String, Object> map = (Map<String, Object>) result.getBean();
         map.put("record", selectRecord(new QRCodeRecord()));
         result.setBean(map);
@@ -39,8 +39,8 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public Result test(QRCodeRequest qrCodeRequest) {
-        QRCodeVo qrCodeVo = new QRCodeVo("超级码丽", qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
-        Result result = lshqrCodeUtil.qrcode(qrCodeVo, true, false);
+        QRCode qrCode = new QRCode("超级码丽", qrCodeRequest.getType(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+        Result result = lshqrCodeUtil.qrcode(qrCode, true, false);
         Map<String, Object> map = (Map<String, Object>) result.getBean();
         map.put("record", selectRecord(new QRCodeRecord()));
         result.setBean(map);

@@ -5,12 +5,16 @@ import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 /**
  * 二维码的使用类
  */
-public class QRCodeVo {
+public class QRCode {
 
     /**
      * 二维码信息
      */
     private String message;
+    /**
+     * 二维码类型
+     */
+    private String type;
     /**
      * 二维码所属编号
      */
@@ -58,6 +62,14 @@ public class QRCodeVo {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public QRCodeTemple getQrCodeTemple() {
@@ -140,11 +152,12 @@ public class QRCodeVo {
         this.angle = angle;
     }
 
-    public QRCodeVo() {
+    public QRCode() {
     }
 
-    public QRCodeVo(String message, QRCodeTemple qrCodeTemple, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
+    public QRCode(String message, String type, QRCodeTemple qrCodeTemple, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
         this.message = message;
+        this.type = type;
         this.qrCodeTemple = qrCodeTemple;
         this.businessCode = businessCode;
         this.managerCode = managerCode;

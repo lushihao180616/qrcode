@@ -4,7 +4,7 @@ import com.lushihao.myutils.time.LSHDateUtils;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
-import com.lushihao.qrcode.entity.qrcode.QRCodeVo;
+import com.lushihao.qrcode.entity.qrcode.QRCode;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.swetake.util.Qrcode;
 import org.springframework.stereotype.Component;
@@ -100,37 +100,37 @@ public class LSHQRCodeUtil {
     /**
      * 生成二维码
      *
-     * @param qrCodeVo 二维码相关信息
+     * @param qrCode 二维码相关信息
      * @return
      */
-    public Result qrcode(QRCodeVo qrCodeVo, boolean ifTest, boolean ifModel) {
+    public Result qrcode(QRCode qrCode, boolean ifTest, boolean ifModel) {
         //删掉测试记录
         if (!ifTest) {
             lshImageUtil.delDirFile(projectBasicInfo.getQrcodeUrl() + "\\test");
         }
-        max = qrCodeVo.getQrCodeTemple().getIconNum();
+        max = qrCode.getQrCodeTemple().getIconNum();
         //判断是静态还是动态
-        if (qrCodeVo.getQrCodeTemple().getCode().startsWith("J")) {
+        if (qrCode.getQrCodeTemple().getCode().startsWith("J")) {
             isMp4 = false;
-        } else if (qrCodeVo.getQrCodeTemple().getCode().startsWith("D")) {
+        } else if (qrCode.getQrCodeTemple().getCode().startsWith("D")) {
             isMp4 = true;
         }
 
         Map<String, Object> map = new HashMap<>();
         try {
             //创建二维码
-            BufferedImage image = getQRCode(qrCodeVo);
+            BufferedImage image = getQRCode(qrCode);
             if (image == null) {
                 return new Result(false, null, null, "信息过长，创建失败");
             }
             //添加背景
-            Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCodeVo);
+            Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCode);
             //输出图片
-            String filePath = outPutImage(imageAndBg, qrCodeVo, ifTest, ifModel);
+            String filePath = outPutImage(imageAndBg, qrCode, ifTest, ifModel);
             map.put("filePath", filePath);
             //记录一下
             if (!ifTest) {
-                qrCodeRecordMapper.create(new QRCodeRecord(qrCodeVo.getQrCodeTemple().getCode(), qrCodeVo.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCodeVo.getQrCodeTemple().getMoney()));
+                qrCodeRecordMapper.create(new QRCodeRecord(qrCode.getQrCodeTemple().getCode(), qrCode.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCode.getQrCodeTemple().getMoney()));
             }
         } catch (UnsupportedEncodingException e) {
             return new Result(false, null, null, "创建失败");
@@ -141,9 +141,9 @@ public class LSHQRCodeUtil {
     /**
      * 创建二维码
      *
-     * @param qrCodeVo
+     * @param qrCode
      */
-    private BufferedImage getQRCode(QRCodeVo qrCodeVo) throws UnsupportedEncodingException {
+    private BufferedImage getQRCode(QRCode qrCode) throws UnsupportedEncodingException {
         //创建二维码对象
         Qrcode qrcode = new Qrcode();
         //设置二维码的纠错级别
@@ -153,7 +153,16 @@ public class LSHQRCodeUtil {
         qrcode.setQrcodeEncodeMode('B');
 
         //设置内容
-        String content = qrCodeVo.getMessage();
+        String content = null;
+        if (qrCode.getType().equals("text")) {//文本
+            content = qrCode.getMessage();
+        } else if (qrCode.getType().equals("image")) {//图片
+            content = "这是一条图片地址";
+        } else if (qrCode.getType().equals("video")) {//视频
+            content = "这是一条视频地址";
+        } else {
+            return null;
+        }
         byte[] contentsBytes = content.getBytes("utf-8");
         int charLength = lshCharUtil.charLength(content);
         boolean[][] code = new boolean[0][];
@@ -186,31 +195,31 @@ public class LSHQRCodeUtil {
         image = gs.getDeviceConfiguration().createCompatibleImage(nowWidth, nowHeight, Transparency.TRANSLUCENT);
         gs = image.createGraphics();
         gs.translate(nowWidth / 2, nowHeight / 2);
-        if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
-            gs.rotate(Math.toRadians(qrCodeVo.getAngle()));
+        if (qrCode.getQrCodeTemple().isIfSelfBg()) {
+            gs.rotate(Math.toRadians(qrCode.getAngle()));
         } else {
-            gs.rotate(Math.toRadians(qrCodeVo.getQrCodeTemple().getAngle()));
+            gs.rotate(Math.toRadians(qrCode.getQrCodeTemple().getAngle()));
         }
         gs.translate(-nowWidth / 2, -nowHeight / 2);
 
         //开始回执二维码
-        handleCodeEye(gs, code, qrCodeVo);
-        if (qrCodeVo.getQrCodeTemple().getArti().equals("0-1-2-3-4")) {
-            drawQrcodeHot(gs, code, qrCodeVo); //0-1-2-3-4
-        } else if (qrCodeVo.getQrCodeTemple().getArti().equals("0-1-2-5-6")) {
-            drawQrcodeOrdi(gs, code, qrCodeVo); //0-1-2-5-6
+        handleCodeEye(gs, code, qrCode);
+        if (qrCode.getQrCodeTemple().getArti().equals("0-1-2-3-4")) {
+            drawQrcodeHot(gs, code, qrCode); //0-1-2-3-4
+        } else if (qrCode.getQrCodeTemple().getArti().equals("0-1-2-5-6")) {
+            drawQrcodeOrdi(gs, code, qrCode); //0-1-2-5-6
         }
 
         //添加logo
-        if (qrCodeVo.getQrCodeTemple().isIfShowLogo()) {
-            BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\logo.png");
-            BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\logo_border.png");
+        if (qrCode.getQrCodeTemple().isIfShowLogo()) {
+            BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + qrCode.getBusinessCode() + "\\logo.png");
+            BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\logo_border.png");
 
             gs.translate(nowWidth / 2, nowHeight / 2);
-            if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {
-                gs.rotate(Math.toRadians(-qrCodeVo.getAngle()));
+            if (qrCode.getQrCodeTemple().isIfSelfBg()) {
+                gs.rotate(Math.toRadians(-qrCode.getAngle()));
             } else {
-                gs.rotate(Math.toRadians(-qrCodeVo.getQrCodeTemple().getAngle()));
+                gs.rotate(Math.toRadians(-qrCode.getQrCodeTemple().getAngle()));
             }
             gs.translate(-nowWidth / 2, -nowHeight / 2);
 
@@ -228,8 +237,8 @@ public class LSHQRCodeUtil {
      * @param gs
      * @param code
      */
-    private void handleCodeEye(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) {
-        BufferedImage image_eye = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\eye.png");
+    private void handleCodeEye(Graphics2D gs, boolean[][] code, QRCode qrCode) {
+        BufferedImage image_eye = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\eye.png");
 
         //码眼部分全部设置为false
         for (int i = 0; i < 7; i++) {
@@ -257,10 +266,10 @@ public class LSHQRCodeUtil {
      * 添加背景图片
      *
      * @param image
-     * @param qrCodeVo
+     * @param qrCode
      * @return
      */
-    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCodeVo qrCodeVo) {
+    private Map<Integer, BufferedImage> addBG(BufferedImage image, QRCode qrCode) {
         BufferedImage nowImage = image;
 
         Map<Integer, BufferedImage> map = new HashMap<>();
@@ -268,46 +277,46 @@ public class LSHQRCodeUtil {
         int bgHeight;
         int x;
         int y;
-        float alpha = 1 - ((float) qrCodeVo.getAlpha() / 100);
+        float alpha = 1 - ((float) qrCode.getAlpha() / 100);
         int multiple;
 
-        if (qrCodeVo.getQrCodeTemple().isIfSelfBg()) {//自定义背景
+        if (qrCode.getQrCodeTemple().isIfSelfBg()) {//自定义背景
             //缩小倍数
             multiple = 1;
             //获得背景图片
             if (!isMp4) {
-                map.put(0, lshImageUtil.getImage(qrCodeVo.getBackGround()));
+                map.put(0, lshImageUtil.getImage(qrCode.getBackGround()));
             } else {
-                map = lshGif2JpgUtil.gifToJpg(qrCodeVo.getBackGround());
+                map = lshGif2JpgUtil.gifToJpg(qrCode.getBackGround());
             }
             //获得背景宽高
             int width = map.get(0).getWidth();
             int height = map.get(0).getHeight();
             if (width > height) {
-                bgHeight = qrCodeVo.getShortLength();
+                bgHeight = qrCode.getShortLength();
                 bgWidth = (int) ((float) width / height * bgHeight);
             } else {
-                bgWidth = qrCodeVo.getShortLength();
+                bgWidth = qrCode.getShortLength();
                 bgHeight = (int) ((float) height / width * bgWidth);
             }
             //获得偏移量
-            x = (int) ((float) (bgWidth - 3000) * qrCodeVo.getX() / 100);
-            y = (int) ((float) (bgHeight - 3000) * qrCodeVo.getY() / 100);
+            x = (int) ((float) (bgWidth - 3000) * qrCode.getX() / 100);
+            y = (int) ((float) (bgHeight - 3000) * qrCode.getY() / 100);
         } else {//非自定义背景
             //缩小倍数
-            multiple = qrCodeVo.getQrCodeTemple().getMultiple();
+            multiple = qrCode.getQrCodeTemple().getMultiple();
             //获得背景图片
             if (!isMp4) {
-                map.put(0, lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.jpg"));
+                map.put(0, lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\bg.jpg"));
             } else {
-                map = lshGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCodeVo.getQrCodeTemple().getCode() + "\\bg.gif");
+                map = lshGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\bg.gif");
             }
             //获得背景宽高
-            bgWidth = qrCodeVo.getQrCodeTemple().getWidth();
-            bgHeight = qrCodeVo.getQrCodeTemple().getHeight();
+            bgWidth = qrCode.getQrCodeTemple().getWidth();
+            bgHeight = qrCode.getQrCodeTemple().getHeight();
             //获得偏移量
-            x = qrCodeVo.getQrCodeTemple().getX();
-            y = qrCodeVo.getQrCodeTemple().getY();
+            x = qrCode.getQrCodeTemple().getX();
+            y = qrCode.getQrCodeTemple().getY();
         }
 
         for (int i = 0; i < map.size(); i++) {
@@ -330,8 +339,8 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    private void drawQrcodeHot(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) {
-        String typeCode = qrCodeVo.getQrCodeTemple().getCode();
+    private void drawQrcodeHot(Graphics2D gs, boolean[][] code, QRCode qrCode) {
+        String typeCode = qrCode.getQrCodeTemple().getCode();
 
         //把图片素材放进数组
         BufferedImage[] img0 = new BufferedImage[max];
@@ -443,8 +452,8 @@ public class LSHQRCodeUtil {
      * @param gs   画笔
      * @param code 二维码数组
      */
-    private void drawQrcodeOrdi(Graphics2D gs, boolean[][] code, QRCodeVo qrCodeVo) {
-        String typeCode = qrCodeVo.getQrCodeTemple().getCode();
+    private void drawQrcodeOrdi(Graphics2D gs, boolean[][] code, QRCode qrCode) {
+        String typeCode = qrCode.getQrCodeTemple().getCode();
         //把图片素材放进数组
         BufferedImage[] img0 = new BufferedImage[max];
         BufferedImage[] img1 = new BufferedImage[max];
@@ -577,23 +586,23 @@ public class LSHQRCodeUtil {
      * 输出图片
      *
      * @param images
-     * @param qrCodeVo
+     * @param qrCode
      */
-    private String outPutImage(Map<Integer, BufferedImage> images, QRCodeVo qrCodeVo, boolean ifTest, boolean ifModel) {
+    private String outPutImage(Map<Integer, BufferedImage> images, QRCode qrCode, boolean ifTest, boolean ifModel) {
         String filePath;
         //将文件输出
         if (!ifModel) {//商家创建
             if (ifTest) {
-                filePath = projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + "_test.jpg";
+                filePath = projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date()) + qrCode.getFileName() + "_test.jpg";
             } else {
-                filePath = lshImageUtil.createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCodeVo.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCodeVo.getFileName() + ".jpg";
+                filePath = lshImageUtil.createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCode.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCode.getFileName() + ".jpg";
             }
         } else {//操作员创建
-            filePath = projectBasicInfo.getModelUrl() + "\\" + qrCodeVo.getFileName() + ".jpg";
+            filePath = projectBasicInfo.getModelUrl() + "\\" + qrCode.getFileName() + ".jpg";
         }
         if (isMp4) {
             filePath = filePath.substring(0, filePath.lastIndexOf(".")) + ".gif";
-            new LSHGifUtil().jpgToGif(images, filePath, qrCodeVo.getQrCodeTemple().getFrame());
+            new LSHGifUtil().jpgToGif(images, filePath, qrCode.getQrCodeTemple().getFrame());
         } else {
             lshImageUtil.sendImage(filePath, images.get(0));
         }

@@ -7,6 +7,10 @@ public class QRCodeRequest {
      */
     private String message;
     /**
+     * 二维码类型
+     */
+    private String type;
+    /**
      * 二维码所属编号
      */
     private String templeCode;
@@ -53,6 +57,14 @@ public class QRCodeRequest {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTempleCode() {
@@ -138,8 +150,9 @@ public class QRCodeRequest {
     public QRCodeRequest() {
     }
 
-    public QRCodeRequest(String message, String templeCode, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
+    public QRCodeRequest(String message, String type, String templeCode, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
         this.message = message;
+        this.type = type;
         this.templeCode = templeCode;
         this.businessCode = businessCode;
         this.managerCode = managerCode;
@@ -151,5 +164,5 @@ public class QRCodeRequest {
         this.alpha = alpha;
         this.angle = angle;
     }
-
+    
 }
