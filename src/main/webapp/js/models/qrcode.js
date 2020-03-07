@@ -268,7 +268,7 @@ function getRecord() {
 }
 
 function create() {
-    var message = document.getElementById("textMessage").value;
+    var message = getMessage();
     var temple = document.getElementById("temples").value;
     var business = document.getElementById("businesses").value;
     var fileName = document.getElementById("fileName").value;
@@ -325,7 +325,7 @@ function create() {
 }
 
 function test() {
-    var message = document.getElementById("textMessage").value;
+    var message = getMessage();
     var temple = document.getElementById("temples").value;
     var business = document.getElementById("businesses").value;
     var fileName = document.getElementById("fileName").value;
@@ -416,4 +416,19 @@ function check(message, temple, business, fileName, backGround, shortLength, x, 
         return false;
     }
     return true;
+}
+
+function getMessage() {
+    var message;
+    var type = document.getElementById(id).value;
+    if (type == "text") {
+        message = document.getElementById("textMessage").value;
+    } else if (type == "image") {
+        message = document.getElementById("imageMessage").value;
+    } else if (type == "video") {
+        message = document.getElementById("videoMessage").value;
+    } else {
+        message = "";
+    }
+    return message;
 }
