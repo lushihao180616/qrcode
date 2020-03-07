@@ -22,11 +22,11 @@
 </p>
 
 <div class="linkItems">
-    <div class="lineItem1" onclick="navigate('videoCut.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem1" onclick="navigate('video/videoCut.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>视&emsp;频&emsp;截&emsp;取</div>
     </div>
-    <div class="lineItem2" onclick="navigate('videoFont.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem2" onclick="navigate('video/videoFont.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;文&emsp;字</div>
     </div>

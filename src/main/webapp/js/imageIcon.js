@@ -33,7 +33,7 @@ function create() {
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
                     document.getElementById("tableTitle").style.visibility = "visible";
-                    var imageCuts = document.getElementById("imageIcons");
+                    var imageIcons = document.getElementById("imageIcons");
                     var url = result.bean;
                     var ifHave = false;
                     for (var i = 0; i < tableRow.length; i++) {
@@ -43,7 +43,7 @@ function create() {
                     }
                     if (!ifHave) {
                         tableRow.push(url);
-                        imageCuts.innerHTML += '\n' +
+                        imageIcons.innerHTML += '\n' +
                             '    <tr>\n' +
                             '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
                             '        <td class="bottomTd2">' + url + '</td>\n' +

@@ -22,19 +22,19 @@
 </p>
 
 <div class="linkItems">
-    <div class="lineItem1" onclick="navigate('imageCut.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem1" onclick="navigate('image/imageCut.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>图&emsp;片&emsp;截&emsp;取</div>
     </div>
-    <div class="lineItem2" onclick="navigate('imageFont.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem2" onclick="navigate('image/imageFont.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;文&emsp;字</div>
     </div>
-    <div class="lineItem3" onclick="navigate('imageIcon.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem3" onclick="navigate('image/imageIcon.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;图&emsp;标</div>
     </div>
-    <div class="lineItem4" onclick="navigate('imageWaterMark.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem4" onclick="navigate('image/imageWaterMark.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;水&emsp;印</div>
     </div>

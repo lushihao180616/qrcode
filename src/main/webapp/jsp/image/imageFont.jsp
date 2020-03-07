@@ -5,41 +5,56 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>添加图标</title>
-    <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/imageIcon.css">
-    <script src="../js/public.js"></script>
-    <script src="../js/imageIcon.js"></script>
+    <title>添加文字</title>
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/imageFont.css">
+    <script src="../../js/public.js"></script>
+    <script src="../../js/imageFont.js"></script>
 </head>
 <body>
 
-<a class="toIndex" onclick="navigate('imageManage.jsp')" onMouseOver="makevisible(this,0)"
+<a class="toIndex" onclick="navigate('../imageManage.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
-    添加图标
+    添加文字
 </p>
 
 <div class="top">
     <div class="topItem1">
         <br>
-        <span class="topItemTitle">添加图标：</span></span><br><br><br>
+        <span class="topItemTitle">添加文字：</span></span><br><br><br>
         <span class="itemName">原&ensp;图&ensp;片：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="image/jpeg, image/jpg, image/png"/><br><br>
-        <span class="itemName">添加图标：</span><input class="topItemSelect" type="file" id="createIcon"
-                                                  accept="image/jpeg, image/jpg, image/png"/><br><br>
-        <span class="itemName">图标宽度：</span><input class="topItemInput" type="text"
-                                                  value="10"
-                                                  id="createWidth"/><span class="unit">%</span><br><br>
-        <span class="itemName">图标高度：</span><input class="topItemInput" type="text"
-                                                  value="10"
-                                                  id="createHeight"/><span class="unit">%</span><br><br>
+        <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none" class="topItemInput" type="text"
+                                                                id="createMessage"
+                                                                placeholder="可使用回车来添加多行文字"></textarea><br><br>
         <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                        value="50"
+                                                        value="0"
                                                         id="createX"/><span class="unit">%</span><br><br>
         <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                        value="50"
+                                                        value="0"
                                                         id="createY"/><span class="unit">%</span><br><br>
+        <span class="itemName">字体大小：</span><input class="topItemInput" type="text"
+                                                  value="24"
+                                                  id="createSize"/><br><br>
+        <span class="itemName">字体颜色：</span><select class="topItemSelect" id="createColor">
+        <option value="black">黑色</option>
+        <option value="white">白色</option>
+        <option value="blue">蓝色</option>
+        <option value="green">绿色</option>
+        <option value="red">红色</option>
+        <option value="yellow">黄色</option>
+        <option value="pink">粉色</option>
+        <option value="cyan">青色</option>
+        <option value="gray">灰色</option>
+        <option value="orange">橙色</option>
+    </select><br><br>
+        <span class="itemName">布局方式：</span><select class="topItemSelect" id="createLayout">
+        <option value="left">左对齐</option>
+        <option value="center">居中对齐</option>
+        <option value="right">右对齐</option>
+    </select><br><br>
         <hr>
         <br>
         <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
@@ -59,7 +74,7 @@
             </tr>
         </table>
         <div class="tableItems">
-            <table class="bottomItemTable2" id="imageIcons">
+            <table class="bottomItemTable2" id="imageFonts">
             </table>
         </div>
     </div>

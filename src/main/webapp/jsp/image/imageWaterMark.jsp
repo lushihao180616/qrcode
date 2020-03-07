@@ -5,40 +5,39 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>图片截取</title>
-    <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/imageCut.css">
-    <script src="../js/public.js"></script>
-    <script src="../js/imageCut.js"></script>
+    <title>添加水印</title>
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/imageWaterMark.css">
+    <script src="../../js/public.js"></script>
+    <script src="../../js/imageWaterMark.js"></script>
 </head>
-<body>
+<body onload="init()">
 
-<a class="toIndex" onclick="navigate('imageManage.jsp')" onMouseOver="makevisible(this,0)"
+<a class="toIndex" onclick="navigate('../imageManage.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
-    图片截取
+    添加水印
 </p>
-
 <div class="top">
     <div class="topItem1">
         <br>
-        <span class="topItemTitle">图片截取：</span></span><br><br><br>
+        <span class="topItemTitle">添加水印：</span></span><br><br><br>
+        <span class="itemName">商家搜索：</span><input class="topItemFilter" id="createCode"/><input class="topItemSearch"
+                                                                                                type="button"
+                                                                                                value="搜索"
+                                                                                                onclick="init()"/><br><br>
+        <span class="itemName">商家选择：</span><select class="topItemSelect" id="createBusinesses"></select><br><br>
         <span class="itemName">原&ensp;图&ensp;片：</span><input class="topItemSelect" type="file" id="createPath"
                                                              accept="image/jpeg, image/jpg, image/png"/><br><br>
-        <span class="itemName">截取宽度：</span><input class="topItemInput" type="text"
-                                                  value="100"
-                                                  id="createWidth"/><span class="unit">%</span><br><br>
-        <span class="itemName">截取高度：</span><input class="topItemInput" type="text"
-                                                  value="100"
+        <span class="itemName">水印高度：</span><input class="topItemInput" type="text"
+                                                  value="10"
                                                   id="createHeight"/><span class="unit">%</span><br><br>
-        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                        value="0"
+        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="0"
                                                         id="createX"/><span class="unit">%</span><br><br>
-        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text"
-                                                        value="0"
+        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="100"
                                                         id="createY"/><span class="unit">%</span><br><br>
-        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="0"
+        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
                                                              id="createAlpha"/><span class="unit">%</span><br><br>
         <hr>
         <br>
@@ -50,16 +49,16 @@
     </div>
     <div class="topItem2">
         <br>
-        <span class="topItemTitle">截取记录：</span><span
+        <span class="topItemTitle">添加记录：</span><span
             style="color: #999;font-size: 12px;margin-left: 130px;line-height: 42px;font-weight: bold">仅用于预览，关闭页面消失</span><br><br><br>
         <table class="bottomItemTable1" id="tableTitle" style="visibility: hidden">
             <tr>
-                <th class="bottomTh1">截取前</th>
-                <th class="bottomTh2">截取后</th>
+                <th class="bottomTh1">加水印前</th>
+                <th class="bottomTh2">加水印后</th>
             </tr>
         </table>
         <div class="tableItems">
-            <table class="bottomItemTable2" id="imageCuts">
+            <table class="bottomItemTable2" id="waterMarks">
             </table>
         </div>
     </div>

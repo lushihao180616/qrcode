@@ -21,7 +21,7 @@ function create() {
         color: color
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/image/addFont", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/video/addFont", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');
@@ -35,7 +35,7 @@ function create() {
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
                     document.getElementById("tableTitle").style.visibility = "visible";
-                    var imageFonts = document.getElementById("imageFonts");
+                    var videoCuts = document.getElementById("videoFonts");
                     var url = result.bean;
                     var ifHave = false;
                     for (var i = 0; i < tableRow.length; i++) {
@@ -45,7 +45,7 @@ function create() {
                     }
                     if (!ifHave) {
                         tableRow.push(url);
-                        imageFonts.innerHTML += '\n' +
+                        videoCuts.innerHTML += '\n' +
                             '    <tr>\n' +
                             '        <td class="bottomTd1">' + document.getElementById('createPath').value + '</td>\n' +
                             '        <td class="bottomTd2">' + url + '</td>\n' +
@@ -90,7 +90,7 @@ function test() {
         color: color
     };
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://localhost:8090/qrcode/image/testFont", false);
+    xhr.open('POST', "http://localhost:8090/qrcode/video/testFont", false);
     // 添加http头，发送信息至服务器时内容编码类型
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.setRequestHeader('dataType', 'json');

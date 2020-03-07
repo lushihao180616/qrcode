@@ -6,14 +6,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>视频截取</title>
-    <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/videoCut.css">
-    <script src="../js/public.js"></script>
-    <script src="../js/videoCut.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/videoCut.css">
+    <script src="../../js/public.js"></script>
+    <script src="../../js/videoCut.js"></script>
 </head>
 <body>
 
-<a class="toIndex" onclick="navigate('videoManage.jsp')" onMouseOver="makevisible(this,0)"
+<a class="toIndex" onclick="navigate('../videoManage.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
