@@ -79,7 +79,7 @@ public class LSHFfmpegUtil {
      * @return
      */
     public int checkFileType(String fileName) {
-        String type = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length())
+        String type = fileName.substring(fileName.lastIndexOf(".") + 1)
                 .toLowerCase();
         if (type.equals("avi")) {
             return VIDEO;
