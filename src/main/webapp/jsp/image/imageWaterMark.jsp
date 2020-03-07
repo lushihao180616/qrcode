@@ -33,12 +33,22 @@
         <span class="itemName">水印高度：</span><input class="topItemInput" type="text"
                                                   value="10"
                                                   id="createHeight"/><span class="unit">%</span><br><br>
-        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="0"
+        <span class="itemName">x&ensp;偏移量：</span><input class="topItemInput" type="text" value="1"
                                                         id="createX"/><span class="unit">%</span><br><br>
-        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="100"
+        <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" value="1"
                                                         id="createY"/><span class="unit">%</span><br><br>
-        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
-                                                             id="createAlpha"/><span class="unit">%</span><br><br>
+        <span class="itemName">字体颜色：</span><select class="topItemSelect" id="createFontColor">
+        <option value="black">黑色</option>
+        <option value="white">白色</option>
+        <option value="blue">蓝色</option>
+        <option value="green">绿色</option>
+        <option value="red">红色</option>
+        <option value="yellow">黄色</option>
+        <option value="pink">粉色</option>
+        <option value="cyan">青色</option>
+        <option value="gray">灰色</option>
+        <option value="orange">橙色</option>
+    </select><br><br>
         <hr>
         <br>
         <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"

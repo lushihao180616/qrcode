@@ -37,21 +37,21 @@ function init() {
 
 function create() {
     var business = document.getElementById("createBusinesses").value;
-    var alpha = document.getElementById("createAlpha").value;
+    var path = document.getElementById("createPath").value;
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
-    var path = document.getElementById("createPath").value;
-    if (!check(business, alpha, height, x, y, path)) {
+    var fontColor = document.getElementById("createFontColor").options[document.getElementById("createFontColor").selectedIndex].value;
+    if (!check(business, path, height, x, y)) {
         return
     }
     var createWaterMark = {
         businessCode: JSON.parse(business).code,
-        alpha: parseInt(alpha),
+        path: path,
         height: parseInt(height),
         x: parseInt(x),
         y: parseInt(y),
-        path: path
+        fontColor: fontColor
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/image/addWaterMark", false);
@@ -85,11 +85,11 @@ function create() {
                             '    </tr>';
                     }
                     document.getElementById('createPath').value = '';
-                    document.getElementById("createTest").value = '';
-                    document.getElementById("createAlpha").value = '50';
+                    document.getElementById("createX").value = '1';
+                    document.getElementById("createY").value = '1';
+                    document.getElementById("createFontColor").options[0].selected = true;
                     document.getElementById("createHeight").value = '10';
-                    document.getElementById("createX").value = '0';
-                    document.getElementById("createY").value = '100';
+                    document.getElementById("createTest").value = '';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -102,21 +102,21 @@ function create() {
 
 function test() {
     var business = document.getElementById("createBusinesses").value;
-    var alpha = document.getElementById("createAlpha").value;
+    var path = document.getElementById("createPath").value;
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
-    var path = document.getElementById("createPath").value;
-    if (!check(business, alpha, height, x, y, path)) {
+    var fontColor = document.getElementById("createFontColor").options[document.getElementById("createFontColor").selectedIndex].value;
+    if (!check(business, path, height, x, y)) {
         return
     }
     var createWaterMark = {
         businessCode: JSON.parse(business).code,
-        alpha: parseInt(alpha),
+        path: path,
         height: parseInt(height),
         x: parseInt(x),
         y: parseInt(y),
-        path: path
+        fontColor: fontColor
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/image/testWaterMark", false);
@@ -144,13 +144,13 @@ function test() {
     xhr.send(JSON.stringify(createWaterMark));
 }
 
-function check(business, alpha, height, x, y, path) {
+function check(business, path, height, x, y) {
     var checkStr = '';
     if (business == null) {
         checkStr += '商家必须选择 ';
     }
-    if (alpha == '' || isNaN(alpha) || parseInt(alpha) > 100 || parseInt(alpha) < 0) {
-        checkStr += '请填写透明度（0-100） ';
+    if (path == null || path == '') {
+        checkStr += '原图片必须选择 ';
     }
     if (height == '' || isNaN(height) || parseInt(height) > 25 || parseInt(height) < 0) {
         checkStr += '请填写高度（0-25，建议填写15以下） ';
@@ -160,9 +160,6 @@ function check(business, alpha, height, x, y, path) {
     }
     if (y == '' || isNaN(y) || parseInt(y) > 100 || parseInt(y) < 0) {
         checkStr += '请填写y偏移量（0-100） ';
-    }
-    if (path == null || path == '') {
-        checkStr += '原图必须选择 ';
     }
     if (checkStr != '') {
         alert(checkStr);

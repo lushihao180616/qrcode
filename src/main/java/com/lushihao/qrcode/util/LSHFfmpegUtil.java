@@ -248,4 +248,52 @@ public class LSHFfmpegUtil {
         return true;
     }
 
+    /**
+     * 视频水印
+     *
+     * @param videoWaterMark
+     * @return
+     */
+    public boolean videoWaterMark(VideoWaterMark videoWaterMark) {
+        File file = new File(videoWaterMark.getNewPath());
+        if (file.exists()) {
+            file.delete();
+        }
+        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
+        List<String> commands = new java.util.ArrayList<String>();
+        FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
+        commands.add(FFMPEG_PATH);
+        commands.add("-i");
+        commands.add(videoWaterMark.getPath());
+        commands.add("-i");
+        commands.add(videoWaterMark.getImagePath());
+        commands.add("-filter_complex");
+        commands.add("\"overlay=x=0:y=0\"");
+        commands.add(videoWaterMark.getNewPath());
+
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command(commands);
+        try {
+            Process process = builder.start();
+            InputStream errorStream = process.getErrorStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            while (br.readLine() != null) {
+            }
+            if (br != null) {
+                br.close();
+            }
+            if (inputStreamReader != null) {
+                inputStreamReader.close();
+            }
+            if (errorStream != null) {
+                errorStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -34,7 +34,7 @@
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;图&emsp;标</div>
     </div>
-    <div class="lineItem4" onclick="navigate('videoWaterMark.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem4" onclick="navigate('video/videoWaterMark.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;水&emsp;印</div>
     </div>

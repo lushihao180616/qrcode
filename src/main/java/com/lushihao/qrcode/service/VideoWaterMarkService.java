@@ -5,8 +5,8 @@ import com.lushihao.qrcode.entity.video.VideoWaterMark;
 
 public interface VideoWaterMarkService {
 
-    Result addWaterMark(VideoWaterMark video, String code);
+    Result addWaterMark(VideoWaterMark videoWaterMark);
 
-    Result testWaterMark(VideoWaterMark videoWaterMark, String code);
+    Result testWaterMark(VideoWaterMark videoWaterMark);
 
 }

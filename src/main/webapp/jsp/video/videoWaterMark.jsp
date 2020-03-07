@@ -6,14 +6,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>视频水印</title>
-    <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/videoWaterMark.css">
-    <script src="../js/public.js"></script>
-    <script src="../js/videoWaterMark.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/videoWaterMark.css">
+    <script src="../../js/public.js"></script>
+    <script src="../../js/videoWaterMark.js"></script>
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('videoManage.jsp')" onMouseOver="makevisible(this,0)"
+<a class="toIndex" onclick="navigate('../videoManage.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
@@ -39,8 +39,6 @@
         <span class="itemName">y&ensp;偏移量：</span><input class="topItemInput" type="text" id="createY"
                                                         value="1"/><span
             class="unit">%</span><br><br>
-        <span class="itemName">透&ensp;明&ensp;度：</span><input class="topItemInput" type="text" value="50"
-                                                             id="createAlpha"/><span class="unit">%</span><br><br>
         <span class="itemName">字体颜色：</span><select class="topItemSelect" id="createFontColor">
         <option value="black">黑色</option>
         <option value="white">白色</option>

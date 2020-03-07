@@ -17,12 +17,12 @@ public class VideoCutServiceImpl implements VideoCutService {
 
     @Override
     public Result addCut(VideoCut videoCut) {
+        if (lshFfmpegUtil.checkFileType(videoCut.getPath()) != lshFfmpegUtil.VIDEO) {
+            return new Result(false, null, null, "不支持此文件格式");
+        }
         VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoCut.getPath());
         if (videoInfo == null) {
             return new Result(false, null, null, "读取文件信息失败");
-        }
-        if (lshFfmpegUtil.checkFileType(videoCut.getPath()) != lshFfmpegUtil.VIDEO) {
-            return new Result(false, null, null, "不支持此文件格式");
         }
         videoCut.setNewPath(videoCut.getPath().substring(0, videoCut.getPath().lastIndexOf(".")) + "_cut.mp4");
         if (!lshFfmpegUtil.videoCut(videoCut)) {

@@ -3,10 +3,6 @@ package com.lushihao.qrcode.entity.image;
 public class ImageWaterMark {
 
     /**
-     * 原图片地址
-     */
-    private String path;
-    /**
      * 商家标识
      */
     private String businessCode;
@@ -15,29 +11,25 @@ public class ImageWaterMark {
      */
     private String managerCode;
     /**
-     * 水印高度百分比（0-100）
+     * 高度
      */
-    private int heightPercentage;
+    private int height;
     /**
-     * x偏移百分比（0-100）
+     * 原图片地址
      */
-    private int xPercentage;
+    private String path;
     /**
-     * y偏移百分比（0-100）
+     * x偏移量
      */
-    private int yPercentage;
+    private int x;
     /**
-     * 透明度
+     * y偏移量
      */
-    private int alpha;
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
+    private int y;
+    /**
+     * 字体颜色
+     */
+    private String fontColor;
 
     public String getBusinessCode() {
         return businessCode;
@@ -55,36 +47,57 @@ public class ImageWaterMark {
         this.managerCode = managerCode;
     }
 
-    public int getHeightPercentage() {
-        return heightPercentage;
+    public int getHeight() {
+        return height;
     }
 
-    public void setHeightPercentage(int heightPercentage) {
-        this.heightPercentage = heightPercentage;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public int getxPercentage() {
-        return xPercentage;
+    public String getPath() {
+        return path;
     }
 
-    public void setxPercentage(int xPercentage) {
-        this.xPercentage = xPercentage;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public int getyPercentage() {
-        return yPercentage;
+    public int getX() {
+        return x;
     }
 
-    public void setyPercentage(int yPercentage) {
-        this.yPercentage = yPercentage;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public int getAlpha() {
-        return alpha;
+    public int getY() {
+        return y;
     }
 
-    public void setAlpha(int alpha) {
-        this.alpha = alpha;
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public ImageWaterMark() {
+    }
+
+    public ImageWaterMark(String businessCode, String managerCode, int height, String path, int x, int y, String fontColor) {
+        this.businessCode = businessCode;
+        this.managerCode = managerCode;
+        this.height = height;
+        this.path = path;
+        this.x = x;
+        this.y = y;
+        this.fontColor = fontColor;
     }
 
 }

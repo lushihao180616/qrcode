@@ -41,9 +41,8 @@ function create() {
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
-    var alpha = document.getElementById("createAlpha").value;
     var fontColor = document.getElementById("createFontColor").options[document.getElementById("createFontColor").selectedIndex].value;
-    if (!check(business, path, height, x, y, alpha)) {
+    if (!check(business, path, height, x, y)) {
         return
     }
     var createWaterMark = {
@@ -52,7 +51,6 @@ function create() {
         height: parseInt(height),
         x: parseInt(x),
         y: parseInt(y),
-        alpha: parseInt(alpha),
         fontColor: fontColor
     };
     var xhr = new XMLHttpRequest();
@@ -88,7 +86,6 @@ function create() {
                         document.getElementById("createHeight").value = '10';
                         document.getElementById("createX").value = '1';
                         document.getElementById("createY").value = '1';
-                        document.getElementById("createAlpha").value = '50';
                         document.getElementById("createFontColor").options[0].selected = true;
                         document.getElementById('createPath').value = '';
                         document.getElementById("createTest").value = '';
@@ -109,9 +106,8 @@ function test() {
     var height = document.getElementById("createHeight").value;
     var x = document.getElementById("createX").value;
     var y = document.getElementById("createY").value;
-    var alpha = document.getElementById("createAlpha").value;
     var fontColor = document.getElementById("createFontColor").options[document.getElementById("createFontColor").selectedIndex].value;
-    if (!check(business, path, height, x, y, alpha)) {
+    if (!check(business, path, height, x, y)) {
         return
     }
     var createWaterMark = {
@@ -120,7 +116,6 @@ function test() {
         height: parseInt(height),
         x: parseInt(x),
         y: parseInt(y),
-        alpha: parseInt(alpha),
         fontColor: fontColor
     };
     var xhr = new XMLHttpRequest();
@@ -149,13 +144,13 @@ function test() {
     xhr.send(JSON.stringify(createWaterMark));
 }
 
-function check(business, path, height, x, y, alpha) {
+function check(business, path, height, x, y) {
     var checkStr = '';
     if (business == null) {
         checkStr += '商家必须选择 ';
     }
     if (path == null || path == '') {
-        checkStr += '图片位置必须选择 ';
+        checkStr += '原视频必须选择 ';
     }
     if (height == '' || isNaN(height) || parseInt(height) > 25 || parseInt(height) < 0) {
         checkStr += '请填写高度（0-25，建议填写15以下） ';
@@ -165,9 +160,6 @@ function check(business, path, height, x, y, alpha) {
     }
     if (y == '' || isNaN(y) || parseInt(y) > 100 || parseInt(y) < 0) {
         checkStr += '请填写y偏移量（0-100） ';
-    }
-    if (alpha == '' || isNaN(alpha) || parseInt(alpha) > 100 || parseInt(alpha) < 0) {
-        checkStr += '请填写透明度（0-100） ';
     }
     if (checkStr != '') {
         alert(checkStr);

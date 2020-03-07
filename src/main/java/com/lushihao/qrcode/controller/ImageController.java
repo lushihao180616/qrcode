@@ -150,13 +150,25 @@ public class ImageController {
     }
 
     private ImageWaterMark transformWaterMark(Map<String, Object> reqMap) {
-        ImageWaterMark wm = new ImageWaterMark();
-        wm.setPath((String) reqMap.get("path"));
-        wm.setHeightPercentage((Integer) reqMap.get("height"));
-        wm.setxPercentage((Integer) reqMap.get("x"));
-        wm.setyPercentage((Integer) reqMap.get("y"));
-        wm.setAlpha((Integer) reqMap.get("alpha"));
-        return wm;
+        ImageWaterMark imageWaterMark = new ImageWaterMark();
+        imageWaterMark.setPath((String) reqMap.get("path"));
+        if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {
+            imageWaterMark.setX(0);
+        } else {
+            imageWaterMark.setX((Integer) reqMap.get("x"));
+        }
+        if (reqMap.get("y") == null || "".equals(reqMap.get("y"))) {
+            imageWaterMark.setY(0);
+        } else {
+            imageWaterMark.setY((Integer) reqMap.get("y"));
+        }
+        if (reqMap.get("height") == null || "".equals(reqMap.get("height"))) {
+            imageWaterMark.setHeight(0);
+        } else {
+            imageWaterMark.setHeight((Integer) reqMap.get("height"));
+        }
+        imageWaterMark.setFontColor((String) reqMap.get("fontColor"));
+        return imageWaterMark;
     }
 
 }

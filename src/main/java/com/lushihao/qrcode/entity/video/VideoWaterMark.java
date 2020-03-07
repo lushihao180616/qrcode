@@ -1,8 +1,5 @@
 package com.lushihao.qrcode.entity.video;
 
-import com.lushihao.qrcode.entity.business.Business;
-import com.lushihao.qrcode.entity.manager.Manager;
-
 /**
  * 视频类
  */
@@ -11,11 +8,11 @@ public class VideoWaterMark {
     /**
      * 商家标识
      */
-    private Business business;
+    private String businessCode;
     /**
      * 管理员标识
      */
-    private Manager manager;
+    private String managerCode;
     /**
      * 高度
      */
@@ -45,20 +42,20 @@ public class VideoWaterMark {
      */
     private String fontColor;
 
-    public Business getBusiness() {
-        return business;
+    public String getBusinessCode() {
+        return businessCode;
     }
 
-    public void setBusiness(Business business) {
-        this.business = business;
+    public void setBusinessCode(String businessCode) {
+        this.businessCode = businessCode;
     }
 
-    public Manager getManager() {
-        return manager;
+    public String getManagerCode() {
+        return managerCode;
     }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
+    public void setManagerCode(String managerCode) {
+        this.managerCode = managerCode;
     }
 
     public int getHeight() {
@@ -120,9 +117,9 @@ public class VideoWaterMark {
     public VideoWaterMark() {
     }
 
-    public VideoWaterMark(Business business, Manager manager, int height, String path, String newPath, String imagePath, int x, int y, String fontColor) {
-        this.business = business;
-        this.manager = manager;
+    public VideoWaterMark(String businessCode, String managerCode, int height, String path, String newPath, String imagePath, int x, int y, String fontColor) {
+        this.businessCode = businessCode;
+        this.managerCode = managerCode;
         this.height = height;
         this.path = path;
         this.newPath = newPath;

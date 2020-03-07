@@ -6,6 +6,7 @@ import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.entity.manager.Manager;
+import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.ImageWaterMarkService;
 import com.lushihao.qrcode.util.LSHImageUtil;
@@ -40,55 +41,46 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
     @Override
     @Transactional
     public Result addWaterMark(ImageWaterMark imageWaterMark) {
+        String[] lines = new String[3];
         //获取商家
         Business business = new Business();
         business.setCode(imageWaterMark.getBusinessCode());
         List<Business> list = businessMapper.filter(business);
         if (list.size() == 1) {
             business = list.get(0);
+            lines[0] = "名称：『" + business.getName() + "』";
+            lines[1] = "电话：『" + business.getPhone() + "』";
+            lines[2] = "地址：『" + business.getAddress() + "』";
         } else {
             return new Result(false, null, null, "商家不存在");
         }
 
-        int fontLength = 7;
-        fontLength = business.getName().length() > fontLength ? business.getName().length() : fontLength;
-        fontLength = business.getAddress().length() > fontLength ? business.getAddress().length() : fontLength;
+        //需要画水印的图片
         BufferedImage bg = lshImageUtil.getImage(imageWaterMark.getPath());
-        if (bg == null) {
-            return new Result(false, null, null, "背景图片不存在");
-        }
         int width = bg.getWidth();
         int height = bg.getHeight();
-        int waterMarkHeight = height * imageWaterMark.getHeightPercentage() / 100;
+        int waterMarkHeight = (int) ((float) height * imageWaterMark.getHeight() / (float) 100);
         int fontSize = (int) (waterMarkHeight * 0.2);
         int offSet = (int) (waterMarkHeight * 0.05);
-        int waterMarkWidth = (fontLength + 5) * fontSize + waterMarkHeight;
+        Graphics2D bgG2 = bg.createGraphics();
+        bgG2.setColor(getColor(imageWaterMark.getFontColor()));
+        Font font = new Font("宋体", Font.PLAIN, fontSize);
+        bgG2.setFont(font);
+        bgG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        FontMetrics fm = bgG2.getFontMetrics(font);
+        int waterMarkWidth = getWidth(lines, fm) + waterMarkHeight;
+        int xWidth = (int) ((float) (width - waterMarkWidth) * imageWaterMark.getX() / (float) 100);
+        int yHeight = (int) ((float) (height - waterMarkHeight) * imageWaterMark.getY() / (float) 100);
+        bgG2.drawString(lines[0], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 1.5));
+        bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
+        bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        //需要画水印的图片
-        BufferedImage waterMarkImage = new BufferedImage(waterMarkWidth, waterMarkHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
-        waterMarkImage = waterMarkG2.getDeviceConfiguration().createCompatibleImage(waterMarkWidth, waterMarkHeight, Transparency.TRANSLUCENT);
-        waterMarkG2 = waterMarkImage.createGraphics();
         BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + imageWaterMark.getBusinessCode() + "\\logo.png");
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
         logoImage = roundImage(logoImage, logoImage.getWidth(), logoImage.getWidth());
-        waterMarkG2.drawImage(logoImage, offSet, offSet, waterMarkHeight - offSet, waterMarkHeight - offSet, null);
-
-        Font font = new Font("微软雅黑", Font.PLAIN, fontSize);
-        waterMarkG2.setFont(font);              //设置字体
-        waterMarkG2.setColor(Color.WHITE); //根据图片的背景设置水印颜色
-        waterMarkG2.drawString("店名：『" + business.getName() + "』", waterMarkHeight + offSet, (float) (fontSize * 1.5));
-        waterMarkG2.drawString("电话：『" + business.getPhone() + "』", waterMarkHeight + offSet, (float) (fontSize * 3.0));
-        waterMarkG2.drawString("地址：『" + business.getAddress() + "』", waterMarkHeight + offSet, (float) (fontSize * 4.5));
-        waterMarkG2.dispose();
-
-        //遮罩层半透明绘制在图片上
-        Graphics2D bgG2 = bg.createGraphics();
-        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) imageWaterMark.getAlpha() / 100));
-        bgG2.drawImage(waterMarkImage, imageWaterMark.getxPercentage() * (width - waterMarkWidth) / 100, imageWaterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
-        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        bgG2.drawImage(logoImage, xWidth + offSet, yHeight + offSet, waterMarkHeight - offSet, waterMarkHeight - offSet, null);
         bgG2.dispose();
 
         //删除测试文件
@@ -97,7 +89,7 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
             testFile.delete();
         }
         //加水印图片
-        String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_watermark.jpg";
+        String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_waterMark.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
             return new Result(false, null, null, "输出图片失败");
         }
@@ -113,72 +105,89 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
     @Override
     @Transactional
     public Result testWaterMark(ImageWaterMark imageWaterMark) {
-        boolean ifOverFlow = false;
+        String[] lines = new String[3];
         //获取商家
         Manager manager = new Manager();
-        manager.setCode(imageWaterMark.getManagerCode());
+        manager.setCode(imageWaterMark.getBusinessCode());
         List<Manager> list = managerMapper.filter(manager);
         if (list.size() == 1) {
             manager = list.get(0);
+            lines[0] = "名称：『" + manager.getName() + "』";
+            lines[1] = "电话：『" + manager.getPhone() + "』";
+            lines[2] = "地址：『" + manager.getAddress() + "』";
         } else {
             return new Result(false, null, null, "管理员不存在");
         }
 
-        int fontLength = 7;
-        fontLength = manager.getName().length() > fontLength ? manager.getName().length() : fontLength;
-        fontLength = manager.getAddress().length() > fontLength ? manager.getAddress().length() : fontLength;
+        //需要画水印的图片
         BufferedImage bg = lshImageUtil.getImage(imageWaterMark.getPath());
-        if (bg == null) {
-            return new Result(false, null, null, "背景图片不存在");
-        }
-
         int width = bg.getWidth();
         int height = bg.getHeight();
-        int waterMarkHeight = height * imageWaterMark.getHeightPercentage() / 100;
+        int waterMarkHeight = (int) ((float) height * imageWaterMark.getHeight() / (float) 100);
         int fontSize = (int) (waterMarkHeight * 0.2);
         int offSet = (int) (waterMarkHeight * 0.05);
-        int waterMarkWidth = (fontLength + 5) * fontSize + waterMarkHeight;
+        Graphics2D bgG2 = bg.createGraphics();
+        bgG2.setColor(getColor(imageWaterMark.getFontColor()));
+        Font font = new Font("宋体", Font.PLAIN, fontSize);
+        bgG2.setFont(font);
+        bgG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        FontMetrics fm = bgG2.getFontMetrics(font);
+        int waterMarkWidth = getWidth(lines, fm) + waterMarkHeight;
+        int xWidth = (int) ((float) (width - waterMarkWidth) * imageWaterMark.getX() / (float) 100);
+        int yHeight = (int) ((float) (height - waterMarkHeight) * imageWaterMark.getY() / (float) 100);
+        bgG2.drawString(lines[0], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 1.5));
+        bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
+        bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        //需要画水印的图片
-        BufferedImage waterMarkImage = new BufferedImage(waterMarkWidth, waterMarkHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D waterMarkG2 = waterMarkImage.createGraphics();
-        waterMarkImage = waterMarkG2.getDeviceConfiguration().createCompatibleImage(waterMarkWidth, waterMarkHeight, Transparency.TRANSLUCENT);
-        waterMarkG2 = waterMarkImage.createGraphics();
         BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + imageWaterMark.getManagerCode() + "\\logo.png");
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
         logoImage = roundImage(logoImage, logoImage.getWidth(), logoImage.getWidth());
-        waterMarkG2.drawImage(logoImage, offSet, offSet, waterMarkHeight - offSet, waterMarkHeight - offSet, null);
-
-        Font font = new Font("微软雅黑", Font.PLAIN, fontSize);
-        waterMarkG2.setFont(font);              //设置字体
-        waterMarkG2.setColor(Color.WHITE); //根据图片的背景设置水印颜色
-        waterMarkG2.drawString("名称：『" + manager.getName() + "』", waterMarkHeight + offSet, (float) (fontSize * 1.5));
-        waterMarkG2.drawString("电话：『" + manager.getPhone() + "』", waterMarkHeight + offSet, (float) (fontSize * 3.0));
-        waterMarkG2.drawString("地址：『" + manager.getAddress() + "』", waterMarkHeight + offSet, (float) (fontSize * 4.5));
-        waterMarkG2.dispose();
-
-        //遮罩层半透明绘制在图片上
-        Graphics2D bgG2 = bg.createGraphics();
-        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, (float) 1 - (float) imageWaterMark.getAlpha() / 100));
-        bgG2.drawImage(waterMarkImage, imageWaterMark.getxPercentage() * (width - waterMarkWidth) / 100, imageWaterMark.getyPercentage() * (height - waterMarkHeight) / 100, waterMarkWidth, waterMarkHeight, null);
-        bgG2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        bgG2.drawImage(logoImage, xWidth + offSet, yHeight + offSet, waterMarkHeight - offSet, waterMarkHeight - offSet, null);
         bgG2.dispose();
 
-        //测试图片
-        String testImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_test.jpg";
-        if (!lshImageUtil.sendImage(testImagePath, bg)) {
+        //加水印图片
+        String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_test.jpg";
+        if (!lshImageUtil.sendImage(newImagePath, bg)) {
             return new Result(false, null, null, "输出图片失败");
         }
-        if (waterMarkWidth > width) {
-            ifOverFlow = true;
+        return new Result(true, newImagePath, "添加成功", null);
+    }
+
+    private Color getColor(String color) {
+        if (color.equals("black")) {
+            return Color.black;
+        } else if (color.equals("white")) {
+            return Color.white;
+        } else if (color.equals("blue")) {
+            return Color.blue;
+        } else if (color.equals("green")) {
+            return Color.green;
+        } else if (color.equals("red")) {
+            return Color.red;
+        } else if (color.equals("yellow")) {
+            return Color.yellow;
+        } else if (color.equals("pink")) {
+            return Color.pink;
+        } else if (color.equals("cyan")) {
+            return Color.cyan;
+        } else if (color.equals("gray")) {
+            return Color.gray;
+        } else if (color.equals("orange")) {
+            return Color.orange;
         }
-        if (ifOverFlow) {
-            return new Result(false, null, null, "信息不能完全展示，请尝试将高度调小");
-        } else {
-            return new Result(true, testImagePath, "添加成功", null);
+        return null;
+    }
+
+    private int getWidth(String[] lines, FontMetrics fm) {
+        int lineMaxWidth = 0;
+        for (String line : lines) {
+            if (fm.stringWidth(line) > lineMaxWidth) {
+                lineMaxWidth = fm.stringWidth(line);
+            }
         }
+        return lineMaxWidth;
     }
 
     /**

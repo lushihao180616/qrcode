@@ -123,8 +123,8 @@ public class VideoController {
             return null;
         }
         VideoWaterMark videoWaterMark = transformWaterMark(reqMap);
-        String code = (String) reqMap.get("businessCode");
-        return videoWaterMarkService.addWaterMark(videoWaterMark, code);
+        videoWaterMark.setBusinessCode((String) reqMap.get("businessCode"));
+        return videoWaterMarkService.addWaterMark(videoWaterMark);
     }
 
     @RequestMapping("testWaterMark")
@@ -134,8 +134,8 @@ public class VideoController {
             return null;
         }
         VideoWaterMark videoWaterMark = transformWaterMark(reqMap);
-        String code = "00000000";
-        return videoWaterMarkService.testWaterMark(videoWaterMark, code);
+        videoWaterMark.setManagerCode("00000000");
+        return videoWaterMarkService.testWaterMark(videoWaterMark);
     }
 
     private VideoWaterMark transformWaterMark(Map<String, Object> reqMap) {
