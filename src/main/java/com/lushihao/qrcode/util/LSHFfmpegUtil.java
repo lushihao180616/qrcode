@@ -1,9 +1,6 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.entity.video.VideoCut;
-import com.lushihao.qrcode.entity.video.VideoFont;
-import com.lushihao.qrcode.entity.video.VideoInfo;
-import com.lushihao.qrcode.entity.video.VideoWaterMark;
+import com.lushihao.qrcode.entity.video.*;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
@@ -211,7 +208,7 @@ public class LSHFfmpegUtil {
     }
 
     /**
-     * 视频截取
+     * 视频字体
      *
      * @param videoFont
      * @return
@@ -232,6 +229,55 @@ public class LSHFfmpegUtil {
         commands.add("-filter_complex");
         commands.add("\"overlay=x=0:y=0\"");
         commands.add(videoFont.getNewPath());
+
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command(commands);
+        try {
+            Process process = builder.start();
+            InputStream errorStream = process.getErrorStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+            }
+            if (br != null) {
+                br.close();
+            }
+            if (inputStreamReader != null) {
+                inputStreamReader.close();
+            }
+            if (errorStream != null) {
+                errorStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 视频图片
+     *
+     * @param videoIcon
+     * @return
+     */
+    public boolean videoIcon(VideoIcon videoIcon) {
+        File file = new File(videoIcon.getNewPath());
+        if (file.exists()) {
+            file.delete();
+        }
+        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
+        List<String> commands = new java.util.ArrayList<String>();
+        FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
+        commands.add(FFMPEG_PATH);
+        commands.add("-i");
+        commands.add(videoIcon.getPath());
+        commands.add("-i");
+        commands.add(videoIcon.getImagePath());
+        commands.add("-filter_complex");
+        commands.add("\"overlay=x=0:y=0\"");
+        commands.add(videoIcon.getNewPath());
 
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(commands);

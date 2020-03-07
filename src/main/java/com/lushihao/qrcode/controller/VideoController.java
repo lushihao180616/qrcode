@@ -2,11 +2,14 @@ package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageFont;
+import com.lushihao.qrcode.entity.image.ImageIcon;
 import com.lushihao.qrcode.entity.video.VideoCut;
 import com.lushihao.qrcode.entity.video.VideoFont;
+import com.lushihao.qrcode.entity.video.VideoIcon;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoCutService;
 import com.lushihao.qrcode.service.VideoFontService;
+import com.lushihao.qrcode.service.VideoIconService;
 import com.lushihao.qrcode.service.VideoWaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,8 @@ public class VideoController {
     private VideoCutService videoCutService;
     @Resource
     private VideoFontService videoFontService;
+    @Resource
+    private VideoIconService videoIconService;
     @Resource
     private VideoWaterMarkService videoWaterMarkService;
     @Resource
@@ -78,6 +83,37 @@ public class VideoController {
         font.setSize((Integer) reqMap.get("size"));
         font.setColor((String) reqMap.get("color"));
         return font;
+    }
+
+    @RequestMapping("addIcon")
+    @ResponseBody
+    public Result addIcon(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        VideoIcon icon = transformIcon(reqMap);
+        return videoIconService.addIcon(icon);
+    }
+
+    @RequestMapping("testIcon")
+    @ResponseBody
+    public Result testIcon(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        VideoIcon icon = transformIcon(reqMap);
+        return videoIconService.testIcon(icon);
+    }
+
+    private VideoIcon transformIcon(Map<String, Object> reqMap) {
+        VideoIcon icon = new VideoIcon();
+        icon.setPath((String) reqMap.get("path"));
+        icon.setIcon((String) reqMap.get("icon"));
+        icon.setWidth((Integer) reqMap.get("width"));
+        icon.setHeight((Integer) reqMap.get("height"));
+        icon.setX((Integer) reqMap.get("x"));
+        icon.setY((Integer) reqMap.get("y"));
+        return icon;
     }
 
     @RequestMapping("addWaterMark")

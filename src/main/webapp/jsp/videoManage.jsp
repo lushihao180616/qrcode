@@ -30,7 +30,7 @@
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;文&emsp;字</div>
     </div>
-    <div class="lineItem3" onclick="navigate('videoIcon.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem3" onclick="navigate('video/videoIcon.jsp')" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>添&emsp;加&emsp;图&emsp;标</div>
     </div>

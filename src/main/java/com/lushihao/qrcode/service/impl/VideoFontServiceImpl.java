@@ -33,8 +33,14 @@ public class VideoFontServiceImpl implements VideoFontService {
         if (!lshCharUtil.isDefaultChar(videoFont.getMessage())) {
             return new Result(false, null, null, "只支持汉字、英文字母、数字");
         }
-        videoFont.setNewPath(videoFont.getPath().substring(0, videoFont.getPath().lastIndexOf(".")) + "_font.mp4");
         VideoInfo videoInfo = lshFfmpegUtil.getVideoInfo(videoFont.getPath());
+        if (videoInfo == null) {
+            return new Result(false, null, null, "读取文件信息失败");
+        }
+        if (lshFfmpegUtil.checkFileType(videoFont.getPath()) != lshFfmpegUtil.VIDEO) {
+            return new Result(false, null, null, "不支持此文件格式");
+        }
+        videoFont.setNewPath(videoFont.getPath().substring(0, videoFont.getPath().lastIndexOf(".")) + "_font.mp4");
         String[] lines = videoFont.getMessage().split("\\n");
         BufferedImage fontImage = new BufferedImage(videoInfo.getWidth(), videoInfo.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D bgG2 = fontImage.createGraphics();//设置透明  start

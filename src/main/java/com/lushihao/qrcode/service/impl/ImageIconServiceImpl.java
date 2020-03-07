@@ -55,10 +55,10 @@ public class ImageIconServiceImpl implements ImageIconService {
         if (bg == null) {
             return new Result(false, null, null, "背景图片不存在");
         }
-        BufferedImage icon = new BufferedImage(imageIcon.getWidth(), imageIcon.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage icon = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D iconG2 = icon.createGraphics();
-        iconG2.setBackground(Color.BLACK);
-        iconG2.clearRect(0, 0, imageIcon.getWidth(), imageIcon.getHeight());
+        iconG2.setBackground(Color.WHITE);
+        iconG2.clearRect(0, 0, 100, 100);
         iconG2.dispose();
         if (icon == null) {
             return new Result(false, null, null, "添加图标不存在");
