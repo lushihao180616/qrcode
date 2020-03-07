@@ -1,9 +1,12 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
+import com.lushihao.qrcode.entity.image.ImageFont;
 import com.lushihao.qrcode.entity.video.VideoCut;
+import com.lushihao.qrcode.entity.video.VideoFont;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.service.VideoCutService;
+import com.lushihao.qrcode.service.VideoFontService;
 import com.lushihao.qrcode.service.VideoWaterMarkService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ public class VideoController {
 
     @Resource
     private VideoCutService videoCutService;
+    @Resource
+    private VideoFontService videoFontService;
     @Resource
     private VideoWaterMarkService videoWaterMarkService;
     @Resource
@@ -41,6 +46,38 @@ public class VideoController {
         videoCut.setStart((Integer) reqMap.get("start"));
         videoCut.setEnd((Integer) reqMap.get("end"));
         return videoCut;
+    }
+
+    @RequestMapping("addFont")
+    @ResponseBody
+    public Result addFont(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        VideoFont font = transformFont(reqMap);
+        return videoFontService.addFont(font);
+    }
+
+    @RequestMapping("testFont")
+    @ResponseBody
+    public Result testFont(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        VideoFont font = transformFont(reqMap);
+        return videoFontService.testFont(font);
+    }
+
+    private VideoFont transformFont(Map<String, Object> reqMap) {
+        VideoFont font = new VideoFont();
+        font.setMessage((String) reqMap.get("message"));
+        font.setLayout((String) reqMap.get("layout"));
+        font.setX((Integer) reqMap.get("x"));
+        font.setY((Integer) reqMap.get("y"));
+        font.setPath((String) reqMap.get("path"));
+        font.setSize((Integer) reqMap.get("size"));
+        font.setColor((String) reqMap.get("color"));
+        return font;
     }
 
     @RequestMapping("addWaterMark")

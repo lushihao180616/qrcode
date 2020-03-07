@@ -3,6 +3,8 @@ package com.lushihao.qrcode.util;
 import org.jim2mov.core.*;
 import org.jim2mov.utils.MovieUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;

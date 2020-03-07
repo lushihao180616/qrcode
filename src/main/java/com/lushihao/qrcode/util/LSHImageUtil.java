@@ -9,6 +9,8 @@ import java.io.*;
 @Component
 public class LSHImageUtil {
 
+    private static final String DEFAULTTYPE = "jpg";
+
     /**
      * 获得图片
      *
@@ -54,7 +56,17 @@ public class LSHImageUtil {
      * @return
      */
     public boolean sendImage(String path, BufferedImage bufferedImage) {
-        return sendImage(new File(path), bufferedImage);
+        return sendImage(new File(path), bufferedImage, DEFAULTTYPE);
+    }
+
+    /**
+     * 输出图片
+     *
+     * @param path
+     * @return
+     */
+    public boolean sendImage(String path, BufferedImage bufferedImage, String type) {
+        return sendImage(new File(path), bufferedImage, type);
     }
 
     /**
@@ -63,12 +75,12 @@ public class LSHImageUtil {
      * @param file
      * @return
      */
-    public boolean sendImage(File file, BufferedImage bufferedImage) {
+    public boolean sendImage(File file, BufferedImage bufferedImage, String type) {
         boolean back = false;
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(file);
-            back = ImageIO.write(bufferedImage, "jpg", fileOutputStream);
+            back = ImageIO.write(bufferedImage, type, fileOutputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
