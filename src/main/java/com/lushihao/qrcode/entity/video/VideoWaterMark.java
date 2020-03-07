@@ -17,33 +17,33 @@ public class VideoWaterMark {
      */
     private Manager manager;
     /**
+     * 高度
+     */
+    private int height;
+    /**
      * 原视频地址
      */
-    private String oldVideoPath;
+    private String path;
     /**
-     * 生成视频地址
+     * 生成视频路径
      */
-    private String newVideoPath;
+    private String newPath;
     /**
-     * 字体x偏移量
+     * 生成图片路径
      */
-    private int fontX;
+    private String imagePath;
     /**
-     * 字体y偏移量
+     * x偏移量
      */
-    private int fontY;
+    private int x;
     /**
-     * 字体大小
+     * y偏移量
      */
-    private int fontSize;
+    private int y;
     /**
      * 字体颜色
      */
     private String fontColor;
-    /**
-     * 字体阴影
-     */
-    private int fontShadow;
 
     public Business getBusiness() {
         return business;
@@ -61,44 +61,52 @@ public class VideoWaterMark {
         this.manager = manager;
     }
 
-    public String getOldVideoPath() {
-        return oldVideoPath;
+    public int getHeight() {
+        return height;
     }
 
-    public void setOldVideoPath(String oldVideoPath) {
-        this.oldVideoPath = oldVideoPath;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public String getNewVideoPath() {
-        return newVideoPath;
+    public String getPath() {
+        return path;
     }
 
-    public void setNewVideoPath(String newVideoPath) {
-        this.newVideoPath = newVideoPath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public int getFontX() {
-        return fontX;
+    public String getNewPath() {
+        return newPath;
     }
 
-    public void setFontX(int fontX) {
-        this.fontX = fontX;
+    public void setNewPath(String newPath) {
+        this.newPath = newPath;
     }
 
-    public int getFontY() {
-        return fontY;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setFontY(int fontY) {
-        this.fontY = fontY;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
-    public int getFontSize() {
-        return fontSize;
+    public int getX() {
+        return x;
     }
 
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public String getFontColor() {
@@ -109,27 +117,19 @@ public class VideoWaterMark {
         this.fontColor = fontColor;
     }
 
-    public int getFontShadow() {
-        return fontShadow;
-    }
-
-    public void setFontShadow(int fontShadow) {
-        this.fontShadow = fontShadow;
-    }
-
     public VideoWaterMark() {
     }
 
-    public VideoWaterMark(Business business, Manager manager, String oldVideoPath, String newVideoPath, int fontX, int fontY, int fontSize, String fontColor, int fontShadow) {
+    public VideoWaterMark(Business business, Manager manager, int height, String path, String newPath, String imagePath, int x, int y, String fontColor) {
         this.business = business;
         this.manager = manager;
-        this.oldVideoPath = oldVideoPath;
-        this.newVideoPath = newVideoPath;
-        this.fontX = fontX;
-        this.fontY = fontY;
-        this.fontSize = fontSize;
+        this.height = height;
+        this.path = path;
+        this.newPath = newPath;
+        this.imagePath = imagePath;
+        this.x = x;
+        this.y = y;
         this.fontColor = fontColor;
-        this.fontShadow = fontShadow;
     }
 
 }

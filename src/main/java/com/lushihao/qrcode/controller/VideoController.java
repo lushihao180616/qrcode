@@ -140,24 +140,23 @@ public class VideoController {
 
     private VideoWaterMark transformWaterMark(Map<String, Object> reqMap) {
         VideoWaterMark videoWaterMark = new VideoWaterMark();
-        videoWaterMark.setOldVideoPath((String) reqMap.get("path"));
+        videoWaterMark.setPath((String) reqMap.get("path"));
         if (reqMap.get("x") == null || "".equals(reqMap.get("x"))) {
-            videoWaterMark.setFontX(0);
+            videoWaterMark.setX(0);
         } else {
-            videoWaterMark.setFontX((Integer) reqMap.get("x"));
+            videoWaterMark.setX((Integer) reqMap.get("x"));
         }
         if (reqMap.get("y") == null || "".equals(reqMap.get("y"))) {
-            videoWaterMark.setFontY(0);
+            videoWaterMark.setY(0);
         } else {
-            videoWaterMark.setFontY((Integer) reqMap.get("y"));
+            videoWaterMark.setY((Integer) reqMap.get("y"));
         }
-        videoWaterMark.setFontSize((Integer) reqMap.get("fontSize"));
+        if (reqMap.get("height") == null || "".equals(reqMap.get("height"))) {
+            videoWaterMark.setHeight(0);
+        } else {
+            videoWaterMark.setHeight((Integer) reqMap.get("height"));
+        }
         videoWaterMark.setFontColor((String) reqMap.get("fontColor"));
-        if (reqMap.get("fontShadow").equals("1")) {
-            videoWaterMark.setFontShadow(videoWaterMark.getFontSize() / 10);
-        } else {
-            videoWaterMark.setFontShadow(0);
-        }
         return videoWaterMark;
     }
 

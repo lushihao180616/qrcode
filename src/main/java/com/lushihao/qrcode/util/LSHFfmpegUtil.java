@@ -97,60 +97,6 @@ public class LSHFfmpegUtil {
     }
 
     /**
-     * 视频加水印
-     *
-     * @param videoWaterMark
-     * @return
-     */
-    public boolean videoWaterMark(VideoWaterMark videoWaterMark) {
-        File file = new File(videoWaterMark.getNewVideoPath());
-        if (file.exists()) {
-            file.delete();
-        }
-        String name;
-        if (videoWaterMark.getBusiness() != null) {
-            name = videoWaterMark.getBusiness().getName();
-        } else {
-            name = videoWaterMark.getManager().getName();
-        }
-
-        FFMPEG_PATH = projectBasicInfo.getFfmpegUrl();
-        List<String> commands = new java.util.ArrayList<String>();
-        FFMPEG_PATH = FFMPEG_PATH.replace("%20", " ");
-        commands.add(FFMPEG_PATH);
-        commands.add("-i");
-        commands.add(videoWaterMark.getOldVideoPath());
-        commands.add("-vf");
-        commands.add("\"drawtext=fontfile=simhei.ttf:text=\"" + name + "\":x=" + videoWaterMark.getFontX() + ":y=" + videoWaterMark.getFontY() + ":fontsize=" + videoWaterMark.getFontSize() + ":fontcolor=" + videoWaterMark.getFontColor() + ":shadowy=" + videoWaterMark.getFontShadow() + "\"");
-        commands.add(videoWaterMark.getNewVideoPath());
-
-        ProcessBuilder builder = new ProcessBuilder();
-        builder.command(commands);
-        try {
-            Process process = builder.start();
-            InputStream errorStream = process.getErrorStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
-            BufferedReader br = new BufferedReader(inputStreamReader);
-            String line = "";
-            while ((line = br.readLine()) != null) {
-            }
-            if (br != null) {
-                br.close();
-            }
-            if (inputStreamReader != null) {
-                inputStreamReader.close();
-            }
-            if (errorStream != null) {
-                errorStream.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 视频截取
      *
      * @param videoCut
@@ -188,8 +134,7 @@ public class LSHFfmpegUtil {
             InputStream errorStream = process.getErrorStream();
             InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
             BufferedReader br = new BufferedReader(inputStreamReader);
-            String line = "";
-            while ((line = br.readLine()) != null) {
+            while (br.readLine() != null) {
             }
             if (br != null) {
                 br.close();
@@ -237,8 +182,7 @@ public class LSHFfmpegUtil {
             InputStream errorStream = process.getErrorStream();
             InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
             BufferedReader br = new BufferedReader(inputStreamReader);
-            String line = "";
-            while ((line = br.readLine()) != null) {
+            while (br.readLine() != null) {
             }
             if (br != null) {
                 br.close();
@@ -286,8 +230,7 @@ public class LSHFfmpegUtil {
             InputStream errorStream = process.getErrorStream();
             InputStreamReader inputStreamReader = new InputStreamReader(errorStream);
             BufferedReader br = new BufferedReader(inputStreamReader);
-            String line = "";
-            while ((line = br.readLine()) != null) {
+            while (br.readLine() != null) {
             }
             if (br != null) {
                 br.close();
