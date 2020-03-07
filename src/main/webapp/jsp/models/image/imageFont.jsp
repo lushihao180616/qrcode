@@ -6,14 +6,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>添加文字</title>
-    <link rel="stylesheet" type="text/css" href="../../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../../css/videoFont.css">
-    <script src="../../js/public.js"></script>
-    <script src="../../js/videoFont.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/models/image/imageFont.css">
+    <script src="../../../js/public.js"></script>
+    <script src="../../../js/models/image/imageFont.js"></script>
 </head>
 <body>
 
-<a class="toIndex" onclick="navigate('../videoManage.jsp')" onMouseOver="makevisible(this,0)"
+<a class="toIndex" onclick="navigate('../imageManage.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <p class="topTitle">
@@ -24,8 +24,8 @@
     <div class="topItem1">
         <br>
         <span class="topItemTitle">添加文字：</span></span><br><br><br>
-        <span class="itemName">原&ensp;视&ensp;频：</span><input class="topItemSelect" type="file" id="createPath"
-                                                             accept="video/*"/><br><br>
+        <span class="itemName">原&ensp;图&ensp;片：</span><input class="topItemSelect" type="file" id="createPath"
+                                                             accept="image/jpeg, image/jpg, image/png"/><br><br>
         <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none" class="topItemInput" type="text"
                                                                 id="createMessage"
                                                                 placeholder="可使用回车来添加多行文字"></textarea><br><br>
@@ -57,8 +57,8 @@
     </select><br><br>
         <hr>
         <br>
-        <span class="itemName">预览视频：</span><input class="topItemInput" readonly="readonly" type="text"
-                                                  id="createTest"/><br><br>
+        <span class="itemName">预&ensp;览&ensp;图：</span><input class="topItemInput" readonly="readonly" type="text"
+                                                             id="createTest"/><br><br>
 
         <input class="topItemButton2" type="button" value="预览" onclick="test()"/>
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
@@ -74,7 +74,7 @@
             </tr>
         </table>
         <div class="tableItems">
-            <table class="bottomItemTable2" id="videoFonts">
+            <table class="bottomItemTable2" id="imageFonts">
             </table>
         </div>
     </div>

@@ -6,14 +6,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>创建二维码</title>
-    <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/qrcode.css">
-    <script src="../js/public.js"></script>
-    <script src="../js/qrcode.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/models/qrcode.css">
+    <script src="../../js/public.js"></script>
+    <script src="../../js/models/qrcode.js"></script>
 </head>
 <body onload="init()">
 
-<a class="toIndex" onclick="navigate('index.jsp')" onMouseOver="makevisible(this,0)"
+<a class="toIndex" onclick="navigate('../index.jsp')" onMouseOver="makevisible(this,0)"
    onMouseOut="makevisible(this,1)">上一页</a>
 
 <a class="toIndex" href="http://www.fhdq.net/">特殊符号</a>

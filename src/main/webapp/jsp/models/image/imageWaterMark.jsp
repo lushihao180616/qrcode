@@ -6,10 +6,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>添加水印</title>
-    <link rel="stylesheet" type="text/css" href="../../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../../css/imageWaterMark.css">
-    <script src="../../js/public.js"></script>
-    <script src="../../js/imageWaterMark.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../../css/models/image/imageWaterMark.css">
+    <script src="../../../js/public.js"></script>
+    <script src="../../../js/models/image/imageWaterMark.js"></script>
 </head>
 <body onload="init()">
 

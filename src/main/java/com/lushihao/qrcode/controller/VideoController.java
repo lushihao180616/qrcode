@@ -1,8 +1,6 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
-import com.lushihao.qrcode.entity.image.ImageFont;
-import com.lushihao.qrcode.entity.image.ImageIcon;
 import com.lushihao.qrcode.entity.video.VideoCut;
 import com.lushihao.qrcode.entity.video.VideoFont;
 import com.lushihao.qrcode.entity.video.VideoIcon;

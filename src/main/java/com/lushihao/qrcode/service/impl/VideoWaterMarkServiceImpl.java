@@ -214,11 +214,6 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         return lineMaxWidth;
     }
 
-    private int getHeight(String[] lines, int size) {
-        int lineSplie = (int) (size * 0.2);
-        return (lines.length * size) + (lines.length - 1) * lineSplie;
-    }
-
     private BufferedImage roundImage(BufferedImage image, int targetSize, int cornerRadius) {
         BufferedImage outputImage = new BufferedImage(targetSize, targetSize, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = outputImage.createGraphics();
