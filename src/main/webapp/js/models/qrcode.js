@@ -11,7 +11,7 @@ function init() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
+                    window.location.href = "../error.jsp"
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
@@ -89,7 +89,7 @@ function getTemple() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
+                    window.location.href = "../error.jsp"
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
@@ -118,7 +118,7 @@ function getBusiness() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
+                    window.location.href = "../error.jsp"
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
@@ -239,7 +239,7 @@ function getRecord() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
+                    window.location.href = "../error.jsp"
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
@@ -302,7 +302,7 @@ function create() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
+                    window.location.href = "../error.jsp"
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
@@ -359,7 +359,7 @@ function test() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 if (xhr.responseText == null || xhr.responseText == '') {
-                    window.location.href = "error.jsp"
+                    window.location.href = "../error.jsp"
                     return
                 }
                 var result = JSON.parse(xhr.responseText);
