@@ -4,14 +4,14 @@
 <mapper namespace="com.lushihao.qrcode.dao.QRTempleMapper">
     <insert id="create" parameterType="QRCodeTemple">
         INSERT INTO
-            qrcodetemple
+            temple
             (code,money,ifOnly,ifShowLogo,ifSelfBg,arti,width,height,iconNum,x,y,angle,multiple,ifGif,frame,startQRFrame,endQRFrame)
         VALUES
             (#{code},#{money},#{ifOnly},#{ifShowLogo},#{ifSelfBg},#{arti},#{width},#{height},#{iconNum},#{x},#{y},#{angle},#{multiple},#{ifGif},#{frame},#{startQRFrame},#{endQRFrame})
     </insert>
     <update id="update" parameterType="QRCodeTemple">
         UPDATE
-            qrcodetemple
+            temple
         SET
             money=#{money},
             ifOnly=#{ifOnly},
@@ -34,7 +34,7 @@
     </update>
     <delete id="delete">
         DELETE FROM
-            qrcodetemple
+            temple
         WHERE
             code=#{code}
     </delete>
@@ -42,7 +42,7 @@
         SELECT
             *
         FROM
-            qrcodetemple
+            temple
         <if test="code != null">
             WHERE code
             LIKE '${code}%'
