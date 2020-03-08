@@ -39,6 +39,22 @@ public class ProjectBasicInfo {
      * 删除商家的同时也删除商家图片文件
      */
     private boolean deleteAllBusinessFiles;
+    /**
+     * ftp ip地址
+     */
+    private String ftpIp;
+    /**
+     * ftp 端口
+     */
+    private int ftpPort;
+    /**
+     * ftp 用户名
+     */
+    private String ftpUserName;
+    /**
+     * ftp 密码
+     */
+    private String ftpPassword;
 
     public String getTempleUrl() {
         return templeUrl;
@@ -104,7 +120,42 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles) {
+    public String getFtpIp() {
+        return ftpIp;
+    }
+
+    public void setFtpIp(String ftpIp) {
+        this.ftpIp = ftpIp;
+    }
+
+    public int getFtpPort() {
+        return ftpPort;
+    }
+
+    public void setFtpPort(int ftpPort) {
+        this.ftpPort = ftpPort;
+    }
+
+    public String getFtpUserName() {
+        return ftpUserName;
+    }
+
+    public void setFtpUserName(String ftpUserName) {
+        this.ftpUserName = ftpUserName;
+    }
+
+    public String getFtpPassword() {
+        return ftpPassword;
+    }
+
+    public void setFtpPassword(String ftpPassword) {
+        this.ftpPassword = ftpPassword;
+    }
+
+    public ProjectBasicInfo() {
+    }
+
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String ftpIp, int ftpPort, String ftpUserName, String ftpPassword) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
@@ -113,9 +164,10 @@ public class ProjectBasicInfo {
         this.ffmpegUrl = ffmpegUrl;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
-    }
-
-    public ProjectBasicInfo() {
+        this.ftpIp = ftpIp;
+        this.ftpPort = ftpPort;
+        this.ftpUserName = ftpUserName;
+        this.ftpPassword = ftpPassword;
     }
 
 }

@@ -5,5 +5,9 @@ basic:
   modelUrl: F:\qrcode\model
   tempJpgUrl: F:\qrcode\tempJpg
   ffmpegUrl: D:\ffmpeg\ffmpeg-20200213-6d37ca8-win64-static\bin\ffmpeg.exe
+  ftpIp: "123.125.23.191"
+  ftpPort: 10321
+  ftpUserName: "30b747sMR3OcrzNJwhpn"
+  ftpPassword: "0337bf9c076af7634c4f28faea8e18fe18422a71"
   deleteAllTempleFiles: true
   deleteAllBusinessFiles: true
