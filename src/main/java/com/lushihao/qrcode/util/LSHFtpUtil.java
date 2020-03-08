@@ -2,12 +2,16 @@ package com.lushihao.qrcode.util;
 
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.SocketException;
+import java.net.URL;
 
 @Component
 public class LSHFtpUtil {
@@ -39,20 +43,16 @@ public class LSHFtpUtil {
      */
     private String ftpEncode = "UTF-8";
 
-    private void setInfo(){
-        this.ftpIP = projectBasicInfo.getFtpIp();
-        this.ftpPort = projectBasicInfo.getFtpPort();
-        this.ftpUserName = projectBasicInfo.getFtpUserName();
-        this.ftpPassword = projectBasicInfo.getFtpPassword();
-    }
-
     /**
      * 连接服务器
      *
      * @return
      */
     public synchronized boolean connectServer() {
-        setInfo();
+        this.ftpIP = projectBasicInfo.getFtpIp();
+        this.ftpPort = projectBasicInfo.getFtpPort();
+        this.ftpUserName = projectBasicInfo.getFtpUserName();
+        this.ftpPassword = projectBasicInfo.getFtpPassword();
         ftpClient = new FTPClient();
         ftpClient.setControlEncoding(ftpEncode);//解决上传文件时文件名乱码
         int reply = 0;
@@ -70,6 +70,7 @@ public class LSHFtpUtil {
             }
             //设置以二进制方式传输
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+            ftpClient.changeWorkingDirectory("/");
         } catch (SocketException e) {
             e.printStackTrace();
             return false;
@@ -88,7 +89,6 @@ public class LSHFtpUtil {
      * @return
      */
     public synchronized boolean deleteFile(String targetName, String fileName) {
-        setInfo();
         boolean flag = false;
         try {
             //切换工作路径，设置上传的路径
@@ -111,7 +111,6 @@ public class LSHFtpUtil {
      * @return
      */
     public synchronized boolean download(String sourcePath, String fileName, String targetPath) {
-        setInfo();
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(targetPath);
@@ -148,7 +147,6 @@ public class LSHFtpUtil {
      * @return
      */
     public synchronized boolean upload(String sourcePath, String fileName, String targetPath) {
-        setInfo();
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(sourcePath);
@@ -172,6 +170,73 @@ public class LSHFtpUtil {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    /**
+     * 下载文件夹
+     *
+     * @param sourcePath
+     * @param targetPath
+     * @return
+     */
+    public synchronized boolean downloadDir(String sourcePath, String targetPath) {
+        try {
+            FTPFile[] files = ftpClient.listFiles(sourcePath);
+            for (FTPFile file : files) {
+                download(sourcePath, file.getName(), targetPath + "\\" + file.getName());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 上传文件夹
+     *
+     * @param sourcePath
+     * @param targetPath
+     * @return
+     */
+    public synchronized boolean uploadDir(String sourcePath, String targetPath) {
+        File dir = new File(sourcePath);
+        if (dir.isFile()) {
+            return false;
+        }
+        if (dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                upload(sourcePath + "\\" + file.getName(), file.getName(), targetPath);
+            }
+        }
+        return true;
+    }
+
+    public void closeServer() {
+        if (ftpClient != null) {
+            try {
+                ftpClient.logout();
+                ftpClient.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 网络图片转换为BufferedImage
+     *
+     * @param url
+     * @return
+     */
+    public BufferedImage getImage(String url) {
+        try {
+            return ImageIO.read(new URL(url));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
