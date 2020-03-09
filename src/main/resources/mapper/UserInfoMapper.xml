@@ -9,6 +9,14 @@
         VALUES
             (#{code},#{userType.code},#{count},#{macAddress})
     </insert>
+    <update id="countSub">
+        UPDATE
+            userinfo
+        SET
+            count=count-#{subCount}
+        WHERE
+            code=#{code}
+    </update>
     <select id="filter" resultType="java.util.HashMap">
         SELECT
             *

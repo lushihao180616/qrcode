@@ -13,6 +13,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Resource
     private UserInfoMapper userInfoMapper;
+    @Resource
+    private InitProject initProject;
 
     @Override
     public String create(UserInfo userInfo) {
@@ -26,7 +28,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo filter() {
-        return InitProject.userInfo;
+        return initProject.userInfo;
+    }
+
+    @Override
+    public boolean countSub(int subCount, String code) {
+        if ("0".equals(initProject.userInfo.getUserType().getType()) && initProject.userInfo.getCount() == -1) {//无限金豆
+            return true;
+        } else {
+            if (initProject.userInfo.getCount() - subCount < 0) {
+                return false;
+            }
+            int sqlBack = userInfoMapper.countSub(subCount, code);
+            if (sqlBack > 0)
+                return false;
+            initProject.getUserInfo();
+            return true;
+        }
     }
 
 }

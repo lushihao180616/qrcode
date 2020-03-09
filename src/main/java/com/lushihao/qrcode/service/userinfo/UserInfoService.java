@@ -8,4 +8,6 @@ public interface UserInfoService {
 
     UserInfo filter();
 
+    boolean countSub(int subCount, String code);
+
 }

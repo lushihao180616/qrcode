@@ -17,4 +17,6 @@ public interface UserInfoMapper {
 
     List<UserType> filterType(@Param("code") String code);
 
+    int countSub(@Param("subCount") int subCount, @Param("code") String code);
+
 }
