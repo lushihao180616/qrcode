@@ -22,16 +22,6 @@
     height: 700px;
 }
 
-.topItemSelect_up {
-    width: 25%;
-    right: 10%;
-}
-
-.topItemSearch_up {
-    width: 8%;
-    right: 1%;
-}
-
 .bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8, .bottomTh9, .bottomTh10, .bottomTh11, .bottomTh12, .bottomTh13, .bottomTh14, .bottomTh15 {
     width: 5%;
     background-color: red;

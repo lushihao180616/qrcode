@@ -117,12 +117,4 @@ public class QRTempleServiceImpl implements QRTempleService {
         return list;
     }
 
-    @Override
-    @Transactional
-    public String downLoad(String downLoad) {
-        // 解码
-        // 下载模板、生成数据库数据
-        return "下载成功";
-    }
-
 }

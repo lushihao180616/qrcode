@@ -62,16 +62,6 @@ public class QRTempleController {
         return new Result(true, qrTempleService.filter(code), "搜索完成", null);
     }
 
-    @RequestMapping("downLoad")
-    @ResponseBody
-    public Result downLoad(@RequestBody String downLoad) {
-        if (!lshmacUtil.check()) {
-            return null;
-        }
-        Result result = new Result(true, null, qrTempleService.downLoad(downLoad), null);
-        return result;
-    }
-
     /**
      * 前台转后台
      *
