@@ -68,6 +68,7 @@ public class ImageFontServiceImpl implements ImageFontService {
         //加水印图片
         String newImagePath = imageFont.getPath().substring(0, imageFont.getPath().lastIndexOf(".")) + "_font.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

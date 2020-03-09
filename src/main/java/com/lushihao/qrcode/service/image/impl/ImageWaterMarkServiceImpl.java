@@ -100,6 +100,7 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         //加水印图片
         String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_waterMark.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

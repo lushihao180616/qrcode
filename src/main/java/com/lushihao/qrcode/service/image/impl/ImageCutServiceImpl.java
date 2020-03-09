@@ -56,6 +56,7 @@ public class ImageCutServiceImpl implements ImageCutService {
         //加水印图片
         String newImagePath = imageCut.getPath().substring(0, imageCut.getPath().lastIndexOf(".")) + "_cut.jpg";
         if (!lshImageUtil.sendImage(newImagePath, cutImage)) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

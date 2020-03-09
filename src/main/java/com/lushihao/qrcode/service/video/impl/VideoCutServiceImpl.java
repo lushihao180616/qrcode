@@ -36,6 +36,7 @@ public class VideoCutServiceImpl implements VideoCutService {
         }
         videoCut.setNewPath(videoCut.getPath().substring(0, videoCut.getPath().lastIndexOf(".")) + "_cut.mp4");
         if (!lshFfmpegUtil.videoCut(videoCut)) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "添加失败，请重启软件后再试");
         } else {
             return new Result(true, videoCut.getNewPath(), "截取成功", null);

@@ -69,9 +69,11 @@ public class VideoIconServiceImpl implements VideoIconService {
         String newImagePath = videoIcon.getPath().substring(0, videoIcon.getPath().lastIndexOf(".")) + "_icon.jpg";
         videoIcon.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, bg, "png")) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         if (!lshFfmpegUtil.videoIcon(videoIcon)) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoIcon.getImagePath());

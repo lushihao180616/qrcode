@@ -80,9 +80,11 @@ public class VideoFontServiceImpl implements VideoFontService {
         String newImagePath = videoFont.getPath().substring(0, videoFont.getPath().lastIndexOf(".")) + "_font.jpg";
         videoFont.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, fontImage, "png")) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         if (!lshFfmpegUtil.videoFont(videoFont)) {
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoFont.getImagePath());
