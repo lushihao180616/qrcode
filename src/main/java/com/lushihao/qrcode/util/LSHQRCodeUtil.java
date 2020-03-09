@@ -6,21 +6,18 @@ import com.lushihao.myutils.qrcode.helper.BufferedImageLuminanceSource;
 import com.lushihao.myutils.time.LSHDateUtils;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.entity.common.Result;
-import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCode;
+import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.swetake.util.Qrcode;
-import jp.sourceforge.qrcode.QRCodeDecoder;
-import jp.sourceforge.qrcode.data.QRCodeImage;
-import jp.sourceforge.qrcode.exception.DecodingFailedException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -45,6 +42,8 @@ public class LSHQRCodeUtil {
     private LSHCharUtil lshCharUtil;
     @Resource
     private UserInfoService userInfoService;
+    @Resource
+    private UserBasicInfo userBasicInfo;
 
     /**
      * 二维码宽度
@@ -145,7 +144,7 @@ public class LSHQRCodeUtil {
             } else if (qrCode.getType().equals("beautify")) {//二维码美化
                 subCount = 5;
             }
-            if (!userInfoService.countSub(subCount, qrCode.getBusinessCode())) {
+            if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
                 return new Result(false, null, null, "金豆不够用了");
             }
             //输出图片
@@ -625,11 +624,25 @@ public class LSHQRCodeUtil {
         } else {
             filePath = projectBasicInfo.getModelUrl() + "\\" + qrCode.getFileName() + ".jpg";
         }
+        boolean result;
         if (isMp4) {
             filePath = filePath.substring(0, filePath.lastIndexOf(".")) + ".gif";
-            new LSHGifUtil().jpgToGif(images, filePath, qrCode.getQrCodeTemple().getFrame());
+            result = new LSHGifUtil().jpgToGif(images, filePath, qrCode.getQrCodeTemple().getFrame());
         } else {
-            lshImageUtil.sendImage(filePath, images.get(0));
+            result = lshImageUtil.sendImage(filePath, images.get(0));
+        }
+        if (!result) {
+            int subCount = 0;
+            if (qrCode.getType().equals("text")) {//文本
+                subCount = 1;
+            } else if (qrCode.getType().equals("image")) {//图片
+                subCount = 10;
+            } else if (qrCode.getType().equals("video")) {//视频
+                subCount = 10;
+            } else if (qrCode.getType().equals("beautify")) {//二维码美化
+                subCount = 5;
+            }
+            userInfoService.countAdd(subCount, userBasicInfo.getCode());
         }
         return filePath;
     }

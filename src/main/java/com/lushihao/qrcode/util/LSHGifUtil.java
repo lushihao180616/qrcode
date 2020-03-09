@@ -48,7 +48,7 @@ public class LSHGifUtil {
      * @param map
      * @param gifFilePath
      */
-    public void jpgToGif(Map<Integer, BufferedImage> map, String gifFilePath, int frame) {
+    public boolean jpgToGif(Map<Integer, BufferedImage> map, String gifFilePath, int frame) {
         AnimatedGifEncoder e = new AnimatedGifEncoder();
         e.setRepeat(1);
         e.start(gifFilePath);//生成gif图片位置名称
@@ -59,6 +59,7 @@ public class LSHGifUtil {
             e.addFrame(eachFrame);
         }
         e.finish();
+        return true;
     }
 
     /**
