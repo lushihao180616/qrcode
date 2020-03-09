@@ -144,8 +144,10 @@ public class LSHQRCodeUtil {
             } else if (qrCode.getType().equals("beautify")) {//二维码美化
                 subCount = 5;
             }
-            if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
-                return new Result(false, null, null, "金豆不够用了");
+            if (!ifTest) {
+                if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+                    return new Result(false, null, null, "金豆不够用了");
+                }
             }
             //输出图片
             String filePath = outPutImage(imageAndBg, qrCode, ifTest, ifModel);
@@ -631,7 +633,7 @@ public class LSHQRCodeUtil {
         } else {
             result = lshImageUtil.sendImage(filePath, images.get(0));
         }
-        if (!result) {
+        if (!ifTest && !result) {
             int subCount = 0;
             if (qrCode.getType().equals("text")) {//文本
                 subCount = 1;

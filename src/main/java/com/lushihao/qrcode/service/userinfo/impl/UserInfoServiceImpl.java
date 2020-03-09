@@ -40,7 +40,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 return false;
             }
             int sqlBack = userInfoMapper.countSub(subCount, code);
-            if (sqlBack > 0)
+            if (sqlBack == 0)
                 return false;
             initProject.getUserInfo();
             return true;
@@ -53,7 +53,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             return true;
         } else {
             int sqlBack = userInfoMapper.countAdd(addCount, code);
-            if (sqlBack > 0)
+            if (sqlBack == 0)
                 return false;
             initProject.getUserInfo();
             return true;
