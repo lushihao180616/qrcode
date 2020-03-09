@@ -10,4 +10,6 @@ public interface UserInfoService {
 
     boolean countSub(int subCount, String code);
 
+    boolean countAdd(int addCount, String code);
+
 }

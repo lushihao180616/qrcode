@@ -17,6 +17,14 @@
         WHERE
             code=#{code}
     </update>
+    <update id="countAdd">
+        UPDATE
+            userinfo
+        SET
+            count=count+#{addCount}
+        WHERE
+            code=#{code}
+    </update>
     <select id="filter" resultType="java.util.HashMap">
         SELECT
             *

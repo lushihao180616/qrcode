@@ -19,4 +19,6 @@ public interface UserInfoMapper {
 
     int countSub(@Param("subCount") int subCount, @Param("code") String code);
 
+    int countAdd(@Param("addCount") int addCount, @Param("code") String code);
+
 }

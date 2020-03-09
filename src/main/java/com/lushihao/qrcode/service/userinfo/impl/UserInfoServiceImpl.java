@@ -47,5 +47,18 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
     }
 
+    @Override
+    public boolean countAdd(int addCount, String code) {
+        if ("0".equals(initProject.userInfo.getUserType().getType()) && initProject.userInfo.getCount() == -1) {//无限金豆
+            return true;
+        } else {
+            int sqlBack = userInfoMapper.countAdd(addCount, code);
+            if (sqlBack > 0)
+                return false;
+            initProject.getUserInfo();
+            return true;
+        }
+    }
+
 }
 
