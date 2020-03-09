@@ -161,6 +161,11 @@ function changeType(id) {
     } else {
         document.getElementById("videoInfo").style.display = "none";
     }
+    if (type == "beautify") {
+        document.getElementById("beautifyInfo").style.display = "";
+    } else {
+        document.getElementById("beautifyInfo").style.display = "none";
+    }
 }
 
 function getTempleCode(id) {
@@ -270,6 +275,7 @@ function getRecord() {
 function create() {
     var message = getMessage();
     var temple = document.getElementById("temples").value;
+    var type = document.getElementById("createLayout").value;
     var business = document.getElementById("businesses").value;
     var fileName = document.getElementById("fileName").value;
     var backGround = document.getElementById("backGround").value;
@@ -291,7 +297,8 @@ function create() {
         x: parseInt(x),
         y: parseInt(y),
         alpha: parseInt(alpha),
-        angle: parseInt(angle)
+        angle: parseInt(angle),
+        type: type
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
@@ -327,6 +334,7 @@ function create() {
 function test() {
     var message = getMessage();
     var temple = document.getElementById("temples").value;
+    var type = document.getElementById("createLayout").value;
     var business = document.getElementById("businesses").value;
     var fileName = document.getElementById("fileName").value;
     var backGround = document.getElementById("backGround").value;
@@ -348,7 +356,8 @@ function test() {
         x: parseInt(x),
         y: parseInt(y),
         alpha: parseInt(alpha),
-        angle: parseInt(angle)
+        angle: parseInt(angle),
+        type: type
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/test", false);
@@ -420,13 +429,15 @@ function check(message, temple, business, fileName, backGround, shortLength, x, 
 
 function getMessage() {
     var message;
-    var type = document.getElementById(id).value;
+    var type = document.getElementById("createLayout").value;
     if (type == "text") {
         message = document.getElementById("textMessage").value;
     } else if (type == "image") {
         message = document.getElementById("imageMessage").value;
     } else if (type == "video") {
         message = document.getElementById("videoMessage").value;
+    } else if (type == "beautify") {
+        message = document.getElementById("beautifyMessage").value;
     } else {
         message = "";
     }

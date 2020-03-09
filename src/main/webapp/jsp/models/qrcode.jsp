@@ -30,6 +30,7 @@
         <option value="text">文本</option>
         <option value="image">图片</option>
         <option value="video">视频</option>
+        <option value="beautify">二维码美化</option>
     </select><br><br>
         <div id="textInfo">
             <span class="itemName2">信&emsp;&emsp;息：</span><textarea style="resize:none"
@@ -43,6 +44,10 @@
         <div id="videoInfo" style="display: none">
             <span class="itemName">视&emsp;&emsp;频：</span><input class="topItemSelect" type="file" id="videoMessage"
                                                                 accept="video/*"/><br><br>
+        </div>
+        <div id="beautifyInfo" style="display: none">
+            <span class="itemName">原二维码：</span><input class="topItemSelect" type="file" id="beautifyMessage"
+                                                      accept="image/jpeg, image/jpg, image/png"/><br><br>
         </div>
     </div>
     <div class="topItem2">

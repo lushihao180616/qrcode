@@ -1,5 +1,8 @@
 package com.lushihao.qrcode.util;
 
+import com.google.zxing.*;
+import com.google.zxing.common.HybridBinarizer;
+import com.lushihao.myutils.qrcode.helper.BufferedImageLuminanceSource;
 import com.lushihao.myutils.time.LSHDateUtils;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.entity.common.Result;
@@ -7,12 +10,16 @@ import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCode;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.swetake.util.Qrcode;
+import jp.sourceforge.qrcode.QRCodeDecoder;
+import jp.sourceforge.qrcode.data.QRCodeImage;
+import jp.sourceforge.qrcode.exception.DecodingFailedException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -160,6 +167,8 @@ public class LSHQRCodeUtil {
             content = "这是一条图片地址";
         } else if (qrCode.getType().equals("video")) {//视频
             content = "这是一条视频地址";
+        } else if (qrCode.getType().equals("beautify")) {//二维码美化
+            content = "这是二维码美化";
         } else {
             return null;
         }
@@ -607,6 +616,25 @@ public class LSHQRCodeUtil {
             lshImageUtil.sendImage(filePath, images.get(0));
         }
         return filePath;
+    }
+
+    public String decodeQRCode(String imgPath) {
+        BufferedImage image;
+        try {
+            image = new LSHImageUtil().getImage(imgPath);
+            if (image == null) {
+                System.out.println("Could not decode image");
+            }
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+            com.google.zxing.Result result;
+            Hashtable hints = new Hashtable();//将图片反解码为二维矩阵
+            hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+            result = new MultiFormatReader().decode(bitmap, hints);//将该二维矩阵解码成内容
+            return result.getText();
+        } catch (ReaderException re) {
+            return "没有找到二维码";
+        }
     }
 
 }
