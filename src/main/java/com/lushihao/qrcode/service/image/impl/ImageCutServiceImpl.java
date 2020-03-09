@@ -2,7 +2,9 @@ package com.lushihao.qrcode.service.image.impl;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageCut;
+import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.service.image.ImageCutService;
+import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class ImageCutServiceImpl implements ImageCutService {
 
     @Resource
     private LSHImageUtil lshImageUtil;
+    @Resource
+    private UserInfoService userInfoService;
+    @Resource
+    private UserBasicInfo userBasicInfo;
 
     @Override
     public Result addCut(ImageCut imageCut) {
@@ -42,6 +48,10 @@ public class ImageCutServiceImpl implements ImageCutService {
         File testFile = new File(imageCut.getPath().substring(0, imageCut.getPath().lastIndexOf(".")) + "_test.jpg");
         if (testFile.exists()) {
             testFile.delete();
+        }
+        int subCount = 1;
+        if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+            return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageCut.getPath().substring(0, imageCut.getPath().lastIndexOf(".")) + "_cut.jpg";

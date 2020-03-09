@@ -8,6 +8,8 @@ import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.service.video.VideoWaterMarkService;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
 import com.lushihao.qrcode.util.LSHImageUtil;
@@ -33,6 +35,10 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
     private LSHImageUtil lshImageUtil;
     @Resource
     private LSHFfmpegUtil lshFfmpegUtil;
+    @Resource
+    private UserInfoService userInfoService;
+    @Resource
+    private UserBasicInfo userBasicInfo;
 
     @Override
     public Result addWaterMark(VideoWaterMark videoWaterMark) {
@@ -92,6 +98,10 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         File testFile = new File(videoWaterMark.getPath().substring(0, videoWaterMark.getPath().lastIndexOf(".")) + "_test.mp4");
         if (testFile.exists()) {
             testFile.delete();
+        }
+        int subCount = 1;
+        if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+            return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoWaterMark.getPath().substring(0, videoWaterMark.getPath().lastIndexOf(".")) + "_watermark.png";

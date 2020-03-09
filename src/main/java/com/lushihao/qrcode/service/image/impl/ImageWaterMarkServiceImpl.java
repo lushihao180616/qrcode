@@ -7,7 +7,9 @@ import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.service.image.ImageWaterMarkService;
+import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,10 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
     private ProjectBasicInfo projectBasicInfo;
     @Resource
     private LSHImageUtil lshImageUtil;
+    @Resource
+    private UserInfoService userInfoService;
+    @Resource
+    private UserBasicInfo userBasicInfo;
 
     /**
      * 添加水印
@@ -86,6 +92,10 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         File testFile = new File(imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_test.jpg");
         if (testFile.exists()) {
             testFile.delete();
+        }
+        int subCount = 1;
+        if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+            return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_waterMark.jpg";

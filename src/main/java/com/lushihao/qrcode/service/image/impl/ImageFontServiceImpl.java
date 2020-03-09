@@ -2,7 +2,9 @@ package com.lushihao.qrcode.service.image.impl;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageFont;
+import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.service.image.ImageFontService;
+import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHCharUtil;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class ImageFontServiceImpl implements ImageFontService {
     private LSHImageUtil lshImageUtil;
     @Resource
     private LSHCharUtil lshCharUtil;
+    @Resource
+    private UserInfoService userInfoService;
+    @Resource
+    private UserBasicInfo userBasicInfo;
 
     @Override
     public Result addFont(ImageFont imageFont) {
@@ -54,6 +60,10 @@ public class ImageFontServiceImpl implements ImageFontService {
         File testFile = new File(imageFont.getPath().substring(0, imageFont.getPath().lastIndexOf(".")) + "_test.jpg");
         if (testFile.exists()) {
             testFile.delete();
+        }
+        int subCount = 1;
+        if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+            return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageFont.getPath().substring(0, imageFont.getPath().lastIndexOf(".")) + "_font.jpg";
