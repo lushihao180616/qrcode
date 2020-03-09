@@ -144,6 +144,9 @@ public class LSHQRCodeUtil {
             } else if (qrCode.getType().equals("beautify")) {//二维码美化
                 subCount = 5;
             }
+            if (isMp4) {
+                subCount += 5;
+            }
             if (!ifTest) {
                 if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
                     return new Result(false, null, null, "金豆不够用了");
@@ -643,6 +646,9 @@ public class LSHQRCodeUtil {
                 subCount = 10;
             } else if (qrCode.getType().equals("beautify")) {//二维码美化
                 subCount = 5;
+            }
+            if (isMp4) {
+                subCount += 5;
             }
             userInfoService.countAdd(subCount, userBasicInfo.getCode());
         }
