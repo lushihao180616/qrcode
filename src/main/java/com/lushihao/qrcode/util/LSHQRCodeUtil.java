@@ -600,13 +600,13 @@ public class LSHQRCodeUtil {
     private String outPutImage(Map<Integer, BufferedImage> images, QRCode qrCode, boolean ifTest, boolean ifModel) {
         String filePath;
         //将文件输出
-        if (!ifModel) {//商家创建
+        if (!ifModel) {
             if (ifTest) {
                 filePath = projectBasicInfo.getQrcodeUrl() + "\\test\\" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_").format(new Date()) + qrCode.getFileName() + "_test.jpg";
             } else {
                 filePath = lshImageUtil.createPath(projectBasicInfo.getQrcodeUrl() + "\\" + qrCode.getBusinessCode() + "\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date())) + "\\" + new SimpleDateFormat("HH_mm_ss_").format(new Date()) + qrCode.getFileName() + ".jpg";
             }
-        } else {//操作员创建
+        } else {
             filePath = projectBasicInfo.getModelUrl() + "\\" + qrCode.getFileName() + ".jpg";
         }
         if (isMp4) {
