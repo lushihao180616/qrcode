@@ -66,11 +66,13 @@
                                                              onchange="getTempleCode(this.id)"></select><br><br>
         <span class="itemName">商&emsp;&emsp;家：</span><select class="topItemSelect" id="businesses"
                                                              onchange="getBusinessCode(this.id)"></select><br><br>
-        <span class="itemName">文&ensp;件&ensp;名：</span><input class="topItemInput" type="text" id="fileName"/><br><br>
+        <span class="itemName">文&ensp;件&ensp;名：</span><input class="topItemInput" type="text"
+                                                             id="fileName"/><br><br>
         <span class="itemName">码透明度：</span><input class="topItemInput" type="text" id="alpha"
                                                   value="0"/><span
             class="unit">%</span><br><br>
-        <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround" type="file"
+        <span id="backGroundLabel" class="itemName">背景图片：</span><input class="topItemSelect" id="backGround"
+                                                                       type="file"
                                                                        name="uploadFile"
                                                                        accept="image/gif, image/jpeg, image/jpg, image/png"/><br><br>
         <span id="shortLengthLabel" class="itemName">较短边长：</span><input class="topItemInput" type="text"
