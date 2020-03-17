@@ -125,13 +125,13 @@ function getBusiness() {
                 if (result.ifSuccess) {
                     var businesses = document.getElementById("businesses");
                     businesses.innerHTML = '';
-                    for (var i = 0; i < result.bean.length; i++) {
+                    for (var i = 0; i < result.bean.businesses.length; i++) {
                         var option = document.createElement("option");
-                        option.value = JSON.stringify(result.bean[i]);
-                        option.text = result.bean[i].code;
+                        option.value = JSON.stringify(result.bean.businesses[i]);
+                        option.text = result.bean.businesses[i].code;
                         businesses.add(option);
                     }
-                    if (result.bean.length > 0) {
+                    if (result.bean.businesses.length > 0) {
                         getBusinessCode("businesses");
                     }
                     alert(result.info);

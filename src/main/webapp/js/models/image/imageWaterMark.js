@@ -20,10 +20,10 @@ function init() {
                 if (result.ifSuccess) {
                     var businesses = document.getElementById("createBusinesses");
                     businesses.innerHTML = '';
-                    for (var i = 0; i < result.bean.length; i++) {
+                    for (var i = 0; i < result.bean.businesses.length; i++) {
                         var option = document.createElement("option");
-                        option.value = JSON.stringify(result.bean[i]);
-                        option.text = result.bean[i].code;
+                        option.value = JSON.stringify(result.bean.businesses[i]);
+                        option.text = result.bean.businesses[i].code;
                         businesses.add(option);
                     }
                 } else {

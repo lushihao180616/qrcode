@@ -3,7 +3,7 @@ package com.lushihao.qrcode.service.business;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 
-import java.util.List;
+import java.util.Map;
 
 public interface BusinessService {
 
@@ -13,5 +13,6 @@ public interface BusinessService {
 
     Result delete(String code);
 
-    List<Business> filter(Business business);
+    Map<String, Object> filter(Business business);
+
 }

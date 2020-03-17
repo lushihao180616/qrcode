@@ -38,7 +38,9 @@
             *
         FROM
             usertype
+        <if test="code != null">
         WHERE
             code=#{code}
+        </if>
     </select>
 </mapper>

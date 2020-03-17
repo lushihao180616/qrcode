@@ -1,8 +1,11 @@
 package com.lushihao.qrcode.service.business.impl;
 
 import com.lushihao.qrcode.dao.BusinessMapper;
+import com.lushihao.qrcode.dao.UserInfoMapper;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
+import com.lushihao.qrcode.entity.user.UserInfo;
+import com.lushihao.qrcode.entity.user.UserType;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.business.BusinessService;
 import com.lushihao.qrcode.util.LSHImageUtil;
@@ -11,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -23,6 +28,8 @@ public class BusinessServiceImpl implements BusinessService {
     private ProjectBasicInfo projectBasicInfo;
     @Resource
     private LSHImageUtil lshImageUtil;
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     @Override
     @Transactional
@@ -32,6 +39,8 @@ public class BusinessServiceImpl implements BusinessService {
         if (back == 0) {
             return new Result(false, null, null, "创建失败");
         } else {
+            UserInfo userInfo = new UserInfo(business.getCode(), new UserType(), 0, "", business, null);
+            back = userInfoMapper.create(userInfo);
             //商标地址
             String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
             File logoDirectory = new File(businessPath);
@@ -104,8 +113,13 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     @Transactional
-    public List<Business> filter(Business business) {
-        return businessMapper.filter(business);
+    public Map<String, Object> filter(Business business) {
+        List<UserType> types = userInfoMapper.filterType(null);
+        List<Business> businesses = businessMapper.filter(business);
+        Map<String, Object> map = new HashMap<>();
+        map.put("types", types);
+        map.put("businesses", businesses);
+        return map;
     }
 
 }

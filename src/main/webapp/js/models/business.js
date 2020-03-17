@@ -20,7 +20,7 @@ function init() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    handleBusinesses(result.bean);
+                    handleBusinesses(result.bean.businesses);
                 } else {
                     alert(result.errorInfo);
                 }
@@ -114,13 +114,13 @@ function modifySearch() {
                 if (result.ifSuccess) {
                     var modifyBusinesses = document.getElementById("modifyBusinesses");
                     modifyBusinesses.innerHTML = '';
-                    for (var i = 0; i < result.bean.length; i++) {
+                    for (var i = 0; i < result.bean.businesses.length; i++) {
                         var option = document.createElement("option");
-                        option.value = JSON.stringify(result.bean[i]);
-                        option.text = result.bean[i].code;
+                        option.value = JSON.stringify(result.bean.businesses[i]);
+                        option.text = result.bean.businesses[i].code;
                         modifyBusinesses.add(option);
                     }
-                    if (result.bean.length > 0) {
+                    if (result.bean.businesses.length > 0) {
                         modifyBusinessCode("modifyBusinesses");
                     }
                     alert(result.info);
@@ -214,13 +214,13 @@ function deleteSearch() {
                 if (result.ifSuccess) {
                     var deleteBusinesses = document.getElementById("deleteBusinesses");
                     deleteBusinesses.innerHTML = '';
-                    for (var i = 0; i < result.bean.length; i++) {
+                    for (var i = 0; i < result.bean.businesses.length; i++) {
                         var option = document.createElement("option");
-                        option.value = JSON.stringify(result.bean[i]);
-                        option.text = result.bean[i].code;
+                        option.value = JSON.stringify(result.bean.businesses[i]);
+                        option.text = result.bean.businesses[i].code;
                         deleteBusinesses.add(option);
                     }
-                    if (result.bean.length > 0) {
+                    if (result.bean.businesses.length > 0) {
                         deleteBusinessCode("deleteBusinesses")
                     }
                     alert(result.info);
