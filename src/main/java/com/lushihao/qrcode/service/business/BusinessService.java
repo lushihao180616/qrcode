@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface BusinessService {
 
-    Result create(Business business, String logoSrc);
+    Result create(Business business, String logoSrc, String typeCode, String macAddress);
 
-    Result update(Business business, String logoSrc);
+    Result update(Business business, String logoSrc, String typeCode, String macAddress);
 
     Result delete(String code);
 

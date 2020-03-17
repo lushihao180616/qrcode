@@ -67,7 +67,7 @@ public class InitProject implements ApplicationRunner {
             Map<String, Object> map = userInfoList.get(0);
             userInfo = LSHMapUtils.mapToEntity(map, UserInfo.class);
             userInfo.setCount((Integer) map.get("count"));
-            userInfo.setUserType(userInfoMapper.filterType((String) map.get("typecode")).get(0));
+            userInfo.setUserType(userInfoMapper.filterType((String) map.get("typecode"), -1).get(0));
             if (userInfo.getUserType().getType().equals("1")) {//商家信息
                 Business business = new Business();
                 business.setCode(userBasicInfo.getCode());

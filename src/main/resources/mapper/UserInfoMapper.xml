@@ -9,6 +9,22 @@
         VALUES
             (#{code},#{userType.code},#{count},#{macAddress})
     </insert>
+    <update id="update" parameterType="UserInfo">
+        UPDATE
+            userinfo
+        SET
+            typeCode=#{userType.code},
+            count=#{count},
+            macAddress=#{macAddress}
+        WHERE
+            code=#{code}
+    </update>
+    <delete id="deleteUserInfo">
+        DELETE FROM
+            userinfo
+        WHERE
+            code=#{code}
+    </delete>
     <update id="countSub">
         UPDATE
             userinfo
@@ -35,12 +51,18 @@
     </select>
     <select id="filterType" resultType="UserType">
         SELECT
-            *
+        *
         FROM
             usertype
-        <if test="code != null">
         WHERE
+            1=1
+        <if test="code != null">
+            AND
             code=#{code}
+        </if>
+        <if test="type != -1">
+            AND
+            type=#{type}
         </if>
     </select>
 </mapper>

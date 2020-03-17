@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.service.business.impl;
 
+import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.dao.UserInfoMapper;
 import com.lushihao.qrcode.entity.business.Business;
@@ -14,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BusinessServiceImpl implements BusinessService {
@@ -33,14 +31,14 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     @Transactional
-    public Result create(Business business, String logoSrc) {
+    public Result create(Business business, String logoSrc, String typeCode, String macAddress) {
         business.setCode(getCode());
         int back = businessMapper.create(business);
         if (back == 0) {
             return new Result(false, null, null, "创建失败");
         } else {
-            UserInfo userInfo = new UserInfo(business.getCode(), new UserType(), 0, "", business, null);
-            back = userInfoMapper.create(userInfo);
+            UserInfo userInfo = new UserInfo(business.getCode(), userInfoMapper.filterType(typeCode, 1).get(0), 0, macAddress, business, null);
+            userInfoMapper.create(userInfo);
             //商标地址
             String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
             File logoDirectory = new File(businessPath);
@@ -77,11 +75,13 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     @Transactional
-    public Result update(Business business, String logoSrc) {
+    public Result update(Business business, String logoSrc, String typeCode, String macAddress) {
         int back = businessMapper.update(business);
         if (back == 0) {
             return new Result(false, null, null, "更新失败，请稍后再试");
         } else {
+            UserInfo userInfo = new UserInfo(business.getCode(), userInfoMapper.filterType(typeCode, 1).get(0), 0, macAddress, business, null);
+            userInfoMapper.update(userInfo);
             if (logoSrc != null && !"".equals(logoSrc)) {
                 //商标地址
                 String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
@@ -98,6 +98,7 @@ public class BusinessServiceImpl implements BusinessService {
         if (back == 0) {
             return new Result(false, null, null, "删除失败");
         } else {
+            userInfoMapper.deleteUserInfo(code);
             if (projectBasicInfo.isDeleteAllBusinessFiles()) {
                 //商标地址
                 String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
@@ -114,11 +115,20 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     @Transactional
     public Map<String, Object> filter(Business business) {
-        List<UserType> types = userInfoMapper.filterType(null);
+        List<UserType> types = userInfoMapper.filterType(null, 1);
         List<Business> businesses = businessMapper.filter(business);
+        List<Map<String, Object>> businessInfoList = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         map.put("types", types);
         map.put("businesses", businesses);
+        for (Business businessItem : businesses) {
+            Map<String, Object> userInfo = userInfoMapper.filter(businessItem.getCode()).get(0);
+            String code = (String) userInfo.get("typecode");
+            Map<String, Object> mapItem = LSHMapUtils.entityToMap(userInfoMapper.filterType(code, 1).get(0));
+            mapItem.put("macAddress", userInfo.get("macAddress"));
+            businessInfoList.add(mapItem);
+        }
+        map.put("type", businessInfoList);
         return map;
     }
 

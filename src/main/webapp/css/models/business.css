@@ -15,27 +15,27 @@
 }
 
 .top {
-    height: 450px;
+    height: 540px;
 }
 
 .topItem1, .topItem2, .topItem3 {
-    height: 450px;
+    height: 540px;
 }
 
-.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5 {
-    width: 12%;
+.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6 {
+    width: 10%;
     background-color: red;
     color: white;
     padding: 5px;
 }
 
 .bottomTh2 {
-    width: 22%;
+    width: 20%;
     background-color: black;
 }
 
 .bottomTh3 {
-    width: 42%;
+    width: 40%;
     background-color: blue;
 }
 
@@ -47,19 +47,23 @@
     background-color: green;
 }
 
-.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5 {
-    width: 12%;
+.bottomTh6 {
+    background-color: tan;
+}
+
+.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6 {
+    width: 10%;
     border: 2px solid red;
     padding: 5px;
 }
 
 .bottomTd2 {
-    width: 22%;
+    width: 20%;
     border: 2px solid black;
 }
 
 .bottomTd3 {
-    width: 42%;
+    width: 40%;
     border: 2px solid blue;
 }
 
@@ -69,4 +73,8 @@
 
 .bottomTd5 {
     border: 2px solid green;
+}
+
+.bottomTd6 {
+    border: 2px solid tan;
 }

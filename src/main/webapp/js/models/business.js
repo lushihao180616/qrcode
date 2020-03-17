@@ -1,3 +1,6 @@
+var allBusinessList;
+var allTypeList;
+
 function init() {
     var filterBusiness = {
         code: document.getElementById("filterCode").value,
@@ -20,7 +23,10 @@ function init() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    handleBusinesses(result.bean.businesses);
+                    allBusinessList = result.bean.businesses;
+                    allTypeList = result.bean.type;
+                    handleBusinesses(result.bean.businesses, result.bean.type);
+                    handleTypes(result.bean.types);
                 } else {
                     alert(result.errorInfo);
                 }
@@ -30,7 +36,7 @@ function init() {
     xhr.send(JSON.stringify(filterBusiness));
 }
 
-function handleBusinesses(businessList) {
+function handleBusinesses(businessList, typeList) {
     var businesses = document.getElementById("buisnesses");
     businesses.innerHTML = '';
     for (var i = 0; i < businessList.length; i++) {
@@ -41,7 +47,27 @@ function handleBusinesses(businessList) {
             '        <td class="bottomTd3">' + businessList[i].address + '</td>\n' +
             '        <td class="bottomTd4">' + businessList[i].phone + '</td>\n' +
             '        <td class="bottomTd5">' + businessList[i].businessName + '</td>\n' +
+            '        <td class="bottomTd6">' + typeList[i].name + '</td>\n' +
             '    </tr>';
+    }
+}
+
+function handleTypes(typeList) {
+    var createTypes = document.getElementById("createUserType");
+    createTypes.innerHTML = '';
+    for (var i = 0; i < typeList.length; i++) {
+        var option = document.createElement("option");
+        option.value = JSON.stringify(typeList[i]);
+        option.text = typeList[i].name;
+        createTypes.add(option);
+    }
+    var modifyTypes = document.getElementById("modifyUserType");
+    modifyTypes.innerHTML = '';
+    for (var i = 0; i < typeList.length; i++) {
+        var option = document.createElement("option");
+        option.value = JSON.stringify(typeList[i]);
+        option.text = typeList[i].name;
+        modifyTypes.add(option);
     }
 }
 
@@ -51,18 +77,22 @@ function create() {
     var phone = document.getElementById("createPhone").value;
     var businessName = document.getElementById("createBusinessName").value;
     var logoSrc = document.getElementById("createLogo").value;
-    if (!check(name, address, phone, businessName)) {
+    var userType = document.getElementById("createUserType").value;
+    var macAddress = document.getElementById("createMacAddress").value;
+    if (!check(name, address, phone, businessName, macAddress)) {
         return
     }
     if (logoSrc == "" || logoSrc == null) {
         alert('商标必须选择');
     }
     var createBusiness = {
-        name: document.getElementById("createName").value,
-        address: document.getElementById("createAddress").value,
-        phone: document.getElementById("createPhone").value,
-        businessName: document.getElementById("createBusinessName").value,
-        logoSrc: document.getElementById("createLogo").value
+        name: name,
+        address: address,
+        phone: phone,
+        businessName: businessName,
+        logoSrc: logoSrc,
+        userType: JSON.parse(userType).code,
+        macAddress: macAddress
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/business/create", false);
@@ -78,12 +108,16 @@ function create() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    handleBusinesses(result.bean);
+                    allBusinessList = result.bean.businesses;
+                    allTypeList = result.bean.type;
+                    handleBusinesses(result.bean.businesses, result.bean.type);
                     document.getElementById("createName").value = '';
                     document.getElementById("createAddress").value = '';
                     document.getElementById("createPhone").value = '';
                     document.getElementById("createBusinessName").value = '';
                     document.getElementById("createLogo").value = '';
+                    document.getElementById("createUserType").options[0].selected = true;
+                    document.getElementById("createMacAddress").value = '';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -112,6 +146,8 @@ function modifySearch() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
+                    allBusinessList = result.bean.businesses;
+                    allTypeList = result.bean.type;
                     var modifyBusinesses = document.getElementById("modifyBusinesses");
                     modifyBusinesses.innerHTML = '';
                     for (var i = 0; i < result.bean.businesses.length; i++) {
@@ -134,11 +170,22 @@ function modifySearch() {
 }
 
 function modifyBusinessCode(id) {
-    var budiness = JSON.parse(document.getElementById(id).value);
-    document.getElementById("modifyName").value = budiness.name;
-    document.getElementById("modifyAddress").value = budiness.address;
-    document.getElementById("modifyPhone").value = budiness.phone;
-    document.getElementById("modifyBusinessName").value = budiness.businessName;
+    var index = JSON.parse(document.getElementById(id).selectedIndex);
+    document.getElementById("modifyName").value = allBusinessList[index].name;
+    document.getElementById("modifyAddress").value = allBusinessList[index].address;
+    document.getElementById("modifyPhone").value = allBusinessList[index].phone;
+    document.getElementById("modifyBusinessName").value = allBusinessList[index].businessName;
+    var length = document.getElementById("modifyUserType").options.length;
+    var typeIndex = 0;
+    for (var i = 0; i < length; i++) {
+        var userType = JSON.parse(document.getElementById("modifyUserType").options[i].value);
+        if (userType.name == allTypeList[index].name) {
+            typeIndex = i;
+            break;
+        }
+    }
+    document.getElementById("modifyUserType").options[typeIndex].selected = true;
+    document.getElementById("modifyMacAddress").value = allTypeList[index].macAddress;
 }
 
 function update() {
@@ -148,7 +195,9 @@ function update() {
     var phone = document.getElementById("modifyPhone").value;
     var businessName = document.getElementById("modifyBusinessName").value;
     var logoSrc = document.getElementById("modifyLogo").value;
-    if (!check(name, address, phone, businessName)) {
+    var userType = document.getElementById("modifyUserType").value;
+    var macAddress = document.getElementById("modifyMacAddress").value;
+    if (!check(name, address, phone, businessName, macAddress)) {
         return;
     }
     if (business == null) {
@@ -161,7 +210,9 @@ function update() {
         address: address,
         phone: phone,
         businessName: businessName,
-        logoSrc: logoSrc
+        logoSrc: logoSrc,
+        userType: JSON.parse(userType).code,
+        macAddress: macAddress
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/business/update", false);
@@ -177,13 +228,17 @@ function update() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    handleBusinesses(result.bean);
+                    allBusinessList = result.bean.businesses;
+                    allTypeList = result.bean.type;
+                    handleBusinesses(result.bean.businesses, result.bean.type);
                     document.getElementById("modifyBusinesses").innerHTML = '';
                     document.getElementById("modifyName").value = '';
                     document.getElementById("modifyAddress").value = '';
                     document.getElementById("modifyPhone").value = '';
                     document.getElementById("modifyBusinessName").value = '';
                     document.getElementById("modifyLogo").value = '';
+                    document.getElementById("modifyUserType").options[0].selected = true;
+                    document.getElementById("modifyMacAddress").value = '';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -212,6 +267,8 @@ function deleteSearch() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
+                    allBusinessList = result.bean.businesses;
+                    allTypeList = result.bean.type;
                     var deleteBusinesses = document.getElementById("deleteBusinesses");
                     deleteBusinesses.innerHTML = '';
                     for (var i = 0; i < result.bean.businesses.length; i++) {
@@ -264,7 +321,9 @@ function deleteOne() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    handleBusinesses(result.bean);
+                    allBusinessList = result.bean.businesses;
+                    allTypeList = result.bean.type;
+                    handleBusinesses(result.bean.businesses, result.bean.type);
                     document.getElementById("deleteBusinesses").innerHTML = '';
                     document.getElementById("deleteName").innerHTML = '';
                     document.getElementById("deleteAddress").innerHTML = '';
@@ -280,7 +339,7 @@ function deleteOne() {
     xhr.send(JSON.stringify(deleteBusiness));
 }
 
-function check(name, address, phone, businessName) {
+function check(name, address, phone, businessName, macAddress) {
     var checkStr = '';
     if (name == "" || name == null) {
         checkStr += '名称必须填写 '
@@ -293,6 +352,9 @@ function check(name, address, phone, businessName) {
     }
     if (businessName == "" || businessName == null) {
         checkStr += '联系人必须填写 '
+    }
+    if (macAddress == "" || macAddress == null) {
+        checkStr += '物理地址必须填写 '
     }
     if (checkStr != '') {
         alert(checkStr);

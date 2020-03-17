@@ -17,16 +17,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     private InitProject initProject;
 
     @Override
-    public String create(UserInfo userInfo) {
-        userInfo.setUserType(userInfoMapper.filterType("06").get(0));
-        int back = userInfoMapper.create(userInfo);
-        if (back > 0) {
-            return "创建成功";
-        }
-        return "创建失败";
-    }
-
-    @Override
     public UserInfo filter() {
         return initProject.userInfo;
     }

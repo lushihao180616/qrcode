@@ -29,7 +29,9 @@ public class BusinessController {
             return null;
         }
         String logoSrc = (String) reqMap.get("logoSrc");
-        return businessService.create(LSHMapUtils.mapToEntity(reqMap, Business.class), logoSrc);
+        String typeCode = (String) reqMap.get("userType");
+        String macAddress = (String) reqMap.get("macAddress");
+        return businessService.create(LSHMapUtils.mapToEntity(reqMap, Business.class), logoSrc, typeCode, macAddress);
     }
 
     @RequestMapping("update")
@@ -39,7 +41,9 @@ public class BusinessController {
             return null;
         }
         String logoSrc = (String) reqMap.get("logoSrc");
-        return businessService.update(LSHMapUtils.mapToEntity(reqMap, Business.class), logoSrc);
+        String typeCode = (String) reqMap.get("userType");
+        String macAddress = (String) reqMap.get("macAddress");
+        return businessService.update(LSHMapUtils.mapToEntity(reqMap, Business.class), logoSrc, typeCode, macAddress);
     }
 
     @RequestMapping("delete")

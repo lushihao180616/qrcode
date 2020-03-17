@@ -13,9 +13,13 @@ public interface UserInfoMapper {
 
     int create(UserInfo userInfo);
 
+    int update(UserInfo userInfo);
+
+    int deleteUserInfo(@Param("code") String code);
+
     List<Map<String, Object>> filter(@Param("code") String code);
 
-    List<UserType> filterType(@Param("code") String code);
+    List<UserType> filterType(@Param("code") String code, @Param("type") int type);
 
     int countSub(@Param("subCount") int subCount, @Param("code") String code);
 
