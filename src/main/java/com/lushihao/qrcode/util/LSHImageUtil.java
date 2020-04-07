@@ -162,8 +162,43 @@ public class LSHImageUtil {
      * @throws IOException
      */
     public void copyFile(String srcPath, String destPath) {
-        BufferedImage bufferedImage = getImage(srcPath);
-        sendImage(destPath, bufferedImage);
+        copy(srcPath, destPath);
+    }
+
+    public static void copy(String fileName1, String fileName2) {
+        File file1 = new File(fileName1);
+        File file2 = new File(fileName2);
+        if (file1 == null || !file1.exists()) {
+            return;
+        }
+        if (file2 == null) {
+            return;
+        } else {
+            file2.getParentFile().mkdirs();
+        }
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file1);
+            fileOutputStream = new FileOutputStream(file2);
+            byte[] b = new byte[1024 * 1024];
+            int length = fileInputStream.read(b);
+            while (length != -1) {
+                fileOutputStream.write(b, 0, length);
+                length = fileInputStream.read(b);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileOutputStream.close();
+                fileInputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

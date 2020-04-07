@@ -231,7 +231,7 @@ public class LSHQRCodeUtil {
         }
         gs.translate(-nowWidth / 2, -nowHeight / 2);
 
-        //开始回执二维码
+        //开始绘制二维码
         handleCodeEye(gs, code, qrCode);
         if (qrCode.getQrCodeTemple().getArti().equals("0-1-2-3-4")) {
             drawQrcodeHot(gs, code, qrCode); //0-1-2-3-4
