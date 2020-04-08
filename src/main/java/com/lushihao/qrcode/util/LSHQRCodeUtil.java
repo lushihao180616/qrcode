@@ -316,21 +316,22 @@ public class LSHQRCodeUtil {
             if (!isMp4) {
                 map.put(0, lshImageUtil.getImage(qrCode.getBackGround()));
             } else {
+                multiple *= 5;
                 map = lshGif2JpgUtil.gifToJpg(qrCode.getBackGround());
             }
             //获得背景宽高
-            int width = map.get(0).getWidth();
-            int height = map.get(0).getHeight();
-            if (width > height) {
+            int thisWidth = map.get(0).getWidth();
+            int thisHeight = map.get(0).getHeight();
+            if (thisWidth > thisHeight) {
                 bgHeight = qrCode.getShortLength();
-                bgWidth = (int) ((float) width / height * bgHeight);
+                bgWidth = (int) ((float) thisWidth / thisHeight * bgHeight);
             } else {
                 bgWidth = qrCode.getShortLength();
-                bgHeight = (int) ((float) height / width * bgWidth);
+                bgHeight = (int) ((float) thisHeight / thisWidth * bgWidth);
             }
             //获得偏移量
-            x = (int) ((float) (bgWidth - 3000) * qrCode.getX() / 100);
-            y = (int) ((float) (bgHeight - 3000) * qrCode.getY() / 100);
+            x = (int) ((float) (bgWidth - 1950) * qrCode.getX() / 100) - 525;
+            y = (int) ((float) (bgHeight - 1950) * qrCode.getY() / 100) - 525;
         } else {//非自定义背景
             //缩小倍数
             multiple = qrCode.getQrCodeTemple().getMultiple();
@@ -338,6 +339,7 @@ public class LSHQRCodeUtil {
             if (!isMp4) {
                 map.put(0, lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\bg.jpg"));
             } else {
+                multiple *= 5;
                 map = lshGif2JpgUtil.gifToJpg(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\bg.gif");
             }
             //获得背景宽高
