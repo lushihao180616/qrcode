@@ -169,6 +169,7 @@ function changeType(id) {
 }
 
 function getTempleCode(id) {
+    document.getElementById("backGround").value = '';
     var temple = JSON.parse(document.getElementById(id).value);
     var ifOnly = '';
     if (temple.ifOnly) {
@@ -181,6 +182,11 @@ function getTempleCode(id) {
         ifShowLogo += "是";
     } else {
         ifShowLogo += "否";
+    }
+    if (temple.code.substr(0, 1) == "J") {
+        document.getElementById("backGround").accept = "image/jpeg, image/jpg, image/png";
+    } else {
+        document.getElementById("backGround").accept = "image/gif";
     }
     var ifSelfBg = '';
     if (temple.ifSelfBg) {
