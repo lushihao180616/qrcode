@@ -44,6 +44,8 @@ public class LSHQRCodeUtil {
     private UserInfoService userInfoService;
     @Resource
     private UserBasicInfo userBasicInfo;
+    @Resource
+    private LSHFtpUtil lshFtpUtil;
 
     /**
      * 二维码宽度
@@ -184,9 +186,15 @@ public class LSHQRCodeUtil {
         if (qrCode.getType().equals("text")) {//文本
             content = qrCode.getMessage();
         } else if (qrCode.getType().equals("image")) {//图片
-            content = "这是一条图片地址";
+            String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
+            lshFtpUtil.connectServer();
+            boolean flag = lshFtpUtil.upload(qrCode.getMessage(), fileName, "/cjml-qrcode/runImage/" + qrCode.getBusinessCode());
+            content = "http://sinacloud.net/cjml-qrcode/runImage/" + qrCode.getBusinessCode() + "/" + fileName;
         } else if (qrCode.getType().equals("video")) {//视频
-            content = "这是一条视频地址";
+            String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
+            lshFtpUtil.connectServer();
+            boolean flag = lshFtpUtil.upload(qrCode.getMessage(), fileName, "/cjml-qrcode/runVideo/" + qrCode.getBusinessCode());
+            content = "http://sinacloud.net/cjml-qrcode/runVideo/" + qrCode.getBusinessCode() + "/" + fileName;
         } else if (qrCode.getType().equals("beautify")) {//二维码美化
             content = "这是二维码美化";
         } else {
