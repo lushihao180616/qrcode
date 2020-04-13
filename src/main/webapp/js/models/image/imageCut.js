@@ -10,6 +10,9 @@ function create() {
     if (!check(width, height, x, y, path, alpha)) {
         return
     }
+    if (confirm("本操作将消耗1枚金豆") == false) {
+        return;
+    }
     var imageCut = {
         width: parseInt(width),
         height: parseInt(height),

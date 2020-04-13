@@ -99,19 +99,18 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        int subCount = 1;
-        if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(1, userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoWaterMark.getPath().substring(0, videoWaterMark.getPath().lastIndexOf(".")) + "_watermark.png";
         videoWaterMark.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, bg, "png")) {
-            userInfoService.countAdd(subCount, userBasicInfo.getCode());
+            userInfoService.countAdd(1, userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         if (!lshFfmpegUtil.videoWaterMark(videoWaterMark)) {
-            userInfoService.countAdd(subCount, userBasicInfo.getCode());
+            userInfoService.countAdd(1, userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoWaterMark.getImagePath());

@@ -45,6 +45,9 @@ function create() {
     if (!check(business, path, height, x, y)) {
         return
     }
+    if (confirm("本操作将消耗1枚金豆") == false) {
+        return;
+    }
     var createWaterMark = {
         businessCode: JSON.parse(business).code,
         path: path,

@@ -11,6 +11,9 @@ function create() {
     if (!check(message, x, y, path, size, layout, color)) {
         return
     }
+    if (confirm("本操作将消耗1枚金豆") == false) {
+        return;
+    }
     var createFont = {
         message: message,
         x: parseInt(x),

@@ -7,6 +7,9 @@ function create() {
     if (!check(path, start, end)) {
         return
     }
+    if (confirm("本操作将消耗1枚金豆") == false) {
+        return;
+    }
     var videoCut = {
         path: path,
         start: parseInt(start),

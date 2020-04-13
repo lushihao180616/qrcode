@@ -30,13 +30,12 @@ public class VideoCutServiceImpl implements VideoCutService {
         if (videoInfo == null) {
             return new Result(false, null, null, "读取文件信息失败");
         }
-        int subCount = 1;
-        if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(1, userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         videoCut.setNewPath(videoCut.getPath().substring(0, videoCut.getPath().lastIndexOf(".")) + "_cut.mp4");
         if (!lshFfmpegUtil.videoCut(videoCut)) {
-            userInfoService.countAdd(subCount, userBasicInfo.getCode());
+            userInfoService.countAdd(1, userBasicInfo.getCode());
             return new Result(false, null, null, "添加失败，请重启软件后再试");
         } else {
             return new Result(true, videoCut.getNewPath(), "截取成功", null);
