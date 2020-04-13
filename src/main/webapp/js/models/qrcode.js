@@ -161,11 +161,6 @@ function changeType(id) {
     } else {
         document.getElementById("videoInfo").style.display = "none";
     }
-    if (type == "beautify") {
-        document.getElementById("beautifyInfo").style.display = "";
-    } else {
-        document.getElementById("beautifyInfo").style.display = "none";
-    }
 }
 
 function getTempleCode(id) {
@@ -322,6 +317,8 @@ function create() {
                 if (result.ifSuccess) {
                     handleRecord(result.bean.record);
                     document.getElementById("textMessage").value = '';
+                    document.getElementById("imageMessage").value = '';
+                    document.getElementById("videoMessage").value = '';
                     document.getElementById("temples").options[0].selected = true;
                     document.getElementById("businesses").options[0].selected = true;
                     document.getElementById("fileName").value = '';
@@ -349,8 +346,12 @@ function test() {
     var y = document.getElementById("y").value;
     var alpha = document.getElementById("alpha").value;
     var angle = document.getElementById("angle").value;
+    if (type != "text") {
+        alert("仅“类型”为“文本”时支持预览");
+        return;
+    }
     if (!check(message, temple, business, fileName, backGround, shortLength, x, y, alpha, angle)) {
-        return
+        return;
     }
     var createQRCode = {
         message: message,
