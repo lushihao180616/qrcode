@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +62,17 @@ public class QRCodeController {
         return new Result(true, qrCodeService.selectRecord(LSHMapUtils.mapToEntity(reqMap, QRCodeRecord.class)), "搜索完成", null);
     }
 
+    @RequestMapping("size")
+    @ResponseBody
+    public Result size(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        String path = (String) reqMap.get("message");
+        File file = new File(path);
+        return new Result(true, file.length(), "搜索完成", null);
+    }
+
     @RequestMapping("qrcodeInit")
     @ResponseBody
     public Result qrcodeInit(@RequestBody Map<String, Object> reqMap) {
@@ -101,6 +113,11 @@ public class QRCodeController {
             qrCodeRequest.setAngle(0);
         } else {
             qrCodeRequest.setAngle((Integer) reqMap.get("angle"));
+        }
+        if (reqMap.get("bean") == null || "".equals(reqMap.get("bean"))) {
+            qrCodeRequest.setBean(0);
+        } else {
+            qrCodeRequest.setBean((Integer) reqMap.get("bean"));
         }
         return qrCodeRequest;
     }

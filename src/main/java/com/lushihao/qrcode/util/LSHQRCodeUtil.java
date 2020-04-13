@@ -136,21 +136,8 @@ public class LSHQRCodeUtil {
             }
             //添加背景
             Map<Integer, BufferedImage> imageAndBg = addBG(image, qrCode);
-            int subCount = 0;
-            if (qrCode.getType().equals("text")) {//文本
-                subCount = 1;
-            } else if (qrCode.getType().equals("image")) {//图片
-                subCount = 10;
-            } else if (qrCode.getType().equals("video")) {//视频
-                subCount = 10;
-            } else if (qrCode.getType().equals("beautify")) {//二维码美化
-                subCount = 5;
-            }
-            if (isMp4) {
-                subCount += 5;
-            }
             if (!ifTest) {
-                if (!userInfoService.countSub(subCount, userBasicInfo.getCode())) {
+                if (!userInfoService.countSub(qrCode.getBean(), userBasicInfo.getCode())) {
                     return new Result(false, null, null, "金豆不够用了");
                 }
             }
@@ -657,20 +644,7 @@ public class LSHQRCodeUtil {
             result = lshImageUtil.sendImage(filePath, images.get(0));
         }
         if (!ifTest && !result) {
-            int subCount = 0;
-            if (qrCode.getType().equals("text")) {//文本
-                subCount = 1;
-            } else if (qrCode.getType().equals("image")) {//图片
-                subCount = 10;
-            } else if (qrCode.getType().equals("video")) {//视频
-                subCount = 10;
-            } else if (qrCode.getType().equals("beautify")) {//二维码美化
-                subCount = 5;
-            }
-            if (isMp4) {
-                subCount += 5;
-            }
-            userInfoService.countAdd(subCount, userBasicInfo.getCode());
+            userInfoService.countAdd(qrCode.getBean(), userBasicInfo.getCode());
         }
         return filePath;
     }

@@ -51,7 +51,7 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            QRCode qrCode = new QRCode("超级码丽", "text", qrTempleMapper.filter(qrCodeTemple.getCode()).get(0), "00000000", "00000000", qrCodeTemple.getCode(), null, 1950, 50, 50, 0, qrCodeTemple.getAngle());
+            QRCode qrCode = new QRCode("超级码丽", "text", qrTempleMapper.filter(qrCodeTemple.getCode()).get(0), "00000000", "00000000", qrCodeTemple.getCode(), null, 1950, 50, 50, 0, qrCodeTemple.getAngle(), 0);
             if (qrCode.getQrCodeTemple().isIfSelfBg()) {
                 if (!qrCode.getQrCodeTemple().isIfGif()) {
                     qrCode.setBackGround(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\bg.jpg");
@@ -83,7 +83,7 @@ public class QRTempleServiceImpl implements QRTempleService {
             if (!modelDirectory.exists()) {//如果文件夹不存在
                 modelDirectory.mkdir();//创建文件夹
             }
-            QRCode qrCode = new QRCode("超级码丽", "text", qrTempleMapper.filter(qrCodeTemple.getCode()).get(0), "00000000", "00000000", qrCodeTemple.getCode(), null, 1950, 50, 50, 0, qrCodeTemple.getAngle());
+            QRCode qrCode = new QRCode("超级码丽", "text", qrTempleMapper.filter(qrCodeTemple.getCode()).get(0), "00000000", "00000000", qrCodeTemple.getCode(), null, 1950, 50, 50, 0, qrCodeTemple.getAngle(), 0);
             if (qrCode.getQrCodeTemple().isIfSelfBg()) {
                 if (!qrCode.getQrCodeTemple().isIfGif()) {
                     qrCode.setBackGround(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\bg.jpg");

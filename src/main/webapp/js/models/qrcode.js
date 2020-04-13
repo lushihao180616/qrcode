@@ -1,3 +1,5 @@
+var fileSize = 0;
+
 function init() {
     var filter = {
         templeCode: document.getElementById("filterTemple").value
@@ -288,6 +290,21 @@ function create() {
     if (!check(message, temple, business, fileName, backGround, shortLength, x, y, alpha, angle)) {
         return
     }
+    var bean = 0;
+    if (JSON.parse(temple).code.substr(0, 1).toString() == "D") {
+        bean += 5;
+    }
+    if (type != "text") {
+        getSize(message);
+        var fileSize_M = parseInt(fileSize / 1024 / 1024);
+        bean += (parseInt(fileSize_M / 10) * 10) + 10;
+        var title = confirm("本操作将消耗" + bean + "枚金豆");
+        if (title == false) {
+            return;
+        }
+    } else {
+        bean += 1;
+    }
     var createQRCode = {
         message: message,
         templeCode: JSON.parse(temple).code,
@@ -299,7 +316,8 @@ function create() {
         y: parseInt(y),
         alpha: parseInt(alpha),
         angle: parseInt(angle),
-        type: type
+        type: type,
+        bean: bean
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
@@ -332,6 +350,34 @@ function create() {
         }
     }
     xhr.send(JSON.stringify(createQRCode));
+}
+
+function getSize(message) {
+    var data = {
+        message: message
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/qrcode/size", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "../error.jsp"
+                    return
+                }
+                var result = JSON.parse(xhr.responseText);
+                if (result.ifSuccess) {
+                    fileSize = result.bean;
+                } else {
+                    alert(result.errorInfo)
+                }
+            }
+        }
+    }
+    xhr.send(JSON.stringify(data));
 }
 
 function test() {

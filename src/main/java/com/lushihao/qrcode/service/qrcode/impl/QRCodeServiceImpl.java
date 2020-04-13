@@ -30,7 +30,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public Result create(QRCodeRequest qrCodeRequest) {
-        QRCode qrCode = new QRCode(qrCodeRequest.getMessage(), qrCodeRequest.getType(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getManagerCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+        QRCode qrCode = new QRCode(qrCodeRequest.getMessage(), qrCodeRequest.getType(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), qrCodeRequest.getBusinessCode(), qrCodeRequest.getManagerCode(), qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle(), qrCodeRequest.getBean());
         Result result = lshqrCodeUtil.qrcode(qrCode, false, false);
         Map<String, Object> map = (Map<String, Object>) result.getBean();
         if (map == null) {
@@ -44,7 +44,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public Result test(QRCodeRequest qrCodeRequest) {
-        QRCode qrCode = new QRCode("超级码丽", qrCodeRequest.getType(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle());
+        QRCode qrCode = new QRCode("超级码丽", qrCodeRequest.getType(), qrTempleMapper.filter(qrCodeRequest.getTempleCode()).get(0), "00000000", "00000000", qrCodeRequest.getFileName(), qrCodeRequest.getBackGround(), qrCodeRequest.getShortLength(), qrCodeRequest.getX(), qrCodeRequest.getY(), qrCodeRequest.getAlpha(), qrCodeRequest.getAngle(), 0);
         Result result = lshqrCodeUtil.qrcode(qrCode, true, false);
         Map<String, Object> map = (Map<String, Object>) result.getBean();
         if (map == null) {
@@ -58,7 +58,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public List<QRCodeRecord> selectRecord(QRCodeRecord qrCodeRecord) {
-        if(InitProject.userInfo.getUserType().getType().equals("1")){
+        if (InitProject.userInfo.getUserType().getType().equals("1")) {
             qrCodeRecord.setBusinessCode(InitProject.userInfo.getBusiness().getCode());
         }
         return qrCodeRecordMapper.select(qrCodeRecord);

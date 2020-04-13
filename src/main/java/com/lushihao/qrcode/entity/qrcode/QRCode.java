@@ -55,6 +55,10 @@ public class QRCode {
      * 旋转角度
      */
     private int angle;
+    /**
+     * 金豆
+     */
+    private int bean;
 
     public String getMessage() {
         return message;
@@ -152,10 +156,18 @@ public class QRCode {
         this.angle = angle;
     }
 
+    public int getBean() {
+        return bean;
+    }
+
+    public void setBean(int bean) {
+        this.bean = bean;
+    }
+
     public QRCode() {
     }
 
-    public QRCode(String message, String type, QRCodeTemple qrCodeTemple, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle) {
+    public QRCode(String message, String type, QRCodeTemple qrCodeTemple, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle, int bean) {
         this.message = message;
         this.type = type;
         this.qrCodeTemple = qrCodeTemple;
@@ -168,6 +180,7 @@ public class QRCode {
         this.y = y;
         this.alpha = alpha;
         this.angle = angle;
+        this.bean = bean;
     }
 
 }
