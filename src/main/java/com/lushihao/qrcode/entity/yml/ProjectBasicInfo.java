@@ -55,6 +55,22 @@ public class ProjectBasicInfo {
      * ftp 密码
      */
     private String ftpPassword;
+    /**
+     * 云存储名称
+     */
+    private String bucket;
+    /**
+     * 云存储主机
+     */
+    private String bucketHost;
+    /**
+     * 云存储图片
+     */
+    private String bucketImageDir;
+    /**
+     * 云存储视频
+     */
+    private String bucketVideoDir;
 
     public String getTempleUrl() {
         return templeUrl;
@@ -152,10 +168,42 @@ public class ProjectBasicInfo {
         this.ftpPassword = ftpPassword;
     }
 
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getBucketHost() {
+        return bucketHost;
+    }
+
+    public void setBucketHost(String bucketHost) {
+        this.bucketHost = bucketHost;
+    }
+
+    public String getBucketImageDir() {
+        return bucketImageDir;
+    }
+
+    public void setBucketImageDir(String bucketImageDir) {
+        this.bucketImageDir = bucketImageDir;
+    }
+
+    public String getBucketVideoDir() {
+        return bucketVideoDir;
+    }
+
+    public void setBucketVideoDir(String bucketVideoDir) {
+        this.bucketVideoDir = bucketVideoDir;
+    }
+
     public ProjectBasicInfo() {
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String ftpIp, int ftpPort, String ftpUserName, String ftpPassword) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String ftpIp, int ftpPort, String ftpUserName, String ftpPassword, String bucket, String bucketHost, String bucketImageDir, String bucketVideoDir) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
@@ -168,6 +216,10 @@ public class ProjectBasicInfo {
         this.ftpPort = ftpPort;
         this.ftpUserName = ftpUserName;
         this.ftpPassword = ftpPassword;
+        this.bucket = bucket;
+        this.bucketHost = bucketHost;
+        this.bucketImageDir = bucketImageDir;
+        this.bucketVideoDir = bucketVideoDir;
     }
 
 }
