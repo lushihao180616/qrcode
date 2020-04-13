@@ -1,6 +1,7 @@
 package com.lushihao.qrcode.controller;
 
 import com.lushihao.qrcode.entity.common.Result;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ public class UserController {
     private UserInfoService userInfoService;
     @Resource
     private LSHMACUtil lshmacUtil;
+    @Resource
+    private InitProject initProject;
 
     @RequestMapping("filter")
     @ResponseBody
@@ -24,6 +27,7 @@ public class UserController {
         if (!lshmacUtil.check()) {
             return null;
         }
+        initProject.getUserInfo();
         return new Result(true, userInfoService.filter(), "搜索完成", null);
     }
 

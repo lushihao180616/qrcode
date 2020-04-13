@@ -6,6 +6,7 @@ import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRequest;
 import com.lushihao.qrcode.entity.qrcode.QRCode;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.qrcode.QRCodeService;
 import com.lushihao.qrcode.util.LSHQRCodeUtil;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,9 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     @Transactional
     public List<QRCodeRecord> selectRecord(QRCodeRecord qrCodeRecord) {
+        if(InitProject.userInfo.getUserType().getType().equals("1")){
+            qrCodeRecord.setBusinessCode(InitProject.userInfo.getBusiness().getCode());
+        }
         return qrCodeRecordMapper.select(qrCodeRecord);
     }
 
