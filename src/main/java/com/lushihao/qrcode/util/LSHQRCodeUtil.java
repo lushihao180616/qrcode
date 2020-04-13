@@ -187,16 +187,26 @@ public class LSHQRCodeUtil {
             content = qrCode.getMessage();
         } else if (qrCode.getType().equals("image")) {//图片
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
-            lshFtpUtil.connectServer();
-            boolean flag = lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode());
-            content = projectBasicInfo.getBucketHost() + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+            if (lshFtpUtil.connectServer()) {
+                if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode())) {
+                    content = projectBasicInfo.getBucketHost() + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
         } else if (qrCode.getType().equals("video")) {//视频
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
-            lshFtpUtil.connectServer();
-            boolean flag = lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode());
-            content = projectBasicInfo.getBucketHost() + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
-        } else if (qrCode.getType().equals("beautify")) {//二维码美化
-            content = "这是二维码美化";
+            if (lshFtpUtil.connectServer()) {
+                if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode())) {
+                    content = projectBasicInfo.getBucketHost() + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
