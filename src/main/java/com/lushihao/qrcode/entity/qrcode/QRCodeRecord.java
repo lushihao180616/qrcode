@@ -26,6 +26,10 @@ public class QRCodeRecord {
      * 保存时间
      */
     private double money;
+    /**
+     * 创建者
+     */
+    private String creator;
 
     public String getTempleCode() {
         return templeCode;
@@ -75,15 +79,25 @@ public class QRCodeRecord {
         this.money = money;
     }
 
-    public QRCodeRecord(String templeCode, String businessCode, String fileName, String url, String saveTime, double money) {
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public QRCodeRecord(String templeCode, String businessCode, String fileName, String url, String saveTime, double money, String creator) {
         this.templeCode = templeCode;
         this.businessCode = businessCode;
         this.fileName = fileName;
         this.url = url;
         this.saveTime = saveTime;
         this.money = money;
+        this.creator = creator;
     }
 
     public QRCodeRecord() {
     }
+
 }

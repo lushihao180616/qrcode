@@ -5,7 +5,7 @@
     <insert id="create" parameterType="QRCodeRecord">
         INSERT INTO
             record
-            (templeCode,businessCode,fileName,url,saveTime,money)
+            (templeCode,businessCode,fileName,url,saveTime,money,creator)
         VALUES
             (
             #{templeCode},
@@ -13,7 +13,8 @@
             #{fileName},
             #{url},
             #{saveTime},
-            #{money}
+            #{money},
+            #{creator}
             )
     </insert>
     <select id="select" parameterType="QRCodeRecord" resultType="QRCodeRecord">

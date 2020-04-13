@@ -159,7 +159,7 @@ public class LSHQRCodeUtil {
             map.put("filePath", filePath);
             //记录一下
             if (!ifTest) {
-                qrCodeRecordMapper.create(new QRCodeRecord(qrCode.getQrCodeTemple().getCode(), qrCode.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCode.getQrCodeTemple().getMoney()));
+                qrCodeRecordMapper.create(new QRCodeRecord(qrCode.getQrCodeTemple().getCode(), qrCode.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCode.getQrCodeTemple().getMoney(), userBasicInfo.getCode()));
             }
         } catch (UnsupportedEncodingException e) {
             return new Result(false, null, null, "创建失败");

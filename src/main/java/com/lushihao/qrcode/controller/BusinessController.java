@@ -3,8 +3,10 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.business.BusinessService;
 import com.lushihao.qrcode.util.LSHMACUtil;
+import com.sun.org.apache.xml.internal.security.Init;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,6 +79,9 @@ public class BusinessController {
         }
         if ("".equals(business.getBusinessName())) {
             business.setBusinessName(null);
+        }
+        if (InitProject.userInfo.getUserType().getType().equals("1")) {
+            business.setCode(InitProject.userInfo.getBusiness().getCode());
         }
         return new Result(true, businessService.filter(business), "搜索完成", null);
     }
