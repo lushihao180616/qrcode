@@ -93,13 +93,13 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(1, userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_waterMark.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
-            userInfoService.countAdd(1, userBasicInfo.getCode());
+            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

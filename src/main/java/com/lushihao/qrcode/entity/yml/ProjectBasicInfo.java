@@ -71,6 +71,10 @@ public class ProjectBasicInfo {
      * 云存储视频
      */
     private String bucketVideoDir;
+    /**
+     * 视频或图片消耗金豆
+     */
+    private int mediaBean;
 
     public String getTempleUrl() {
         return templeUrl;
@@ -200,10 +204,18 @@ public class ProjectBasicInfo {
         this.bucketVideoDir = bucketVideoDir;
     }
 
+    public int getMediaBean() {
+        return mediaBean;
+    }
+
+    public void setMediaBean(int mediaBean) {
+        this.mediaBean = mediaBean;
+    }
+
     public ProjectBasicInfo() {
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String ftpIp, int ftpPort, String ftpUserName, String ftpPassword, String bucket, String bucketHost, String bucketImageDir, String bucketVideoDir) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String ftpIp, int ftpPort, String ftpUserName, String ftpPassword, String bucket, String bucketHost, String bucketImageDir, String bucketVideoDir, int mediaBean) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
@@ -220,6 +232,7 @@ public class ProjectBasicInfo {
         this.bucketHost = bucketHost;
         this.bucketImageDir = bucketImageDir;
         this.bucketVideoDir = bucketVideoDir;
+        this.mediaBean = mediaBean;
     }
 
 }

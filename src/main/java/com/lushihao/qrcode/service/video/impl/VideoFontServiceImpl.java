@@ -3,6 +3,7 @@ package com.lushihao.qrcode.service.video.impl;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.video.VideoFont;
 import com.lushihao.qrcode.entity.video.VideoInfo;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.service.video.VideoFontService;
@@ -33,6 +34,8 @@ public class VideoFontServiceImpl implements VideoFontService {
     private UserInfoService userInfoService;
     @Resource
     private UserBasicInfo userBasicInfo;
+    @Resource
+    private ProjectBasicInfo projectBasicInfo;
 
     @Override
     public Result addFont(VideoFont videoFont) {
@@ -72,18 +75,18 @@ public class VideoFontServiceImpl implements VideoFontService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(1, userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoFont.getPath().substring(0, videoFont.getPath().lastIndexOf(".")) + "_font.jpg";
         videoFont.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, fontImage, "png")) {
-            userInfoService.countAdd(1, userBasicInfo.getCode());
+            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         if (!lshFfmpegUtil.videoFont(videoFont)) {
-            userInfoService.countAdd(1, userBasicInfo.getCode());
+            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoFont.getImagePath());

@@ -2,6 +2,7 @@ package com.lushihao.qrcode.service.image.impl;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageFont;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.service.image.ImageFontService;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
@@ -29,6 +30,8 @@ public class ImageFontServiceImpl implements ImageFontService {
     private UserInfoService userInfoService;
     @Resource
     private UserBasicInfo userBasicInfo;
+    @Resource
+    private ProjectBasicInfo projectBasicInfo;
 
     @Override
     public Result addFont(ImageFont imageFont) {
@@ -61,13 +64,13 @@ public class ImageFontServiceImpl implements ImageFontService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(1, userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageFont.getPath().substring(0, imageFont.getPath().lastIndexOf(".")) + "_font.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
-            userInfoService.countAdd(1, userBasicInfo.getCode());
+            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);
