@@ -5,6 +5,7 @@ import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -22,13 +23,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Transactional
     public boolean countSub(int subCount, String code) {
-        if ("0".equals(initProject.userInfo.getUserType().getType()) && initProject.userInfo.getCount() == -1) {//无限金豆
+        if ("0".equals(initProject.userInfo.getUserType().getType()) && initProject.userInfo.getCount() == -1) //无限金豆
             return true;
-        } else {
-            if (initProject.userInfo.getCount() - subCount < 0) {
+        else {
+            if (initProject.userInfo.getCount() - subCount < 0)
                 return false;
-            }
             int sqlBack = userInfoMapper.countSub(subCount, code);
             if (sqlBack == 0)
                 return false;
@@ -38,10 +39,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Transactional
     public boolean countAdd(int addCount, String code) {
-        if ("0".equals(initProject.userInfo.getUserType().getType()) && initProject.userInfo.getCount() == -1) {//无限金豆
+        if ("0".equals(initProject.userInfo.getUserType().getType()) && initProject.userInfo.getCount() == -1) //无限金豆
             return true;
-        } else {
+        else {
             int sqlBack = userInfoMapper.countAdd(addCount, code);
             if (sqlBack == 0)
                 return false;
