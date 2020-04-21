@@ -1,4 +1,4 @@
-package com.lushihao.qrcode.config;
+package com.lushihao.qrcode.config.mybatis;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
