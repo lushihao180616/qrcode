@@ -654,7 +654,6 @@ public class LSHQRCodeUtil {
         try {
             image = new LSHImageUtil().getImage(imgPath);
             if (image == null) {
-                System.out.println("Could not decode image");
             }
             LuminanceSource source = new BufferedImageLuminanceSource(image);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
