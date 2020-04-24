@@ -1,10 +1,10 @@
 basic:
-  templeUrl: F:\qrcode\qrcodeTemple
-  qrcodeUrl: F:\qrcode\outputQrcode
-  businessUrl: F:\qrcode\businessLogo
-  modelUrl: F:\qrcode\model
-  tempJpgUrl: F:\qrcode\tempJpg
-  ffmpegUrl: D:\ffmpeg\ffmpeg-20200213-6d37ca8-win64-static\bin\ffmpeg.exe
+  templeUrl: C:\qrcode\qrcodeTemple
+  qrcodeUrl: C:\qrcode\outputQrcode
+  businessUrl: C:\qrcode\businessLogo
+  modelUrl: C:\qrcode\model
+  tempJpgUrl: C:\qrcode\tempJpg
+  ffmpegUrl: C:\ffmpeg\bin\ffmpeg.exe
   ftpIp: "123.125.23.191"
   ftpPort: 10321
   ftpUserName: "30b747sMR3OcrzNJwhpn"
