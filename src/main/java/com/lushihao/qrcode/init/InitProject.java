@@ -1,9 +1,11 @@
 package com.lushihao.qrcode.init;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
+import com.lushihao.qrcode.dao.BeanCostMapper;
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.dao.UserInfoMapper;
+import com.lushihao.qrcode.entity.bean.BeanCost;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.user.UserInfo;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class InitProject implements ApplicationRunner {
 
     public static UserInfo userInfo;
+    public static List<BeanCost> beanCosts;
     @Resource
     private ProjectBasicInfo projectBasicInfo;
     @Resource
@@ -35,6 +38,8 @@ public class InitProject implements ApplicationRunner {
     private BusinessMapper businessMapper;
     @Resource
     private ManagerMapper managerMapper;
+    @Resource
+    private BeanCostMapper beanCostMapper;
 
     /**
      * 根据配置文件获取需要执行的任务，并通过任务调度器执行
@@ -51,6 +56,7 @@ public class InitProject implements ApplicationRunner {
         createDirectory(projectBasicInfo.getTempJpgUrl());
 
         getUserInfo();
+        getBeanCost();
     }
 
     private void createDirectory(String directory) {
@@ -86,6 +92,10 @@ public class InitProject implements ApplicationRunner {
                 userInfo.setManager(manager);
             }
         }
+    }
+
+    public void getBeanCost() {
+        beanCosts = beanCostMapper.filter();
     }
 
 }
