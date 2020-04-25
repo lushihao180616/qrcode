@@ -7,7 +7,8 @@ function create() {
     if (!check(path, start, end)) {
         return
     }
-    if (confirm("本操作将消耗1枚金豆") == false) {
+    getBeanCost("videocut");
+    if (confirm("本操作将消耗" + beanCostCount + "枚金豆") == false) {
         return;
     }
     var videoCut = {

@@ -10,7 +10,8 @@ function create() {
     if (!check(path, icon, width, height, x, y)) {
         return
     }
-    if (confirm("本操作将消耗1枚金豆") == false) {
+    getBeanCost("imageicon");
+    if (confirm("本操作将消耗" + beanCostCount + "枚金豆") == false) {
         return;
     }
     var createIcon = {

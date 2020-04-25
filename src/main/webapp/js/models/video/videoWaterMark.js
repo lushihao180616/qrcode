@@ -45,7 +45,8 @@ function create() {
     if (!check(business, path, height, x, y)) {
         return
     }
-    if (confirm("本操作将消耗1枚金豆") == false) {
+    getBeanCost("videowatermark");
+    if (confirm("本操作将消耗" + beanCostCount + "枚金豆") == false) {
         return;
     }
     var createWaterMark = {

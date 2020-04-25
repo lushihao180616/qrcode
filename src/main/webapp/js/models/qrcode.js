@@ -290,20 +290,25 @@ function create() {
     if (!check(message, temple, business, fileName, backGround, shortLength, x, y, alpha, angle)) {
         return
     }
-    var bean = 0;
+    var beanType = "";
     if (JSON.parse(temple).code.substr(0, 1).toString() == "D") {
-        bean += 5;
+        beanType += "qrcodegif";
+    } else {
+        beanType += "qrcodebasic";
     }
+    beanType += " ";
     if (type != "text") {
         getSize(message);
         var fileSize_M = parseInt(fileSize / 1024 / 1024);
-        bean += (parseInt(fileSize_M / 10) * 10) + 10;
-        var title = confirm("本操作将消耗" + bean + "枚金豆");
-        if (title == false) {
-            return;
+        if (type == "image") {
+            beanType += "qrcodeimage;" + fileSize_M;
+        } else if (type == "video") {
+            beanType += "qrcodevideo;" + fileSize_M;
         }
-    } else {
-        bean += 1;
+    }
+    getBeanCost(beanType);
+    if (confirm("本操作将消耗" + beanCostCount + "枚金豆") == false) {
+        return;
     }
     var createQRCode = {
         message: message,
@@ -317,7 +322,7 @@ function create() {
         alpha: parseInt(alpha),
         angle: parseInt(angle),
         type: type,
-        bean: bean
+        bean: beanCostCount
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/qrcode/create", false);
