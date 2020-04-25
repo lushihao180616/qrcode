@@ -4,6 +4,7 @@ import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageFont;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.image.ImageFontService;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHCharUtil;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageFontServiceImpl implements ImageFontService {
@@ -31,7 +33,7 @@ public class ImageFontServiceImpl implements ImageFontService {
     @Resource
     private UserBasicInfo userBasicInfo;
     @Resource
-    private ProjectBasicInfo projectBasicInfo;
+    private InitProject initProject;
 
     @Override
     public Result addFont(ImageFont imageFont) {
@@ -64,13 +66,13 @@ public class ImageFontServiceImpl implements ImageFontService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagefont")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageFont.getPath().substring(0, imageFont.getPath().lastIndexOf(".")) + "_font.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
-            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagefont")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

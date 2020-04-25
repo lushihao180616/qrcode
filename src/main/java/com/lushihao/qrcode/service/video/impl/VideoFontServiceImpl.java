@@ -5,6 +5,7 @@ import com.lushihao.qrcode.entity.video.VideoFont;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.service.video.VideoFontService;
 import com.lushihao.qrcode.util.LSHCharUtil;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class VideoFontServiceImpl implements VideoFontService {
@@ -35,7 +37,7 @@ public class VideoFontServiceImpl implements VideoFontService {
     @Resource
     private UserBasicInfo userBasicInfo;
     @Resource
-    private ProjectBasicInfo projectBasicInfo;
+    private InitProject initProject;
 
     @Override
     public Result addFont(VideoFont videoFont) {
@@ -75,18 +77,18 @@ public class VideoFontServiceImpl implements VideoFontService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videofont")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoFont.getPath().substring(0, videoFont.getPath().lastIndexOf(".")) + "_font.jpg";
         videoFont.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, fontImage, "png")) {
-            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videofont")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         if (!lshFfmpegUtil.videoFont(videoFont)) {
-            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videofont")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoFont.getImagePath());

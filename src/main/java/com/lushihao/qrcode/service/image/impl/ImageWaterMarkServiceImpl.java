@@ -8,6 +8,7 @@ import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.image.ImageWaterMarkService;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHImageUtil;
@@ -20,6 +21,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
@@ -36,6 +38,8 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
     private UserInfoService userInfoService;
     @Resource
     private UserBasicInfo userBasicInfo;
+    @Resource
+    private InitProject initProject;
 
     /**
      * 添加水印
@@ -93,13 +97,13 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagewatermark")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageWaterMark.getPath().substring(0, imageWaterMark.getPath().lastIndexOf(".")) + "_waterMark.jpg";
         if (!lshImageUtil.sendImage(newImagePath, bg)) {
-            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagewatermark")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

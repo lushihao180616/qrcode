@@ -15,4 +15,3 @@ basic:
   bucketHost: http://sinacloud.net/
   bucketImageDir: runImage
   bucketVideoDir: runVideo
-  mediaBean: 1

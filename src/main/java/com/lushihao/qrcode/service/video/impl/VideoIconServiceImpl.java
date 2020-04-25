@@ -5,6 +5,7 @@ import com.lushihao.qrcode.entity.video.VideoIcon;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.service.video.VideoIconService;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
@@ -15,6 +16,8 @@ import javax.annotation.Resource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class VideoIconServiceImpl implements VideoIconService {
@@ -28,7 +31,7 @@ public class VideoIconServiceImpl implements VideoIconService {
     @Resource
     private UserBasicInfo userBasicInfo;
     @Resource
-    private ProjectBasicInfo projectBasicInfo;
+    private InitProject initProject;
 
     @Override
     public Result addIcon(VideoIcon videoIcon) {
@@ -64,18 +67,18 @@ public class VideoIconServiceImpl implements VideoIconService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(projectBasicInfo.getMediaBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoIcon.getPath().substring(0, videoIcon.getPath().lastIndexOf(".")) + "_icon.jpg";
         videoIcon.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, bg, "png")) {
-            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         if (!lshFfmpegUtil.videoIcon(videoIcon)) {
-            userInfoService.countAdd(projectBasicInfo.getMediaBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoIcon.getImagePath());
