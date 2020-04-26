@@ -1,11 +1,9 @@
 package com.lushihao.qrcode.init;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
-import com.lushihao.qrcode.dao.BeanCostMapper;
-import com.lushihao.qrcode.dao.BusinessMapper;
-import com.lushihao.qrcode.dao.ManagerMapper;
-import com.lushihao.qrcode.dao.UserInfoMapper;
+import com.lushihao.qrcode.dao.*;
 import com.lushihao.qrcode.entity.bean.BeanCost;
+import com.lushihao.qrcode.entity.bucket.Bucket;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.user.UserInfo;
@@ -19,6 +17,8 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * 初始化项目
@@ -28,6 +28,7 @@ public class InitProject implements ApplicationRunner {
 
     public static UserInfo userInfo;
     public static List<BeanCost> beanCosts;
+    public static Bucket bucket;
     @Resource
     private ProjectBasicInfo projectBasicInfo;
     @Resource
@@ -40,6 +41,8 @@ public class InitProject implements ApplicationRunner {
     private ManagerMapper managerMapper;
     @Resource
     private BeanCostMapper beanCostMapper;
+    @Resource
+    private BucketMapper bucketMapper;
 
     /**
      * 根据配置文件获取需要执行的任务，并通过任务调度器执行
@@ -57,6 +60,7 @@ public class InitProject implements ApplicationRunner {
 
         getUserInfo();
         getBeanCost();
+        getBucket();
     }
 
     private void createDirectory(String directory) {
@@ -96,6 +100,12 @@ public class InitProject implements ApplicationRunner {
 
     public void getBeanCost() {
         beanCosts = beanCostMapper.filter();
+    }
+
+    public void getBucket() {
+        List<Bucket> bucketList = bucketMapper.filter().stream().filter(s -> s.isIfUse()).collect(Collectors.toList());
+        int randomNum = new Random().nextInt(bucketList.size());
+        bucket = bucketList.get(randomNum);
     }
 
 }

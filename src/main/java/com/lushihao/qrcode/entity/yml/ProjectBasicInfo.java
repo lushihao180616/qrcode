@@ -40,26 +40,6 @@ public class ProjectBasicInfo {
      */
     private boolean deleteAllBusinessFiles;
     /**
-     * ftp ip地址
-     */
-    private String ftpIp;
-    /**
-     * ftp 端口
-     */
-    private int ftpPort;
-    /**
-     * ftp 用户名
-     */
-    private String ftpUserName;
-    /**
-     * ftp 密码
-     */
-    private String ftpPassword;
-    /**
-     * 云存储名称
-     */
-    private String bucket;
-    /**
      * 云存储主机
      */
     private String bucketHost;
@@ -136,46 +116,6 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public String getFtpIp() {
-        return ftpIp;
-    }
-
-    public void setFtpIp(String ftpIp) {
-        this.ftpIp = ftpIp;
-    }
-
-    public int getFtpPort() {
-        return ftpPort;
-    }
-
-    public void setFtpPort(int ftpPort) {
-        this.ftpPort = ftpPort;
-    }
-
-    public String getFtpUserName() {
-        return ftpUserName;
-    }
-
-    public void setFtpUserName(String ftpUserName) {
-        this.ftpUserName = ftpUserName;
-    }
-
-    public String getFtpPassword() {
-        return ftpPassword;
-    }
-
-    public void setFtpPassword(String ftpPassword) {
-        this.ftpPassword = ftpPassword;
-    }
-
-    public String getBucket() {
-        return bucket;
-    }
-
-    public void setBucket(String bucket) {
-        this.bucket = bucket;
-    }
-
     public String getBucketHost() {
         return bucketHost;
     }
@@ -203,7 +143,7 @@ public class ProjectBasicInfo {
     public ProjectBasicInfo() {
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String ftpIp, int ftpPort, String ftpUserName, String ftpPassword, String bucket, String bucketHost, String bucketImageDir, String bucketVideoDir) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketHost, String bucketImageDir, String bucketVideoDir) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
@@ -212,11 +152,6 @@ public class ProjectBasicInfo {
         this.ffmpegUrl = ffmpegUrl;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
-        this.ftpIp = ftpIp;
-        this.ftpPort = ftpPort;
-        this.ftpUserName = ftpUserName;
-        this.ftpPassword = ftpPassword;
-        this.bucket = bucket;
         this.bucketHost = bucketHost;
         this.bucketImageDir = bucketImageDir;
         this.bucketVideoDir = bucketVideoDir;

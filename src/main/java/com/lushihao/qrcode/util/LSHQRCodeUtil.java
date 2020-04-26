@@ -10,6 +10,7 @@ import com.lushihao.qrcode.entity.qrcode.QRCode;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.swetake.util.Qrcode;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,8 @@ public class LSHQRCodeUtil {
     private UserBasicInfo userBasicInfo;
     @Resource
     private LSHFtpUtil lshFtpUtil;
+    @Resource
+    private InitProject initProject;
 
     /**
      * 二维码宽度
@@ -175,8 +178,8 @@ public class LSHQRCodeUtil {
         } else if (qrCode.getType().equals("image")) {//图片
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
             if (lshFtpUtil.connectServer()) {
-                if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode())) {
-                    content = projectBasicInfo.getBucketHost() + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+                if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode())) {
+                    content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
                     return null;
                 }
@@ -186,8 +189,8 @@ public class LSHQRCodeUtil {
         } else if (qrCode.getType().equals("video")) {//视频
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
             if (lshFtpUtil.connectServer()) {
-                if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode())) {
-                    content = projectBasicInfo.getBucketHost() + projectBasicInfo.getBucket() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+                if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode())) {
+                    content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
                     return null;
                 }

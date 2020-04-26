@@ -1,6 +1,6 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.init.InitProject;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
@@ -17,7 +17,7 @@ import java.net.URL;
 public class LSHFtpUtil {
 
     @Resource
-    private ProjectBasicInfo projectBasicInfo;
+    private InitProject initProject;
     /**
      * 连接客户端
      */
@@ -49,10 +49,10 @@ public class LSHFtpUtil {
      * @return
      */
     public synchronized boolean connectServer() {
-        this.ftpIP = projectBasicInfo.getFtpIp();
-        this.ftpPort = projectBasicInfo.getFtpPort();
-        this.ftpUserName = projectBasicInfo.getFtpUserName();
-        this.ftpPassword = projectBasicInfo.getFtpPassword();
+        this.ftpIP = initProject.bucket.getIp();
+        this.ftpPort = Integer.valueOf(initProject.bucket.getPort());
+        this.ftpUserName = initProject.bucket.getUserName();
+        this.ftpPassword = initProject.bucket.getPwd();
         ftpClient = new FTPClient();
         ftpClient.setControlEncoding(ftpEncode);//解决上传文件时文件名乱码
         int reply = 0;

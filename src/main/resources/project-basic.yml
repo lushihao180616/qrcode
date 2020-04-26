@@ -5,13 +5,8 @@ basic:
   modelUrl: C:\qrcode\model
   tempJpgUrl: C:\qrcode\tempJpg
   ffmpegUrl: C:\ffmpeg\bin\ffmpeg.exe
-  ftpIp: "123.125.23.191"
-  ftpPort: 10321
-  ftpUserName: "30b747sMR3OcrzNJwhpn"
-  ftpPassword: "0337bf9c076af7634c4f28faea8e18fe18422a71"
   deleteAllTempleFiles: true
   deleteAllBusinessFiles: true
-  bucket: cjml-qrcode
   bucketHost: http://sinacloud.net/
   bucketImageDir: runImage
   bucketVideoDir: runVideo
