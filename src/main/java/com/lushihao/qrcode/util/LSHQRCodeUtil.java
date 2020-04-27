@@ -177,7 +177,7 @@ public class LSHQRCodeUtil {
             content = qrCode.getMessage();
         } else if (qrCode.getType().equals("image")) {//图片
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
-            if (lshFtpUtil.connectServer()) {
+            if (lshFtpUtil.connectServer(initProject.bucket.getIp(), Integer.valueOf(initProject.bucket.getPort()), initProject.bucket.getUserName(), initProject.bucket.getPwd())) {
                 if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode())) {
                     content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
@@ -188,7 +188,7 @@ public class LSHQRCodeUtil {
             }
         } else if (qrCode.getType().equals("video")) {//视频
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
-            if (lshFtpUtil.connectServer()) {
+            if (lshFtpUtil.connectServer(initProject.bucket.getIp(), Integer.valueOf(initProject.bucket.getPort()), initProject.bucket.getUserName(), initProject.bucket.getPwd())) {
                 if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode())) {
                     content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {

@@ -16,8 +16,6 @@ import java.net.URL;
 @Component
 public class LSHFtpUtil {
 
-    @Resource
-    private InitProject initProject;
     /**
      * 连接客户端
      */
@@ -48,11 +46,11 @@ public class LSHFtpUtil {
      *
      * @return
      */
-    public synchronized boolean connectServer() {
-        this.ftpIP = initProject.bucket.getIp();
-        this.ftpPort = Integer.valueOf(initProject.bucket.getPort());
-        this.ftpUserName = initProject.bucket.getUserName();
-        this.ftpPassword = initProject.bucket.getPwd();
+    public synchronized boolean connectServer(String ip, int port, String userName, String pwd) {
+        this.ftpIP = ip;
+        this.ftpPort = port;
+        this.ftpUserName = userName;
+        this.ftpPassword = pwd;
         ftpClient = new FTPClient();
         ftpClient.setControlEncoding(ftpEncode);//解决上传文件时文件名乱码
         int reply = 0;
@@ -105,36 +103,24 @@ public class LSHFtpUtil {
     /**
      * 下载文件
      *
-     * @param sourcePath
      * @param fileName
      * @param targetPath
      * @return
      */
-    public synchronized boolean download(String sourcePath, String fileName, String targetPath) {
+    public synchronized boolean download(String fileName, String targetPath) {
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(targetPath);
-            //切换工作路径，设置上传的路径
-            ftpClient.changeWorkingDirectory(sourcePath);
             //设置1M缓冲
-            ftpClient.setBufferSize(1024);
-            //设置被动模式
-            ftpClient.enterLocalPassiveMode();
+            ftpClient.setBufferSize(4096);
             //开始下载文件
             ftpClient.retrieveFile(fileName, outputStream);
+            outputStream.flush();
+            outputStream.close();
             return true;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
-                if (outputStream != null) {
-                    outputStream.flush();
-                    outputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -182,9 +168,12 @@ public class LSHFtpUtil {
      */
     public synchronized boolean downloadDir(String sourcePath, String targetPath) {
         try {
+            ftpClient.enterLocalPassiveMode();
             FTPFile[] files = ftpClient.listFiles(sourcePath);
+            //切换工作路径，设置上传的路径
+            ftpClient.changeWorkingDirectory(sourcePath);
             for (FTPFile file : files) {
-                download(sourcePath, file.getName(), targetPath + "\\" + file.getName());
+                download(file.getName(), targetPath + "\\" + file.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();

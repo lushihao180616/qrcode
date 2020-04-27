@@ -34,6 +34,38 @@ function init() {
     xhr.send(JSON.stringify(filter));
 }
 
+function downLoad() {
+    var downLoadTempleCode = document.getElementById("downLoadTemple").value;
+    if (downLoadTempleCode.length < 7 || (downLoadTempleCode.substr(0, 2) != "DW" && downLoadTempleCode.substr(0, 2) != "DY" && downLoadTempleCode.substr(0, 2) != "JW" && downLoadTempleCode.substr(0, 2) != "JY")) {
+        alert("模板编号输入错误");
+        return
+    }
+    var downLoadTemple = {
+        downLoadTemple: downLoadTempleCode
+    };
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "http://localhost:8090/qrcode/temple/downLoad", false);
+    // 添加http头，发送信息至服务器时内容编码类型
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.setRequestHeader('dataType', 'json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 304) {
+                if (xhr.responseText == null || xhr.responseText == '') {
+                    window.location.href = "../error.jsp"
+                    return
+                }
+                var result = JSON.parse(xhr.responseText);
+                if (result.ifSuccess) {
+                } else {
+                    alert(result.errorInfo);
+                }
+            }
+        }
+    }
+    xhr.send(JSON.stringify(downLoadTemple));
+}
+
 function handleRecord(recordList) {
     var records = document.getElementById("records");
     records.innerHTML = '';

@@ -18,6 +18,12 @@
 
 <a class="toIndex" href="http://www.fuhaodaquan.org">特殊符号</a>
 
+<div class="downLoad">
+    <span class="downLoadText">下载模板：</span>
+    <input class="downLoadInput" id="downLoadTemple" type="text"/>
+    <input class="downLoadButton" type="button" value="下载" onclick="downLoad()"/>
+</div>
+
 <p class="topTitle">
     创建二维码
 </p>

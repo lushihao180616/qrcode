@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.init;
 
+import com.alibaba.druid.util.StringUtils;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.*;
 import com.lushihao.qrcode.entity.bean.BeanCost;
@@ -29,6 +30,7 @@ public class InitProject implements ApplicationRunner {
     public static UserInfo userInfo;
     public static List<BeanCost> beanCosts;
     public static Bucket bucket;
+    public static Bucket bucketTemple;
     @Resource
     private ProjectBasicInfo projectBasicInfo;
     @Resource
@@ -103,9 +105,12 @@ public class InitProject implements ApplicationRunner {
     }
 
     public void getBucket() {
-        List<Bucket> bucketList = bucketMapper.filter().stream().filter(s -> s.isIfUse()).collect(Collectors.toList());
+        List<Bucket> bucketList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("cjml-qrcode")).collect(Collectors.toList());
         int randomNum = new Random().nextInt(bucketList.size());
         bucket = bucketList.get(randomNum);
+        List<Bucket> bucketTempleList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("temple")).collect(Collectors.toList());
+        int randomTempleNum = new Random().nextInt(bucketTempleList.size());
+        bucketTemple = bucketTempleList.get(randomTempleNum);
     }
 
 }

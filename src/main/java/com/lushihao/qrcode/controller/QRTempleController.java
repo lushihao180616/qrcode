@@ -3,7 +3,9 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.temple.QRTempleService;
+import com.lushihao.qrcode.util.LSHFtpUtil;
 import com.lushihao.qrcode.util.LSHMACUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.Map;
 
 @Controller
@@ -21,6 +24,10 @@ public class QRTempleController {
     private QRTempleService qrTempleService;
     @Resource
     private LSHMACUtil lshmacUtil;
+    @Resource
+    private LSHFtpUtil lshFtpUtil;
+    @Resource
+    private InitProject initProject;
 
     @RequestMapping("create")
     @ResponseBody
@@ -60,6 +67,23 @@ public class QRTempleController {
             code = null;
         }
         return new Result(true, qrTempleService.filter(code), "搜索完成", null);
+    }
+
+    @RequestMapping("downLoad")
+    @ResponseBody
+    public Result downLoad(@RequestBody Map<String, Object> reqMap) {
+        if (!lshmacUtil.check()) {
+            return null;
+        }
+        String downLoadTempleCode = (String) reqMap.get("downLoadTemple");
+        if (initProject.bucketTemple == null) {
+            return new Result(false, null, null, "网络连接失败");
+        }
+        if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
+            new File("C:\\qrcode\\qrcodeTemple\\" + downLoadTempleCode).mkdir();
+            lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/" + downLoadTempleCode, "C:\\qrcode\\qrcodeTemple\\" + downLoadTempleCode);
+        }
+        return new Result(true, null, "搜索完成", null);
     }
 
     /**

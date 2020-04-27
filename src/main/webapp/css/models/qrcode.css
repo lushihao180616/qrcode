@@ -14,6 +14,34 @@
     background-color: lightcoral;
 }
 
+.downLoad {
+    float: right;
+    width: 30%;
+    right: 0px;
+    border-radius: 5px;
+    height: 30px;
+    margin: 10px;
+    padding: 10px;
+    background: lightcoral;
+}
+
+.downLoadText {
+    display: inline-block;
+    line-height: 30px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.downLoadInput {
+    width: 250px;
+    right: 100px;
+}
+
+.downLoadButton {
+    width: 65px;
+    right: 25px;
+}
+
 .top {
     height: 750px;
 }
