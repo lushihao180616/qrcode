@@ -3,6 +3,7 @@ package com.lushihao.qrcode.controller;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
+import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.temple.QRTempleService;
 import com.lushihao.qrcode.util.LSHFtpUtil;
@@ -28,6 +29,8 @@ public class QRTempleController {
     private LSHFtpUtil lshFtpUtil;
     @Resource
     private InitProject initProject;
+    @Resource
+    private ProjectBasicInfo projectBasicInfo;
 
     @RequestMapping("create")
     @ResponseBody
@@ -80,10 +83,12 @@ public class QRTempleController {
             return new Result(false, null, null, "网络连接失败");
         }
         if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
-            new File("C:\\qrcode\\qrcodeTemple\\" + downLoadTempleCode).mkdir();
+            File dir = new File(projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode);
+            dir.mkdir();
             if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/" + downLoadTempleCode, "C:\\qrcode\\qrcodeTemple\\" + downLoadTempleCode)) {
                 return new Result(true, null, "搜索完成", null);
-            }else{
+            } else {
+                dir.delete();
                 return new Result(false, null, null, "下载的模板不存在，请检查模板号是否正确");
             }
         } else {
