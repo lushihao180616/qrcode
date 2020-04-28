@@ -21,7 +21,7 @@
 <div class="downLoad">
     <span class="downLoadText">下载模板：</span>
     <input class="downLoadInput" id="downLoadTemple" type="text"/>
-    <input class="downLoadButton" type="button" value="下载" onclick="downLoad()"/>
+    <input class="downLoadButton" type="button" value="下载" onclick="downLoad(false)"/>
 </div>
 
 <p class="topTitle">

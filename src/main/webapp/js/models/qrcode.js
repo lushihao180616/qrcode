@@ -34,14 +34,15 @@ function init() {
     xhr.send(JSON.stringify(filter));
 }
 
-function downLoad() {
+function downLoad(flag) {
     var downLoadTempleCode = document.getElementById("downLoadTemple").value;
     if (downLoadTempleCode.length < 7 || (downLoadTempleCode.substr(0, 2) != "DW" && downLoadTempleCode.substr(0, 2) != "DY" && downLoadTempleCode.substr(0, 2) != "JW" && downLoadTempleCode.substr(0, 2) != "JY")) {
         alert("模板编号输入错误");
         return
     }
     var downLoadTemple = {
-        downLoadTemple: downLoadTempleCode
+        downLoadTemple: downLoadTempleCode,
+        flag: flag
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/temple/downLoad", false);
@@ -57,7 +58,15 @@ function downLoad() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
-                    alert(result.info);
+                    if (result.bean != null) {
+                        if (confirm(result.bean) == false) {
+                            return;
+                        } else {
+                            downLoad(true);
+                        }
+                    } else {
+                        alert(result.info);
+                    }
                 } else {
                     alert(result.errorInfo);
                 }

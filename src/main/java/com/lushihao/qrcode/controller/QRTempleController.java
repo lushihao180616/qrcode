@@ -86,7 +86,7 @@ public class QRTempleController {
         if (nowTemple == null || nowTemple.size() == 0) {
             return new Result(false, null, null, "下载的模板不存在，请检查模板号是否正确");
         } else {
-            if (nowTemple.get(0).getMoney() > 0) {
+            if (!(Boolean) reqMap.get("flag") && nowTemple.get(0).getMoney() > 0) {
                 return new Result(true, "下载此模板需要花费" + nowTemple.get(0).getMoney() + "金豆", null, null);
             }
         }
