@@ -74,6 +74,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 }
             }
             lshqrCodeUtil.qrcode(qrCode, false, true);
+            initProject.getAllTemple();
             return new Result(true, filter(null), "创建成功", null);
         }
     }
@@ -106,6 +107,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 }
             }
             lshqrCodeUtil.qrcode(qrCode, false, true);
+            initProject.getAllTemple();
             return new Result(true, filter(null), "更新成功", null);
         }
     }
@@ -125,6 +127,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 String modelPath = projectBasicInfo.getModelUrl() + "\\" + code + ".jpg";
                 lshImageUtil.delFileOrDir(modelPath);
             }
+            initProject.getAllTemple();
             return new Result(true, filter(null), "删除成功", null);
         }
     }
