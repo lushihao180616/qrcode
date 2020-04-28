@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("temple")
@@ -79,6 +82,14 @@ public class QRTempleController {
             return null;
         }
         String downLoadTempleCode = (String) reqMap.get("downLoadTemple");
+        List<QRCodeTemple> nowTemple = initProject.qrCodeTempleList.stream().filter(s -> StringUtils.equals(s.getCode(), downLoadTempleCode)).collect(Collectors.toList());
+        if (nowTemple == null || nowTemple.size() == 0) {
+            return new Result(false, null, null, "下载的模板不存在，请检查模板号是否正确");
+        } else {
+            if (nowTemple.get(0).getMoney() > 0) {
+                return new Result(true, null, "下载此模板需要花费" + nowTemple.get(0).getMoney() + "金豆", null);
+            }
+        }
         if (initProject.bucketTemple == null) {
             return new Result(false, null, null, "网络连接失败");
         }
