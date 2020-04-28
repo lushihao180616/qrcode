@@ -179,6 +179,7 @@ public class LSHQRCodeUtil {
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
             if (lshFtpUtil.connectServer(initProject.bucket.getIp(), Integer.valueOf(initProject.bucket.getPort()), initProject.bucket.getUserName(), initProject.bucket.getPwd())) {
                 if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode())) {
+                    lshFtpUtil.closeServer();
                     content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
                     return null;
@@ -190,6 +191,7 @@ public class LSHQRCodeUtil {
             String fileName = LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYYMMDDHHMMSS) + "_" + qrCode.getFileName() + qrCode.getMessage().substring(qrCode.getMessage().lastIndexOf("."));
             if (lshFtpUtil.connectServer(initProject.bucket.getIp(), Integer.valueOf(initProject.bucket.getPort()), initProject.bucket.getUserName(), initProject.bucket.getPwd())) {
                 if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode())) {
+                    lshFtpUtil.closeServer();
                     content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
                     return null;
