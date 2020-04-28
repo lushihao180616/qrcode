@@ -1,12 +1,12 @@
 package com.lushihao.qrcode.init;
 
-import com.alibaba.druid.util.StringUtils;
 import com.lushihao.myutils.collection.LSHMapUtils;
 import com.lushihao.qrcode.dao.*;
 import com.lushihao.qrcode.entity.bean.BeanCost;
 import com.lushihao.qrcode.entity.bucket.Bucket;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.manager.Manager;
+import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.entity.yml.UserBasicInfo;
@@ -27,10 +27,26 @@ import java.util.stream.Collectors;
 @Component
 public class InitProject implements ApplicationRunner {
 
+    /**
+     * 当前用户信息
+     */
     public static UserInfo userInfo;
+    /**
+     * 各种服务花费金豆
+     */
     public static List<BeanCost> beanCosts;
+    /**
+     * 当前实用的云存储
+     */
     public static Bucket bucket;
+    /**
+     * 服务器模板位置
+     */
     public static Bucket bucketTemple;
+    /**
+     * 数据库全部模板
+     */
+    public static List<QRCodeTemple> qrCodeTempleList;
     @Resource
     private ProjectBasicInfo projectBasicInfo;
     @Resource
@@ -41,6 +57,8 @@ public class InitProject implements ApplicationRunner {
     private BusinessMapper businessMapper;
     @Resource
     private ManagerMapper managerMapper;
+    @Resource
+    private QRTempleMapper qrTempleMapper;
     @Resource
     private BeanCostMapper beanCostMapper;
     @Resource
@@ -63,8 +81,13 @@ public class InitProject implements ApplicationRunner {
         getUserInfo();
         getBeanCost();
         getBucket();
+        getAllTemple();
     }
 
+    /**
+     * 创建文件夹
+     * @param directory
+     */
     private void createDirectory(String directory) {
         File modelDirectory = new File(directory);
         if (!modelDirectory.exists()) {//如果文件夹不存在
@@ -72,6 +95,9 @@ public class InitProject implements ApplicationRunner {
         }
     }
 
+    /**
+     * 获取用户信息
+     */
     public void getUserInfo() {
         List<Map<String, Object>> userInfoList = userInfoMapper.filter(userBasicInfo.getCode());
 
@@ -100,10 +126,16 @@ public class InitProject implements ApplicationRunner {
         }
     }
 
+    /**
+     * 各种服务花费的金豆
+     */
     public void getBeanCost() {
         beanCosts = beanCostMapper.filter();
     }
 
+    /**
+     * 云存储相关
+     */
     public void getBucket() {
         List<Bucket> bucketList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("cjml-qrcode")).collect(Collectors.toList());
         int randomNum = new Random().nextInt(bucketList.size());
@@ -111,6 +143,13 @@ public class InitProject implements ApplicationRunner {
         List<Bucket> bucketTempleList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("temple")).collect(Collectors.toList());
         int randomTempleNum = new Random().nextInt(bucketTempleList.size());
         bucketTemple = bucketTempleList.get(randomTempleNum);
+    }
+
+    /**
+     * 数据库全部模板
+     */
+    public void getAllTemple() {
+        qrCodeTempleList = qrTempleMapper.filter(null);
     }
 
 }
