@@ -172,6 +172,7 @@ public class LSHFtpUtil {
             ftpClient.enterLocalPassiveMode();
             FTPFile[] files = ftpClient.listFiles(sourcePath);
             //切换工作路径，设置上传的路径
+            ftpClient.changeWorkingDirectory(sourcePath);
             if (files.length > 0) {
                 for (FTPFile file : files) {
                     download(file.getName(), targetPath + "\\" + file.getName());

@@ -84,9 +84,12 @@ public class QRTempleController {
         }
         if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
             File dir = new File(projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode);
+//            if(dir.exists()){
+//                return new Result(false, null, null, "当前模板已存在");
+//            }
             dir.mkdir();
             if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/" + downLoadTempleCode, "C:\\qrcode\\qrcodeTemple\\" + downLoadTempleCode)) {
-                return new Result(true, null, "搜索完成", null);
+                return new Result(true, null, "下载成功", null);
             } else {
                 dir.delete();
                 return new Result(false, null, null, "下载的模板不存在，请检查模板号是否正确");
