@@ -133,7 +133,15 @@ public class QRTempleServiceImpl implements QRTempleService {
     @Transactional
     public List<Map<String, Object>> filter(String code) {
         List<Map<String, Object>> list = new ArrayList<>();
-        List<QRCodeTemple> templeList = qrTempleMapper.filter(code);
+        List<QRCodeTemple> templeList = new ArrayList<>();
+        for (File file : new File(projectBasicInfo.getTempleUrl()).listFiles()) {
+            if (file.isDirectory()) {
+                templeList.addAll(initProject.qrCodeTempleList.stream().filter(s -> StringUtils.equals(s.getCode(), file.getName())).collect(Collectors.toList()));
+            }
+        }
+        if (code != null && !"".equals(code)) {
+            templeList = templeList.stream().filter(s -> s.getCode().startsWith(code)).collect(Collectors.toList());
+        }
         for (QRCodeTemple qrCodeTemple : templeList) {
             Map<String, Object> map = LSHMapUtils.entityToMap(qrCodeTemple);
             if (qrCodeTemple.isIfGif()) {
