@@ -1,18 +1,18 @@
 package com.lushihao.qrcode.util;
 
-import com.lushihao.qrcode.init.InitProject;
+import com.alibaba.druid.util.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.stereotype.Component;
-import sun.net.ftp.FtpClient;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.SocketException;
 import java.net.URL;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class LSHFtpUtil {
@@ -167,7 +167,7 @@ public class LSHFtpUtil {
      * @param targetPath
      * @return
      */
-    public synchronized boolean downloadDir(String sourcePath, String targetPath) {
+    public synchronized boolean downloadDir(String sourcePath, String targetPath, List<String> notCopyFileNames) {
         try {
             ftpClient.enterLocalPassiveMode();
             FTPFile[] files = ftpClient.listFiles(sourcePath);
@@ -175,6 +175,9 @@ public class LSHFtpUtil {
             ftpClient.changeWorkingDirectory(sourcePath);
             if (files.length > 0) {
                 for (FTPFile file : files) {
+                    if (notCopyFileNames.stream().filter(s -> StringUtils.equals(s, file.getName())).collect(Collectors.toList()).size() > 0) {
+                        continue;
+                    }
                     download(file.getName(), targetPath + "\\" + file.getName());
                 }
             } else {

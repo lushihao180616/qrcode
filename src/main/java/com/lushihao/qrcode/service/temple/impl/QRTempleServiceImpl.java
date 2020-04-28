@@ -184,7 +184,16 @@ public class QRTempleServiceImpl implements QRTempleService {
         if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
             File dir = new File(projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode);
             dir.mkdir();
-            if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/" + downLoadTempleCode, "C:\\qrcode\\qrcodeTemple\\" + downLoadTempleCode)) {
+            List<String> notCopyFileNames = new ArrayList<>();
+            String notCopyFileName;
+            if (downLoadTempleCode.startsWith("D")) {
+                notCopyFileName = downLoadTempleCode + ".gif";
+            } else {
+                notCopyFileName = downLoadTempleCode + ".jpg";
+            }
+            notCopyFileNames.add(notCopyFileName);
+            if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/" + downLoadTempleCode, projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode, notCopyFileNames)) {
+                lshFtpUtil.download(notCopyFileName, projectBasicInfo.getModelUrl() + "\\" + notCopyFileName);
                 return new Result(true, null, "下载成功", null);
             } else {
                 dir.delete();
