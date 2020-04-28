@@ -57,6 +57,7 @@ function downLoad() {
                 }
                 var result = JSON.parse(xhr.responseText);
                 if (result.ifSuccess) {
+                    alert(result.info);
                 } else {
                     alert(result.errorInfo);
                 }

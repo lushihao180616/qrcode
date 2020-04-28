@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.stereotype.Component;
+import sun.net.ftp.FtpClient;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -112,7 +113,7 @@ public class LSHFtpUtil {
         try {
             outputStream = new FileOutputStream(targetPath);
             //设置1M缓冲
-            ftpClient.setBufferSize(4096);
+            ftpClient.setBufferSize(1024);
             //开始下载文件
             ftpClient.retrieveFile(fileName, outputStream);
             outputStream.flush();
@@ -171,9 +172,12 @@ public class LSHFtpUtil {
             ftpClient.enterLocalPassiveMode();
             FTPFile[] files = ftpClient.listFiles(sourcePath);
             //切换工作路径，设置上传的路径
-            ftpClient.changeWorkingDirectory(sourcePath);
-            for (FTPFile file : files) {
-                download(file.getName(), targetPath + "\\" + file.getName());
+            if (files.length > 0) {
+                for (FTPFile file : files) {
+                    download(file.getName(), targetPath + "\\" + file.getName());
+                }
+            } else {
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
