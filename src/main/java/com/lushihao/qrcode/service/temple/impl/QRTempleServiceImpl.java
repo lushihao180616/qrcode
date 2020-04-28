@@ -7,8 +7,10 @@ import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCode;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.entity.yml.UserBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.temple.QRTempleService;
+import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.util.LSHFtpUtil;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import com.lushihao.qrcode.util.LSHQRCodeUtil;
@@ -37,6 +39,10 @@ public class QRTempleServiceImpl implements QRTempleService {
     private LSHFtpUtil lshFtpUtil;
     @Resource
     private InitProject initProject;
+    @Resource
+    private UserInfoService userInfoService;
+    @Resource
+    private UserBasicInfo userBasicInfo;
 
     @Override
     @Transactional
@@ -144,15 +150,27 @@ public class QRTempleServiceImpl implements QRTempleService {
     @Override
     @Transactional
     public Result downLoad(String downLoadTempleCode, boolean flag) {
+        boolean subBean = false;
         List<QRCodeTemple> nowTemple = initProject.qrCodeTempleList.stream().filter(s -> StringUtils.equals(s.getCode(), downLoadTempleCode)).collect(Collectors.toList());
         if (nowTemple == null || nowTemple.size() == 0) {
             return new Result(false, null, null, "下载的模板不存在，请检查模板号是否正确");
         } else {
-            if (!flag && nowTemple.get(0).getMoney() > 0) {
-                return new Result(true, "下载此模板需要花费" + nowTemple.get(0).getMoney() + "金豆", null, null);
+            if (nowTemple.get(0).getMoney() > 0) {
+                if (!flag) {
+                    return new Result(true, "下载此模板需要花费" + nowTemple.get(0).getMoney() + "金豆", null, null);
+                } else {
+                    if (!userInfoService.countSub((int) nowTemple.get(0).getMoney(), userBasicInfo.getCode())) {
+                        return new Result(false, null, null, "金豆不够用了");
+                    } else {
+                        subBean = true;
+                    }
+                }
             }
         }
         if (initProject.bucketTemple == null) {
+            if (subBean) {
+                userInfoService.countAdd((int) nowTemple.get(0).getMoney(), userBasicInfo.getCode());
+            }
             return new Result(false, null, null, "网络连接失败");
         }
         if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
@@ -162,9 +180,15 @@ public class QRTempleServiceImpl implements QRTempleService {
                 return new Result(true, null, "下载成功", null);
             } else {
                 dir.delete();
+                if (subBean) {
+                    userInfoService.countAdd((int) nowTemple.get(0).getMoney(), userBasicInfo.getCode());
+                }
                 return new Result(false, null, null, "下载的模板不存在，请检查模板号是否正确");
             }
         } else {
+            if (subBean) {
+                userInfoService.countAdd((int) nowTemple.get(0).getMoney(), userBasicInfo.getCode());
+            }
             return new Result(false, null, null, "网络连接失败");
         }
     }
