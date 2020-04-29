@@ -1,7 +1,7 @@
 package com.lushihao.qrcode.util;
 
 import com.lushihao.qrcode.entity.video.*;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.MultimediaInfo;

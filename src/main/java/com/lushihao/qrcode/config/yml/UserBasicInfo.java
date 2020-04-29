@@ -1,4 +1,4 @@
-package com.lushihao.qrcode.entity.yml;
+package com.lushihao.qrcode.config.yml;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

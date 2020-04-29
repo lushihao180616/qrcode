@@ -3,8 +3,7 @@ package com.lushihao.qrcode.service.video.impl;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.video.VideoIcon;
 import com.lushihao.qrcode.entity.video.VideoInfo;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.service.video.VideoIconService;
@@ -16,7 +15,6 @@ import javax.annotation.Resource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service

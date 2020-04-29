@@ -7,7 +7,7 @@ import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.entity.user.UserType;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.service.business.BusinessService;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;

@@ -2,8 +2,7 @@ package com.lushihao.qrcode.service.image.impl;
 
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageIcon;
-import com.lushihao.qrcode.entity.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.entity.yml.UserBasicInfo;
+import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.image.ImageIconService;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
