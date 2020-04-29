@@ -8,14 +8,14 @@
     <meta name="referrer" content="no-referrer">
     <title>首页</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/modifyInfo.css">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
     <script src="../js/public.js"></script>
-    <script src="../js/modifyInfo.js"></script>
+    <script src="../js/index.js"></script>
 </head>
 <body onload="userInfo()">
 
 <div class="modifyInfo">
-    <input class="modifyInfoButton" type="button" value="修改信息" onclick="window.location.href='modifyInfo.jsp'"/>
+    <input class="modifyInfoButton" type="button" value="修改信息" onclick="window.location.href = 'modifyInfo.jsp'"/>
 </div>
 
 <p class="topTitle">

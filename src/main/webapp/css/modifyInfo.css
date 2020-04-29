@@ -1,0 +1,20 @@
+body {
+    background-color: #333;
+}
+
+.toIndex {
+    background-color: #999999;
+}
+
+.top {
+    margin-top: 120px;
+    height: 360px;
+}
+
+.topItem1 {
+    height: 360px;
+}
+
+.topItemTitle {
+    background-color: #999999;
+}
