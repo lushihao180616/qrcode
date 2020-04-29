@@ -38,7 +38,8 @@ public class LSHMACUtil {
     }
 
     public boolean check() {
-        if (InitProject.userInfo.getMacAddress().equals(getLocalMac())) {
+        String mac = getLocalMac();
+        if (InitProject.userInfo.getMacAddress().equals(mac) || InitProject.userInfo.getMacAddress2().equals(mac)) {
             return true;
         }
         return false;
