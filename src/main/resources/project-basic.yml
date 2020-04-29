@@ -10,3 +10,4 @@ basic:
   bucketHost: http://sinacloud.net/
   bucketImageDir: runImage
   bucketVideoDir: runVideo
+  logoPath: src\main\webapp\image\logo.jpg

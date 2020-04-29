@@ -51,6 +51,10 @@ public class ProjectBasicInfo {
      * 云存储视频
      */
     private String bucketVideoDir;
+    /**
+     * 商标路径
+     */
+    private String logoPath;
 
     public String getTempleUrl() {
         return templeUrl;
@@ -140,10 +144,18 @@ public class ProjectBasicInfo {
         this.bucketVideoDir = bucketVideoDir;
     }
 
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
     public ProjectBasicInfo() {
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketHost, String bucketImageDir, String bucketVideoDir) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketHost, String bucketImageDir, String bucketVideoDir, String logoPath) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.businessUrl = businessUrl;
@@ -155,6 +167,7 @@ public class ProjectBasicInfo {
         this.bucketHost = bucketHost;
         this.bucketImageDir = bucketImageDir;
         this.bucketVideoDir = bucketVideoDir;
+        this.logoPath = logoPath;
     }
 
 }
