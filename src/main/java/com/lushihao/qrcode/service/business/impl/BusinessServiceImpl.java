@@ -53,6 +53,7 @@ public class BusinessServiceImpl implements BusinessService {
                 qrcodeDirectory.mkdir();//创建文件夹
             }
             lshImageUtil.copyFile(logoSrc, businessPath + "\\logo.png");
+//            lshImageUtil.copyFile(logoSrc, "src\\main\\webapp\\image\\logo.jpg");
 
             return new Result(true, filter(new Business()), "创建成功，商家编号为" + business.getCode(), null);
         }

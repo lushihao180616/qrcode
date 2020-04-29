@@ -8,11 +8,15 @@
     <meta name="referrer" content="no-referrer">
     <title>首页</title>
     <link rel="stylesheet" type="text/css" href="../css/public.css">
-    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link rel="stylesheet" type="text/css" href="../css/modifyInfo.css">
     <script src="../js/public.js"></script>
-    <script src="../js/index.js"></script>
+    <script src="../js/modifyInfo.js"></script>
 </head>
 <body onload="userInfo()">
+
+<div class="modifyInfo">
+    <input class="modifyInfoButton" type="button" value="修改信息" onclick="window.location.href='modifyInfo.jsp'"/>
+</div>
 
 <p class="topTitle">
     用户信息
@@ -40,7 +44,7 @@
         <div class="logoDiv">
             <img class="logo"
                  src="http://sinacloud.net/cjml-qrcode/00000000/d.va.jpg?KID=sina,30b747sMR3OcrzNJwhpn&Expires=1583235510&ssig=TkVvHLNDEb"
-                 onerror="this.src='http://sinacloud.net/temple/d.va.jpg'">
+                 onerror="this.src='../image/logo.jpg'">
         </div>
         <div class="rigthDiv">
             <div class="userInfoRow">

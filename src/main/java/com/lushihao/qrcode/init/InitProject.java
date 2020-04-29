@@ -10,6 +10,7 @@ import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
 import com.lushihao.qrcode.config.yml.UserBasicInfo;
+import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

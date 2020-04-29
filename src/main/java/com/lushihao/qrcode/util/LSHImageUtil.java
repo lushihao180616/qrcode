@@ -174,7 +174,9 @@ public class LSHImageUtil {
         if (file2 == null) {
             return;
         } else {
-            file2.getParentFile().mkdirs();
+            if (file2.getParentFile() != null) {
+                file2.getParentFile().mkdirs();
+            }
         }
         FileInputStream fileInputStream = null;
         FileOutputStream fileOutputStream = null;
