@@ -79,6 +79,7 @@ function create() {
     var logoSrc = document.getElementById("createLogo").value;
     var userType = document.getElementById("createUserType").value;
     var macAddress = document.getElementById("createMacAddress").value;
+    var macAddress2 = document.getElementById("createMacAddress2").value;
     if (!check(name, address, phone, businessName, macAddress)) {
         return
     }
@@ -92,7 +93,8 @@ function create() {
         businessName: businessName,
         logoSrc: logoSrc,
         userType: JSON.parse(userType).code,
-        macAddress: macAddress
+        macAddress: macAddress,
+        macAddress2: macAddress2
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/business/create", false);
@@ -118,6 +120,7 @@ function create() {
                     document.getElementById("createLogo").value = '';
                     document.getElementById("createUserType").options[0].selected = true;
                     document.getElementById("createMacAddress").value = '';
+                    document.getElementById("createMacAddress2").value = '';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);
@@ -186,6 +189,7 @@ function modifyBusinessCode(id) {
     }
     document.getElementById("modifyUserType").options[typeIndex].selected = true;
     document.getElementById("modifyMacAddress").value = allTypeList[index].macAddress;
+    document.getElementById("modifyMacAddress2").value = allTypeList[index].macAddress2;
 }
 
 function update() {
@@ -197,6 +201,7 @@ function update() {
     var logoSrc = document.getElementById("modifyLogo").value;
     var userType = document.getElementById("modifyUserType").value;
     var macAddress = document.getElementById("modifyMacAddress").value;
+    var macAddress2 = document.getElementById("modifyMacAddress2").value;
     if (!check(name, address, phone, businessName, macAddress)) {
         return;
     }
@@ -212,7 +217,8 @@ function update() {
         businessName: businessName,
         logoSrc: logoSrc,
         userType: JSON.parse(userType).code,
-        macAddress: macAddress
+        macAddress: macAddress,
+        macAddress2: macAddress2
     };
     var xhr = new XMLHttpRequest();
     xhr.open('POST', "http://localhost:8090/qrcode/business/update", false);
@@ -239,6 +245,7 @@ function update() {
                     document.getElementById("modifyLogo").value = '';
                     document.getElementById("modifyUserType").options[0].selected = true;
                     document.getElementById("modifyMacAddress").value = '';
+                    document.getElementById("modifyMacAddress2").value = '';
                     alert(result.info);
                 } else {
                     alert(result.errorInfo);

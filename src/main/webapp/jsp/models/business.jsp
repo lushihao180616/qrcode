@@ -35,6 +35,8 @@
         <span class="itemName">商家类型：</span><select class="topItemSelect" id="createUserType"></select><br><br>
         <span class="itemName">物理地址：</span><input class="topItemInput" type="text"
                                                   id="createMacAddress"/><br><br>
+        <span class="itemName">备用地址：</span><input class="topItemInput" type="text"
+                                                  id="createMacAddress2"/><br><br>
 
         <input class="topItemButton" type="button" value="创建" onclick="create()"/>
     </div>
@@ -60,6 +62,8 @@
         <span class="itemName">商家类型：</span><select class="topItemSelect" id="modifyUserType"></select><br><br>
         <span class="itemName">物理地址：</span><input class="topItemInput" type="text"
                                                   id="modifyMacAddress"/><br><br>
+        <span class="itemName">备用地址：</span><input class="topItemInput" type="text"
+                                                  id="modifyMacAddress2"/><br><br>
 
         <input class="topItemButton" type="button" value="更新" onclick="update()"/>
     </div>

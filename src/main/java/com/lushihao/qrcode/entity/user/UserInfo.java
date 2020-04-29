@@ -22,6 +22,10 @@ public class UserInfo {
      */
     private String macAddress;
     /**
+     * 备用mac地址
+     */
+    private String macAddress2;
+    /**
      * 商家信息
      */
     private Business business;
@@ -62,6 +66,14 @@ public class UserInfo {
         this.macAddress = macAddress;
     }
 
+    public String getMacAddress2() {
+        return macAddress2;
+    }
+
+    public void setMacAddress2(String macAddress2) {
+        this.macAddress2 = macAddress2;
+    }
+
     public Business getBusiness() {
         return business;
     }
@@ -81,11 +93,12 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public UserInfo(String code, UserType userType, int count, String macAddress, Business business, Manager manager) {
+    public UserInfo(String code, UserType userType, int count, String macAddress, String macAddress2, Business business, Manager manager) {
         this.code = code;
         this.userType = userType;
         this.count = count;
         this.macAddress = macAddress;
+        this.macAddress2 = macAddress2;
         this.business = business;
         this.manager = manager;
     }

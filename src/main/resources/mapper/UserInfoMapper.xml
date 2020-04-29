@@ -5,9 +5,9 @@
     <insert id="create" parameterType="UserInfo">
         INSERT INTO
             userinfo
-            (code,typeCode,count,macAddress)
+            (code,typeCode,count,macAddress,macAddress2)
         VALUES
-            (#{code},#{userType.code},#{count},#{macAddress})
+            (#{code},#{userType.code},#{count},#{macAddress},#{macAddress2})
     </insert>
     <update id="update" parameterType="UserInfo">
         UPDATE
@@ -15,7 +15,8 @@
         SET
             typeCode=#{userType.code},
             count=#{count},
-            macAddress=#{macAddress}
+            macAddress=#{macAddress},
+            macAddress2=#{macAddress2}
         WHERE
             code=#{code}
     </update>
