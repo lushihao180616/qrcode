@@ -13,6 +13,8 @@ public interface ManagerMapper {
 
     int update(Manager manager);
 
+    int updateSelf(Manager manager);
+
     int delete(@Param("code") String code);
 
     List<Manager> filter(Manager manager);

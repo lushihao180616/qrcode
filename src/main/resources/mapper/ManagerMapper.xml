@@ -26,6 +26,16 @@
         WHERE
             code=#{code}
     </update>
+    <update id="updateSelf" parameterType="Manager">
+        UPDATE
+            manager
+        SET
+            name=#{name},
+            phone=#{phone},
+            address=#{address}
+        WHERE
+            code=#{code}
+    </update>
     <delete id="delete">
         DELETE FROM
             manager
