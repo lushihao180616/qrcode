@@ -24,57 +24,57 @@
 
 .bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6, .bottomTh7, .bottomTh8, .bottomTh9, .bottomTh10, .bottomTh11, .bottomTh12, .bottomTh13, .bottomTh14, .bottomTh15 {
     width: 5%;
-    background-color: red;
+    background-color: burlywood;
     color: white;
     padding: 5px;
 }
 
 .bottomTh2 {
-    background-color: black;
+    background-color: burlywood;
 }
 
 .bottomTh3 {
-    background-color: blue;
+    background-color: burlywood;
 }
 
 .bottomTh4 {
-    background-color: purple;
+    background-color: burlywood;
 }
 
 .bottomTh5 {
-    background-color: green;
+    background-color: burlywood;
 }
 
 .bottomTh6 {
-    background-color: crimson;
+    background-color: burlywood;
 }
 
 .bottomTh7 {
-    background-color: midnightblue;
+    background-color: burlywood;
 }
 
 .bottomTh8 {
-    background-color: darkolivegreen;
+    background-color: burlywood;
 }
 
 .bottomTh9 {
-    background-color: indigo;
+    background-color: burlywood;
 }
 
 .bottomTh10 {
-    background-color: chocolate;
+    background-color: burlywood;
 }
 
 .bottomTh11 {
-    background-color: navy;
+    background-color: burlywood;
 }
 
 .bottomTh12 {
-    background-color: brown;
+    background-color: burlywood;
 }
 
 .bottomTh13 {
-    background-color: rebeccapurple;
+    background-color: burlywood;
 }
 
 .bottomTh14 {
@@ -83,61 +83,61 @@
 
 .bottomTh15 {
     width: 30%;
-    background-color: gold;
+    background-color: burlywood;
 }
 
 .bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6, .bottomTd7, .bottomTd8, .bottomTd9, .bottomTd10, .bottomTd11, .bottomTd12, .bottomTd13, .bottomTd14, .bottomTd15 {
     width: 5%;
-    border: 2px solid red;
+    border: 2px solid burlywood;
     padding: 5px;
 }
 
 .bottomTd2 {
-    border: 2px solid black;
+    border: 2px solid burlywood;
 }
 
 .bottomTd3 {
-    border: 2px solid blue;
+    border: 2px solid burlywood;
 }
 
 .bottomTd4 {
-    border: 2px solid purple;
+    border: 2px solid burlywood;
 }
 
 .bottomTd5 {
-    border: 2px solid green;
+    border: 2px solid burlywood;
 }
 
 .bottomTd6 {
-    border: 2px solid crimson;
+    border: 2px solid burlywood;
 }
 
 .bottomTd7 {
-    border: 2px solid midnightblue;
+    border: 2px solid burlywood;
 }
 
 .bottomTd8 {
-    border: 2px solid darkolivegreen;
+    border: 2px solid burlywood;
 }
 
 .bottomTd9 {
-    border: 2px solid indigo;
+    border: 2px solid burlywood;
 }
 
 .bottomTd10 {
-    border: 2px solid chocolate;
+    border: 2px solid burlywood;
 }
 
 .bottomTd11 {
-    border: 2px solid navy;
+    border: 2px solid burlywood;
 }
 
 .bottomTd12 {
-    border: 2px solid brown;
+    border: 2px solid burlywood;
 }
 
 .bottomTd13 {
-    border: 2px solid rebeccapurple;
+    border: 2px solid burlywood;
 }
 
 .bottomTd14 {
@@ -146,5 +146,5 @@
 
 .bottomTd15 {
     width: 30%;
-    border: 2px solid gold;
+    border: 2px solid burlywood;
 }

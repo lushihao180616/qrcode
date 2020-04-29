@@ -195,7 +195,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 notCopyFileName = downLoadTempleCode + ".jpg";
             }
             notCopyFileNames.add(notCopyFileName);
-            if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/" + downLoadTempleCode, projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode, notCopyFileNames)) {
+            if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/temple/" + downLoadTempleCode, projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode, notCopyFileNames)) {
                 lshFtpUtil.download(notCopyFileName, projectBasicInfo.getModelUrl() + "\\" + notCopyFileName);
                 lshFtpUtil.closeServer();
                 return new Result(true, null, "下载成功", null);

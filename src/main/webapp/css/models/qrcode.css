@@ -1,17 +1,17 @@
 .toIndex {
-    background-color: lightcoral;
+    background-color: cadetblue;
 }
 
 .topTitle {
-    background-color: lightcoral;
+    background-color: cadetblue;
 }
 
 .middleTitle {
-    background-color: lightcoral;
+    background-color: cadetblue;
 }
 
 .topItemTitle {
-    background-color: lightcoral;
+    background-color: cadetblue;
 }
 
 .downLoad {
@@ -22,7 +22,7 @@
     height: 30px;
     margin: 10px;
     padding: 10px;
-    background: lightcoral;
+    background: cadetblue;
 }
 
 .downLoadText {
@@ -52,57 +52,57 @@
 
 .bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6 {
     width: 12%;
-    background-color: red;
+    background-color: cadetblue;
     color: white;
     padding: 5px;
 }
 
 .bottomTh2 {
-    background-color: black;
+    background-color: cadetblue;
 }
 
 .bottomTh3 {
     width: 16%;
-    background-color: blue;
+    background-color: cadetblue;
 }
 
 .bottomTh4 {
     width: 36%;
-    background-color: purple;
+    background-color: cadetblue;
 }
 
 .bottomTh5 {
-    background-color: green;
+    background-color: cadetblue;
 }
 
 .bottomTh6 {
-    background-color: coral;
+    background-color: cadetblue;
 }
 
 .bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6 {
     width: 12%;
-    border: 2px solid red;
+    border: 2px solid cadetblue;
     padding: 5px;
 }
 
 .bottomTd2 {
-    border: 2px solid black;
+    border: 2px solid cadetblue;
 }
 
 .bottomTd3 {
     width: 16%;
-    border: 2px solid blue;
+    border: 2px solid cadetblue;
 }
 
 .bottomTd4 {
     width: 36%;
-    border: 2px solid purple;
+    border: 2px solid cadetblue;
 }
 
 .bottomTd5 {
-    border: 2px solid green;
+    border: 2px solid cadetblue;
 }
 
 .bottomTd6 {
-    border: 2px solid coral;
+    border: 2px solid cadetblue;
 }

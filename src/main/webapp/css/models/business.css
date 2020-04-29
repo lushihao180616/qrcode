@@ -1,17 +1,17 @@
 .toIndex {
-    background-color: cadetblue;
+    background-color: lightcoral;
 }
 
 .topTitle {
-    background-color: cadetblue;
+    background-color: lightcoral;
 }
 
 .middleTitle {
-    background-color: cadetblue;
+    background-color: lightcoral;
 }
 
 .topItemTitle {
-    background-color: cadetblue;
+    background-color: lightcoral;
 }
 
 .top {
@@ -24,57 +24,57 @@
 
 .bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6 {
     width: 10%;
-    background-color: red;
+    background-color: lightcoral;
     color: white;
     padding: 5px;
 }
 
 .bottomTh2 {
     width: 20%;
-    background-color: black;
+    background-color: lightcoral;
 }
 
 .bottomTh3 {
     width: 40%;
-    background-color: blue;
+    background-color: lightcoral;
 }
 
 .bottomTh4 {
-    background-color: purple;
+    background-color: lightcoral;
 }
 
 .bottomTh5 {
-    background-color: green;
+    background-color: lightcoral;
 }
 
 .bottomTh6 {
-    background-color: tan;
+    background-color: lightcoral;
 }
 
 .bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6 {
     width: 10%;
-    border: 2px solid red;
+    border: 2px solid lightcoral;
     padding: 5px;
 }
 
 .bottomTd2 {
     width: 20%;
-    border: 2px solid black;
+    border: 2px solid lightcoral;
 }
 
 .bottomTd3 {
     width: 40%;
-    border: 2px solid blue;
+    border: 2px solid lightcoral;
 }
 
 .bottomTd4 {
-    border: 2px solid purple;
+    border: 2px solid lightcoral;
 }
 
 .bottomTd5 {
-    border: 2px solid green;
+    border: 2px solid lightcoral;
 }
 
 .bottomTd6 {
-    border: 2px solid tan;
+    border: 2px solid lightcoral;
 }

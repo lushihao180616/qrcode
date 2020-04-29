@@ -40,7 +40,7 @@
         <div class="logoDiv">
             <img class="logo"
                  src="http://sinacloud.net/cjml-qrcode/00000000/d.va.jpg?KID=sina,30b747sMR3OcrzNJwhpn&Expires=1583235510&ssig=TkVvHLNDEb"
-                 onerror="this.src='../image/logo.jpg'">
+                 onerror="this.src='http://sinacloud.net/temple/d.va.jpg'">
         </div>
         <div class="rigthDiv">
             <div class="userInfoRow">

@@ -140,7 +140,7 @@ public class InitProject implements ApplicationRunner {
         List<Bucket> bucketList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("cjml-qrcode")).collect(Collectors.toList());
         int randomNum = new Random().nextInt(bucketList.size());
         bucket = bucketList.get(randomNum);
-        List<Bucket> bucketTempleList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("temple")).collect(Collectors.toList());
+        List<Bucket> bucketTempleList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("qrcode-files")).collect(Collectors.toList());
         int randomTempleNum = new Random().nextInt(bucketTempleList.size());
         bucketTemple = bucketTempleList.get(randomTempleNum);
     }
