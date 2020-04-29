@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.util;
 
+import com.alibaba.druid.util.StringUtils;
 import com.lushihao.qrcode.init.InitProject;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +40,7 @@ public class LSHMACUtil {
 
     public boolean check() {
         String mac = getLocalMac();
-        if (InitProject.userInfo.getMacAddress().equals(mac) || InitProject.userInfo.getMacAddress2().equals(mac)) {
+        if (StringUtils.equals(InitProject.userInfo.getMacAddress(), mac) || StringUtils.equals(InitProject.userInfo.getMacAddress2(), mac)) {
             return true;
         }
         return false;
