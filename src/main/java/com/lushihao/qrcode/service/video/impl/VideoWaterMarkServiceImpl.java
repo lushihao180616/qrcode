@@ -142,7 +142,7 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         String[] lines = new String[3];
         //获取商家
         Manager manager = new Manager();
-        manager.setCode(videoWaterMark.getBusinessCode());
+        manager.setCode(videoWaterMark.getManagerCode());
         List<Manager> list = managerMapper.filter(manager);
         if (list.size() == 1) {
             manager = list.get(0);
@@ -185,8 +185,8 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
 
         BufferedImage logoImage = null;
         if (initProject.userInfo.getUserType().getType().equals("0")) {//管理员
-            if (!StringUtils.equals(videoWaterMark.getBusinessCode(), initProject.userInfo.getCode())) {
-                logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + videoWaterMark.getBusinessCode() + ".jpg");
+            if (!StringUtils.equals(videoWaterMark.getManagerCode(), initProject.userInfo.getCode())) {
+                logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + videoWaterMark.getManagerCode() + ".jpg");
             } else {
                 logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
             }

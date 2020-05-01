@@ -134,7 +134,7 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         String[] lines = new String[3];
         //获取商家
         Manager manager = new Manager();
-        manager.setCode(imageWaterMark.getBusinessCode());
+        manager.setCode(imageWaterMark.getManagerCode());
         List<Manager> list = managerMapper.filter(manager);
         if (list.size() == 1) {
             manager = list.get(0);
@@ -167,8 +167,8 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
 
         BufferedImage logoImage = null;
         if (initProject.userInfo.getUserType().getType().equals("0")) {//管理员
-            if (!StringUtils.equals(imageWaterMark.getBusinessCode(), initProject.userInfo.getCode())) {
-                logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + imageWaterMark.getBusinessCode() + ".jpg");
+            if (!StringUtils.equals(imageWaterMark.getManagerCode(), initProject.userInfo.getCode())) {
+                logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + imageWaterMark.getManagerCode() + ".jpg");
             } else {
                 logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
             }

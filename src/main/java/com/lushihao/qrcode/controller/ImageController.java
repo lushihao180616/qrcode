@@ -133,9 +133,9 @@ public class ImageController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        ImageWaterMark wm = transformWaterMark(reqMap);
-        wm.setBusinessCode((String) reqMap.get("businessCode"));
-        return imageWaterMarkService.addWaterMark(wm);
+        ImageWaterMark imageWaterMark = transformWaterMark(reqMap);
+        imageWaterMark.setBusinessCode((String) reqMap.get("businessCode"));
+        return imageWaterMarkService.addWaterMark(imageWaterMark);
     }
 
     @RequestMapping("testWaterMark")
@@ -144,9 +144,9 @@ public class ImageController {
         if (!lshmacUtil.check()) {
             return null;
         }
-        ImageWaterMark wm = transformWaterMark(reqMap);
-        wm.setManagerCode("00000000");
-        return imageWaterMarkService.testWaterMark(wm);
+        ImageWaterMark imageWaterMark = transformWaterMark(reqMap);
+        imageWaterMark.setManagerCode("00000000");
+        return imageWaterMarkService.testWaterMark(imageWaterMark);
     }
 
     private ImageWaterMark transformWaterMark(Map<String, Object> reqMap) {
