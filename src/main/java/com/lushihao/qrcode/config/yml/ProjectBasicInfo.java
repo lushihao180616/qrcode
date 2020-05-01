@@ -16,10 +16,6 @@ public class ProjectBasicInfo {
      */
     private String qrcodeUrl;
     /**
-     * 商家图标地址
-     */
-    private String businessUrl;
-    /**
      * 模板样例地址
      */
     private String modelUrl;
@@ -70,14 +66,6 @@ public class ProjectBasicInfo {
 
     public void setQrcodeUrl(String qrcodeUrl) {
         this.qrcodeUrl = qrcodeUrl;
-    }
-
-    public String getBusinessUrl() {
-        return businessUrl;
-    }
-
-    public void setBusinessUrl(String businessUrl) {
-        this.businessUrl = businessUrl;
     }
 
     public String getModelUrl() {
@@ -155,10 +143,9 @@ public class ProjectBasicInfo {
     public ProjectBasicInfo() {
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String businessUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketHost, String bucketImageDir, String bucketVideoDir, String logoPath) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketHost, String bucketImageDir, String bucketVideoDir, String logoPath) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
-        this.businessUrl = businessUrl;
         this.modelUrl = modelUrl;
         this.tempJpgUrl = tempJpgUrl;
         this.ffmpegUrl = ffmpegUrl;

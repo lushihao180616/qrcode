@@ -8,7 +8,9 @@ import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.user.UserInfo;
 import com.lushihao.qrcode.entity.user.UserType;
+import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.business.BusinessService;
+import com.lushihao.qrcode.util.LSHFtpUtil;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,10 @@ public class BusinessServiceImpl implements BusinessService {
     private LSHImageUtil lshImageUtil;
     @Resource
     private UserInfoMapper userInfoMapper;
+    @Resource
+    private LSHFtpUtil lshFtpUtil;
+    @Resource
+    private InitProject initProject;
 
     @Override
     @Transactional
@@ -39,21 +45,17 @@ public class BusinessServiceImpl implements BusinessService {
         } else {
             UserInfo userInfo = new UserInfo(business.getCode(), userInfoMapper.filterType(typeCode, 1).get(0), 0, macAddress, macAddress2, business, null);
             userInfoMapper.create(userInfo);
-            //商标地址
-            String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
-            File logoDirectory = new File(businessPath);
-            if (!logoDirectory.exists()) {//如果文件夹不存在
-                logoDirectory.mkdir();//创建文件夹
-            }
-
             //二维码地址
             String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + business.getCode();
             File qrcodeDirectory = new File(qrcodePath);
             if (!qrcodeDirectory.exists()) {//如果文件夹不存在
                 qrcodeDirectory.mkdir();//创建文件夹
             }
-            lshImageUtil.copyFile(logoSrc, businessPath + "\\logo.png");
-//            lshImageUtil.copyFile(logoSrc, "src\\main\\webapp\\image\\logo.jpg");
+            if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
+                if (lshFtpUtil.upload(logoSrc, business.getCode() + ".jpg", "/" + initProject.bucketTemple.getName() + "/logo")) {
+                    lshFtpUtil.closeServer();
+                }
+            }
 
             return new Result(true, filter(new Business()), "创建成功，商家编号为" + business.getCode(), null);
         }
@@ -84,9 +86,11 @@ public class BusinessServiceImpl implements BusinessService {
             UserInfo userInfo = new UserInfo(business.getCode(), userInfoMapper.filterType(typeCode, 1).get(0), 0, macAddress, macAddress2, business, null);
             userInfoMapper.update(userInfo);
             if (logoSrc != null && !"".equals(logoSrc)) {
-                //商标地址
-                String businessPath = projectBasicInfo.getBusinessUrl() + "\\" + business.getCode();
-                lshImageUtil.copyFile(logoSrc, businessPath + "\\logo.png");
+                if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
+                    if (lshFtpUtil.upload(logoSrc, business.getCode() + ".jpg", "/" + initProject.bucketTemple.getName() + "/logo")) {
+                        lshFtpUtil.closeServer();
+                    }
+                }
             }
             return new Result(true, filter(new Business()), "更新成功", null);
         }
@@ -101,9 +105,11 @@ public class BusinessServiceImpl implements BusinessService {
         } else {
             userInfoMapper.deleteUserInfo(code);
             if (projectBasicInfo.isDeleteAllBusinessFiles()) {
-                //商标地址
-                String logoPath = projectBasicInfo.getBusinessUrl() + "\\" + code;
-                lshImageUtil.delFileOrDir(logoPath);
+                if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
+                    if (lshFtpUtil.deleteFile("/" + initProject.bucketTemple.getName() + "/logo", code + ".jpg")) {
+                        lshFtpUtil.closeServer();
+                    }
+                }
                 //二维码地址
                 String qrcodePath = projectBasicInfo.getQrcodeUrl() + "\\" + code;
                 lshImageUtil.delFileOrDir(qrcodePath);

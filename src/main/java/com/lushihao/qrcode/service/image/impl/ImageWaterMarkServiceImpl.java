@@ -1,13 +1,13 @@
 package com.lushihao.qrcode.service.image.impl;
 
+import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.image.ImageWaterMark;
 import com.lushihao.qrcode.entity.manager.Manager;
-import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.image.ImageWaterMarkService;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
@@ -84,7 +84,7 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
         bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + imageWaterMark.getBusinessCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
@@ -152,7 +152,7 @@ public class ImageWaterMarkServiceImpl implements ImageWaterMarkService {
         bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
         bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + imageWaterMark.getManagerCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }

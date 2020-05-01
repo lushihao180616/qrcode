@@ -74,7 +74,6 @@ public class InitProject implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         createDirectory(projectBasicInfo.getTempleUrl());
-        createDirectory(projectBasicInfo.getBusinessUrl());
         createDirectory(projectBasicInfo.getQrcodeUrl());
         createDirectory(projectBasicInfo.getModelUrl());
         createDirectory(projectBasicInfo.getTempJpgUrl());

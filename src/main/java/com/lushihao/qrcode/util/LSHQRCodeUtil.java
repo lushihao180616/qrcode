@@ -251,7 +251,7 @@ public class LSHQRCodeUtil {
 
         //添加logo
         if (qrCode.getQrCodeTemple().isIfShowLogo()) {
-            BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + qrCode.getBusinessCode() + "\\logo.png");
+            BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
             BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\logo_border.png");
 
             gs.translate(nowWidth / 2, nowHeight / 2);

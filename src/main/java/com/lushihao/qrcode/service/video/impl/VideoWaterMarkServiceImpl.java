@@ -90,7 +90,7 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
         bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + videoWaterMark.getBusinessCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
@@ -170,7 +170,7 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
         bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getBusinessUrl() + "\\" + videoWaterMark.getManagerCode() + "\\logo.png");
+        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
