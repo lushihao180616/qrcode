@@ -16,12 +16,14 @@ function userInfo() {
                 if (result.ifSuccess) {
                     if (result.bean.userType.type == "0") {
                         document.getElementById("code").innerText = result.bean.manager.code;
+                        document.getElementById("logoSrc").src = "http://sinacloud.net/qrcode-files/logo/" + result.bean.manager.code + ".jpg";
                         document.getElementById("businessItem").style.display = "none";
                         document.getElementById("businessName").innerText = result.bean.manager.name;
                         document.getElementById("phone").innerText = result.bean.manager.phone;
                         document.getElementById("address").innerText = result.bean.manager.address;
                     } else if (result.bean.userType.type == "1") {
                         document.getElementById("code").innerText = result.bean.business.code;
+                        document.getElementById("logoSrc").src = "http://sinacloud.net/qrcode-files/logo/" + result.bean.business.code + ".jpg";
                         document.getElementById("name").innerText = result.bean.business.name;
                         document.getElementById("businessName").innerText = result.bean.business.businessName;
                         document.getElementById("phone").innerText = result.bean.business.phone;
