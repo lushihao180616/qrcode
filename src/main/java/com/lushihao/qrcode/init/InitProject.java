@@ -43,7 +43,7 @@ public class InitProject implements ApplicationRunner {
     /**
      * 服务器模板位置
      */
-    public static Bucket bucketTemple;
+    public static Bucket bucketFiles;
     /**
      * 数据库全部模板
      */
@@ -142,7 +142,7 @@ public class InitProject implements ApplicationRunner {
         bucket = bucketList.get(randomNum);
         List<Bucket> bucketTempleList = bucketMapper.filter().stream().filter(s -> s.isIfUse() && s.getName().startsWith("qrcode-files")).collect(Collectors.toList());
         int randomTempleNum = new Random().nextInt(bucketTempleList.size());
-        bucketTemple = bucketTempleList.get(randomTempleNum);
+        bucketFiles = bucketTempleList.get(randomTempleNum);
     }
 
     /**

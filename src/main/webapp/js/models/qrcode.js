@@ -20,7 +20,7 @@ function init() {
                 if (result.ifSuccess) {
                     var recordList = result.bean.record;
                     var templeList = result.bean.temple;
-                    var businessList = result.bean.business;
+                    var businessList = result.bean.business.businesses;
 
                     handleRecord(recordList);
                     handleTemples(templeList);

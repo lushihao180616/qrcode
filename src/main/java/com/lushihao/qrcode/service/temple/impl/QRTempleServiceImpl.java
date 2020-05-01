@@ -178,13 +178,13 @@ public class QRTempleServiceImpl implements QRTempleService {
                 }
             }
         }
-        if (initProject.bucketTemple == null) {
+        if (initProject.bucketFiles == null) {
             if (subBean) {
                 userInfoService.countAdd((int) nowTemple.get(0).getMoney(), userBasicInfo.getCode());
             }
             return new Result(false, null, null, "网络连接失败");
         }
-        if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
+        if (lshFtpUtil.connectServer(initProject.bucketFiles.getIp(), Integer.valueOf(initProject.bucketFiles.getPort()), initProject.bucketFiles.getUserName(), initProject.bucketFiles.getPwd())) {
             File dir = new File(projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode);
             dir.mkdir();
             List<String> notCopyFileNames = new ArrayList<>();
@@ -195,7 +195,7 @@ public class QRTempleServiceImpl implements QRTempleService {
                 notCopyFileName = downLoadTempleCode + ".jpg";
             }
             notCopyFileNames.add(notCopyFileName);
-            if (lshFtpUtil.downloadDir(initProject.bucketTemple.getName() + "/temple/" + downLoadTempleCode, projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode, notCopyFileNames)) {
+            if (lshFtpUtil.downloadDir(initProject.bucketFiles.getName() + "/temple/" + downLoadTempleCode, projectBasicInfo.getTempleUrl() + "\\" + downLoadTempleCode, notCopyFileNames)) {
                 lshFtpUtil.download(notCopyFileName, projectBasicInfo.getModelUrl() + "\\" + notCopyFileName);
                 lshFtpUtil.closeServer();
                 return new Result(true, null, "下载成功", null);

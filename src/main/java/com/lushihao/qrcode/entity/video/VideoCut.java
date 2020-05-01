@@ -51,14 +51,4 @@ public class VideoCut {
         this.end = end;
     }
 
-    public VideoCut() {
-    }
-
-    public VideoCut(String path, String newPath, int start, int end) {
-        this.path = path;
-        this.newPath = newPath;
-        this.start = start;
-        this.end = end;
-    }
-
 }

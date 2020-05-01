@@ -159,23 +159,4 @@ public class QRCodeRequest {
         this.bean = bean;
     }
 
-    public QRCodeRequest() {
-    }
-
-    public QRCodeRequest(String message, String type, String templeCode, String businessCode, String managerCode, String fileName, String backGround, int shortLength, int x, int y, int alpha, int angle, int bean) {
-        this.message = message;
-        this.type = type;
-        this.templeCode = templeCode;
-        this.businessCode = businessCode;
-        this.managerCode = managerCode;
-        this.fileName = fileName;
-        this.backGround = backGround;
-        this.shortLength = shortLength;
-        this.x = x;
-        this.y = y;
-        this.alpha = alpha;
-        this.angle = angle;
-        this.bean = bean;
-    }
-
 }

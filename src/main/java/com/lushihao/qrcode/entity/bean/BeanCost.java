@@ -10,6 +10,10 @@ public class BeanCost {
      * 捎点
      */
     private int bean;
+    /**
+     * 捎点
+     */
+    private String userType;
 
     public String getType() {
         return type;
@@ -25,6 +29,14 @@ public class BeanCost {
 
     public void setBean(int bean) {
         this.bean = bean;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
 }

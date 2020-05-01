@@ -99,18 +99,4 @@ public class VideoIcon {
         this.y = y;
     }
 
-    public VideoIcon() {
-    }
-
-    public VideoIcon(String path, String newPath, String imagePath, String icon, int width, int height, int x, int y) {
-        this.path = path;
-        this.newPath = newPath;
-        this.imagePath = imagePath;
-        this.icon = icon;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-    }
-
 }

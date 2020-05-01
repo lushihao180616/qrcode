@@ -87,17 +87,4 @@ public class ImageWaterMark {
         this.fontColor = fontColor;
     }
 
-    public ImageWaterMark() {
-    }
-
-    public ImageWaterMark(String businessCode, String managerCode, int height, String path, int x, int y, String fontColor) {
-        this.businessCode = businessCode;
-        this.managerCode = managerCode;
-        this.height = height;
-        this.path = path;
-        this.x = x;
-        this.y = y;
-        this.fontColor = fontColor;
-    }
-
 }

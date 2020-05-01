@@ -111,19 +111,4 @@ public class VideoFont {
         this.color = color;
     }
 
-    public VideoFont() {
-    }
-
-    public VideoFont(String path, String newPath, String imagePath, int x, int y, int size, String layout, String message, String color) {
-        this.path = path;
-        this.newPath = newPath;
-        this.imagePath = imagePath;
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.layout = layout;
-        this.message = message;
-        this.color = color;
-    }
-
 }

@@ -76,16 +76,4 @@ public class ImageIcon {
         this.y = y;
     }
 
-    public ImageIcon() {
-    }
-
-    public ImageIcon(String path, String icon, int width, int height, int x, int y) {
-        this.path = path;
-        this.icon = icon;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-    }
-
 }

@@ -87,17 +87,4 @@ public class ImageFont {
         this.color = color;
     }
 
-    public ImageFont() {
-    }
-
-    public ImageFont(String path, int x, int y, int size, String layout, String message, String color) {
-        this.path = path;
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.layout = layout;
-        this.message = message;
-        this.color = color;
-    }
-
 }

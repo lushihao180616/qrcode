@@ -75,16 +75,4 @@ public class ImageCut {
         this.alpha = alpha;
     }
 
-    public ImageCut() {
-    }
-
-    public ImageCut(String path, int width, int height, int x, int y, int alpha) {
-        this.path = path;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-        this.alpha = alpha;
-    }
-
 }

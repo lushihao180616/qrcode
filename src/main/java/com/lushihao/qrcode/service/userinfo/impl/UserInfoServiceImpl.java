@@ -49,8 +49,8 @@ public class UserInfoServiceImpl implements UserInfoService {
             if (logoPath != null) {
                 flag = true;
                 lshImageUtil.copyFile(logoPath, projectBasicInfo.getLogoPath());
-                if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
-                    if (lshFtpUtil.upload(logoPath, business.getCode() + ".jpg", "/" + initProject.bucketTemple.getName() + "/logo")) {
+                if (lshFtpUtil.connectServer(initProject.bucketFiles.getIp(), Integer.valueOf(initProject.bucketFiles.getPort()), initProject.bucketFiles.getUserName(), initProject.bucketFiles.getPwd())) {
+                    if (lshFtpUtil.upload(logoPath, business.getCode() + ".jpg", "/" + initProject.bucketFiles.getName() + "/logo")) {
                         lshFtpUtil.closeServer();
                     }
                 }
@@ -77,8 +77,8 @@ public class UserInfoServiceImpl implements UserInfoService {
             if (logoPath != null) {
                 flag = true;
                 lshImageUtil.copyFile(logoPath, projectBasicInfo.getLogoPath());
-                if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
-                    if (lshFtpUtil.upload(logoPath, manager.getCode() + ".jpg", "/" + initProject.bucketTemple.getName() + "/logo")) {
+                if (lshFtpUtil.connectServer(initProject.bucketFiles.getIp(), Integer.valueOf(initProject.bucketFiles.getPort()), initProject.bucketFiles.getUserName(), initProject.bucketFiles.getPwd())) {
+                    if (lshFtpUtil.upload(logoPath, manager.getCode() + ".jpg", "/" + initProject.bucketFiles.getName() + "/logo")) {
                         lshFtpUtil.closeServer();
                     }
                 }

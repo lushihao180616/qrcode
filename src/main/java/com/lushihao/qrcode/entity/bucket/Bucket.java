@@ -74,4 +74,5 @@ public class Bucket {
     public void setIfUse(boolean ifUse) {
         this.ifUse = ifUse;
     }
+
 }

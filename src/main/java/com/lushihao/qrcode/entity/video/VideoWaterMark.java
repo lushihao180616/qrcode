@@ -114,19 +114,4 @@ public class VideoWaterMark {
         this.fontColor = fontColor;
     }
 
-    public VideoWaterMark() {
-    }
-
-    public VideoWaterMark(String businessCode, String managerCode, int height, String path, String newPath, String imagePath, int x, int y, String fontColor) {
-        this.businessCode = businessCode;
-        this.managerCode = managerCode;
-        this.height = height;
-        this.path = path;
-        this.newPath = newPath;
-        this.imagePath = imagePath;
-        this.x = x;
-        this.y = y;
-        this.fontColor = fontColor;
-    }
-
 }

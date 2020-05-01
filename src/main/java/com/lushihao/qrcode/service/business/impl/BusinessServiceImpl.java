@@ -51,8 +51,8 @@ public class BusinessServiceImpl implements BusinessService {
             if (!qrcodeDirectory.exists()) {//如果文件夹不存在
                 qrcodeDirectory.mkdir();//创建文件夹
             }
-            if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
-                if (lshFtpUtil.upload(logoSrc, business.getCode() + ".jpg", "/" + initProject.bucketTemple.getName() + "/logo")) {
+            if (lshFtpUtil.connectServer(initProject.bucketFiles.getIp(), Integer.valueOf(initProject.bucketFiles.getPort()), initProject.bucketFiles.getUserName(), initProject.bucketFiles.getPwd())) {
+                if (lshFtpUtil.upload(logoSrc, business.getCode() + ".jpg", "/" + initProject.bucketFiles.getName() + "/logo")) {
                     lshFtpUtil.closeServer();
                 }
             }
@@ -86,8 +86,8 @@ public class BusinessServiceImpl implements BusinessService {
             UserInfo userInfo = new UserInfo(business.getCode(), userInfoMapper.filterType(typeCode, 1).get(0), 0, macAddress, macAddress2, business, null);
             userInfoMapper.update(userInfo);
             if (logoSrc != null && !"".equals(logoSrc)) {
-                if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
-                    if (lshFtpUtil.upload(logoSrc, business.getCode() + ".jpg", "/" + initProject.bucketTemple.getName() + "/logo")) {
+                if (lshFtpUtil.connectServer(initProject.bucketFiles.getIp(), Integer.valueOf(initProject.bucketFiles.getPort()), initProject.bucketFiles.getUserName(), initProject.bucketFiles.getPwd())) {
+                    if (lshFtpUtil.upload(logoSrc, business.getCode() + ".jpg", "/" + initProject.bucketFiles.getName() + "/logo")) {
                         lshFtpUtil.closeServer();
                     }
                 }
@@ -105,8 +105,8 @@ public class BusinessServiceImpl implements BusinessService {
         } else {
             userInfoMapper.deleteUserInfo(code);
             if (projectBasicInfo.isDeleteAllBusinessFiles()) {
-                if (lshFtpUtil.connectServer(initProject.bucketTemple.getIp(), Integer.valueOf(initProject.bucketTemple.getPort()), initProject.bucketTemple.getUserName(), initProject.bucketTemple.getPwd())) {
-                    if (lshFtpUtil.deleteFile("/" + initProject.bucketTemple.getName() + "/logo", code + ".jpg")) {
+                if (lshFtpUtil.connectServer(initProject.bucketFiles.getIp(), Integer.valueOf(initProject.bucketFiles.getPort()), initProject.bucketFiles.getUserName(), initProject.bucketFiles.getPwd())) {
+                    if (lshFtpUtil.deleteFile("/" + initProject.bucketFiles.getName() + "/logo", code + ".jpg")) {
                         lshFtpUtil.closeServer();
                     }
                 }
