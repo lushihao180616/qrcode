@@ -36,6 +36,10 @@
             AND fileName
             LIKE '%${fileName}%'
         </if>
+        <if test="creator != null">
+            AND creator
+            LIKE '%${creator}%'
+        </if>
         ORDER BY
             saveTime
         DESC

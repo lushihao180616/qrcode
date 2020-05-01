@@ -59,7 +59,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Transactional
     public List<QRCodeRecord> selectRecord(QRCodeRecord qrCodeRecord) {
         if (InitProject.userInfo.getUserType().getType().equals("1")) {
-            qrCodeRecord.setBusinessCode(InitProject.userInfo.getBusiness().getCode());
+            qrCodeRecord.setCreator(InitProject.userInfo.getBusiness().getCode());
         }
         return qrCodeRecordMapper.select(qrCodeRecord);
     }
