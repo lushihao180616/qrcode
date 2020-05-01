@@ -5,12 +5,12 @@ import com.google.zxing.*;
 import com.google.zxing.common.HybridBinarizer;
 import com.lushihao.myutils.qrcode.helper.BufferedImageLuminanceSource;
 import com.lushihao.myutils.time.LSHDateUtils;
+import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.dao.QRCodeRecordMapper;
 import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.qrcode.QRCode;
 import com.lushihao.qrcode.entity.qrcode.QRCodeRecord;
-import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.swetake.util.Qrcode;
@@ -181,7 +181,7 @@ public class LSHQRCodeUtil {
             if (lshFtpUtil.connectServer(initProject.bucket.getIp(), Integer.valueOf(initProject.bucket.getPort()), initProject.bucket.getUserName(), initProject.bucket.getPwd())) {
                 if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode())) {
                     lshFtpUtil.closeServer();
-                    content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+                    content = initProject.bucket.getUri() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketImageDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
                     return null;
                 }
@@ -193,7 +193,7 @@ public class LSHQRCodeUtil {
             if (lshFtpUtil.connectServer(initProject.bucket.getIp(), Integer.valueOf(initProject.bucket.getPort()), initProject.bucket.getUserName(), initProject.bucket.getPwd())) {
                 if (lshFtpUtil.upload(qrCode.getMessage(), fileName, "/" + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode())) {
                     lshFtpUtil.closeServer();
-                    content = projectBasicInfo.getBucketHost() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
+                    content = initProject.bucket.getUri() + initProject.bucket.getName() + "/" + projectBasicInfo.getBucketVideoDir() + "/" + qrCode.getBusinessCode() + "/" + fileName;
                 } else {
                     return null;
                 }

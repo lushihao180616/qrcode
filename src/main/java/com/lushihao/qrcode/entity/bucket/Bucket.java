@@ -26,6 +26,10 @@ public class Bucket {
      * 云存储是否启用
      */
     private boolean ifUse;
+    /**
+     * 云存储服务器地址
+     */
+    private String uri;
 
     public String getName() {
         return name;
@@ -75,4 +79,11 @@ public class Bucket {
         this.ifUse = ifUse;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 }

@@ -36,10 +36,6 @@ public class ProjectBasicInfo {
      */
     private boolean deleteAllBusinessFiles;
     /**
-     * 云存储主机
-     */
-    private String bucketHost;
-    /**
      * 云存储图片
      */
     private String bucketImageDir;
@@ -108,14 +104,6 @@ public class ProjectBasicInfo {
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
     }
 
-    public String getBucketHost() {
-        return bucketHost;
-    }
-
-    public void setBucketHost(String bucketHost) {
-        this.bucketHost = bucketHost;
-    }
-
     public String getBucketImageDir() {
         return bucketImageDir;
     }
@@ -143,7 +131,7 @@ public class ProjectBasicInfo {
     public ProjectBasicInfo() {
     }
 
-    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketHost, String bucketImageDir, String bucketVideoDir, String logoPath) {
+    public ProjectBasicInfo(String templeUrl, String qrcodeUrl, String modelUrl, String tempJpgUrl, String ffmpegUrl, boolean deleteAllTempleFiles, boolean deleteAllBusinessFiles, String bucketImageDir, String bucketVideoDir, String logoPath) {
         this.templeUrl = templeUrl;
         this.qrcodeUrl = qrcodeUrl;
         this.modelUrl = modelUrl;
@@ -151,7 +139,6 @@ public class ProjectBasicInfo {
         this.ffmpegUrl = ffmpegUrl;
         this.deleteAllTempleFiles = deleteAllTempleFiles;
         this.deleteAllBusinessFiles = deleteAllBusinessFiles;
-        this.bucketHost = bucketHost;
         this.bucketImageDir = bucketImageDir;
         this.bucketVideoDir = bucketVideoDir;
         this.logoPath = logoPath;

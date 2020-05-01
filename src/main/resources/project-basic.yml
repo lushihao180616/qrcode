@@ -1,13 +1,11 @@
 basic:
   templeUrl: C:\qrcode\qrcodeTemple
   qrcodeUrl: C:\qrcode\outputQrcode
-  businessUrl: C:\qrcode\businessLogo
   modelUrl: C:\qrcode\model
   tempJpgUrl: C:\qrcode\tempJpg
   ffmpegUrl: C:\ffmpeg\bin\ffmpeg.exe
   deleteAllTempleFiles: true
   deleteAllBusinessFiles: true
-  bucketHost: http://sinacloud.net/
   bucketImageDir: runImage
   bucketVideoDir: runVideo
   logoPath: src\main\webapp\image\logo.jpg
