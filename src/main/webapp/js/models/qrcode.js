@@ -86,8 +86,7 @@ function handleRecord(recordList) {
             '        <td class="bottomTd2">' + recordList[i].templeCode + '</td>\n' +
             '        <td class="bottomTd3">' + recordList[i].fileName + '</td>\n' +
             '        <td class="bottomTd4">' + recordList[i].url + '</td>\n' +
-            '        <td class="bottomTd5">' + recordList[i].money + '</td>\n' +
-            '        <td class="bottomTd6">' + recordList[i].saveTime + '</td>\n' +
+            '        <td class="bottomTd5">' + recordList[i].saveTime + '</td>\n' +
             '    </tr>';
     }
 }
@@ -259,7 +258,6 @@ function getTempleCode(id) {
         document.getElementsByClassName("unit")[2].style.visibility = "hidden";
         document.getElementsByClassName("unit")[3].style.visibility = "hidden";
     }
-    document.getElementById("nowTemple_price").innerText = '价        格：' + temple.money;
     document.getElementById("nowTemple_ifOnly").innerText = '仅二维码：' + ifOnly;
     document.getElementById("nowTemple_ifShowLogo").innerText = '显示商标：' + ifShowLogo;
     document.getElementById("nowTemple_ifSelfBg").innerText = '自定背景：' + ifSelfBg;
@@ -303,8 +301,7 @@ function getRecord() {
                             '        <td class="bottomTd2">' + result.bean[i].templeCode + '</td>\n' +
                             '        <td class="bottomTd3">' + result.bean[i].fileName + '</td>\n' +
                             '        <td class="bottomTd4">' + result.bean[i].url + '</td>\n' +
-                            '        <td class="bottomTd5">' + result.bean[i].money + '</td>\n' +
-                            '        <td class="bottomTd6">' + result.bean[i].saveTime + '</td>\n' +
+                            '        <td class="bottomTd5">' + result.bean[i].saveTime + '</td>\n' +
                             '    </tr>';
                     }
                     alert(result.info);

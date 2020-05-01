@@ -109,8 +109,6 @@
         <br>
         <span class="topItemTitle">模板信息：</span><br><br><br>
         <br>
-        <div class="topItemSelect" id="nowTemple_price"></div>
-        <br>
         <div class="topItemSelect" id="nowTemple_ifOnly"></div>
         <br>
         <div class="topItemSelect" id="nowTemple_ifShowLogo"></div>
@@ -144,8 +142,7 @@
                 <th class="bottomTh2">模板</th>
                 <th class="bottomTh3">文件名</th>
                 <th class="bottomTh4">位置</th>
-                <th class="bottomTh5">价格</th>
-                <th class="bottomTh6">创建时间</th>
+                <th class="bottomTh5">创建时间</th>
             </tr>
         </table>
         <div class="tableItems">

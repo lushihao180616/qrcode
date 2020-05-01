@@ -50,7 +50,7 @@
     height: 750px;
 }
 
-.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5, .bottomTh6 {
+.bottomTh1, .bottomTh2, .bottomTh3, .bottomTh4, .bottomTh5 {
     width: 12%;
     background-color: cadetblue;
     color: white;
@@ -67,19 +67,16 @@
 }
 
 .bottomTh4 {
-    width: 36%;
+    width: 42%;
     background-color: cadetblue;
 }
 
 .bottomTh5 {
+    width: 18%;
     background-color: cadetblue;
 }
 
-.bottomTh6 {
-    background-color: cadetblue;
-}
-
-.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5, .bottomTd6 {
+.bottomTd1, .bottomTd2, .bottomTd3, .bottomTd4, .bottomTd5 {
     width: 12%;
     border: 2px solid cadetblue;
     padding: 5px;
@@ -95,14 +92,11 @@
 }
 
 .bottomTd4 {
-    width: 36%;
+    width: 42%;
     border: 2px solid cadetblue;
 }
 
 .bottomTd5 {
-    border: 2px solid cadetblue;
-}
-
-.bottomTd6 {
+    width: 18%;
     border: 2px solid cadetblue;
 }
