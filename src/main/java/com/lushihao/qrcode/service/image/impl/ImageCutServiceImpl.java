@@ -53,13 +53,13 @@ public class ImageCutServiceImpl implements ImageCutService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagecut")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagecut") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = imageCut.getPath().substring(0, imageCut.getPath().lastIndexOf(".")) + "_cut.jpg";
         if (!lshImageUtil.sendImage(newImagePath, cutImage)) {
-            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagecut")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("imagecut") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         return new Result(true, newImagePath, "添加成功", null);

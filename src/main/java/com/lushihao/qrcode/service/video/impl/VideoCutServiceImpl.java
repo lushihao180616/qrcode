@@ -34,12 +34,12 @@ public class VideoCutServiceImpl implements VideoCutService {
         if (videoInfo == null) {
             return new Result(false, null, null, "读取文件信息失败");
         }
-        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videocut")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videocut") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         videoCut.setNewPath(videoCut.getPath().substring(0, videoCut.getPath().lastIndexOf(".")) + "_cut.mp4");
         if (!lshFfmpegUtil.videoCut(videoCut)) {
-            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videocut")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videocut") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "添加失败，请重启软件后再试");
         } else {
             return new Result(true, videoCut.getNewPath(), "截取成功", null);

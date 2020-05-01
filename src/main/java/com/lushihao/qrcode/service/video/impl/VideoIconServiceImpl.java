@@ -65,18 +65,18 @@ public class VideoIconServiceImpl implements VideoIconService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoIcon.getPath().substring(0, videoIcon.getPath().lastIndexOf(".")) + "_icon.jpg";
         videoIcon.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, bg, "png")) {
-            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         if (!lshFfmpegUtil.videoIcon(videoIcon)) {
-            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videoicon") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoIcon.getImagePath());

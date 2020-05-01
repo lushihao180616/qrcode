@@ -116,18 +116,18 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         if (testFile.exists()) {
             testFile.delete();
         }
-        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videowatermark")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
+        if (!userInfoService.countSub(initProject.beanCosts.stream().filter(s -> s.getType().equals("videowatermark") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode())) {
             return new Result(false, null, null, "金豆不够用了");
         }
         //加水印图片
         String newImagePath = videoWaterMark.getPath().substring(0, videoWaterMark.getPath().lastIndexOf(".")) + "_watermark.png";
         videoWaterMark.setImagePath(newImagePath);
         if (!lshImageUtil.sendImage(newImagePath, bg, "png")) {
-            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videowatermark")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videowatermark") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出图片失败");
         }
         if (!lshFfmpegUtil.videoWaterMark(videoWaterMark)) {
-            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videowatermark")).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
+            userInfoService.countAdd(initProject.beanCosts.stream().filter(s -> s.getType().equals("videowatermark") && s.getUserType().equals(initProject.userInfo.getUserType().getCode())).collect(Collectors.toList()).get(0).getBean(), userBasicInfo.getCode());
             return new Result(false, null, null, "输出视频失败");
         }
         File nowFontImage = new File(videoWaterMark.getImagePath());
