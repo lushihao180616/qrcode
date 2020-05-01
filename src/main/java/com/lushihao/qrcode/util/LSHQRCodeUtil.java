@@ -1,5 +1,6 @@
 package com.lushihao.qrcode.util;
 
+import com.alibaba.druid.util.StringUtils;
 import com.google.zxing.*;
 import com.google.zxing.common.HybridBinarizer;
 import com.lushihao.myutils.qrcode.helper.BufferedImageLuminanceSource;
@@ -251,7 +252,16 @@ public class LSHQRCodeUtil {
 
         //添加logo
         if (qrCode.getQrCodeTemple().isIfShowLogo()) {
-            BufferedImage imageLogo = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+            BufferedImage logoImage = null;
+            if (initProject.userInfo.getUserType().getType().equals("0")) {//管理员
+                if (!StringUtils.equals(qrCode.getBusinessCode(), initProject.userInfo.getCode())) {
+                    logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + qrCode.getBusinessCode() + ".jpg");
+                } else {
+                    logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+                }
+            } else if (initProject.userInfo.getUserType().getType().equals("1")) {
+                logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+            }
             BufferedImage imageLogoBorder = lshImageUtil.getImage(projectBasicInfo.getTempleUrl() + "\\" + qrCode.getQrCodeTemple().getCode() + "\\logo_border.png");
 
             gs.translate(nowWidth / 2, nowHeight / 2);
@@ -262,7 +272,7 @@ public class LSHQRCodeUtil {
             }
             gs.translate(-nowWidth / 2, -nowHeight / 2);
 
-            gs.drawImage(imageLogo, (nowWidth - logoWidth) / 2, (nowHeight - logoHeight) / 2, logoWidth, logoHeight, null);
+            gs.drawImage(logoImage, (nowWidth - logoWidth) / 2, (nowHeight - logoHeight) / 2, logoWidth, logoHeight, null);
             gs.drawImage(imageLogoBorder, (nowWidth - logoBgWidth) / 2, (nowHeight - logoBgHeight) / 2, logoBgWidth, logoBgHeight, null);
         }
         //释放画笔

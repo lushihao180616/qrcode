@@ -26,6 +26,8 @@ function userInfo() {
                         document.getElementById("businessName").innerText = result.bean.business.businessName;
                         document.getElementById("phone").innerText = result.bean.business.phone;
                         document.getElementById("address").innerText = result.bean.business.address;
+                        document.getElementById("businessModel").style.display = "none";
+                        document.getElementById("templeModel").style.display = "none";
                     }
                     document.getElementById("type").innerText = result.bean.userType.name;
                     if (result.bean.count == -1) {

@@ -69,7 +69,7 @@ public class LSHFtpUtil {
             }
             //设置以二进制方式传输
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-            ftpClient.changeWorkingDirectory("/");
+            changePWD("/");
         } catch (SocketException e) {
             e.printStackTrace();
             return false;
@@ -88,14 +88,29 @@ public class LSHFtpUtil {
      * @return
      */
     public synchronized boolean deleteFile(String targetName, String fileName) {
-        boolean flag = false;
         try {
-            //切换工作路径，设置上传的路径
-            ftpClient.changeWorkingDirectory(targetName);
+            changePWD(targetName);
             //开始删除文件
             ftpClient.dele(fileName);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 切换工作目录
+     *
+     * @param path
+     * @return
+     */
+    public synchronized boolean changePWD(String path) throws IOException {
+        try {
+            //切换工作路径，设置上传的路径
+            ftpClient.changeWorkingDirectory(path);
+            return true;
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -137,8 +152,7 @@ public class LSHFtpUtil {
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(sourcePath);
-            //切换工作路径，设置上传的路径
-            ftpClient.changeWorkingDirectory(targetPath);
+            changePWD(targetPath);
             //设置1M缓冲
             ftpClient.setBufferSize(1024);
             //设置被动模式
@@ -171,8 +185,7 @@ public class LSHFtpUtil {
         try {
             ftpClient.enterLocalPassiveMode();
             FTPFile[] files = ftpClient.listFiles(sourcePath);
-            //切换工作路径，设置上传的路径
-            ftpClient.changeWorkingDirectory(sourcePath);
+            changePWD(sourcePath);
             if (files.length > 0) {
                 for (FTPFile file : files) {
                     if (notCopyFileNames.stream().filter(s -> StringUtils.equals(s, file.getName())).collect(Collectors.toList()).size() > 0) {

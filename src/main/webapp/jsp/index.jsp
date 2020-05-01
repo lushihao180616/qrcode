@@ -62,11 +62,11 @@
 </p>
 
 <div class="linkItems">
-    <div class="lineItem1" onclick="navigate('models/business.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem1" onclick="navigate('models/business.jsp')" id="businessModel" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>商&emsp;家&emsp;管&emsp;理</div>
     </div>
-    <div class="lineItem2" onclick="navigate('models/temple.jsp')" onMouseOver="makevisible(this,0)"
+    <div class="lineItem2" onclick="navigate('models/temple.jsp')" id="templeModel" onMouseOver="makevisible(this,0)"
          onMouseOut="makevisible(this,1)">
         <div>模&emsp;板&emsp;管&emsp;理</div>
     </div>

@@ -1,5 +1,8 @@
 package com.lushihao.qrcode.service.video.impl;
 
+import com.alibaba.druid.util.StringUtils;
+import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.dao.BusinessMapper;
 import com.lushihao.qrcode.dao.ManagerMapper;
 import com.lushihao.qrcode.entity.business.Business;
@@ -7,12 +10,11 @@ import com.lushihao.qrcode.entity.common.Result;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.video.VideoInfo;
 import com.lushihao.qrcode.entity.video.VideoWaterMark;
-import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.init.InitProject;
 import com.lushihao.qrcode.service.userinfo.UserInfoService;
 import com.lushihao.qrcode.service.video.VideoWaterMarkService;
 import com.lushihao.qrcode.util.LSHFfmpegUtil;
+import com.lushihao.qrcode.util.LSHFtpUtil;
 import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,8 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
     private UserBasicInfo userBasicInfo;
     @Resource
     private InitProject initProject;
+    @Resource
+    private LSHFtpUtil lshFtpUtil;
 
     @Override
     public Result addWaterMark(VideoWaterMark videoWaterMark) {
@@ -90,7 +94,16 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
         bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+        BufferedImage logoImage = null;
+        if (initProject.userInfo.getUserType().getType().equals("0")) {//管理员
+            if (!StringUtils.equals(videoWaterMark.getBusinessCode(), initProject.userInfo.getCode())) {
+                logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + videoWaterMark.getBusinessCode() + ".jpg");
+            } else {
+                logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+            }
+        } else if (initProject.userInfo.getUserType().getType().equals("1")) {
+            logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+        }
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
@@ -170,7 +183,16 @@ public class VideoWaterMarkServiceImpl implements VideoWaterMarkService {
         bgG2.drawString(lines[1], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 3.0));
         bgG2.drawString(lines[2], xWidth + waterMarkHeight + offSet, (float) (yHeight + fontSize * 4.5));
 
-        BufferedImage logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+        BufferedImage logoImage = null;
+        if (initProject.userInfo.getUserType().getType().equals("0")) {//管理员
+            if (!StringUtils.equals(videoWaterMark.getBusinessCode(), initProject.userInfo.getCode())) {
+                logoImage = lshFtpUtil.getImage("http://sinacloud.net/qrcode-files/logo/" + videoWaterMark.getBusinessCode() + ".jpg");
+            } else {
+                logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+            }
+        } else if (initProject.userInfo.getUserType().getType().equals("1")) {
+            logoImage = lshImageUtil.getImage(projectBasicInfo.getLogoPath());
+        }
         if (logoImage == null) {
             return new Result(false, null, null, "商标不存在");
         }
