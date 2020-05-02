@@ -1,4 +1,3 @@
-### Basic Info Config
 spring:
   http:
     encoding:
@@ -13,7 +12,7 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/qrcode?characterEncoding=utf-8&serverTimezone=UTC&allowMultiQueries=true
+    url: jdbc:mysql://152.136.221.219:3306/qrcode?characterEncoding=utf-8&serverTimezone=UTC&allowMultiQueries=true
     username: root
     password:
 
