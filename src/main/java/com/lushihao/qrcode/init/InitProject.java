@@ -82,6 +82,7 @@ public class InitProject implements ApplicationRunner {
         getBucket();
         getAllTemple();
         createDirectory(projectBasicInfo.getQrcodeUrl() + "\\" + userInfo.getCode());
+        createCode();
     }
 
     /**
@@ -93,6 +94,18 @@ public class InitProject implements ApplicationRunner {
         File modelDirectory = new File(directory);
         if (!modelDirectory.exists()) {//如果文件夹不存在
             modelDirectory.mkdir();//创建文件夹
+        }
+    }
+
+    /**
+     * 创建商家文件夹
+     */
+    private void createCode() {
+        if (userInfo.getUserType().getType().equals("0")) {//商家信息
+            List<Business> businessList = businessMapper.filter(new Business());
+            for (Business business : businessList) {
+                createDirectory(projectBasicInfo.getQrcodeUrl() + "\\" + userInfo.getCode() + "\\" + business.getCode());
+            }
         }
     }
 
