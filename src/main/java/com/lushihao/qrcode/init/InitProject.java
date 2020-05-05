@@ -1,6 +1,8 @@
 package com.lushihao.qrcode.init;
 
 import com.lushihao.myutils.collection.LSHMapUtils;
+import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
+import com.lushihao.qrcode.config.yml.UserBasicInfo;
 import com.lushihao.qrcode.dao.*;
 import com.lushihao.qrcode.entity.bean.BeanCost;
 import com.lushihao.qrcode.entity.bucket.Bucket;
@@ -8,9 +10,6 @@ import com.lushihao.qrcode.entity.business.Business;
 import com.lushihao.qrcode.entity.manager.Manager;
 import com.lushihao.qrcode.entity.temple.QRCodeTemple;
 import com.lushihao.qrcode.entity.user.UserInfo;
-import com.lushihao.qrcode.config.yml.ProjectBasicInfo;
-import com.lushihao.qrcode.config.yml.UserBasicInfo;
-import com.lushihao.qrcode.util.LSHImageUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -82,10 +81,12 @@ public class InitProject implements ApplicationRunner {
         getBeanCost();
         getBucket();
         getAllTemple();
+        createDirectory(projectBasicInfo.getQrcodeUrl() + "\\" + userInfo.getCode());
     }
 
     /**
      * 创建文件夹
+     *
      * @param directory
      */
     private void createDirectory(String directory) {

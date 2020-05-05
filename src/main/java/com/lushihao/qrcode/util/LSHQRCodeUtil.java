@@ -152,7 +152,7 @@ public class LSHQRCodeUtil {
             if (!ifTest) {
                 qrCodeRecordMapper.create(new QRCodeRecord(qrCode.getQrCodeTemple().getCode(), qrCode.getBusinessCode(), filePath.substring(filePath.lastIndexOf("\\") + 1), filePath, LSHDateUtils.date2String(new Date(), LSHDateUtils.YYYY_MM_DD_HH_MM_SS1), qrCode.getQrCodeTemple().getMoney(), userBasicInfo.getCode()));
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             return new Result(false, null, null, "创建失败");
         }
         return new Result(true, map, "创建成功", null);
@@ -163,7 +163,7 @@ public class LSHQRCodeUtil {
      *
      * @param qrCode
      */
-    private BufferedImage getQRCode(QRCode qrCode) throws UnsupportedEncodingException {
+    private BufferedImage getQRCode(QRCode qrCode) throws Exception {
         //创建二维码对象
         Qrcode qrcode = new Qrcode();
         //设置二维码的纠错级别
@@ -204,9 +204,8 @@ public class LSHQRCodeUtil {
             return null;
         }
         byte[] contentsBytes = content.getBytes("utf-8");
-        int charLength = lshCharUtil.charLength(content);
         boolean[][] code = new boolean[0][];
-        if (charLength <= 105) {
+        if (content.getBytes().length <= 105) {
             qrcode.setQrcodeVersion(5);
             //二维码
             code = qrcode.calQrcode(contentsBytes);
@@ -214,7 +213,7 @@ public class LSHQRCodeUtil {
             height = 1950;
             nowWidth = 3000;
             nowHeight = 3000;
-        } else if (charLength <= 270) {
+        } else if (content.getBytes().length <= 216) {
             qrcode.setQrcodeVersion(10);
             //二维码
             code = qrcode.calQrcode(contentsBytes);

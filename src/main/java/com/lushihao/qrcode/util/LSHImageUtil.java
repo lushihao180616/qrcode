@@ -56,6 +56,7 @@ public class LSHImageUtil {
      * @return
      */
     public boolean sendImage(String path, BufferedImage bufferedImage) {
+        createPath(path.substring(0, path.lastIndexOf("\\")));
         return sendImage(new File(path), bufferedImage, DEFAULTTYPE);
     }
 
