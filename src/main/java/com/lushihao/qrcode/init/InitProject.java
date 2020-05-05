@@ -104,7 +104,7 @@ public class InitProject implements ApplicationRunner {
         if (userInfo.getUserType().getType().equals("0")) {//商家信息
             List<Business> businessList = businessMapper.filter(new Business());
             for (Business business : businessList) {
-                createDirectory(projectBasicInfo.getQrcodeUrl() + "\\" + userInfo.getCode() + "\\" + business.getCode());
+                createDirectory(projectBasicInfo.getQrcodeUrl() + "\\" + business.getCode());
             }
         }
     }
